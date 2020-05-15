@@ -1,5 +1,5 @@
-@import "variables";
-@import "common";
+@import "../../common/sass/variables";
+@import "../../common/sass/common";
 
 html,
 body,
@@ -12,7 +12,11 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: rgb(244, 244, 255);
-  background: linear-gradient(180deg, rgba(244, 244, 255, 1) 0%, rgba(218, 216, 240, 1) 100%);
   color: $color-black1;
+  background: url('/images/fond_principal.jpg') no-repeat top left;
+  background-size: cover;
+  .main-container.gradient {
+    background: rgb(244, 244, 255);
+    background: linear-gradient(180deg, rgba(244, 244, 255, 1) 0%, rgba(218, 216, 240, 1) 100%);
+  }
 }

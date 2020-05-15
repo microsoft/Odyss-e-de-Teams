@@ -16,6 +16,9 @@
 			},
 			{
 				"plugin": "./menu/index.js"
+			},
+			{
+				"plugin": "./user/index.js"
 			}
 		],
 		"options": {

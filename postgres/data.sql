@@ -58,13 +58,13 @@ INSERT INTO public.t_thematique(nom, actif, horodatage, horodatage_creation)
 
 -- navigation
 INSERT INTO public.t_page (nom, router_link, horodatage, actif, ordre, is_menu, picto) VALUES
-	('Cockpit', '/Cockpit', now(), true, 10, true, ''),
-	('Jouer', '/Jouer', now(), true, 20, true, ''),
-	('Planning', '/Planning', now(), true, 20, true, ''),
-	('Classement', '/Classement', now(), true, 30, true, ''),
-	('Outillage', '/Outillage', now(), true, 40, true, ''),
-	('Mon Profil', '/Profil', now(), true, 40, true, ''),
-	('Règles', '/Regles', now(), true, 50, true, '');
+	('Cockpit', '/#/Cockpit', now(), true, 10, true, 'cockpit.svg'),
+	('Jouer', '/#/Jouer', now(), true, 20, true, 'jouer.svg'),
+	('Planning', '/#/Planning', now(), true, 20, true, 'planning.svg'),
+	('Classement', '/#/Classement', now(), true, 30, true, 'classement.svg'),
+	('Outillage', '/#/Outillage', now(), true, 40, true, 'outillage.svg'),
+	('Mon Profil', '/#/Profil', now(), true, 40, true, 'profil.svg'),
+	('Règles', '/#/Regles', now(), true, 50, true, 'regle.svg');
 
 INSERT INTO public.j_role_page (id_role, id_page) VALUES (1, 1), (1, 2), (1, 4), (1, 6), (1, 7), (2, 1), (2, 3), (2, 4), (2, 5);
 
