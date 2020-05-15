@@ -336,6 +336,112 @@ CREATE INDEX idx_actif_t_reponse
   
  
 /***************************/
+/******** navigation *******/
+/***************************/
+
+CREATE SEQUENCE public.seq_t_page;
+GRANT ALL ON TABLE public.seq_t_page TO odyssee_teams_appli;
+
+CREATE TABLE public.t_page
+(
+  id_page integer NOT NULL DEFAULT nextval('public.seq_t_page'::regclass),
+  nom character(35),
+  router_link character(35),
+  horodatage timestamp without time zone,
+  actif boolean,
+  ordre integer,
+  is_menu boolean,
+  picto text,
+  CONSTRAINT pk_t_page PRIMARY KEY (id_page)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_page TO odyssee_teams_appli;
+
+CREATE INDEX idx_ordre_t_page
+  ON public.t_page
+  USING btree
+  (ordre);
+
+CREATE UNIQUE INDEX idx_page_pkey
+  ON public.t_page
+  USING btree
+  (id_page);
+ALTER TABLE public.t_page CLUSTER ON idx_page_pkey;
+
+CREATE INDEX idx_actif_t_page
+  ON public.t_page
+  USING btree
+  (actif);
+
+
+CREATE TABLE public.j_role_page
+(
+	id_role integer NOT NULL,
+	id_page integer NOT NULL,
+	CONSTRAINT pk_j_role_page PRIMARY KEY (id_role , id_page)
+);
+
+CREATE UNIQUE INDEX idx_j_role_page
+  ON public.j_role_page
+  USING btree
+  (id_role , id_page);
+ALTER TABLE public.j_role_page CLUSTER ON idx_j_role_page;
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.j_role_page TO odyssee_teams_appli;
+
+-- FUNCTION: public.f_v_menu_user(text, integer, text, text)
+CREATE OR REPLACE FUNCTION public.f_v_menu_user(
+	iduser text,
+	idrole integer,
+	lang text,
+	andquery text,
+	OUT main_query text)
+    RETURNS text
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+
+--********************************************************************************************************
+--* fonction generatrice du query vue du menu
+--***********************************************************************************************************************************
+DECLARE
+BEGIN
+	main_query := 'WITH w0 AS(
+		SELECT DISTINCT a.id_user, b.id_page, b.id_role
+		FROM public.t_user a
+			INNER JOIN public.j_role_page b ON a.id_role=b.id_role --&idrole --&iduser
+	)
+    SELECT DISTINCT b.id_role, a.id_page, TRIM(c.nom) AS nom, TRIM(a.router_link) AS router_link, a.is_menu, a.picto, a.ordre
+    FROM public.t_page a
+        INNER JOIN w0 b ON a.id_page=b.id_page
+        INNER JOIN public.t_libelle_i18n c ON a.id_page=c.id_table AND TRIM(c.code)=''PAGE'' AND TRIM(c.lang)=''' || lang || '''
+    WHERE a.actif=true AND a.ordre IS NOT NULL --&andquery
+	ORDER BY id_role, ordre';
+	IF iduser IS NOT NULL THEN
+		main_query = REPLACE(main_query, '--&iduser', 'AND a.id_user IN (' || iduser || ')');
+	ELSE
+		main_query = REPLACE(main_query, '--&iduser', '');
+	END IF;
+	IF idrole IS NOT NULL THEN
+		main_query = REPLACE(main_query, '--&idrole', 'AND a.id_role=' || idrole);
+	ELSE
+		main_query = REPLACE(main_query, '--&idrole', '');
+	END IF;
+	IF andquery IS NOT NULL THEN
+		main_query = REPLACE(main_query, '--&andquery', andquery);
+	ELSE
+		main_query = REPLACE(main_query, '--&andquery', '');
+	END IF;
+END;
+
+$BODY$;
+
+ 
+/***************************/
 /****** historisation ******/
 /***************************/
 

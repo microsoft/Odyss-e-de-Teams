@@ -1,12 +1,12 @@
 const API_TOKEN = "dd51c6450623cd49125f26620b0c14c0";
 
-export function getListPoste(text?: string, limit?: number): Promise<any> {
-    const url = process.env.REACT_APP_API_URL + '/postes?api_key=' + API_TOKEN + '&language=fr&query=' + (text || '') + (limit ? "&limit=" + limit.toString() : '')
+export function getMenu(lang: string): Promise<any> {
+    const url = process.env.REACT_APP_API_URL + '/menu?api_key=' + API_TOKEN + '&language=' + lang
     return fetch(url)
         .then((response) => response.json())
         .catch((error) => console.error(error))
 }
-
+/* 
 export function generatePowerPoint(casUsageIds: number[]): Promise<any> {
     const url = process.env.REACT_APP_API_URL + '/generate-powerpoint?api_key=' + API_TOKEN + '&language=fr'
     return fetch(url, {
@@ -19,4 +19,4 @@ export function generatePowerPoint(casUsageIds: number[]): Promise<any> {
     })
         .then((response) => response.json())
         .catch((error) => console.error(error))
-}
+} */

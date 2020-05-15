@@ -1,9 +1,9 @@
-export interface Question {
+export interface IQuestion {
     id_question: number;
     nom: string;
 }
 
 export interface IQuestionState {
     isLoading: boolean;
-    listQuestion?: Question[];
+    listQuestion?: IQuestion[];
 }
