@@ -2,12 +2,30 @@
 @import "~bootstrap/scss/_variables.scss";
 @import "~bootstrap/scss/mixins/_breakpoints.scss";
 
+@import "../../common/sass/variables";
+
 .menu {
     background: #fff;
     border-radius: 0 1rem 1rem 0;
     -webkit-box-shadow: 5px 0px 30px -15px rgba(123, 131, 235, 1);
     -moz-box-shadow: 5px 0px 30px -15px rgba(123, 131, 235, 1);
     box-shadow: 5px 0px 30px -15px rgba(123, 131, 235, 1);
+    .list-group {
+        .list-group-item {
+            background-repeat: no-repeat;
+            background-position: 1.5rem top;
+            background-size: 2.5rem;
+            padding-left: 5rem;
+            padding-right: 3rem;
+            border: none;
+            border-radius: 0 2rem 2rem 0;
+        }
+        .list-group-item.active {
+            color: $color-primary;
+            font-weight: bold;
+            background-color: rgba(123, 131, 235, 0.2);
+        }
+    }
 }
 
 @include media-breakpoint-up(md) {
