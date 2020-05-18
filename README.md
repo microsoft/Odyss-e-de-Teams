@@ -5,5 +5,7 @@ Jeux concours Microsoft Teams
 #### Prérequis
  - Docker Desktop installé sur l'environnement de développement
 #### Installation
- - docker-compose build
- - docker-compose up
+ - make setup
+ - make pull
+ - make build
+ - make up
