@@ -1,0 +1,10 @@
+{
+  "welcome_text": "Bienvenue dans",
+  "landing" : {
+    "welcome_text": "Bienvenue dans",
+    "title": "L'Odyssée de Teams",
+    "subtitle": "Un voyage à travers les usages",
+    "body": "Partez à la conquête du travail en équipe avec Microsoft Teams",
+    "buttonText": "Partir en exploration maintenant"
+  }
+}
