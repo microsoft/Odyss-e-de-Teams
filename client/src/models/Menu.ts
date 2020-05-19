@@ -1,7 +1,7 @@
 import { IUser } from "./User";
 
 export interface IMenu {
-    id_page: number,
+    id_page: number;
     nom: string;
     router_link: string;
     ordre: number;
