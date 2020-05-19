@@ -17,3 +17,7 @@ export interface IUser {
 export interface IUserState {
     currentUser?: IUser;
 }
+
+export interface IProfilProps {
+    currentUser: IUser;
+}
