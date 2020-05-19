@@ -10,6 +10,42 @@ CREATE ROLE odyssee_teams_appli WITH
 
 ALTER DATABASE odyssee_teams OWNER TO odyssee_teams_appli;
 
+----- organisation  
+CREATE SEQUENCE public.seq_t_organisation;
+GRANT ALL ON TABLE public.seq_t_organisation TO odyssee_teams_appli;
+
+CREATE TABLE public.t_organisation
+(
+  id_organisation integer NOT NULL DEFAULT nextval('public.seq_t_organisation'::regclass),
+  id_semaine integer,
+  nom character(180),
+  logo text,
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_organisation PRIMARY KEY (id_organisation)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_organisation TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_organisation_pkey
+  ON public.t_organisation
+  USING btree
+  (id_organisation);
+ALTER TABLE public.t_organisation CLUSTER ON idx_organisation_pkey;
+
+CREATE INDEX idx_id_semaine_t_organisation
+  ON public.t_organisation
+  USING btree
+  (id_semaine);
+  
+CREATE INDEX idx_actif_t_organisation
+  ON public.t_organisation
+  USING btree
+  (actif);
+  
  ----- user 
 CREATE SEQUENCE public.seq_t_user;
 GRANT ALL ON TABLE public.seq_t_user TO odyssee_teams_appli;
@@ -17,6 +53,7 @@ GRANT ALL ON TABLE public.seq_t_user TO odyssee_teams_appli;
 CREATE TABLE public.t_user
 (
   id_user integer NOT NULL DEFAULT nextval('public.seq_t_user'::regclass),
+  id_organisation integer,
   id_role integer,
   id_avatar integer,
   id_medaille_avatar integer,
@@ -25,9 +62,9 @@ CREATE TABLE public.t_user
   nb_point integer,
   nb_xp integer,
   nb_reponse integer,
-  nb_response_ok integer,
-  nb_response_consecutive_top integer,
-  nb_response_consecutive_en_cours integer,
+  nb_reponse_ok integer,
+  nb_reponse_consecutive_top integer,
+  nb_reponse_consecutive_en_cours integer,
   nb_questionnaire_complete integer,
   actif boolean,
   horodatage timestamp without time zone,
@@ -45,6 +82,11 @@ CREATE UNIQUE INDEX idx_user_pkey
   USING btree
   (id_user);
 ALTER TABLE public.t_user CLUSTER ON idx_user_pkey;
+
+CREATE INDEX idx_id_organisation_t_user
+  ON public.t_user
+  USING btree
+  (id_organisation);
 
 CREATE INDEX idx_id_role_t_user
   ON public.t_user
@@ -98,7 +140,6 @@ CREATE INDEX idx_actif_t_avatar
   (actif);
 
 -- role user
-
 CREATE SEQUENCE public.seq_t_role;
 GRANT ALL ON TABLE public.seq_t_role TO odyssee_teams_appli;
 
@@ -127,6 +168,40 @@ CREATE INDEX idx_actif_t_role
   USING btree
   (actif);
 
+ ----- agenda 
+CREATE SEQUENCE public.seq_t_agenda;
+GRANT ALL ON TABLE public.seq_t_agenda TO odyssee_teams_appli;
+
+CREATE TABLE public.t_agenda
+(
+  id_agenda integer NOT NULL DEFAULT nextval('public.seq_t_agenda'::regclass),
+  nom character(80),
+  date_agenda date,
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_agenda PRIMARY KEY (id_agenda)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_agenda TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_agenda_pkey
+  ON public.t_agenda
+  USING btree
+  (id_agenda);
+ALTER TABLE public.t_agenda CLUSTER ON idx_agenda_pkey;
+
+CREATE INDEX idx_date_agenda_t_agenda
+  ON public.t_agenda
+  USING btree
+  (date_agenda);
+
+CREATE INDEX idx_actif_t_agenda
+  ON public.t_agenda
+  USING btree
+  (actif);
 
  ----- medaille 
 CREATE SEQUENCE public.seq_t_medaille;
@@ -160,6 +235,112 @@ CREATE INDEX idx_actif_t_medaille
   USING btree
   (actif);
  
+  ----- semaine 
+CREATE SEQUENCE public.seq_t_semaine;
+GRANT ALL ON TABLE public.seq_t_semaine TO odyssee_teams_appli;
+
+CREATE TABLE public.t_semaine
+(
+  id_semaine integer NOT NULL DEFAULT nextval('public.seq_t_semaine'::regclass),
+  nom character(80),
+  ordre integer,
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_semaine PRIMARY KEY (id_semaine)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_semaine TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_semaine_pkey
+  ON public.t_semaine
+  USING btree
+  (id_semaine);
+ALTER TABLE public.t_semaine CLUSTER ON idx_semaine_pkey;
+
+CREATE INDEX idx_ordre_t_semaine
+  ON public.t_semaine
+  USING btree
+  (ordre);
+
+CREATE INDEX idx_actif_t_semaine
+  ON public.t_semaine
+  USING btree
+  (actif);
+
+/***************************/
+/****** communication*******/
+/***************************/
+
+ ----- asset_communication 
+CREATE SEQUENCE public.seq_t_asset_communication;
+GRANT ALL ON TABLE public.seq_t_asset_communication TO odyssee_teams_appli;
+
+CREATE TABLE public.t_asset_communication
+(
+  id_asset_communication integer NOT NULL DEFAULT nextval('public.seq_t_asset_communication'::regclass),
+  id_type_asset_communication integer,
+  nom character(80),
+  contenu text,
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_asset_communication PRIMARY KEY (id_asset_communication)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_asset_communication TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_asset_communication_pkey
+  ON public.t_asset_communication
+  USING btree
+  (id_asset_communication);
+ALTER TABLE public.t_asset_communication CLUSTER ON idx_asset_communication_pkey;
+
+CREATE INDEX idx_id_type_asset_communication_t_asset_communication
+  ON public.t_asset_communication
+  USING btree
+  (id_type_asset_communication);
+
+CREATE INDEX idx_actif_t_asset_communication
+  ON public.t_asset_communication
+  USING btree
+  (actif);
+ 
+  ----- type_asset_communication 
+CREATE SEQUENCE public.seq_t_type_asset_communication;
+GRANT ALL ON TABLE public.seq_t_type_asset_communication TO odyssee_teams_appli;
+
+CREATE TABLE public.t_type_asset_communication
+(
+  id_type_asset_communication integer NOT NULL DEFAULT nextval('public.seq_t_type_asset_communication'::regclass),
+  nom character(80),
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_type_asset_communication PRIMARY KEY (id_type_asset_communication)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_type_asset_communication TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_type_asset_communication_pkey
+  ON public.t_type_asset_communication
+  USING btree
+  (id_type_asset_communication);
+ALTER TABLE public.t_type_asset_communication CLUSTER ON idx_type_asset_communication_pkey;
+
+CREATE INDEX idx_actif_t_type_asset_communication
+  ON public.t_type_asset_communication
+  USING btree
+  (actif);
+
+
+
 /***************************/
 /******** question *********/
 /***************************/
@@ -171,6 +352,7 @@ GRANT ALL ON TABLE public.seq_t_question TO odyssee_teams_appli;
 CREATE TABLE public.t_question
 (
   id_question integer NOT NULL DEFAULT nextval('public.seq_t_question'::regclass),
+  id_module integer,
   id_thematique integer,
   id_niveau integer,
   id_mecanique integer,
@@ -195,6 +377,11 @@ CREATE INDEX idx_id_thematique_t_question
   ON public.t_question
   USING btree
   (id_thematique);
+
+CREATE INDEX idx_id_module_t_question
+  ON public.t_question
+  USING btree
+  (id_module);
 
 CREATE INDEX idx_id_niveau_t_question
   ON public.t_question
@@ -240,6 +427,35 @@ CREATE INDEX idx_actif_t_mecanique
   USING btree
   (actif);
 
+ ----- module  
+CREATE SEQUENCE public.seq_t_module;
+GRANT ALL ON TABLE public.seq_t_module TO odyssee_teams_appli;
+
+CREATE TABLE public.t_module
+(
+  id_module integer NOT NULL DEFAULT nextval('public.seq_t_module'::regclass),
+  nom character(180),
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_module PRIMARY KEY (id_module)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_module TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_module_pkey
+  ON public.t_module
+  USING btree
+  (id_module);
+ALTER TABLE public.t_module CLUSTER ON idx_module_pkey;
+
+CREATE INDEX idx_actif_t_module
+  ON public.t_module
+  USING btree
+  (actif);
+
  ----- thematique  
 CREATE SEQUENCE public.seq_t_thematique;
 GRANT ALL ON TABLE public.seq_t_thematique TO odyssee_teams_appli;
@@ -247,7 +463,7 @@ GRANT ALL ON TABLE public.seq_t_thematique TO odyssee_teams_appli;
 CREATE TABLE public.t_thematique
 (
   id_thematique integer NOT NULL DEFAULT nextval('public.seq_t_thematique'::regclass),
-  nom character(180),
+  nom character(80),
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
@@ -269,6 +485,23 @@ CREATE INDEX idx_actif_t_thematique
   USING btree
   (actif);
 
+
+CREATE TABLE public.j_thematique_organisation_disabled
+(
+	id_thematique integer NOT NULL,
+	id_organisation integer NOT NULL,
+    horodatage timestamp without time zone,
+	CONSTRAINT pk_j_thematique_organisation PRIMARY KEY (id_thematique , id_organisation)
+);
+
+CREATE UNIQUE INDEX idx_j_thematique_organisation_disabled
+  ON public.j_thematique_organisation_disabled
+  USING btree
+  (id_thematique , id_organisation);
+ALTER TABLE public.j_thematique_organisation_disabled CLUSTER ON idx_j_thematique_organisation_disabled;
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.j_thematique_organisation_disabled TO odyssee_teams_appli;
+
+
  ----- niveau  
 CREATE SEQUENCE public.seq_t_niveau;
 GRANT ALL ON TABLE public.seq_t_niveau TO odyssee_teams_appli;
@@ -277,6 +510,7 @@ CREATE TABLE public.t_niveau
 (
   id_niveau integer NOT NULL DEFAULT nextval('public.seq_t_niveau'::regclass),
   nom character(180),
+  ordre integer,
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
@@ -293,6 +527,11 @@ CREATE UNIQUE INDEX idx_niveau_pkey
   (id_niveau);
 ALTER TABLE public.t_niveau CLUSTER ON idx_niveau_pkey;
 
+CREATE INDEX idx_ordre_t_niveau
+  ON public.t_niveau
+  USING btree
+  (ordre);
+  
 CREATE INDEX idx_actif_t_niveau
   ON public.t_niveau
   USING btree
@@ -552,6 +791,7 @@ $BODY$;
 		id_reponse_user integer NOT NULL DEFAULT nextval('public.seq_h_reponse_user'::regclass),
 		id_user integer,
 		valeur text,
+		temps time without time zone,
         valid boolean,
 		horodatage timestamp without time zone,
 		CONSTRAINT pk_h_reponse_user PRIMARY KEY (id_reponse_user)
@@ -582,7 +822,7 @@ $BODY$;
 	CREATE TABLE public.h_questionnaire_complete
 	(
 		id_questionnaire_complete integer NOT NULL DEFAULT nextval('public.seq_h_questionnaire_complete'::regclass),
-        id_thematique integer,
+        id_module integer,
         id_niveau integer,
 		id_user integer,
 		nb_reponse_ok integer,
@@ -607,9 +847,9 @@ $BODY$;
 		ON public.h_questionnaire_complete USING btree
 		(id_user);
 
-	CREATE INDEX idx_id_thematique_h_questionnaire_complete
+	CREATE INDEX idx_id_module_h_questionnaire_complete
 		ON public.h_questionnaire_complete USING btree
-		(id_thematique);
+		(id_module);
 
 	CREATE INDEX idx_id_niveau_h_questionnaire_complete
 		ON public.h_questionnaire_complete USING btree
@@ -697,20 +937,3 @@ $BODY$;
 		ON public.t_libelle_i18n USING btree
 		(lang)
 		TABLESPACE pg_default;
-
-/*
--- jointure cas usage / poste
-CREATE TABLE public.j_cas_usage_poste
-(
-	id_cas_usage integer NOT NULL,
-	id_poste integer NOT NULL,
-	CONSTRAINT pk_j_cas_usage_poste PRIMARY KEY (id_cas_usage , id_poste)
-);
-
-CREATE UNIQUE INDEX idx_j_cas_usage_poste
-  ON public.j_cas_usage_poste
-  USING btree
-  (id_cas_usage , id_poste);
-ALTER TABLE public.j_cas_usage_poste CLUSTER ON idx_j_cas_usage_poste;
-GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.j_cas_usage_poste TO odyssee_teams_appli;
-*/

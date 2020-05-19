@@ -1,3 +1,40 @@
+-- organisation
+  INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 	
+    ('Saegus', true, now(), now()),
+	('Air France', false, now(), now()),
+	('Alstom', false, now(), now()),
+	('ALTEN SA', false, now(), now()),
+	('AXA GIE', false, now(), now()),
+	('BPCE', false, now(), now()),
+	('Colas', false, now(), now()),
+	('Edenred', false, now(), now()),
+	('EDF Renouvelable', false, now(), now()),
+	('EUROVIA', false, now(), now()),
+	('Grtgaz', false, now(), now()),
+	('JCDecaux', false, now(), now()),
+	('Kenzo', false, now(), now()),
+	('Kering', false, now(), now()),
+	('KIABI', false, now(), now()),
+	('La Poste', false, now(), now()),
+	('LVMH', false, now(), now()),
+	('MANUFACTURE FRANCAISE DES PNEUMATIQUES MICHELIN', false, now(), now()),
+	('Moet Hennessy', false, now(), now()),
+	('PUBLICIS', false, now(), now()),
+	('RATP', false, now(), now()),
+	('RENAULT SAS', false, now(), now()),
+	('SANOFI', false, now(), now()),
+	('SERVIER', false, now(), now()),
+	('SNCF', false, now(), now()),
+	('SONEPAR', false, now(), now()),
+	('SOPRA STERIA GROUP', false, now(), now()),
+	('SPIE SA', false, now(), now()),
+	('Suez', false, now(), now()),
+	('Total', false, now(), now()),
+	('VINCI AUTOROUTES', false, now(), now()),
+	('VINCI CONSTRUCTION', false, now(), now());
+
+	UPDATE public.t_organisation SET id_semaine=1 WHERE id_organisation=1;
+
 -- role
   INSERT INTO public.t_role (nom, actif, horodatage, horodatage_creation) VALUES 	
     ('Joueur', true, now(), now()),
@@ -43,13 +80,13 @@
 	('Le collectionneur de l''infini', 'Obtenir toutes les médailles communes et légendaires', 'collectionneur_infini.svg', true, true, now(), now());
 
 -- niveau
-INSERT INTO public.t_niveau(nom, actif, horodatage, horodatage_creation)
-	VALUES ('Version basique', true, now(), now()),
-	('Version améliorée', true, now(), now()),
-	('Version ultime', true, now(), now());
+INSERT INTO public.t_niveau(nom, ordre, actif, horodatage, horodatage_creation)
+	VALUES ('Version basique', 1, true, now(), now()),
+	('Version améliorée', 2, true, now(), now()),
+	('Version ultime', 3, true, now(), now());
 	
--- thematique
-INSERT INTO public.t_thematique(nom, actif, horodatage, horodatage_creation)
+-- module
+INSERT INTO public.t_module(nom, actif, horodatage, horodatage_creation)
 	VALUES ('Collaborer en toute simplicité', true, now(), now()),
 	('Piloter un projet', true, now(), now()),
 	('Organiser la réunion parfaite', true, now(), now()),
@@ -76,16 +113,19 @@ INSERT INTO public.j_role_page (id_role, id_page) VALUES (1, 1), (1, 2), (1, 4),
 	UNION ALL
 	SELECT DISTINCT 'NIVEAU', id_niveau, 'fr', nom, NULL::text FROM public.t_niveau
 	UNION ALL
-	SELECT DISTINCT 'THEMATIQUE', id_thematique, 'fr', nom, NULL::text FROM public.t_thematique
+	SELECT DISTINCT 'MODULE', id_module, 'fr', nom, NULL::text FROM public.t_module
 	UNION ALL
 	SELECT DISTINCT 'PAGE', id_page, 'fr', nom, NULL::text FROM public.t_page;
 	
-	
 
+-- type assets communication
+  INSERT INTO public.t_type_asset_communication (nom, actif, horodatage, horodatage_creation) VALUES 	
+    ('Emailing', true, now(), now()),
+    ('RS', true, now(), now());
 
 
 
 -- user temp dev
-	INSERT INTO public.t_user(id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_response_ok, nb_response_consecutive_top, nb_response_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
-	VALUES (1, 1, 'Catherine Kefhi', 4, 100, 255, 15, 12, 5, 5, 5, true, now(), now(), now());
+	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
+	VALUES (1, 1, 1, 'Catherine Kefhi', 4, 100, 255, 15, 12, 5, 5, 5, true, now(), now(), now());
 
