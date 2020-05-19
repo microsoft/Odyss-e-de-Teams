@@ -1,10 +1,17 @@
 {
-  "welcome_text": "Bienvenue dans",
   "landing" : {
-    "welcome_text": "Bienvenue dans",
-    "title": "L'Odyssée de Teams",
-    "subtitle": "Un voyage à travers les usages",
-    "body": "Partez à la conquête du travail en équipe avec Microsoft Teams",
-    "buttonText": "Partir en exploration maintenant"
+    "welcome": {
+      "text": "Bienvenue dans",
+      "body": "Partez à la conquête du travail en équipe \n avec Microsoft Teams",
+      "buttonText": "Partir en exploration maintenant"
+    },
+    "description": {
+      "medals": "25 médailles à collectionner pour exhiber votre talent d'explorateur de la collaboration !",
+      "questions": "<1>200 questions </1> pour vous propulser sur Microsoft Teams",
+      "reward": "Une <1> récompense d'honneur </1> pour le meilleur explorateur",
+      "gifs": "Des cadeaux et goodies pour les meilleurs explorateurs",
+      "buttonText": "Configuration de mon vaisseau"
+    }
+    
   }
 }
