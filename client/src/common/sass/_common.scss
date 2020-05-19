@@ -51,4 +51,14 @@ body {
     .color-pink {
         color: $color-pink;
     }
+
+    .btn {
+        padding: .75rem 1.75rem;
+        border-radius: .75rem;
+        font-weight: bold;
+    }
+    .btn.btn-primary {
+        background-color: $color-primary;
+        border-color: $color-primary;
+    }
 }

@@ -12,6 +12,8 @@ export interface IUser {
     nb_response_ok?: number;
     nb_xp?: number;
     niveau: number;
+    nom_avatar: string;
+    image_avatar: string;
 }
 
 export interface IUserState {
