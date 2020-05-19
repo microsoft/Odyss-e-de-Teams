@@ -1,7 +1,33 @@
+@import "common/sass/typography";
+@import "common/sass/variables";
+
 .Welcome {
-  &__heading {
-    font-size: bold;
+  color: $color-white1;
+  position: absolute;
+  transform: translateY(70%);
+
+
+  &>span {
+    display: block;
   }
 
-  &__title {}
+  &__heading {
+    @include typo-heading;
+  }
+
+  &__logo {
+    line-height: 1em;
+    margin-top: 2em;
+  }
+
+  &__body {
+    @include typo-body;
+    margin-top: 2em;
+    line-height: 1em;
+    white-space: pre-line;
+  }
+
+  &__button {
+    margin-top: 2em;
+  }
 }

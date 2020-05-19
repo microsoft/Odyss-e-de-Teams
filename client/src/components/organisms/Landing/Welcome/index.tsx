@@ -9,13 +9,13 @@ const Welcome = (props) => {
   const { t } = props;
 
   return (
-    <div className="Landing__container__body">
-    <h1>{t('landing.welcome_text')}</h1>
-    <h1>{t('landing.title')}</h1>
-    <h1>{t('landing.subtitle')}</h1>
-    <h1>{t('landing.body')}</h1>
-    <h1>{t('landing.body')}</h1>
-    <Button text={t('landing.buttonText')}  className="Button_white" onClickAction={props.onClickNext}/>
+    <div className="Welcome col-12">
+      <span className="Welcome__heading">{t('landing.welcome_text')}</span>
+      <div className="Welcome__logo">
+        <img src="/images/logo/logo_gauche_blanc.png" alt="logo" />
+      </div>
+      <span className="Welcome__body">{t('landing.body')}</span>
+      <Button text={t('landing.buttonText')}  className="Welcome__button Button__white col-3" onClickAction={props.onClickNext}/>
   </div>
   )
 }
