@@ -1,0 +1,34 @@
+@import "common/sass/typography";
+@import "common/sass/variables";
+
+.CGU {
+  background: url("/images/overlays/overlay-blue.jpg");
+  background-size: cover;
+
+  margin: 10em;
+  padding: 4em;
+
+  &__title {
+    @include typo-subtitle;
+    color: $color-white1;
+    line-height: normal;
+    margin-bottom: 1em;
+    font-size: 1.8em;
+  }
+
+  &__body {
+    @include typo-body;
+    height: 10em;
+    font-size: 1em;
+    overflow-y: scroll;
+    color: $color-white1;
+    margin-bottom: 1em;
+  }
+
+  &__form {
+    color: $color-white1;
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
