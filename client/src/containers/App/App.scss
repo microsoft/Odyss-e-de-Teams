@@ -13,10 +13,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $color-black1;
-  background: url('/images/fond_principal.jpg') no-repeat top left;
+  background: url("/images/fond_principal.jpg") no-repeat top left;
   background-size: cover;
   .main-container.gradient {
     background: rgb(244, 244, 255);
     background: linear-gradient(180deg, rgba(244, 244, 255, 1) 0%, rgba(218, 216, 240, 1) 100%);
+  }
+  .main-container {
+    .main-encart {
+      background: #fff;
+      border-radius: 1rem;
+      -webkit-box-shadow: 0px 0px 25px -5px rgba(123, 131, 235, 0.4);
+      -moz-box-shadow: 0px 0px 25px -5px rgba(123, 131, 235, 0.4);
+      box-shadow: 0px 0px 25px -5px rgba(123, 131, 235, 0.4);
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
   }
 }
