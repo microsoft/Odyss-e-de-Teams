@@ -12,10 +12,16 @@
 				"plugin": "blipp"
 			},
 			{
-				"plugin": "./question/index.js"
+				"plugin": "./avatar/index.js"
+			},
+			{
+				"plugin": "./classement/index.js"
 			},
 			{
 				"plugin": "./menu/index.js"
+			},
+			{
+				"plugin": "./question/index.js"
 			},
 			{
 				"plugin": "./user/index.js"
