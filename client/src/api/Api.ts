@@ -16,10 +16,17 @@ export function getUser(lang: string, mode: string): Promise<any> {
         .then((response) => response.json())
         .catch((error) => console.error(error))
 }
+
+export function getMedaille(lang: string): Promise<any> {
+    const url = process.env.REACT_APP_API_URL + '/user/medailles?api_key=' + API_TOKEN + '&language=' + lang
+    return fetch(url)
+        .then((response) => response.json())
+        .catch((error) => console.error(error))
+}
 /*** user ***/
 
 /* 
-exemple PPOST
+exemple POST
 export function generatePowerPoint(casUsageIds: number[]): Promise<any> {
     const url = process.env.REACT_APP_API_URL + '/generate-powerpoint?api_key=' + API_TOKEN + '&language=fr'
     return fetch(url, {
