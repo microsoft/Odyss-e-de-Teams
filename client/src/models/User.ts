@@ -35,3 +35,7 @@ export interface IProfilState {
     selectedMedailleAvatar?: IMedaille;
     hasUpdatedMedailleAvatar?: boolean;
 }
+
+export interface IUserAvatarProps {
+    user: IUser;
+}

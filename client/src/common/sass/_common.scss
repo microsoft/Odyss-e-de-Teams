@@ -75,4 +75,13 @@ body {
     .pointer {
         cursor: pointer;
     }
+
+    .p-sep {
+        width: 60%;
+        margin: 1.5rem auto;
+        padding: 0;
+        height: 1px;
+        background-color: $color-primary-light;
+        opacity: .4;
+    }
 }
