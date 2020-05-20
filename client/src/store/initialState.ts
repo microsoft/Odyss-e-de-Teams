@@ -8,10 +8,6 @@ export const initialState: IStore = {
   user: {
     currentUser: null,
   },
-  avatars: {
-    isLoading: false,
-    listAvatars: [],
-  },
 };
 
 export default initialState;
