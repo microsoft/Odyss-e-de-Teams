@@ -1,0 +1,53 @@
+@import "../../common/sass/variables";
+
+.main-classement {
+    .table {
+        thead {
+            th {
+                background: $color-primary-light;
+                color: #fff;
+                border: none;
+                padding: 1rem;
+            }
+            th:first-child {
+                border-radius: 1rem 0 0 0;
+            }
+            th:last-child {
+                border-radius: 0 1rem 0 0;
+            }
+        }
+        tfoot {
+            td {
+                background: $color-yellow;
+                color: #fff;
+                border: none;
+                font-weight: bold;
+            }
+        }
+        tbody {
+            .avatar {
+                width: 2.25rem;
+            }
+            tr.rang1,
+            tr.rang2,
+            tr.rang3 {
+                font-weight: bold;
+            }
+            tr.rang1 {
+                td {
+                    color: $color-yellow;
+                }
+            }
+            tr.rang2 {
+                td {
+                    color: #818181;
+                }
+            }
+            tr.rang3 {
+                td {
+                    color: #a85150;
+                }
+            }
+        }
+    }
+}

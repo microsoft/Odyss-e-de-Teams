@@ -1,4 +1,11 @@
 body {
+    .flex-1 {
+        flex: 1;
+    }
+    .flex-grow-3 {
+        flex-grow: 3;
+    }
+    
     .h1,
     h1 {
         font-size: 1.75rem;
@@ -53,12 +60,32 @@ body {
     }
 
     .btn {
-        padding: .75rem 1.75rem;
+        padding: .75rem 1.5rem;
         border-radius: .75rem;
         font-weight: bold;
+        .btn-ico {
+            max-height: 1.5rem;
+            margin-right: .25rem;
+        }
     }
     .btn.btn-primary {
         background-color: $color-primary;
         border-color: $color-primary;
+    }
+    .btn.btn-secondary {
+        background-color: $color-black2;
+        border-color: $color-black2;
+    }
+    .pointer {
+        cursor: pointer;
+    }
+
+    .p-sep {
+        width: 60%;
+        margin: 1.5rem auto;
+        padding: 0;
+        height: 1px;
+        background-color: $color-primary-light;
+        opacity: .4;
     }
 }
