@@ -4,10 +4,10 @@
 .Welcome {
   color: $color-white1;
   position: absolute;
-  top: 30%;
+  top: 25%;
+  left: 5%;
 
-
-  &>span {
+  & > span {
     display: block;
   }
 
