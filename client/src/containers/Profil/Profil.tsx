@@ -6,6 +6,7 @@ import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import { getMedaille, getClassement, setMedailleAvatar, getUser } from "../../api/Api";
 
 import Medaille from "../../components/Medaille/Medaille";
+import UserAvatar from "../../components/UserAvatar/UserAvatar";
 
 import { IProfilProps, IProfilState } from "../../models/User";
 import { IMedaille } from "../../models/Medaille";
@@ -175,7 +176,9 @@ class Profil extends Component<IProfilProps, IProfilState> {
                     centered>
                     <Modal.Body>
                         <h2 className={"color-primary-light"}>Personnalise ton avatar</h2>
-                        <p>Profil component</p>
+                        <div className={"container-avatar-user"}>
+                            <UserAvatar user={this.props.currentUser} />
+                        </div>
                         <p className={"text-center"}>Clique sur la médaille que tu souhaites mettre à la place de ton avatar.</p>
                         {
                             this.state.listMedaille?.map((item: IMedaille) => {
