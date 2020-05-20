@@ -40,8 +40,8 @@ export function setMedailleAvatar(id: number): Promise<any> {
 /*** user ***/
 
 /*** classement ***/
-export function getClassement(lang: string, mode: string, user: number = 0): Promise<any> {
-    const url = process.env.REACT_APP_API_URL + '/classement?api_key=' + API_TOKEN + '&language=' + lang + '&mode=' + mode + (user > 0 ? '&user=1' : '')
+export function getClassement(lang: string, mode: string, monde: number = 0, user: number = 0): Promise<any> {
+    const url = process.env.REACT_APP_API_URL + '/classement?api_key=' + API_TOKEN + '&language=' + lang + '&mode=' + mode + (monde > 0 ? '&monde=1' : '') + (user > 0 ? '&user=1' : '')
     return fetch(url)
         .then((response) => response.json())
         .catch((error) => console.error(error))

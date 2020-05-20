@@ -13,6 +13,7 @@ export interface IUser {
     nb_reponse_consecutive_top?: number;
     nb_reponse_ok?: number;
     nb_xp?: number;
+    nb_medaille?: number;
     niveau: number;
     nom_avatar: string;
     image_avatar: string;

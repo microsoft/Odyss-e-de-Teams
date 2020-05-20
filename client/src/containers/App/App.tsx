@@ -8,6 +8,7 @@ import './App.scss';
 import Menu from '../Menu/Menu';
 import Cockpit from '../Cockpit/Cockpit';
 import Profil from '../Profil/Profil';
+import Classement from '../Classement/Classement';
 import Header from '../../components/Header/Header';
 
 import { getUser } from '../../api/Api';
@@ -45,7 +46,7 @@ class App extends React.Component<IAppProps, {}> {
                             <p>Jouer container</p>
                         </Route>
                         <Route exact path="/Classement">
-                            <p>Classement container</p>
+                            <Classement />
                         </Route>
                         <Route exact path="/Profil">
                             <Profil />
