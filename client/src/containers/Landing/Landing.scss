@@ -1,16 +1,13 @@
 .Landing {
   width: 100%;
-  background: url('/images/backgrounds/landing-background0.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
 
-  &__container {
+  &__withbackground {
     width: 100%;
-    background: url('/images/backgrounds/landing-background1.svg');
+    background: url("/images/backgrounds/landing-background1.svg");
     background-repeat: no-repeat;
     background-size: cover;
 
-    &__body{
+    &__body {
       position: absolute;
       transform: translateY(60%);
     }
