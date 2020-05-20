@@ -11,7 +11,10 @@ import Avatars from "components/organisms/Landing/Avatars";
 
 import { getAvatars } from "../../api/Api";
 
-class LandingComponent extends Component<any, any> {
+import { ILandingState, ILandingProps } from "./../../models/Landing";
+import { IAvatar } from "./../../models/Avatar";
+
+class LandingComponent extends Component<ILandingProps, ILandingState> {
   state = {
     curStep: 1,
     avatars: [],
@@ -22,7 +25,7 @@ class LandingComponent extends Component<any, any> {
   componentDidMount() {
     getAvatars().then((data) => {
       // add a selected property
-      data.results.forEach((avatar) => {
+      data.results.forEach((avatar: IAvatar) => {
         avatar.selected = false;
       });
 
@@ -31,12 +34,29 @@ class LandingComponent extends Component<any, any> {
         avatars: data.results,
       });
     });
+
+    // don't display the second background
+    document.getElementById("landing_step2").style.display = "none";
   }
 
   changeStep = () => {
-    this.setState((state, props) => ({
-      curStep: ++state.curStep,
-    }));
+    let step = this.state.curStep;
+    this.setState(
+      (state, props) => ({
+        curStep: ++step,
+      }),
+      () => {
+        // hide first div and show the second background
+        if (this.state.curStep > 1) {
+          document.getElementById("landing_step1").style.display = "none";
+          document.getElementById("landing_step2").style.display = "block";
+        }
+
+        if (this.state.curStep > 2) {
+          document.getElementById("landing_step2").style.display = "none";
+        }
+      }
+    );
   };
 
   selectAvatar = (avatarId: number) => {
@@ -45,23 +65,33 @@ class LandingComponent extends Component<any, any> {
       e.selected = e.id_avatar === avatarId ? true : false;
     });
 
-    this.setState(
-      {
-        selectedAvatarId: avatarId,
-        avatars: avatars,
-      },
-      () => console.log(this.state, avatarId)
-    );
+    this.setState({
+      selectedAvatarId: avatarId,
+      avatars: avatars,
+    });
+  };
+
+  onCompleteProfile = () => {
+    this.props.onCompleteLanding({
+      avatarSelected: this.state.selectedAvatarId,
+    });
   };
 
   render() {
     return (
       <div className="Landing">
-        <div className="Landing__withbackground">
+        <div
+          className="Landing__withbackground Landing__background-0"
+          id="landing_step1"
+        >
           {this.state.curStep === 1 && (
             <Welcome onClickNext={this.changeStep} />
           )}
-
+        </div>
+        <div
+          className="Landing__withbackground Landing__background-1"
+          id="landing_step2"
+        >
           {this.state.curStep === 2 && (
             <Description onClickNext={this.changeStep} />
           )}
@@ -70,7 +100,7 @@ class LandingComponent extends Component<any, any> {
 
         {this.state.curStep === 4 && (
           <Avatars
-            onClickNext={this.changeStep}
+            onClickNext={this.onCompleteProfile}
             avatars={this.state.avatars}
             onSelectAvatar={this.selectAvatar}
           />
@@ -80,10 +110,10 @@ class LandingComponent extends Component<any, any> {
   }
 }
 
-export default function Landing() {
+export default function Landing(props: ILandingProps) {
   return (
     <Suspense fallback={<Loader />}>
-      <LandingComponent />
+      <LandingComponent onCompleteLanding={props.onCompleteLanding} />
     </Suspense>
   );
 }

@@ -14,9 +14,13 @@ import Landing from "../Landing/index";
 import { getUser } from "../../api/Api";
 
 import IStore from "../../store/IStore";
-import { IAppProps } from "../../models/App";
+import { IAppProps, IAppState } from "../../models/App";
 
-class App extends React.Component<IAppProps, {}> {
+class App extends React.Component<IAppProps, IAppState> {
+  state = {
+    logged: false,
+  };
+
   componentDidMount() {
     this._loadCurrentUser();
   }
@@ -28,11 +32,20 @@ class App extends React.Component<IAppProps, {}> {
     });
   };
 
+  onCompleteLanding = () => {
+    //to change later
+    console.log("here ok");
+    this.setState({
+      logged: true,
+    });
+  };
+
   render() {
     // let hasGradient = this.props.location.pathname === "/Jouer" ? false : true;
 
     let hasGradient = false;
-    const logged = false; // to remove later
+
+    const { logged } = this.state;
     return (
       <Container
         fluid
@@ -40,7 +53,7 @@ class App extends React.Component<IAppProps, {}> {
           hasGradient ? "gradient" : ""
         } main-container h-100 d-flex p-0`}
       >
-        {!logged && <Landing />}
+        {!logged && <Landing onCompleteLanding={this.onCompleteLanding} />}
         {logged && (
           <>
             <Menu currentRouterLink={this.props.location.pathname} />
@@ -73,7 +86,7 @@ class App extends React.Component<IAppProps, {}> {
                   <p>Outillage container</p>
                 </Route>
                 <Route exact path="/Landing">
-                  <Landing />
+                  <Landing onCompleteLanding={this.onCompleteLanding} />
                 </Route>
               </Switch>
             </div>
