@@ -31,9 +31,9 @@ class App extends React.Component<IAppProps, {}> {
     render() {
         let hasGradient = this.props.location.pathname === '/Jouer' ? false : true;
         return (
-            <Container fluid className={`${hasGradient ? 'gradient' : ''} main-container h-100 d-flex p-0`}>
+            <Container fluid className={`${hasGradient ? 'gradient' : ''} main-container d-flex p-0`}>
                 <Menu currentRouterLink={this.props.location.pathname} />
-                <div className={"main-content w-100 py-4 px-5"}>
+                <div className={"main-content w-100 py-4 px-3 px-md-5"}>
                     <div className={"mb-3"}>
                         <Header hasGradient={hasGradient}  />
                     </div>

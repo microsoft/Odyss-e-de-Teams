@@ -1,4 +1,11 @@
 body {
+    .flex-1 {
+        flex: 1;
+    }
+    .flex-grow-3 {
+        flex-grow: 3;
+    }
+    
     .h1,
     h1 {
         font-size: 1.75rem;
@@ -60,5 +67,12 @@ body {
     .btn.btn-primary {
         background-color: $color-primary;
         border-color: $color-primary;
+    }
+    .btn.btn-secondary {
+        background-color: $color-black2;
+        border-color: $color-black2;
+    }
+    .pointer {
+        cursor: pointer;
     }
 }
