@@ -30,8 +30,8 @@ class Profil extends Component<IProfilProps, IProfilState> {
     private _loadDataProfil = () => {
         forkJoin([
             getMedaille('fr'),
-            getClassement('fr', 'xp', 1),
-            getClassement('fr', 'point', 1)
+            getClassement('fr', 'xp', 0, 1),
+            getClassement('fr', 'point', 0, 1)
         ]).toPromise().then(data => {
             let listMedaille = data[0].results ? data[0].results : [];
             this.setState({
