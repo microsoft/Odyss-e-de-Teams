@@ -51,7 +51,7 @@ const register = async (server, options) => {
 
             return db.sequelize.query(`
                 WITH w0 AS (
-                    SELECT DISTINCT a.id_medaille, TRIM(a.image) AS image, a.legendaire, TRIM(b.nom) AS nom 
+                    SELECT DISTINCT a.id_medaille, TRIM(a.image) AS image, a.legendaire, TRIM(b.nom) AS nom, TRIM(b.description) AS description 
                     FROM public.t_medaille a 
                         INNER JOIN public.t_libelle_i18n b ON a.id_medaille=b.id_table AND TRIM(b.code)='MEDAILLE' AND TRIM(b.lang)=:lang
                     WHERE a.actif
@@ -99,7 +99,7 @@ const register = async (server, options) => {
             if (!body) {
                 return { results: false };
             }
-            let replacements = { user: id_user, medaille: (body.id_medaille > 0 ? body.id_medaille : NULL) };
+            let replacements = { user: id_user, medaille: (body.id > 0 ? body.id : null) };
 
             return db.sequelize.query(`UPDATE public.t_user SET id_medaille_avatar=:medaille WHERE id_user=:user;`, {
                 replacements: replacements, type: QueryTypes.UPDATE

@@ -34,7 +34,7 @@ class Menu extends Component<IMenuProps, IMenuState> {
     render() {
         const { currentRouterLink, currentUser } = this.props;
         return (
-            <div className={"menu py-4 d-flex flex-column justify-content-between"}>
+            <div className={"d-none d-md-flex menu py-4 flex-column justify-content-between"}>
                 <p>Profil component - {currentUser?.nom} </p>
                 <ListGroup defaultActiveKey={'/#' + currentRouterLink}>
                     {

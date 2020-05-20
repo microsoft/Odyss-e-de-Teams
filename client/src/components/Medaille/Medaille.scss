@@ -1,0 +1,6 @@
+@import "../../common/sass/variables";
+
+.medaille.selected {
+    border: solid 2px $color-yellow;
+    border-radius: 3rem;
+}

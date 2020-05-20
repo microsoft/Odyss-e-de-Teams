@@ -23,15 +23,12 @@ export function getMedaille(lang: string): Promise<any> {
         .then((response) => response.json())
         .catch((error) => console.error(error))
 }
-/*** user ***/
 
-/* 
-exemple POST
-export function generatePowerPoint(casUsageIds: number[]): Promise<any> {
-    const url = process.env.REACT_APP_API_URL + '/generate-powerpoint?api_key=' + API_TOKEN + '&language=fr'
+export function setMedailleAvatar(id: number): Promise<any> {
+    const url = process.env.REACT_APP_API_URL + '/user/set-medaille-avatar?api_key=' + API_TOKEN
     return fetch(url, {
         method: 'post',
-        body: JSON.stringify({ casUsageIds: casUsageIds }),
+        body: JSON.stringify({ id: id }),
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -39,4 +36,14 @@ export function generatePowerPoint(casUsageIds: number[]): Promise<any> {
     })
         .then((response) => response.json())
         .catch((error) => console.error(error))
-} */
+} 
+/*** user ***/
+
+/*** classement ***/
+export function getClassement(lang: string, mode: string, user: number = 0): Promise<any> {
+    const url = process.env.REACT_APP_API_URL + '/classement?api_key=' + API_TOKEN + '&language=' + lang + '&mode=' + mode + (user > 0 ? '&user=1' : '')
+    return fetch(url)
+        .then((response) => response.json())
+        .catch((error) => console.error(error))
+}
+/*** user ***/
