@@ -1,0 +1,17 @@
+.container-avatar-user {
+    width: 30%;
+    margin: 0 auto;
+}
+
+.total_xp {
+    background: url("/images/icone/coin.png") no-repeat top left;
+    background-size: contain;
+    padding-left: 1.75rem;
+}
+
+@media (min-width: 576px) {
+    .modal-profil {
+        width: 60%;
+        max-width: 60% !important;
+    }
+}

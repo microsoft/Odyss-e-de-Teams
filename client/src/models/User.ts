@@ -1,3 +1,5 @@
+import { IMedaille } from "./Medaille";
+
 export interface IUser {
     id_user: number;
     nom: string;
@@ -11,6 +13,7 @@ export interface IUser {
     nb_reponse_consecutive_top?: number;
     nb_reponse_ok?: number;
     nb_xp?: number;
+    nb_medaille?: number;
     niveau: number;
     nom_avatar: string;
     image_avatar: string;
@@ -20,19 +23,20 @@ export interface IUserState {
     currentUser?: IUser;
 }
 
-export interface IMedaille {
-    id_medaille: number;
-    nom: string;
-    image: string;
-    legendaire: boolean;
-    unlock: boolean;
-}
-
 export interface IProfilProps {
     currentUser: IUser;
+    dispatch?: any;
 }
 
 export interface IProfilState {
     listMedaille: IMedaille[];
     showModalProfil?: boolean;
+    classementXP?: number;
+    classementPoint?: number;
+    selectedMedailleAvatar?: IMedaille;
+    hasUpdatedMedailleAvatar?: boolean;
+}
+
+export interface IUserAvatarProps {
+    user: IUser;
 }

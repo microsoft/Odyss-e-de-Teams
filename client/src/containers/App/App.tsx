@@ -7,9 +7,10 @@ import "./App.scss";
 
 import Menu from "../Menu/Menu";
 import Cockpit from "../Cockpit/Cockpit";
-// import Profil from '../Profil/Profil';
 import Header from "../../components/Header/Header";
 import Landing from "../Landing/index";
+import Profil from "../Profil/Profil";
+import Classement from "../Classement/Classement";
 
 import { getUser } from "../../api/Api";
 
@@ -69,12 +70,10 @@ class App extends React.Component<IAppProps, IAppState> {
                   <p>Jouer container</p>
                 </Route>
                 <Route exact path="/Classement">
-                  <p>Classement container</p>
+                  <Classement />
                 </Route>
                 <Route exact path="/Profil">
-                  <p>
-                    Profil container (change to profil componentn when fixed)
-                  </p>
+                  <Profil />
                 </Route>
                 <Route exact path="/Regles">
                   <p>Regles container</p>
