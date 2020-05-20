@@ -61,7 +61,7 @@ const Description = (props) => {
       </div>
       <Button
         text={t("landing.description.buttonText")}
-        className="Button__white col-3"
+        className="Button__white col-4"
         onClickAction={props.onClickNext}
       />
     </div>
