@@ -16,6 +16,16 @@
       "title": "Avant de pouvoir accéder à ton vaisseau et ses fonctionnalités, prend connaissance des conditions RGPD suivantes :",
       "acknowledge": "J'ai pris connaissance des conditions de jeu",
       "buttonText": "Accepter et continuer"
+    },
+    "Avatars": {
+      "title": "Bienvenue à toi, Explorateur.trice",
+      "subtitle": "Il te reste une étape à réaliser avant de t'embarquer dans cette grande exploration :",
+      "body": {
+        "title": "Choisis ton vaisseau de départ",
+        "description": "Le choix du vaisseau ne relève que de la personnalisation esthétique de l'avatar de départ. Chaque explorateur pourra modifier son avatar au cours de son voyage grâce aux médailles d'honneur collectées",
+        "selectAvatar": "Sélectionner"
+      },
+      "buttonText": "Configuration terminée"
     }
   }
 }
