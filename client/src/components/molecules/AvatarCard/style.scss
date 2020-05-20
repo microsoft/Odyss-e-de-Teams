@@ -1,0 +1,64 @@
+@import "common/sass/typography";
+@import "common/sass/variables";
+
+.AvatarCard {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-primary;
+  border-radius: 15px;
+  height: 20em;
+
+  &--selected {
+    background-color: $color-primary-light;
+  }
+
+  &:hover {
+    background-color: $color-primary-light;
+
+    .AvatarCard__container__image {
+      img {
+        transform: scale(1.3);
+      }
+    }
+
+    &__container {
+      &__image {
+        &img {
+          transform: scale(1.3);
+        }
+      }
+    }
+  }
+
+  &__title {
+    @include typo-bold;
+    color: $color-white1;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+  }
+
+  &__container {
+    height: 8em;
+    width: 8em;
+    background-color: $color-white1;
+    border-radius: 50%;
+
+    &__image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      &img {
+        max-width: 100%;
+        max-height: 100%;
+        transition: transform 0.2s;
+      }
+    }
+  }
+
+  &__description {
+    @include typo-body;
+    font-size: 1em;
+    color: $color-white1;
+  }
+}
