@@ -36,7 +36,7 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
     });
 
     // don't display the second background
-    document.getElementById("landing_step2").style.display = "none";
+    // document.getElementById("landing_step2").style.display = "none";
   }
 
   changeStep = () => {
@@ -49,11 +49,11 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
         // hide first div and show the second background
         if (this.state.curStep > 1) {
           document.getElementById("landing_step1").style.display = "none";
-          document.getElementById("landing_step2").style.display = "block";
+          // document.getElementById("landing_step2").style.display = "block";
         }
 
         if (this.state.curStep > 2) {
-          document.getElementById("landing_step2").style.display = "none";
+          // document.getElementById("landing_step2").style.display = "none";
         }
       }
     );
@@ -78,33 +78,19 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
   };
 
   render() {
+    const { isMobile } = this.props;
     return (
       <div className="Landing">
         <div
-          className="Landing__withbackground Landing__background-0"
+          className={`Landing__withbackground ${
+            isMobile ? "Landing__background-mobile-1" : "Landing__background-0"
+          }`}
           id="landing_step1"
         >
           {this.state.curStep === 1 && (
-            <Welcome onClickNext={this.changeStep} />
+            <Welcome onClickNext={this.changeStep} isMobile={isMobile} />
           )}
         </div>
-        <div
-          className="Landing__withbackground Landing__background-1"
-          id="landing_step2"
-        >
-          {this.state.curStep === 2 && (
-            <Description onClickNext={this.changeStep} />
-          )}
-        </div>
-        {this.state.curStep === 3 && <CGU onClickNext={this.changeStep} />}
-
-        {this.state.curStep === 4 && (
-          <Avatars
-            onClickNext={this.onCompleteProfile}
-            avatars={this.state.avatars}
-            onSelectAvatar={this.selectAvatar}
-          />
-        )}
       </div>
     );
   }
@@ -113,7 +99,28 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
 export default function Landing(props: ILandingProps) {
   return (
     <Suspense fallback={<Loader />}>
-      <LandingComponent onCompleteLanding={props.onCompleteLanding} />
+      <LandingComponent
+        onCompleteLanding={props.onCompleteLanding}
+        isMobile={props.isMobile}
+      />
     </Suspense>
   );
 }
+
+// <div
+//   className="Landing__withbackground Landing__background-1"
+//   id="landing_step2"
+// >
+//   {this.state.curStep === 2 && (
+//     <Description onClickNext={this.changeStep} />
+//   )}
+// </div>
+// {this.state.curStep === 3 && <CGU onClickNext={this.changeStep} />}
+
+// {this.state.curStep === 4 && (
+//   <Avatars
+//     onClickNext={this.onCompleteProfile}
+//     avatars={this.state.avatars}
+//     onSelectAvatar={this.selectAvatar}
+//   />
+// )}
