@@ -6,14 +6,14 @@ import Button from "components/atoms/Button/Button";
 import "./style.scss";
 
 const Description = (props) => {
-  const { t } = props;
+  const { t, isMobile } = props;
 
   return (
     <div className="Description">
       <div className="Description__logo">
         <img src="/images/logo/logo_gauche_blanc.png" alt="logo" />
       </div>
-      <div className="Description__body">
+      <div className="Description__body col-12">
         <div className="Description__body__elt">
           <div className="Description__body__elt__img">
             <img
@@ -59,11 +59,15 @@ const Description = (props) => {
           </div>
         </div>
       </div>
-      <Button
-        text={t("landing.description.buttonText")}
-        className="Button__white col-4"
-        onClickAction={props.onClickNext}
-      />
+      <div className="Description__button">
+        <Button
+          text={t("landing.description.buttonText")}
+          className={`Welcome__button ${
+            isMobile ? "Button__orange-gradiant" : "Button__white"
+          } col-sm-4 col-10`}
+          onClickAction={props.onClickNext}
+        />
+      </div>
     </div>
   );
 };
