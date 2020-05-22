@@ -1,5 +1,6 @@
 @import "common/sass/typography";
 @import "common/sass/variables";
+@import "common/sass/media-queries";
 
 .Description {
   color: $color-white1;
@@ -7,11 +8,31 @@
   top: 25%;
   left: 15%;
 
+  @include MQ(XS) {
+    left: 0%;
+    top: 15%;
+  }
+
   &__logo {
+    @include MQ(XS) {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        height: 3em;
+        object-fit: contain;
+      }
+    }
   }
 
   &__body {
     margin-top: 2em;
+
+    @include MQ(XS) {
+      margin-top: 4em;
+    }
 
     &__elt {
       display: inline-flex;
@@ -20,6 +41,15 @@
       height: 3em;
       margin-bottom: 1em;
       width: 100%;
+
+      @include MQ(XS) {
+        margin-bottom: 2em;
+
+        .Description__body__elt__text {
+          line-height: 1.3em;
+          font-size: 1em;
+        }
+      }
 
       & b {
         // translated texts
@@ -40,6 +70,15 @@
         @include typo-body;
         font-size: 1.3em;
       }
+    }
+  }
+
+  &__button {
+    @include MQ(XS) {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
