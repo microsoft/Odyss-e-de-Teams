@@ -3,7 +3,8 @@
     "welcome": {
       "text": "Bienvenue dans",
       "body": "Partez à la conquête du travail en équipe \n avec Microsoft Teams",
-      "buttonText": "Partir en exploration maintenant"
+      "buttonText": "Partir en exploration maintenant",
+      "body-mobile": "Le jeu concours interactif pour explorer la galexie des usages collaboratifs"
     },
     "description": {
       "medals": "25 <1>médailles</1> à collectionner pour exhiber votre talent d'explorateur de la collaboration !",
