@@ -58,14 +58,15 @@ CREATE TABLE public.t_user
   id_avatar integer,
   id_medaille_avatar integer,
   nom character(120),
-  niveau smallint,
-  nb_point integer,
-  nb_xp integer,
-  nb_reponse integer,
-  nb_reponse_ok integer,
-  nb_reponse_consecutive_top integer,
-  nb_reponse_consecutive_en_cours integer,
-  nb_questionnaire_complete integer,
+  oid_ad text,
+  niveau smallint DEFAULT 1,
+  nb_point integer DEFAULT 0,
+  nb_xp integer DEFAULT 0,
+  nb_reponse integer DEFAULT 0,
+  nb_reponse_ok integer DEFAULT 0,
+  nb_reponse_consecutive_top integer DEFAULT 0,
+  nb_reponse_consecutive_en_cours integer DEFAULT 0,
+  nb_questionnaire_complete integer DEFAULT 0,
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
@@ -107,6 +108,11 @@ CREATE INDEX idx_actif_t_user
   ON public.t_user
   USING btree
   (actif);
+
+CREATE INDEX idx_oid_ad_t_user
+  ON public.t_user
+  USING btree
+  (oid_ad);
 
  ----- avatar 
 CREATE SEQUENCE public.seq_t_avatar;
