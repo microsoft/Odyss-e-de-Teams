@@ -35,7 +35,6 @@ class App extends React.Component<IAppProps, IAppState> {
 
   onCompleteLanding = () => {
     //to change later
-    console.log("here ok");
     this.setState({
       logged: true,
     });
@@ -46,53 +45,57 @@ class App extends React.Component<IAppProps, IAppState> {
 
     let hasGradient = false;
 
+    const isMobile = window.innerWidth <= 768;
+
     const { logged } = this.state;
-    return (
+
+    const toRender = !logged ? (
+      <Landing onCompleteLanding={this.onCompleteLanding} isMobile={isMobile} />
+    ) : (
       <Container
         fluid
         className={`${
           hasGradient ? "gradient" : ""
         } main-container h-100 d-flex p-0`}
       >
-        {!logged && <Landing onCompleteLanding={this.onCompleteLanding} />}
-        {logged && (
-          <>
-            <Menu currentRouterLink={this.props.location.pathname} />
-            <div className={"main-content w-100 py-4 px-5"}>
-              <div className={"mb-3"}>
-                <Header hasGradient={hasGradient} />
-              </div>
-              <Switch>
-                <Route exact path="/Cockpit">
-                  <Cockpit />
-                </Route>
-                <Route exact path="/Jouer">
-                  <p>Jouer container</p>
-                </Route>
-                <Route exact path="/Classement">
-                  <Classement />
-                </Route>
-                <Route exact path="/Profil">
-                  <Profil />
-                </Route>
-                <Route exact path="/Regles">
-                  <p>Regles container</p>
-                </Route>
-                <Route exact path="/Planning">
-                  <p>Planning container</p>
-                </Route>
-                <Route exact path="/Outillage">
-                  <p>Outillage container</p>
-                </Route>
-                <Route exact path="/Landing">
-                  <Landing onCompleteLanding={this.onCompleteLanding} />
-                </Route>
-              </Switch>
-            </div>
-          </>
-        )}
+        <Menu currentRouterLink={this.props.location.pathname} />
+        <div className={"main-content w-100 py-4 px-5"}>
+          <div className={"mb-3"}>
+            <Header hasGradient={hasGradient} />
+          </div>
+          <Switch>
+            <Route exact path="/Cockpit">
+              <Cockpit />
+            </Route>
+            <Route exact path="/Jouer">
+              <p>Jouer container</p>
+            </Route>
+            <Route exact path="/Classement">
+              <Classement />
+            </Route>
+            <Route exact path="/Profil">
+              <Profil />
+            </Route>
+            <Route exact path="/Regles">
+              <p>Regles container</p>
+            </Route>
+            <Route exact path="/Planning">
+              <p>Planning container</p>
+            </Route>
+            <Route exact path="/Outillage">
+              <p>Outillage container</p>
+            </Route>
+            <Route exact path="/Landing">
+              <Landing
+                onCompleteLanding={this.onCompleteLanding}
+                isMobile={isMobile}
+              />
+            </Route>
+          </Switch>
+        </div>
       </Container>
     );
+    return toRender;
   }
 }
 

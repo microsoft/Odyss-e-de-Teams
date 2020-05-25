@@ -44,4 +44,35 @@ const AvatarCard = (props: IAvatarCard) => {
   );
 };
 
-export default AvatarCard;
+const AvatarCardMobile = (props: IAvatarCard) => {
+  const {
+    title,
+    image,
+    description,
+    className,
+    onClickAvatarAction,
+    id,
+    selected,
+  } = props;
+
+  return (
+    <div
+      className={`AvatarCard ${className} ${
+        selected ? "AvatarCard--selected" : ""
+      }`}
+      onClick={onClickAvatarAction.bind(this, id)}
+    >
+      <div className="AvatarCard__container">
+        <div className="AvatarCard__container__image">
+          <img src={image} alt={title} />
+        </div>
+      </div>
+      <div className="AvatarCard__body">
+        <div className="AvatarCard__body__title">{title}</div>
+        <div className="AvatarCard__body__description">{description}</div>
+      </div>
+    </div>
+  );
+};
+
+export { AvatarCard, AvatarCardMobile };

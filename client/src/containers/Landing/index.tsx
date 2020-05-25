@@ -36,6 +36,7 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
     });
 
     // don't display the second background
+    document.getElementById("landing_step1").style.display = "block";
     document.getElementById("landing_step2").style.display = "none";
   }
 
@@ -52,8 +53,8 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
           document.getElementById("landing_step2").style.display = "block";
         }
 
-        if (this.state.curStep > 2) {
-          document.getElementById("landing_step2").style.display = "none";
+        if (this.state.curStep > 2 && !this.props.isMobile) {
+          document.getElementById("landing_step2").style.display = "block";
         }
       }
     );
@@ -100,6 +101,15 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
           {this.state.curStep === 2 && (
             <Description onClickNext={this.changeStep} isMobile={isMobile} />
           )}
+          {this.state.curStep === 3 && <CGU onClickNext={this.changeStep} />}
+
+          {this.state.curStep === 4 && (
+            <Avatars
+              onClickNext={this.onCompleteProfile}
+              avatars={this.state.avatars}
+              onSelectAvatar={this.selectAvatar}
+            />
+          )}
         </div>
       </div>
     );
@@ -118,11 +128,3 @@ export default function Landing(props: ILandingProps) {
 }
 
 // {this.state.curStep === 3 && <CGU onClickNext={this.changeStep} />}
-
-// {this.state.curStep === 4 && (
-//   <Avatars
-//     onClickNext={this.onCompleteProfile}
-//     avatars={this.state.avatars}
-//     onSelectAvatar={this.selectAvatar}
-//   />
-// )}
