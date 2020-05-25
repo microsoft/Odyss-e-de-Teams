@@ -1,0 +1,35 @@
+@mixin main-font {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@mixin typo-heading {
+  @include main-font;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+@mixin typo-title {
+  @include main-font;
+  font-weight: lighter;
+  font-size: 4em;
+  line-height: 2em;
+}
+
+@mixin typo-subtitle {
+  @include main-font;
+  font-weight: lighter;
+  font-size: 3em;
+  line-height: 2em;
+}
+
+@mixin typo-body {
+  @include main-font;
+  font-weight: normal;
+  font-size: 2em;
+  line-height: 2em;
+}
+
+@mixin typo-bold {
+  @include main-font;
+  font-weight: bold;
+}
