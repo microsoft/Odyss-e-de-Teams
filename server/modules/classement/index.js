@@ -46,7 +46,7 @@ const register = async (server, options) => {
                         INNER JOIN public.t_libelle_i18n b ON a.id_medaille=b.id_table AND TRIM(b.code)='MEDAILLE' AND TRIM(b.lang)='fr'
                     WHERE a.actif
                 )
-                SELECT DISTINCT row_number() OVER (ORDER BY `+ order_query + ` DESC) AS rang, a.*, COALESCE(b.nb, 0) AS nb_medaille, CASE WHEN d.id_medaille IS NOT NULL THEN '/images/medaille/' || d.image ELSE '/images/avatar/' || c.image END AS image_avatar
+                SELECT DISTINCT row_number() OVER (ORDER BY `+ order_query + ` DESC)::int AS rang, a.*, COALESCE(b.nb, 0) AS nb_medaille, CASE WHEN d.id_medaille IS NOT NULL THEN '/images/medaille/' || d.image ELSE '/images/avatar/' || c.image END AS image_avatar
                 FROM w0 a
                     LEFT JOIN w_medaille b ON a.id_user=b.id_user
                     LEFT JOIN w_avatar c ON a.id_avatar=c.id_avatar

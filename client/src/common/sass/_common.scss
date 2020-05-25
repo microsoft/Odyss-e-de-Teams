@@ -1,3 +1,7 @@
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
 body {
     .flex-1 {
         flex: 1;
@@ -9,6 +13,10 @@ body {
     .h1,
     h1 {
         font-size: 1.75rem;
+        .ico-titre {
+            max-height: 2rem;
+            margin-right: .25rem;
+        }
     }
     .h2,
     h2 {
@@ -60,7 +68,7 @@ body {
     }
 
     .btn {
-        padding: .75rem 1.5rem;
+        padding: .25rem .5rem;
         border-radius: .75rem;
         font-weight: bold;
         .btn-ico {
@@ -87,5 +95,13 @@ body {
         height: 1px;
         background-color: $color-primary-light;
         opacity: .4;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    body {
+        .btn {
+            padding: .75rem 1.5rem;
+        }
     }
 }

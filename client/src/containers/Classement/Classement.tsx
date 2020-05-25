@@ -65,13 +65,37 @@ class Classement extends Component<{}, IClassementState> {
                 return item?.nb_point;
         }
     }
+
+    private _renderPodiumElement(user) {
+        return (
+            <div className={`podium-user top${user.rang} text-center`}>
+                <p className={"avatar mb-0 pb-0"}>
+                    <img src={process.env.PUBLIC_URL + user.image_avatar} alt="Avatar" />
+                </p>
+                <p className={"pb-0 mb-0"}>
+                    {user.rang}.<strong>{user.nom}</strong>
+                </p>
+                <p className={"pb-0 mb-0"}>
+                    {this._renderPoint(user)} points
+                </p>
+            </div>
+        )
+    }
+
     render() {
+        const userTop1 = this.state.listUser?.filter(u => u.rang === 1).length > 0 ? this.state.listUser?.filter(u => u.rang === 1)[0] : null;
+        const userTop2 = this.state.listUser?.filter(u => u.rang === 2).length > 0 ? this.state.listUser?.filter(u => u.rang === 2)[0] : null;
+        const userTop3 = this.state.listUser?.filter(u => u.rang === 3).length > 0 ? this.state.listUser?.filter(u => u.rang === 3)[0] : null;
         return (
             <div>
-                <h1 className={"color-primary"}>Classements du programme en cours</h1>
-                <div className={"main-encart main-classement"}>
-                    <h2 className={"color-primary-light mb-4"}>Programme du</h2>
-                    <div className={"d-none d-md-block mb-3"}>   {/* btn vu dekstop */}
+                <h1 className={"color-primary d-none d-md-block"}>Classements du programme en cours</h1>
+                <h1 className={"color-white d-flex d-md-none justify-content-center"}>
+                    <img src={process.env.PUBLIC_URL + '/images/icone/cup.png'} alt="Ico Classement Général" className={"ico-titre"} />
+                    Classement de la saison
+                </h1>
+                <div className={"main-encart nobg-mobile main-classement"}>
+                    <h2 className={"color-primary-light mb-4 d-none d-md-block"}>Mission : « Lancement ! »</h2> {/* todo : get current programme / global state */}
+                    <div className={"d-none d-md-block mb-4"}>   {/* btn vu dekstop */}
                         <Button variant={this.state.currentView === 'point' ? 'primary' : 'secondary'} onClick={() => this._setCurrentView('point')} className={"mr-3"}>
                             <img src={process.env.PUBLIC_URL + '/images/icone/cup.png'} alt="Ico Classement Général" className={"btn-ico"} />
                             Classement général
@@ -85,79 +109,106 @@ class Classement extends Component<{}, IClassementState> {
                             Classement monde
                         </Button>
                     </div>
-                    <div className={"d-md-none mb-3"}>   {/* btn vu mobile */}
-                        <ButtonGroup aria-label="Filtre du classement" className={"mr-3"}>
+                    <div className={"d-md-none mb-4 text-center"}>   {/* btn vu mobile */}
+                        <ButtonGroup aria-label="Filtre du classement" className={"mr-2"}>
                             <Button variant={this.state.currentView === 'point' ? 'primary' : 'secondary'} onClick={() => this._setCurrentView('point')}>
-                                Classement général
+                                Classement<br />Jeu
                             </Button>
                             <Button variant={this.state.currentView === 'xp' ? 'primary' : 'secondary'} onClick={() => this._setCurrentView('xp')} className={"mr-3"}>
-                                Classement points EXP
-                            </Button>
-                            <Button variant={this.state.viewMonde ? 'primary' : 'secondary'} onClick={() => this._setViewMonde()}>
-                                monde
+                                Classement<br />EXP
                             </Button>
                         </ButtonGroup>
-                    </div>
-                    <Table responsive hover>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Explorateur.trice</th>
-                                <th>Points classement</th>
-                                <th>Bonnes réponses</th>
-                                <th>Mauvaises réponses</th>
-                                <th>Questionnaires complétés</th>
-                                <th>Niveau</th>
-                                <th>Médailles</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        <Button variant={this.state.viewMonde ? 'primary' : 'secondary'} onClick={() => this._setViewMonde()}>
+                            <img src={process.env.PUBLIC_URL + '/images/icone/monde.png'} alt="Ico Classement monde" className={"btn-ico d-block mx-auto"} />
+                            monde
+                        </Button>
+                        {/* podium mobile */}
+                        <div className={"position-relative d-flex podium"}>
                             {
-                                this.state.listUser?.map((item: IClassement) => {
-                                    return (
-                                        <tr key={item.id_user} className={`rang${item.rang}`}>
-                                            <td>{item.rang}</td>
-                                            <td>
-                                                <div className={"d-flex align-items-center"}>
-                                                    {
-                                                        item.image_avatar ? (
-                                                            <p className={"avatar"}>
-                                                                <img src={process.env.PUBLIC_URL + item.image_avatar} alt="Avatar" />
-                                                            </p>
-                                                        ) : <span className={"d-none"}></span>
-                                                    }
-                                                    <p className={"mb-0 pb-0"}>{item.nom}</p>
-                                                </div>
-
-                                            </td>
-                                            <td>{this._renderPoint(item)}</td>
-                                            <td>{item.nb_reponse_ok ? item.nb_reponse_ok : 0}</td>
-                                            <td>{this._calculMauvaiseReponse(item)}</td>
-                                            <td>{item.nb_questionnaire_complete}</td>
-                                            <td>{item.niveau}</td>
-                                            <td>{item.nb_medaille}</td>
-                                        </tr>
-                                    )
-                                })
+                                userTop2 ? (
+                                    this._renderPodiumElement(userTop2)
+                                ) : <div className={"podium-user top2"}></div>
                             }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>{this.state.classementCurrentUser?.rang}</td>
-                                <td>
-                                    {this.state.classementCurrentUser?.nom}
-                                </td>
-                                <td>{this._renderPoint(this.state.classementCurrentUser)}</td>
-                                <td>{this.state.classementCurrentUser?.nb_reponse_ok ? this.state.classementCurrentUser?.nb_reponse_ok : 0}</td>
-                                <td>{this._calculMauvaiseReponse(this.state.classementCurrentUser)}</td>
-                                <td>{this.state.classementCurrentUser?.nb_questionnaire_complete}</td>
-                                <td>{this.state.classementCurrentUser?.niveau}</td>
-                                <td>{this.state.classementCurrentUser?.nb_medaille}</td>
-                            </tr>
-                        </tfoot>
-                    </Table>
+                            {
+                                userTop1 ? (
+                                    this._renderPodiumElement(userTop1)
+                                ) : <div className={"podium-user top1"}></div>
+                            }
+                            {
+                                userTop3 ? (
+                                    this._renderPodiumElement(userTop3)
+                                ) : <div className={"podium-user top3"}></div>
+                            }
+                        </div>
                 </div>
+                <Table responsive hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Explorateur.trice</th>
+                            <th>Points classement</th>
+                            <th>Bonnes réponses</th>
+                            <th>Mauvaises réponses</th>
+                            <th>Questionnaires complétés</th>
+                            <th>Niveau</th>
+                            <th>Médailles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            this.state.listUser?.map((item: IClassement) => {
+                                return (
+                                    <tr key={item.id_user} className={`rang${item.rang}`}>
+                                        <td>{item.rang}</td>
+                                        <td>
+                                            <div className={"d-flex"}>
+                                                {
+                                                    item.image_avatar ? (
+                                                        <p className={"avatar mb-0 pb-0"}>
+                                                            <img src={process.env.PUBLIC_URL + item.image_avatar} alt="Avatar" />
+                                                        </p>
+                                                    ) : <span className={"d-none"}></span>
+                                                }
+                                                <p className={"mb-0 pb-0"}>{item.nom}</p>
+                                            </div>
+                                        </td>
+                                        <td>{this._renderPoint(item)}<span className={"d-md-none"}> points</span></td>
+                                        <td className={"no-mobile"}>{item.nb_reponse_ok ? item.nb_reponse_ok : 0}</td>
+                                        <td className={"no-mobile"}>{this._calculMauvaiseReponse(item)}</td>
+                                        <td className={"no-mobile"}>{item.nb_questionnaire_complete}</td>
+                                        <td className={"no-mobile"}>{item.niveau}</td>
+                                        <td className={"no-mobile"}>{item.nb_medaille}</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>{this.state.classementCurrentUser?.rang}</td>
+                            <td>
+                                <div className={"d-flex"}>
+                                    {
+                                        this.state.classementCurrentUser?.image_avatar ? (
+                                            <p className={"avatar mb-0 pb-0"}>
+                                                <img src={process.env.PUBLIC_URL + this.state.classementCurrentUser?.image_avatar} alt="Avatar" />
+                                            </p>
+                                        ) : <span className={"d-none"}></span>
+                                    }
+                                    <p className={"mb-0 pb-0"}>{this.state.classementCurrentUser?.nom}</p>
+                                </div>
+                            </td>
+                            <td>{this._renderPoint(this.state.classementCurrentUser)}</td>
+                            <td className={"no-mobile"}>{this.state.classementCurrentUser?.nb_reponse_ok ? this.state.classementCurrentUser?.nb_reponse_ok : 0}</td>
+                            <td className={"no-mobile"}>{this._calculMauvaiseReponse(this.state.classementCurrentUser)}</td>
+                            <td className={"no-mobile"}>{this.state.classementCurrentUser?.nb_questionnaire_complete}</td>
+                            <td className={"no-mobile"}>{this.state.classementCurrentUser?.niveau}</td>
+                            <td className={"no-mobile"}>{this.state.classementCurrentUser?.nb_medaille}</td>
+                        </tr>
+                    </tfoot>
+                </Table>
             </div>
+            </div >
         );
     }
 }

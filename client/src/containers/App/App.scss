@@ -95,3 +95,12 @@ body {
   }
   /*** fin tooltip ***/
 }
+
+@include media-breakpoint-down(md) {
+  body {
+    .nobg-mobile {
+      background: none !important;
+      box-shadow: none !important;
+    }
+  }
+}
