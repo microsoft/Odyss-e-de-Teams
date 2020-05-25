@@ -12,14 +12,14 @@ import Landing from "../Landing/index";
 import Profil from "../Profil/Profil";
 import Classement from "../Classement/Classement";
 
-import { getUser } from "../../api/Api";
+import User from "api/User";
 
 import IStore from "../../store/IStore";
 import { IAppProps, IAppState } from "../../models/App";
 
 class App extends React.Component<IAppProps, IAppState> {
   state = {
-    logged: false,
+    logged: true,
   };
 
   componentDidMount() {
@@ -27,7 +27,7 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   private _loadCurrentUser = () => {
-    getUser("fr", "current").then((data) => {
+    User.getUser("fr", "current").then((data) => {
       const action_liste = { type: "SET_CURRENT_USER", value: data };
       this.props.dispatch(action_liste);
     });
