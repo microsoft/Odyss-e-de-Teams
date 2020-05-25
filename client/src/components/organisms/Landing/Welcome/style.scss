@@ -1,0 +1,67 @@
+@import "common/sass/typography";
+@import "common/sass/variables";
+
+@import "common/sass/media-queries";
+
+.Welcome {
+  color: $color-white1;
+  position: absolute;
+  top: 25%;
+  left: 5%;
+
+  @include MQ(XS) {
+    left: 0%;
+    top: 16%;
+  }
+
+  & > span {
+    display: block;
+  }
+
+  &__heading {
+    @include MQ(XS) {
+      @include typo-body;
+      font-size: 1.7em;
+      font-weight: bold;
+    }
+    @include typo-heading;
+  }
+
+  &__logo {
+    line-height: 1em;
+    margin-top: 2em;
+
+    @include MQ(XS) {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        height: 3em;
+        object-fit: contain;
+      }
+    }
+  }
+
+  &__body {
+    @include typo-body;
+    margin-top: 2em;
+    line-height: 1em;
+    white-space: pre-line;
+
+    @include MQ(XS) {
+      font-size: 1.3em;
+      line-height: 1.3em;
+      font-weight: lighter;
+    }
+  }
+
+  &__button {
+    margin-top: 2em;
+
+    @include MQ(XS) {
+      margin-top: 5em;
+    }
+  }
+}

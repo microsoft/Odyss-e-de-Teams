@@ -1,12 +1,19 @@
 /****
 COLORS
 *****/
-$color-primary: #424BB0;
-$color-primary-light: #7B83EB;
-$color-white1: #FFF;
-$color-white2: #F1F0EF;
+$color-primary: #424bb0;
+$color-primary-light: #7b83eb;
+$color-white1: #fff;
+$color-white2: #f1f0ef;
 $color-black1: #010101;
 $color-black2: #414141;
-$color-yellow: #F1B446;
-$color-green: #5DB87C;
-$color-pink: #CC496F;
+$color-yellow: #f1b446;
+$color-green: #5db87c;
+$color-pink: #cc496f;
+
+/**** 
+Gradiants 
+****/
+@mixin orange-gradiant() {
+  background: linear-gradient(to right, #ffc623 -29%, #ff8322 176%);
+}
