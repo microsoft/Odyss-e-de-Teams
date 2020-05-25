@@ -21,6 +21,7 @@
     "Avatars": {
       "title": "Bienvenue à toi, Explorateur.trice",
       "subtitle": "Il te reste une étape à réaliser avant de t'embarquer dans cette grande exploration :",
+      "subtitle-mobile": "Avant de commencer, il te faut choisir ton vaisseau de départ",
       "body": {
         "title": "Choisis ton vaisseau de départ",
         "description": "Le choix du vaisseau ne relève que de la personnalisation esthétique de l'avatar de départ. Chaque explorateur pourra modifier son avatar au cours de son voyage grâce aux médailles d'honneur collectées",
