@@ -8,25 +8,6 @@ import { IClassementState, IClassement } from "../../models/Classement";
 
 import "./Classement.scss";
 
-function getClassement(
-  lang: string,
-  mode: string,
-  monde: number = 0,
-  user: number = 0
-): Promise<any> {
-  const url =
-    process.env.REACT_APP_API_URL +
-    "/classement?api_key=2" +
-    "&language=" +
-    lang +
-    "&mode=" +
-    mode +
-    (monde > 0 ? "&monde=1" : "") +
-    (user > 0 ? "&user=1" : "");
-  return fetch(url)
-    .then((response) => response.json())
-    .catch((error) => console.error(error));
-}
 class Classement extends Component<{}, IClassementState> {
   constructor(props: any) {
     super(props);
@@ -43,8 +24,12 @@ class Classement extends Component<{}, IClassementState> {
 
   private _loadDataClassement = () => {
     forkJoin([
-      getClassement("fr", this.state.currentView, this.state.viewMonde ? 1 : 0),
-      getClassement(
+      ClassementAPI.getClassement(
+        "fr",
+        this.state.currentView,
+        this.state.viewMonde ? 1 : 0
+      ),
+      ClassementAPI.getClassement(
         "fr",
         this.state.currentView,
         this.state.viewMonde ? 1 : 0,
