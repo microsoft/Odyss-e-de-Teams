@@ -1,0 +1,37 @@
+// Media Queries
+@mixin MQ($class) {
+  // Extra small devices (portrait phones, less than 576px)
+  // No media query since this is the default in Bootstrap
+  @if $class == XS {
+    // Medium devices (tablets, 768px and up)
+    @media (max-width: 575px) {
+      @content;
+    }
+  } @else if $class == SM {
+    @media (min-width: 576px) {
+      @content;
+    }
+  } @else if $class == MD {
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      @content;
+    }
+  } @else if $class == LG {
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      @content;
+    }
+  } @else if $class == XL {
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      @content;
+    }
+  } @else if $class == retina {
+    @media (-webkit-min-device-pixel-ratio: 2),
+      (-moz-min-device-pixel-ratio: 2) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint mixin supports: XS, SM, MD, LG, XL";
+  }
+}

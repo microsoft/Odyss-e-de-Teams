@@ -1,12 +1,12 @@
 import { IUser } from "./User";
 
 export interface IClassement extends IUser {
-    rang: number;
+  rang: number;
 }
 
 export interface IClassementState {
-    currentView: string;
-    viewMonde: boolean;
-    listUser?: IClassement[];
-    classementCurrentUser?: IClassement;
+  currentView: string;
+  viewMonde: boolean;
+  listUser?: IClassement[];
+  classementCurrentUser?: IClassement;
 }
