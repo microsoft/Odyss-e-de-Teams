@@ -58,7 +58,7 @@ body {
   .tooltip {
     .tooltip-inner {
       background: $color-primary-light;
-      padding: .75rem;
+      padding: 0.75rem;
       text-align: left;
       max-width: 500px;
     }
@@ -87,4 +87,13 @@ body {
     }
   }
   /*** fin tooltip ***/
+}
+
+@include media-breakpoint-down(md) {
+  body {
+    .nobg-mobile {
+      background: none !important;
+      box-shadow: none !important;
+    }
+  }
 }
