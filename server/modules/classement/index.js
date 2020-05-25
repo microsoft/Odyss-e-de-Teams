@@ -8,9 +8,16 @@ const register = async (server, options) => {
         path: baseUrl,
         method: 'GET',
         handler: async function (request, h) {
-            const id_organisation = 1;
-            const id_user = 1;
+            if (!request.state.oid_ad) return false;
             const db = request.getDb('odyssee_teams');
+            const User = db.getModel('User');
+            const currentUserByAD = await User.findOne({
+                where: {
+                    oid_ad: request.state.oid_ad
+                }
+            });
+            const id_organisation = currentUserByAD.id_organisation;
+            const id_user = currentUserByAD.id_user;
             const params = request.query;
             let replacements = {}, order_query = '', oneResult = false;
             switch (params.mode) {
