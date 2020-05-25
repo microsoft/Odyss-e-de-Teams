@@ -29,7 +29,7 @@
     background: url("/images/backgrounds/mobile/landing-background0.svg");
     background-repeat: no-repeat;
     background-size: cover;
-    position: fixed;
+    background-attachment: fixed;
     background-position: center center;
   }
 
@@ -37,7 +37,7 @@
     background: url("/images/backgrounds/mobile/landing-background1.svg");
     background-repeat: no-repeat;
     background-size: cover;
-    position: fixed;
+    background-attachment: fixed;
     background-position: center center;
   }
 }

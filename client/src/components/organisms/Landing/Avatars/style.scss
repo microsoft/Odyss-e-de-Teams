@@ -1,23 +1,58 @@
 @import "common/sass/typography";
 @import "common/sass/variables";
+@import "common/sass/media-queries";
 
 .Avatars {
-  background: url("/images/overlays/overlay-blue.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+  @include MQ(LG) {
+    background: url("/images/overlays/overlay-blue.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  @include MQ(XL) {
+    background: url("/images/overlays/overlay-blue.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 
   margin: 3em;
   padding: 2em;
 
+  @include MQ(XS) {
+    margin: 0;
+  }
+
+  &__logo {
+    @include MQ(XS) {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      padding-top: 4em;
+
+      img {
+        height: 3em;
+        object-fit: contain;
+      }
+    }
+  }
+
   &__title {
     @include typo-heading;
     color: $color-white1;
+
+    @include MQ(XS) {
+      margin-top: 2em;
+    }
   }
 
   &__subtitle {
     @include typo-title;
     color: $color-white1;
     font-size: 1.2em;
+
+    @include MQ(XS) {
+      margin-top: 1em;
+    }
   }
 
   &__body {
@@ -40,6 +75,16 @@
       width: 100%;
       align-items: center;
       margin: 0.5em;
+
+      @include MQ(XS) {
+        flex-direction: column;
+
+        &__item {
+          display: inline-flex;
+          flex-direction: row;
+          width: 100%;
+        }
+      }
     }
   }
 
