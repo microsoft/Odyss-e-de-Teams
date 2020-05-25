@@ -11,6 +11,7 @@ import Cockpit from '../Cockpit/Cockpit';
 import Profil from '../Profil/Profil';
 import Classement from '../Classement/Classement';
 import Header from '../../components/Header/Header';
+import Landing from "../Landing/index";
 
 import { getUser } from '../../api/Api';
 import AuthService from "../../api/sso/auth.service";
@@ -23,6 +24,7 @@ class App extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
         this.state = {
+            logged: true,
             loading: true,
             //  inTeams: !!params.get("inTeams") || !!params.get("inTeamsSSO"),
         };
@@ -71,6 +73,13 @@ class App extends React.Component<IAppProps, IAppState> {
             });
     };
 
+    onCompleteLanding = () => {
+        //to change later
+        this.setState({
+            logged: true,
+        });
+    };
+
     private _loadCurrentUser = () => {
         if (this.state.userAD) {
             Cookies.set('oid_ad', this.state.userAD.idToken.oid, { expires: 7, path: '/' });
@@ -84,39 +93,51 @@ class App extends React.Component<IAppProps, IAppState> {
     render() {
         if (!AuthService.isCallback()) {
             let hasGradient = this.props.location.pathname === '/Jouer' ? false : true;
+            const isMobile = window.innerWidth <= 768;
+
             return (
                 this.state.userAD ? (
-                    <Container fluid className={`${hasGradient ? 'gradient' : ''} main-container d-flex p-0`}>
-                        <Menu currentRouterLink={this.props.location.pathname} />
-                        <div className={"main-content w-100 py-4 px-3 px-md-5"}>
-                            <div className={"mb-3"}>
-                                <Header hasGradient={hasGradient} />
-                            </div>
-                            <Switch>
-                                <Route exact path="/Cockpit">
-                                    <Cockpit />
-                                </Route>
-                                <Route exact path="/Jouer">
-                                    <p>Jouer container</p>
-                                </Route>
-                                <Route exact path="/Classement">
-                                    <Classement />
-                                </Route>
-                                <Route exact path="/Profil">
-                                    <Profil />
-                                </Route>
-                                <Route exact path="/Regles">
-                                    <p>Regles container</p>
-                                </Route>
-                                <Route exact path="/Planning">
-                                    <p>Planning container</p>
-                                </Route>
-                                <Route exact path="/Outillage">
-                                    <p>Outillage container</p>
-                                </Route>
-                            </Switch>
-                        </div>
-                    </Container>
+                    !this.state.logged ? (
+                        <Landing onCompleteLanding={this.onCompleteLanding} isMobile={isMobile} />
+                    ) : (
+                            <Container fluid className={`${hasGradient ? 'gradient' : ''} main-container d-flex p-0`}>
+                                <Menu currentRouterLink={this.props.location.pathname} />
+                                <div className={"main-content w-100 py-4 px-3 px-md-5"}>
+                                    <div className={"mb-3"}>
+                                        <Header hasGradient={hasGradient} />
+                                    </div>
+                                    <Switch>
+                                        <Route exact path="/Cockpit">
+                                            <Cockpit />
+                                        </Route>
+                                        <Route exact path="/Jouer">
+                                            <p>Jouer container</p>
+                                        </Route>
+                                        <Route exact path="/Classement">
+                                            <Classement />
+                                        </Route>
+                                        <Route exact path="/Profil">
+                                            <Profil />
+                                        </Route>
+                                        <Route exact path="/Regles">
+                                            <p>Regles container</p>
+                                        </Route>
+                                        <Route exact path="/Planning">
+                                            <p>Planning container</p>
+                                        </Route>
+                                        <Route exact path="/Outillage">
+                                            <p>Outillage container</p>
+                                        </Route>
+                                        <Route exact path="/Landing">
+                                            <Landing
+                                                onCompleteLanding={this.onCompleteLanding}
+                                                isMobile={isMobile}
+                                            />
+                                        </Route>
+                                    </Switch>
+                                </div>
+                            </Container>
+                        )
                 ) : (
                         <Container fluid className={`main-container d-flex p-0`}>
                             <div className="App-login">

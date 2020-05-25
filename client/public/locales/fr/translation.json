@@ -1,0 +1,33 @@
+{
+  "landing": {
+    "welcome": {
+      "text": "Bienvenue dans",
+      "body": "Partez à la conquête du travail en équipe \n avec Microsoft Teams",
+      "buttonText": "Partir en exploration maintenant",
+      "body-mobile": "Le jeu concours interactif pour explorer la galexie des usages collaboratifs"
+    },
+    "description": {
+      "medals": "25 <1>médailles</1> à collectionner pour exhiber votre talent d'explorateur de la collaboration !",
+      "questions": "200 <1>questions </1> pour vous propulser sur Microsoft Teams",
+      "reward": "Une <1> récompense d'honneur </1> pour le meilleur explorateur",
+      "gifts": "Des cadeaux et goodies pour les meilleurs explorateurs",
+      "buttonText": "Configuration de mon vaisseau"
+    },
+    "CGU": {
+      "title": "Avant de pouvoir accéder à ton vaisseau et ses fonctionnalités, prend connaissance des conditions RGPD suivantes :",
+      "acknowledge": "J'ai pris connaissance des conditions de jeu",
+      "buttonText": "Accepter et continuer"
+    },
+    "Avatars": {
+      "title": "Bienvenue à toi, Explorateur.trice",
+      "subtitle": "Il te reste une étape à réaliser avant de t'embarquer dans cette grande exploration :",
+      "subtitle-mobile": "Avant de commencer, il te faut choisir ton vaisseau de départ",
+      "body": {
+        "title": "Choisis ton vaisseau de départ",
+        "description": "Le choix du vaisseau ne relève que de la personnalisation esthétique de l'avatar de départ. Chaque explorateur pourra modifier son avatar au cours de son voyage grâce aux médailles d'honneur collectées",
+        "selectAvatar": "Sélectionner"
+      },
+      "buttonText": "Configuration terminée"
+    }
+  }
+}
