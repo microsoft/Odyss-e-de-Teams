@@ -9,7 +9,7 @@ import Description from "components/organisms/Landing/Description";
 import CGU from "components/organisms/Landing/CGU";
 import Avatars from "components/organisms/Landing/Avatars";
 
-import { getAvatars } from "../../api/Api";
+import AvatarAPI from "api/Avatar";
 
 import { ILandingState, ILandingProps } from "./../../models/Landing";
 import { IAvatar } from "./../../models/Avatar";
@@ -23,7 +23,7 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
   };
 
   componentDidMount() {
-    getAvatars().then((data) => {
+    AvatarAPI.getAvatars().then((data) => {
       // add a selected property
       data.results.forEach((avatar: IAvatar) => {
         avatar.selected = false;
