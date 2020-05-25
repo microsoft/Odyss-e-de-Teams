@@ -135,3 +135,7 @@ INSERT INTO public.j_role_page (id_role, id_page) VALUES (1, 1), (1, 2), (1, 4),
 
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
 	VALUES (2, 1, 4, 'Emile Feuille', 9, 164, 333, 55, 50, 13, 12, 11, true, now(), now(), now());
+
+	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, actif, horodatage, horodatage_creation, horodatage_connexion)
+	VALUES (1, 2, 6, 'Eddy Scylla', true, now(), now(), now());
+
