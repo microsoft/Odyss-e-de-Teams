@@ -6,6 +6,10 @@ class Admin extends API {
   getExplorersCount(): Promise<any> {
     return super.fetchGET(this.resource + "/explorers-count");
   }
+
+  getCurrentCampaignInfo(): Promise<any> {
+    return super.fetchGET(this.resource + "/current-mission");
+  }
 }
 
 export default new Admin();
