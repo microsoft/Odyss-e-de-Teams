@@ -9,36 +9,36 @@ body {
     .flex-grow-3 {
         flex-grow: 3;
     }
-    
+
     .h1,
     h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         .ico-titre {
             max-height: 2rem;
-            margin-right: .25rem;
+            margin-right: 0.25rem;
         }
     }
     .h2,
     h2 {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
     .h3,
     h3 {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
     }
     .h4,
     h4 {
-        font-size: 1.125rem;
+        font-size: 1rem;
     }
     .h5,
     h5 {
-        font-size: 1rem;
+        font-size: 0.825rem;
     }
     .h6,
     h6 {
-        font-size: 0.9rem;
+        font-size: 0.75rem;
     }
-    
+
     .color-primary {
         color: $color-primary;
     }
@@ -68,12 +68,12 @@ body {
     }
 
     .btn {
-        padding: .25rem .5rem;
-        border-radius: .75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.75rem;
         font-weight: bold;
         .btn-ico {
             max-height: 1.5rem;
-            margin-right: .25rem;
+            margin-right: 0.25rem;
         }
     }
     .btn.btn-primary {
@@ -83,6 +83,16 @@ body {
     .btn.btn-secondary {
         background-color: $color-black2;
         border-color: $color-black2;
+    }
+    .btn.btn-light {
+        background-color: $color-white1;
+        border-color: $color-white1;
+        color: $color-primary;
+    }
+    .btn {
+        &__orange-gradiant {
+            @include orange-gradiant;
+        }
     }
     .pointer {
         cursor: pointer;
@@ -94,14 +104,14 @@ body {
         padding: 0;
         height: 1px;
         background-color: $color-primary-light;
-        opacity: .4;
+        opacity: 0.4;
     }
 }
 
 @include media-breakpoint-up(md) {
     body {
         .btn {
-            padding: .75rem 1.5rem;
+            padding: 0.5rem 1.25rem;
         }
     }
 }

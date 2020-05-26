@@ -1,9 +1,7 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
 
-import { Form } from "react-bootstrap";
-
-import Button from "components/atoms/Button/Button";
+import { Form, Button } from "react-bootstrap";
 
 import "./style.scss";
 
@@ -13,16 +11,16 @@ const CGU = (props) => {
   const isMobile = window.innerWidth < 768;
 
   return (
-    <div className="CGU col-12">
+    <div className="CGU d-flex flex-column align-items-center justify-content-center h-100 mx-auto">
       {isMobile && (
         <div className="CGU__logo">
           <img src="/images/logo/logo_gauche_blanc.png" alt="logo" />
         </div>
       )}
-      <div className="CGU__container col-11 col-sm-10">
-        <div className="CGU__container__title">{t("landing.CGU.title")}</div>
+      <div className="CGU__container p-4 m-2 m-md-0">
+        <div className="CGU__container__title mb-4">{t("landing.CGU.title")}</div>
 
-        <div className="CGU__container__body">
+        <div className="CGU__container__body mb-4">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
           tempus at eros id porttitor. Integer tellus felis, rhoncus sed nulla
           sed, sodales tempus sapien. Quisque convallis in nunc vel laoreet.
@@ -76,7 +74,7 @@ const CGU = (props) => {
         </div>
 
         <div className="CG__container__form">
-          <Form className="CGU__container__form">
+          <Form className="CGU__container__form mb-0">
             <Form.Group controlId="formBasicCheckbox">
               <Form.Check
                 type="checkbox"
@@ -86,10 +84,12 @@ const CGU = (props) => {
 
             {!isMobile && (
               <Button
-                text={t("landing.CGU.buttonText")}
-                className="Button__white col-3"
-                onClickAction={onClickNext}
-              />
+                variant="light"
+                className="py-3 py-md-2"
+                onClick={onClickNext}
+              >
+                {t("landing.CGU.buttonText")}
+              </Button>
             )}
           </Form>
         </div>
@@ -97,10 +97,12 @@ const CGU = (props) => {
       {isMobile && (
         <div className="CGU__container__mobile--actions">
           <Button
-            text={t("landing.CGU.buttonText")}
-            className="Button__orange-gradiant col-10"
-            onClickAction={onClickNext}
-          />
+            variant="primary"
+            className="btn__orange-gradiant py-3 py-md-2 w-100"
+            onClick={onClickNext}
+          >
+            {t("landing.CGU.buttonText")}
+          </Button>
         </div>
       )}
     </div>

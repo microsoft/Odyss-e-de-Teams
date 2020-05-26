@@ -4,36 +4,22 @@
 
 .Description {
   color: $color-white1;
-  position: absolute;
-  top: 25%;
-  left: 15%;
-
+  width: 60%;
   @include MQ(XS) {
-    left: 0%;
-    top: 15%;
+    width: 100%;
   }
 
   &__logo {
+    height: 3em;
     @include MQ(XS) {
-      display: flex;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-
       img {
-        height: 3em;
         object-fit: contain;
+        max-width: 100%;
       }
     }
   }
 
   &__body {
-    margin-top: 2em;
-
-    @include MQ(XS) {
-      margin-top: 4em;
-    }
-
     &__elt {
       display: inline-flex;
       align-items: center;
@@ -51,14 +37,14 @@
         }
       }
 
-      & b {
+      & strong {
         // translated texts
         margin: 0.3em;
       }
 
       &__img {
         height: 3em;
-        margin-right: 2em;
+        margin-right: 1.75em;
 
         & > img {
           object-fit: contain;
@@ -73,12 +59,10 @@
     }
   }
 
-  &__button {
+  .btn {
+    width: fit-content;
     @include MQ(XS) {
-      display: flex;
       width: 100%;
-      justify-content: center;
-      align-items: center;
     }
   }
 }
