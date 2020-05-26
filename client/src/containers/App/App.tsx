@@ -13,7 +13,7 @@ import Classement from '../Classement/Classement';
 import Header from '../../components/Header/Header';
 import Landing from "../Landing/index";
 
-import { getUser } from '../../api/Api';
+import UserAPI from '../../api/User';
 import AuthService from "../../api/sso/auth.service";
 
 import IStore from '../../store/IStore';
@@ -24,7 +24,7 @@ class App extends React.Component<IAppProps, IAppState> {
     constructor(props: IAppProps) {
         super(props);
         this.state = {
-            logged: true,
+            logged: false,
             loading: true,
             //  inTeams: !!params.get("inTeams") || !!params.get("inTeamsSSO"),
         };
@@ -73,19 +73,24 @@ class App extends React.Component<IAppProps, IAppState> {
             });
     };
 
-    onCompleteLanding = () => {
-        //to change later
-        this.setState({
-            logged: true,
-        });
+    onCompleteLanding = (e: any) => {
+        UserAPI.createUserByAD('fr', { ad: this.state.userAD, id_avatar: e.avatarSelected }).then((result: any) => {
+            this._loadCurrentUser();
+        })
     };
 
     private _loadCurrentUser = () => {
         if (this.state.userAD) {
             Cookies.set('oid_ad', this.state.userAD.idToken.oid, { expires: 7, path: '/' });
-            getUser('fr', 'current', this.state.userAD).then(data => {
-                const action_liste = { type: "SET_CURRENT_USER", value: data };
-                this.props.dispatch(action_liste);
+            UserAPI.getUser('fr', 'current').then(data => {
+                if (data){
+                    this.setState({
+                        logged: true,
+                    }, () => {
+                        const action_liste = { type: "SET_CURRENT_USER", value: data };
+                        this.props.dispatch(action_liste);
+                    });
+                }
             });
         }
     }
@@ -155,7 +160,7 @@ class App extends React.Component<IAppProps, IAppState> {
                                                     alt="Microsoft logo"
                                                     src={microsoftLogo}
                                                 /> */}
-                                        <span className="ms-Button-label label-46">Sign in</span>
+                                        <span className="ms-Button-label label-46">Connexion AD</span>
                                     </Button>
                                 </div>
                             </div>

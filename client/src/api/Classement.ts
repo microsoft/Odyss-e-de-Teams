@@ -9,8 +9,6 @@ class Classement extends API {
     monde: number = 0,
     user: number = 0
   ): Promise<any> {
-    console.log(process.env);
-
     return super.fetchGET(this.resource, {
       language: lang,
       mode: mode,

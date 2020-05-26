@@ -10,6 +10,7 @@ services:
         environment:
             - NODE_ENV=${NODE_ENV}
             - REACT_APP_API_URL= ${API_URL}
+            - REACT_APP_API_TOKEN= ${API_TOKEN}
             - REACT_APP_AZUREAD_ApplicationId= ${AZUREAD_ApplicationId}
             - REACT_APP_AZUREAD_BaseUri= ${AZUREAD_BaseUri}
         ports:
