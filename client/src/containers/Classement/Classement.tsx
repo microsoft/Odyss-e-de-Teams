@@ -114,7 +114,7 @@ class Classement extends Component<{}, IClassementState> {
             <div>
                 <h1 className={"color-primary d-none d-md-block"}>
                     Classements du programme en cours
-        </h1>
+                </h1>
                 <h1 className={"color-white d-flex d-md-none justify-content-center"}>
                     <img
                         src={process.env.PUBLIC_URL + "/images/icone/cup.png"}
