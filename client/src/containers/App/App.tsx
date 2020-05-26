@@ -10,6 +10,7 @@ import Menu from '../Menu/Menu';
 import Cockpit from '../Cockpit/Cockpit';
 import Profil from '../Profil/Profil';
 import Classement from '../Classement/Classement';
+import Regle from '../Regle/Regle';
 import Header from '../../components/Header/Header';
 import Landing from "../Landing/index";
 
@@ -125,7 +126,7 @@ class App extends React.Component<IAppProps, IAppState> {
                                             <Profil />
                                         </Route>
                                         <Route exact path="/Regles">
-                                            <p>Regles container</p>
+                                            <Regle />
                                         </Route>
                                         <Route exact path="/Planning">
                                             <p>Planning container</p>

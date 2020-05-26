@@ -249,6 +249,7 @@ CREATE TABLE public.t_semaine
 (
   id_semaine integer NOT NULL DEFAULT nextval('public.seq_t_semaine'::regclass),
   nom character(80),
+  description text,
   ordre integer,
   actif boolean,
   horodatage timestamp without time zone,
