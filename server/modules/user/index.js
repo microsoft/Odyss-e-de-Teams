@@ -6,24 +6,20 @@ let lang = 'fr';
 const register = async (server, options) => {
     server.route({
         path: baseUrl,
-        method: 'POST',
+        method: 'GET',
         handler: async function (request, h) {
-            const body = request.payload;
             const db = request.getDb('odyssee_teams');
             const User = db.getModel('User');
-            const current_oid_ad = (body && body.idToken ? body.idToken.oid : request.state.oid_ad);
-            if (!current_oid_ad) {
+            if (!request.state.oid_ad) {
                 return false;
             }
             let currentUserByAD = await User.findOne({
                 where: {
-                    oid_ad: current_oid_ad
+                    oid_ad: request.state.oid_ad
                 }
             });
             if (!currentUserByAD) {
-                currentUserByAD = await User.create({
-                    id_organisation: 1, oid_ad: body.idToken.oid, id_role: 1, nom: body.name, actif: true
-                });
+                return false;
             }
 
             const params = request.query;
@@ -55,6 +51,31 @@ const register = async (server, options) => {
                 `, { replacements: replacements, type: QueryTypes.SELECT }).then(result => {
                 return oneResult ? result[0] : result;
             });
+        }
+    });
+    server.route({
+        path: baseUrl + '/createByAD',
+        method: 'POST',
+        handler: async function (request, h) {
+            const body = request.payload;
+            const db = request.getDb('odyssee_teams');
+            const User = db.getModel('User');
+            const current_oid_ad = (body && body.ad && body.ad.idToken ? body.ad.idToken.oid : request.state.oid_ad);
+            if (!current_oid_ad) {
+                return false;
+            }
+            let currentUserByAD = await User.findOne({
+                where: {
+                    oid_ad: current_oid_ad
+                }
+            });
+            if (currentUserByAD) {
+                return currentUserByAD;
+            }
+            currentUserByAD = await User.create({
+                id_organisation: 1, oid_ad: body.ad.idToken.oid, id_role: 1, id_avatar:body.id_avatar, nom: body.ad.name, actif: true
+            });
+            return currentUserByAD;
         }
     });
     server.route({

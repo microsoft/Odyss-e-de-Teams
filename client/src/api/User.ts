@@ -7,12 +7,16 @@ class User extends API {
     return super.fetchGET(this.resource, { language: lang, mode: mode });
   }
 
+  createUserByAD(lang: string, dataAD?: any): Promise<any> {
+    return super.fetchPOST(this.resource + "/createByAD", dataAD, { language: lang });
+  }
+
   getMedaille(lang: string): Promise<any> {
     return super.fetchGET(this.resource + "/medailles", { language: lang });
   }
 
   setMedailleAvatar(id: number): Promise<any> {
-    return super.fetchPOST(this.resource + "/set-medaille-avata", { id: id });
+    return super.fetchPOST(this.resource + "/set-medaille-avatar", { id: id });
   }
 }
 
