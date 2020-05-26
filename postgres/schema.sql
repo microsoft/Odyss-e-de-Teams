@@ -894,6 +894,48 @@ $BODY$;
 		TABLESPACE pg_default;
 
 
+ -- histo agenda done
+	CREATE SEQUENCE public.seq_h_agenda_done;
+	GRANT ALL ON TABLE public.seq_h_agenda_done TO odyssee_teams_appli;
+	
+	CREATE TABLE public.h_agenda_done
+	(
+		id_agenda_done integer NOT NULL DEFAULT nextval('public.seq_h_agenda_done'::regclass),
+		id_organisation integer,
+		id_user integer,
+		id_agenda integer,
+		horodatage timestamp without time zone,
+		CONSTRAINT pk_h_agenda_done PRIMARY KEY (id_agenda_done)
+	)
+	WITH (
+		OIDS = FALSE
+	)
+	TABLESPACE pg_default;
+	GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE ON TABLE public.h_agenda_done TO odyssee_teams_appli;
+
+	CREATE UNIQUE INDEX idx_agenda_done_pkey
+		ON public.h_agenda_done USING btree
+		(id_agenda_done)
+		TABLESPACE pg_default;
+
+	ALTER TABLE public.h_agenda_done
+		CLUSTER ON idx_agenda_done_pkey;
+
+	CREATE INDEX idx_id_organisation_h_agenda_done
+		ON public.h_agenda_done USING btree
+		(id_organisation)
+		TABLESPACE pg_default;
+
+	CREATE INDEX idx_id_user_h_agenda_done
+		ON public.h_agenda_done USING btree
+		(id_user)
+		TABLESPACE pg_default;
+
+	CREATE INDEX idx_id_agenda_h_agenda_done
+		ON public.h_agenda_done USING btree
+		(id_agenda)
+		TABLESPACE pg_default;
+    
 /***************************/
 /******* multilangue *******/
 /***************************/
