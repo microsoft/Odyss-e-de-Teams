@@ -29,5 +29,8 @@
       },
       "buttonText": "Configuration terminée"
     }
+  },
+  "admin": {
+    "title": "Bienvenue à bord, Commandant !"
   }
 }
