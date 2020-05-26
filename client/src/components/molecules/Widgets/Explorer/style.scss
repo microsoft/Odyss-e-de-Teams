@@ -1,0 +1,35 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.ExplorerWidget {
+  height: 15rem;
+  background: url("/images/overlays/overlay-blue.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 15px;
+
+  &__tree {
+    position: absolute;
+    right: 0;
+    transform: translateX(50%) translateY(25%);
+
+    img {
+      height: 10em;
+    }
+  }
+  &__container {
+    padding-top: 2em;
+    &__count {
+      @include typo-title;
+      font-size: 5em;
+      line-height: initial;
+      color: $color-white1;
+    }
+
+    &__message {
+      @include typo-body-component;
+      font-size: 1.5em;
+      color: $color-white1;
+    }
+  }
+}
