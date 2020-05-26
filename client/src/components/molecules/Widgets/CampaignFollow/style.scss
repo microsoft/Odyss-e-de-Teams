@@ -1,0 +1,54 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.LaunchFollowWidget {
+  position: relative;
+  height: 15em;
+  background-image: linear-gradient(to bottom, #424bb0, #5642b0, #5742b0),
+    url("/images/overlays/overlay-purple.svg");
+  // background:
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 15px;
+
+  &__background {
+    background: url(/images/bandeau/programme-astronaute.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    height: 100%;
+    right: 0;
+    width: 25%;
+  }
+
+  &__container {
+    color: $color-white1;
+    &__title {
+      @include typo-title-component;
+      // font-weight: bold;
+      // font-size: 2em;
+      // line-height: initial;
+    }
+
+    &__description {
+      font-size: 1.2rem;
+    }
+
+    &__timeleft {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 2em;
+      &__label {
+        color: $color-white1;
+        margin-right: 0.5em;
+      }
+
+      &__timer {
+        font-weight: bold;
+        color: $color-white1;
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
