@@ -243,10 +243,11 @@ CREATE TABLE public.t_semaine
 (
   id_semaine integer NOT NULL DEFAULT nextval('public.seq_t_semaine'::regclass),
   nom character(80),
+  description text,
   ordre integer,
   actif boolean,
-  horodatage timestamp without time zone,
-  horodatage_creation timestamp without time zone,
+  horodatage timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+  horodatage_creation timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT pk_t_semaine PRIMARY KEY (id_semaine)
 )
 WITH (
@@ -937,3 +938,7 @@ $BODY$;
 		ON public.t_libelle_i18n USING btree
 		(lang)
 		TABLESPACE pg_default;
+
+
+-- Foreign key semaine 
+ALTER TABLE t_organisation ADD FOREIGN KEY (id_semaine) REFERENCES t_semaine(id_semaine);
