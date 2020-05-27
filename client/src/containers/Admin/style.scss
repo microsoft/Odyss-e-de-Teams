@@ -4,12 +4,18 @@
   &__tools {
     background-color: $color-white1;
     border-radius: 15px;
+    height: 9em;
+    width: 100%;
 
     display: inline-flex;
+    align-items: center;
 
     &__image {
-      width: 40%;
+      width: 30%;
       height: 5em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       &img {
         width: 100%;
@@ -29,10 +35,31 @@
       }
     }
   }
+
+  &__sub__block {
+    display: inline-flex;
+    flex-direction: row;
+    margin-top: 1.5rem;
+    width: 100%;
+
+    &__left {
+      display: flex;
+      flex-direction: column;
+      width: 60%;
+      height: 20rem;
+      margin-right: 1.5em;
+    }
+
+    &__right {
+      width: 40%;
+      height: 20rem;
+    }
+  }
 }
 
 .no-underline-on-hover {
-  &:hover {
+  &:hover,
+  &:visited {
     text-decoration: none;
     color: initial;
   }
