@@ -7,25 +7,32 @@
   &__header {
     display: flex;
     align-items: center;
-    justify-content: center;
 
     &__icon {
-      width: 30%;
+      width: 25%;
     }
 
     &__info {
-      width: 70%;
+      width: 75%;
 
       &__title {
         font-weight: bold;
         color: $color-primary;
-        font-size: 1.3em;
+        font-size: 1.4em;
+      }
+
+      &__subtitle {
+        font-size: 0.8em;
       }
     }
   }
 
   &__body {
     margin-top: 1em;
+
+    &__title {
+      font-size: 0.8em;
+    }
 
     &__separator {
       margin-bottom: 1em;
@@ -42,8 +49,8 @@
         align-items: center;
 
         &__avatar {
-          width: 5em;
-          height: 5em;
+          width: 2em;
+          height: 2em;
 
           &__img {
             width: 100%;
@@ -53,10 +60,13 @@
         &__user {
           font-weight: bold;
           text-align: center;
+          font-size: 0.6em;
         }
 
         &__score {
           text-align: center;
+          font-size: 0.6em;
+          opacity: 0.8;
         }
       }
     }
