@@ -15,6 +15,9 @@
 				"plugin": "blipp"
 			},
 			{
+				"plugin": "./agenda/index.js"
+			},
+			{
 				"plugin": "./avatar/index.js"
 			},
 			{
