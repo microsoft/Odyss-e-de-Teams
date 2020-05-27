@@ -103,7 +103,7 @@ class Admin extends Component<IAdminProps, IAdminState> {
             </Translation>
 
             <div className="col-12 row">
-              <Explorer count={explorers_count} className="col-4 py-4" />
+              <Explorer count={explorers_count} className="col-4 py-2" />
 
               <CampaignFollow
                 campaign_name={this.state.campaign.name}
@@ -112,38 +112,45 @@ class Admin extends Component<IAdminProps, IAdminState> {
               />
             </div>
 
-            <div className="col-12 row py-4">
-              <Planning
-                className="col-6"
-                notificationsCount={3}
-                redirectLink={"/Planning"}
-              />
+            <div className="col-12 row">
+              <div className="Admin__sub__block">
+                <div className="Admin__sub__block__left">
+                  <Planning
+                    className=""
+                    notificationsCount={3}
+                    redirectLink={"/Planning"}
+                  />
 
-              <Rankings
-                expRanks={this.state.userRankingsExp}
-                ptsRanks={this.state.userRankingsPoints}
-                className={"col-6"}
-              />
-            </div>
+                  <Link to="/Outillage" className="no-underline-on-hover">
+                    <div className="Admin__tools mt-4">
+                      <div className="Admin__tools__image">
+                        <img src="/images/menu/outillage.svg" alt="outillage" />
+                      </div>
 
-            <Link to="/Outillage" className="no-underline-on-hover">
-              <div className="Admin__tools">
-                <div className="Admin__tools__image">
-                  <img src="/images/menu/outillage.svg" alt="outillage" />
+                      <div className="Admin__tools__content">
+                        <div className="Admin__tools__content__title">
+                          <Translation>
+                            {(t) => t("menu.outillage")}
+                          </Translation>
+                        </div>
+                        <div className="Admin__tools__content__description">
+                          <Translation>
+                            {(t) => t("admin.outillage_desc")}
+                          </Translation>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
                 </div>
-
-                <div className="Admin__tools__content">
-                  <div className="Admin__tools__content__title">
-                    <Translation>{(t) => t("menu.outillage")}</Translation>
-                  </div>
-                  <div className="Admin__tools__content__description">
-                    <Translation>
-                      {(t) => t("admin.outillage_desc")}
-                    </Translation>
-                  </div>
+                <div className="Admin__sub__block__right">
+                  <Rankings
+                    expRanks={this.state.userRankingsExp}
+                    ptsRanks={this.state.userRankingsPoints}
+                    className={"col-12 col-12 pl-4 pr-4 pt-4 pb-3"}
+                  />
                 </div>
               </div>
-            </Link>
+            </div>
           </div>
         </Main>
       );
