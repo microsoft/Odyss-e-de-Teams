@@ -1,0 +1,50 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+// anchor tag from <Link> Component
+a:hover {
+  text-decoration: none;
+}
+
+.Planning {
+  background: url("/images/overlays/overlay-yellow.svg");
+  background-size: cover;
+  border-radius: 15px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__container {
+    &__content {
+      color: $color-white1;
+
+      &__title {
+        @include typo-title-component;
+        position: relative;
+
+        &__notif {
+          height: 2em;
+          width: 2em;
+          border-radius: 50%;
+          position: absolute;
+          background-color: $color-white1;
+          color: $color-yellow;
+          top: 0;
+          left: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0.6em;
+          transform: translateX(30%);
+          left: 42%;
+          padding: 0.7em;
+        }
+      }
+      &__description {
+        @include typo-body-component;
+        font-size: 1.2em;
+      }
+    }
+  }
+}
