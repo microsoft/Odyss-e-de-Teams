@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter, RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
-// import { Translation } from "react-i18next";
+import { Translation, Trans } from "react-i18next";
 
 import "./style.scss";
 
@@ -98,7 +98,9 @@ class Admin extends Component<IAdminProps, IAdminState> {
               <Header hasGradient={hasGradiant} />
             </div>
 
-            <Title className="mb-3" title="Bienvenue à bord, Commandant !" />
+            <Translation>
+              {(t) => <Title className="mb-3" title={t("admin.title")} />}
+            </Translation>
 
             <div className="col-12 row">
               <Explorer count={explorers_count} className="col-4 py-4" />
@@ -131,9 +133,13 @@ class Admin extends Component<IAdminProps, IAdminState> {
                 </div>
 
                 <div className="Admin__tools__content">
-                  <div className="Admin__tools__content__title">Outillage</div>
+                  <div className="Admin__tools__content__title">
+                    <Translation>{(t) => t("menu.outillage")}</Translation>
+                  </div>
                   <div className="Admin__tools__content__description">
-                    Configuration et paramètres
+                    <Translation>
+                      {(t) => t("admin.outillage_desc")}
+                    </Translation>
                   </div>
                 </div>
               </div>

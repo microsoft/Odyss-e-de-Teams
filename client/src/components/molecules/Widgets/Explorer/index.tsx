@@ -1,14 +1,15 @@
 import React from "react";
 
 import "./style.scss";
+import { withTranslation, WithTranslation } from "react-i18next";
 
 interface IExplorerWidgetProps {
   count: number;
   className?: string;
 }
 
-const ExplorerWidget = (props: IExplorerWidgetProps) => {
-  const { count, className } = props;
+const ExplorerWidget = (props: IExplorerWidgetProps & WithTranslation) => {
+  const { count, className, t, tReady } = props;
 
   return (
     <div className={`ExplorerWidget ${className}`}>
@@ -18,11 +19,11 @@ const ExplorerWidget = (props: IExplorerWidgetProps) => {
       <div className="ExplorerWidget__container">
         <div className="ExplorerWidget__container__count col-12">{count}</div>
         <div className="ExplorerWidget__container__message col-12">
-          Explorateurs ont rejoint le voyage depuis le lancement
+          {tReady && t("admin.explorers_desc")}
         </div>
       </div>
     </div>
   );
 };
 
-export default ExplorerWidget;
+export default withTranslation()(ExplorerWidget);

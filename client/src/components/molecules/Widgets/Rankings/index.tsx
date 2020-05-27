@@ -3,6 +3,7 @@ import React from "react";
 import "./style.scss";
 
 import { IUser } from "models/User";
+import { withTranslation, WithTranslation } from "react-i18next";
 
 interface IRankingProps {
   className?: string;
@@ -10,9 +11,8 @@ interface IRankingProps {
   ptsRanks: IUser[];
 }
 
-const Rankings = (props: IRankingProps) => {
-  const { className, expRanks, ptsRanks } = props;
-  console.log(props);
+const Rankings = (props: IRankingProps & WithTranslation) => {
+  const { className, expRanks, ptsRanks, t, tReady } = props;
 
   return (
     <div className={`Rankings ${className}`}>
@@ -22,15 +22,19 @@ const Rankings = (props: IRankingProps) => {
         </div>
 
         <div className="Rankings__header__info">
-          <div className="Rankings__header__info__title">Classements</div>
+          <div className="Rankings__header__info__title">
+            {tReady && t("menu.classement")}
+          </div>
 
           <div className="Rankings__header__info__subtitle">
-            Classements et statistiques
+            {tReady && t("admin.classement_desc")}
           </div>
         </div>
       </div>
       <div className="Rankings__body">
-        <span className="Rankings__body__title">Classement général</span>
+        <span className="Rankings__body__title">
+          {tReady && t("admin.classement_general")}
+        </span>
         <div className="Rankings__body__exp">
           {ptsRanks.map((user, index) => (
             <div key={index} className="Rankings__body__exp__item">
@@ -45,14 +49,17 @@ const Rankings = (props: IRankingProps) => {
                 {index + 1}. {user.nom}
               </div>
               <div className="Rankings__body__exp__item__score">
-                {user.nb_point} Points
+                {user.nb_point} {tReady && t("admin.classement_points")}
               </div>
             </div>
           ))}
         </div>
         <div className="Rankings__body__separator"></div>
 
-        <span className="Rankings__body__title">Classement XP</span>
+        <span className="Rankings__body__title">
+          {" "}
+          {tReady && t("admin.classement_xp")}
+        </span>
         <div className="Rankings__body__exp">
           {expRanks.map((user, index) => (
             <div key={index} className="Rankings__body__exp__item">
@@ -77,4 +84,4 @@ const Rankings = (props: IRankingProps) => {
   );
 };
 
-export default Rankings;
+export default withTranslation()(Rankings);
