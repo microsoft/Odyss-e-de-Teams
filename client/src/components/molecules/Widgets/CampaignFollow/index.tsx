@@ -22,13 +22,13 @@ const LaunchFollowWidget = (
       <div className="LaunchFollowWidget__background"></div>
 
       <div className="LaunchFollowWidget__container">
-        <div className="LaunchFollowWidget__container__title">
+        <div className="LaunchFollowWidget__container__title col-10">
           &laquo; {campaign_name} &raquo;{" "}
           {tReady && t("admin.campaign_pending")}
         </div>
 
-        <div className="LaunchFollowWidget__container__description col-8">
-          {tReady && t("admin.campaign_week_goald")} &laquo; {campaign_name}{" "}
+        <div className="LaunchFollowWidget__container__description col-10">
+          {tReady && t("admin.campaign_week_goal")} &laquo; {campaign_name}{" "}
           &raquo;
         </div>
 
