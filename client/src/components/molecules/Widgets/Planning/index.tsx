@@ -13,8 +13,8 @@ const PlanningWidget = (props: IPlanningWidget) => {
   const { notificationsCount, redirectLink, className } = props;
 
   return (
-    <Link to={redirectLink}>
-      <div className={`Planning ${className}`}>
+    <Link to={redirectLink} className={`${className} no-hover`}>
+      <div className={"Planning"}>
         <div className="Planning__container d-flex flex-row col-12 no-gutters">
           <div className="Planning__container__icon  col-4 d-flex justify-content-center">
             <img src="/images/menu/planning.svg" alt="planning" />

@@ -2,8 +2,10 @@
 @import "common/sass/_typography";
 
 // anchor tag from <Link> Component
-a:hover {
-  text-decoration: none;
+.no-hover {
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .Planning {
