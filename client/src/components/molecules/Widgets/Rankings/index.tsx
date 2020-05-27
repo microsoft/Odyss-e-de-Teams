@@ -23,7 +23,7 @@ const Rankings = (props: IRankingProps & WithTranslation) => {
 
         <div className="Rankings__header__info">
           <div className="Rankings__header__info__title">
-            {tReady && t("menu.classement")}
+            {tReady && t("admin.classement_title")}
           </div>
 
           <div className="Rankings__header__info__subtitle">
@@ -35,9 +35,9 @@ const Rankings = (props: IRankingProps & WithTranslation) => {
         <span className="Rankings__body__title">
           {tReady && t("admin.classement_general")}
         </span>
-        <div className="Rankings__body__exp">
+        <div className="Rankings__body__exp col-12 p-0">
           {ptsRanks.map((user, index) => (
-            <div key={index} className="Rankings__body__exp__item">
+            <div key={index} className="Rankings__body__exp__item col-4 p-0">
               <div className="Rankings__body__exp__item__avatar">
                 <img
                   src={user.image_avatar}

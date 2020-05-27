@@ -2,7 +2,7 @@
 @import "common/sass/_typography";
 
 .ExplorerWidget {
-  height: 15rem;
+  height: 10rem;
   background: url("/images/overlays/overlay-blue.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -11,23 +11,23 @@
   &__tree {
     position: absolute;
     right: 0;
-    transform: translateX(50%) translateY(25%);
+    transform: translateX(50%) translateY(20%);
 
     img {
-      height: 10em;
+      height: 7em;
     }
   }
   &__container {
     &__count {
       @include typo-title;
-      font-size: 5em;
+      font-size: 4em;
       line-height: initial;
       color: $color-white1;
     }
 
     &__message {
       @include typo-body-component;
-      font-size: 1.5em;
+      font-size: 1em;
       color: $color-white1;
     }
   }
