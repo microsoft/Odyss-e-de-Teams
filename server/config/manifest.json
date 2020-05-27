@@ -28,6 +28,9 @@
       },
       {
         "plugin": "./admin/index.js"
+      },
+      {
+        "plugin": "./agenda/index.js"
       }
     ],
     "options": {

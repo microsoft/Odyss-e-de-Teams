@@ -3,6 +3,10 @@
 @import "common/sass/media-queries";
 
 .CGU {
+  width: 50%;
+  @include MQ(XS) {
+    width: 100%;
+  }
   &__logo {
     @include MQ(XS) {
       display: flex;
@@ -19,22 +23,15 @@
   }
 
   &__container {
-    background: url("/images/overlays/overlay-blue.jpg");
+    background: url("/images/overlays/overlay-blue.jpg") center center fixed;
     background-size: cover;
 
-    margin: 10em;
-    @include MQ(XS) {
-      margin: 1em;
-    }
-
-    padding: 4em;
     border-radius: 15px;
 
     &__title {
       @include typo-subtitle;
       color: $color-white1;
       line-height: normal;
-      margin-bottom: 1em;
       font-size: 1.8em;
 
       @include MQ(XS) {
@@ -45,11 +42,10 @@
 
     &__body {
       @include typo-body;
-      height: 10em;
+      height: 12rem;
       font-size: 1em;
       overflow-y: scroll;
       color: $color-white1;
-      margin-bottom: 1em;
 
       @include MQ(XS) {
         font-size: 0.9em;
@@ -58,7 +54,7 @@
 
     &__form {
       color: $color-white1;
-      display: inline-flex;
+      display: flex;
       justify-content: space-between;
       width: 100%;
     }

@@ -58,14 +58,15 @@ CREATE TABLE public.t_user
   id_avatar integer,
   id_medaille_avatar integer,
   nom character(120),
-  niveau smallint,
-  nb_point integer,
-  nb_xp integer,
-  nb_reponse integer,
-  nb_reponse_ok integer,
-  nb_reponse_consecutive_top integer,
-  nb_reponse_consecutive_en_cours integer,
-  nb_questionnaire_complete integer,
+  oid_ad text,
+  niveau smallint DEFAULT 1,
+  nb_point integer DEFAULT 0,
+  nb_xp integer DEFAULT 0,
+  nb_reponse integer DEFAULT 0,
+  nb_reponse_ok integer DEFAULT 0,
+  nb_reponse_consecutive_top integer DEFAULT 0,
+  nb_reponse_consecutive_en_cours integer DEFAULT 0,
+  nb_questionnaire_complete integer DEFAULT 0,
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
@@ -107,6 +108,11 @@ CREATE INDEX idx_actif_t_user
   ON public.t_user
   USING btree
   (actif);
+
+CREATE INDEX idx_oid_ad_t_user
+  ON public.t_user
+  USING btree
+  (oid_ad);
 
  ----- avatar 
 CREATE SEQUENCE public.seq_t_avatar;
@@ -888,6 +894,48 @@ $BODY$;
 		TABLESPACE pg_default;
 
 
+ -- histo agenda done
+	CREATE SEQUENCE public.seq_h_agenda_done;
+	GRANT ALL ON TABLE public.seq_h_agenda_done TO odyssee_teams_appli;
+	
+	CREATE TABLE public.h_agenda_done
+	(
+		id_agenda_done integer NOT NULL DEFAULT nextval('public.seq_h_agenda_done'::regclass),
+		id_organisation integer,
+		id_user integer,
+		id_agenda integer,
+		horodatage timestamp without time zone,
+		CONSTRAINT pk_h_agenda_done PRIMARY KEY (id_agenda_done)
+	)
+	WITH (
+		OIDS = FALSE
+	)
+	TABLESPACE pg_default;
+	GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE ON TABLE public.h_agenda_done TO odyssee_teams_appli;
+
+	CREATE UNIQUE INDEX idx_agenda_done_pkey
+		ON public.h_agenda_done USING btree
+		(id_agenda_done)
+		TABLESPACE pg_default;
+
+	ALTER TABLE public.h_agenda_done
+		CLUSTER ON idx_agenda_done_pkey;
+
+	CREATE INDEX idx_id_organisation_h_agenda_done
+		ON public.h_agenda_done USING btree
+		(id_organisation)
+		TABLESPACE pg_default;
+
+	CREATE INDEX idx_id_user_h_agenda_done
+		ON public.h_agenda_done USING btree
+		(id_user)
+		TABLESPACE pg_default;
+
+	CREATE INDEX idx_id_agenda_h_agenda_done
+		ON public.h_agenda_done USING btree
+		(id_agenda)
+		TABLESPACE pg_default;
+    
 /***************************/
 /******* multilangue *******/
 /***************************/

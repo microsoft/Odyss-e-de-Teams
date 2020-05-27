@@ -108,6 +108,12 @@ INSERT INTO public.t_page (nom, router_link, horodatage, actif, ordre, is_menu, 
 
 INSERT INTO public.j_role_page (id_role, id_page) VALUES (1, 1), (1, 2), (1, 4), (1, 6), (1, 7), (2, 1), (2, 3), (2, 4), (2, 5);
 
+
+-- agenda
+INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_creation) VALUES
+	('Activer la mission « Lancement »', current_date, true, now(), now()),
+	('Communication : Envoi d''un email de lancement', current_date, true, now(), now());
+
 -- multilangue
 	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
 	SELECT DISTINCT 'AVATAR', id_avatar, 'fr', nom, description FROM public.t_avatar
@@ -139,11 +145,7 @@ INSERT INTO public.j_role_page (id_role, id_page) VALUES (1, 1), (1, 2), (1, 4),
 
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
 	VALUES (2, 1, 4, 'Emile Feuille', 9, 164, 333, 55, 50, 13, 12, 11, true, now(), now(), now());
-	
+
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, actif, horodatage, horodatage_creation, horodatage_connexion)
-    VALUES (1, 2, 6, 'Eddy Scylla', true, now(), now(), now());
+	VALUES (1, 2, 6, 'Eddy Scylla', true, now(), now(), now());
 
-
-
-
-	

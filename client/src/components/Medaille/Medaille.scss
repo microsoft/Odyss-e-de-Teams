@@ -1,5 +1,8 @@
 @import "../../common/sass/variables";
 
+.medaille {
+    max-width: 2.5rem;
+}
 .medaille.selected {
     border: solid 2px $color-yellow;
     border-radius: 3rem;

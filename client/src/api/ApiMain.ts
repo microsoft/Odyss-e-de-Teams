@@ -1,39 +1,54 @@
 class API {
-  protected API_TOKEN = process.env.REACT_APP_API_TOKEN;
-  protected BASE_URL = process.env.REACT_APP_API_URL;
+    protected API_TOKEN = process.env.REACT_APP_API_TOKEN;
+    protected BASE_URL = process.env.REACT_APP_API_URL;
 
-  protected fetchGET(url, params = null) {
-    let urlParams = "";
+    protected fetchGET(url: string, params: any = null) {
+        let urlParams = "";
+        if (params) {
+            Object.keys(params).forEach((e) => {
+                if (params[e]) {
+                    urlParams += `&${e.toString()}=${params[e]}`;
+                }
+            });
+        }
 
-    if (params) {
-      Object.keys(params).forEach((e) => {
-        urlParams += `&${e.toString()}=${params[e]}`;
-      });
+        let urlAPI = this.BASE_URL + url + "?api_key=" + this.API_TOKEN + (params ? urlParams : "");
+
+        return fetch(urlAPI, {
+            credentials: "include"
+        })
+            .then((response) => response.json())
+            .catch((error) => this.handleAPIError(error));
     }
 
-    let urlAPI = url + "?api_key=" + this.API_TOKEN + (params ? urlParams : "");
+    protected fetchPOST(url: string, body: any, params: any = null) {
+        let urlParams = "";
+        if (params) {
+            Object.keys(params).forEach((e) => {
+                if (params[e]) {
+                    urlParams += `&${e.toString()}=${params[e]}`;
+                }
+            });
+        }
 
-    return fetch(this.BASE_URL + urlAPI)
-      .then((response) => response.json())
-      .catch((error) => this.handleAPIError(error));
-  }
+        let urlAPI = this.BASE_URL + url + "?api_key=" + this.API_TOKEN + (params ? urlParams : "");
 
-  protected fetchPOST(url, body) {
-    return fetch(this.BASE_URL + url + "?api_key" + this.API_TOKEN, {
-      method: "post",
-      body: JSON.stringify(body),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .catch((error) => this.handleAPIError(error));
-  }
+        return fetch(urlAPI, {
+            method: "post",
+            credentials: "include",
+            body: JSON.stringify(body),
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .catch((error) => this.handleAPIError(error));
+    }
 
-  handleAPIError(error) {
-    console.error(error);
-  }
+    handleAPIError(error) {
+        console.error(error);
+    }
 }
 
 export default API;

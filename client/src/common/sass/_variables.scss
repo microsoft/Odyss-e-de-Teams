@@ -16,4 +16,5 @@ Gradiants
 ****/
 @mixin orange-gradiant() {
   background: linear-gradient(to right, #ffc623 -29%, #ff8322 176%);
+  color: $color-white1 !important;
 }

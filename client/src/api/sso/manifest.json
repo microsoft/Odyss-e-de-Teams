@@ -1,0 +1,58 @@
+﻿{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.5",
+  "version": "1.0",
+  "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
+  "packageName": "com.odysseeteams",
+  "developer": {
+    "name": "Saegus",
+    "websiteUrl": "https://9fc911c4.ngrok.io",
+    "privacyUrl": "https://9fc911c4.ngrok.io/privacypolicy",
+    "termsOfUseUrl": "https://9fc911c4.ngrok.io/termsofuse"
+  },
+  "name": {
+    "short": "L'Odyssee de Teams",
+    "full": "L'Odyssee de Teams - Un voyage à travers les usages"
+  },
+  "description": {
+    "short": "Partez à la conquète de la collaboration avec Microsoft Teams",
+    "full": "Le jeu concours intéractif pour explorer la galaxie des usages collaboratifs"
+  },
+  "icons": {
+    "outline": "outline.png",
+    "color": "color.png"
+  },
+  "accentColor": "#ffffff",
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://9fc911c4.ngrok.io/config/?inTeamsSSO=true",
+      "canUpdateConfiguration": true,
+      "scopes": [
+        "team",
+        "groupchat"
+      ]
+    }
+  ],
+  "staticTabs": [
+    {
+      "contentUrl": "https://9fc911c4.ngrok.io/?inTeamsSSO=true",
+      "entityId": "myTasks",
+      "name": "My Tasks",
+      "scopes": [
+        "personal"
+      ]
+    }
+  ],
+  "permissions": [
+    "messageTeamMembers",
+    "identity"
+  ],
+  "validDomains": [
+    "9fc911c4.ngrok.io",
+    "localhost"
+  ],
+  "webApplicationInfo": {
+    "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
+    "resource": "api://5830a2dd-c958-47bd-b6e8-676341fc5faf"
+  }
+}

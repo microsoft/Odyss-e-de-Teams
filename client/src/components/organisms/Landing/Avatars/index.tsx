@@ -1,14 +1,12 @@
 import React from "react";
-
 import { withTranslation } from "react-i18next";
+import { Button } from "react-bootstrap";
 
-import Button from "components/atoms/Button/Button";
 import { AvatarCard, AvatarCardMobile } from "components/molecules/AvatarCard";
 
 import "./style.scss";
 
 const Avatars = (props) => {
-  console.log("props", props);
   const { t, onSelectAvatar, avatars, onClickNext } = props;
 
   const isMobile = window.innerWidth < 768;
@@ -21,7 +19,7 @@ const Avatars = (props) => {
   const avatarsRender = avatars.map((avatar, index) =>
     !isMobile ? (
       <AvatarCard
-        className="Avatars__body__list__item col-12 col-sm-2 m-1 justify-content-center"
+        className="Avatars__body__list__item m-1 d-flex justify-content-center"
         key={index}
         id={avatar.id_avatar}
         title={avatar.nom}
@@ -32,54 +30,67 @@ const Avatars = (props) => {
         onClickAvatarAction={onSelect}
       />
     ) : (
-      <AvatarCardMobile
-        className="Avatars__body__list__item col-12 col-sm-2 m-1 justify-content-center"
-        key={index}
-        id={avatar.id_avatar}
-        title={avatar.nom}
-        description={avatar.description}
-        image={`/images/avatar/${avatar.image}`}
-        onClickActionText={t("landing.Avatars.body.selectAvatar")}
-        selected={avatar.selected}
-        onClickAvatarAction={onSelect}
-      />
-    )
+        <AvatarCardMobile
+          className="Avatars__body__list__item m-1 d-flex justify-content-center"
+          key={index}
+          id={avatar.id_avatar}
+          title={avatar.nom}
+          description={avatar.description}
+          image={`/images/avatar/${avatar.image}`}
+          onClickActionText={t("landing.Avatars.body.selectAvatar")}
+          selected={avatar.selected}
+          onClickAvatarAction={onSelect}
+        />
+      )
   );
 
   return (
-    <div className="Avatars">
+    <div className="Avatars d-flex h-100 flex-column justify-content-start px-5 py-4">
       {isMobile && (
         <div className="Avatars__logo">
           <img src="/images/logo/logo_gauche_blanc.png" alt="logo" />
         </div>
       )}
-      <div className="Avatars__title">{t("landing.Avatars.title")}</div>
-      <div className="Avatars__subtitle">
-        {isMobile
-          ? t("landing.Avatars.subtitle-mobile")
-          : t("landing.Avatars.subtitle")}
-      </div>
-      <div className="Avatars__body">
-        {!isMobile && (
-          <>
-            <div className="Avatars__body__title">
-              {t("landing.Avatars.body.title")}
-            </div>
+      <div className="Avatars__container p-4 m-2 m-md-0">
+        <h1 className="Avatars__title color-white1">{t("landing.Avatars.title")}</h1>
+        <h4 className="Avatars__subtitle color-white1">
+          {isMobile
+            ? t("landing.Avatars.subtitle-mobile")
+            : t("landing.Avatars.subtitle")}
+        </h4>
+        <div className="Avatars__body color-white1 mt-4">
+          {!isMobile && (
+            <>
+              <h2 className="Avatars__body__title text-center color-white1 my-2">
+                {t("landing.Avatars.body.title")}
+              </h2>
 
-            <div className="Avatars__body__subtitle">
-              {t("landing.Avatars.body.description")}
-            </div>
-          </>
-        )}
+              <div className="Avatars__body__subtitle text-center color-white1 mx-auto mb-2 w-75">
+                {t("landing.Avatars.body.description")}
+              </div>
+            </>
+          )}
 
-        <div className="Avatars__body__list col-12">{avatarsRender}</div>
+          <div className="Avatars__body__list d-flex justify-space-between">
+            {avatarsRender}
+          </div>
 
-        <div className="Avatars__actions">
-          <Button
-            text={t("landing.Avatars.buttonText")}
-            className="Button__orange-gradiant col-12 col-sm-3"
-            onClickAction={onClickNext}
-          />
+          <div className="Avatars__actions mt-2">
+            <Button
+              variant="light"
+              onClick={onClickNext}
+              className={"d-none d-md-block"}
+            >
+              {t("landing.Avatars.buttonText")}
+            </Button>
+            <Button
+              variant="light"
+              onClick={onClickNext}
+              className={"d-block d-md-none btn__orange-gradiant"}
+            >
+              {t("landing.Avatars.buttonText")}
+            </Button>
+          </div>
         </div>
       </div>
     </div>

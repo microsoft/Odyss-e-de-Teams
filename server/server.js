@@ -15,6 +15,7 @@ manifest.register.plugins.push({
     "options": [
         {
             "name": "odyssee_teams",
+            "models": [__dirname + '/models/**/*.js'], 
             "sequelize": sequelize,
             "sync": false,
             "forceSync": false

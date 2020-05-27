@@ -8,13 +8,25 @@ const register = async (server, options) => {
         path: baseUrl,
         method: 'GET',
         handler: async function (request, h) {
-            const id_user = 1;
             const db = request.getDb('odyssee_teams');
+            const User = db.getModel('User');
+            if (!request.state.oid_ad) {
+                return false;
+            }
+            let currentUserByAD = await User.findOne({
+                where: {
+                    oid_ad: request.state.oid_ad
+                }
+            });
+            if (!currentUserByAD) {
+                return false;
+            }
+
             const params = request.query;
             let and_query = "";
             let replacements = {}, oneResult = false;
             if (params.mode && params.mode === 'current') {
-                replacements['user'] = id_user;
+                replacements['user'] = currentUserByAD.id_user;
                 and_query = " AND a.id_user=:user";
                 oneResult = true;
             }
@@ -42,11 +54,43 @@ const register = async (server, options) => {
         }
     });
     server.route({
+        path: baseUrl + '/createByAD',
+        method: 'POST',
+        handler: async function (request, h) {
+            const body = request.payload;
+            const db = request.getDb('odyssee_teams');
+            const User = db.getModel('User');
+            const current_oid_ad = (body && body.ad && body.ad.idToken ? body.ad.idToken.oid : request.state.oid_ad);
+            if (!current_oid_ad) {
+                return false;
+            }
+            let currentUserByAD = await User.findOne({
+                where: {
+                    oid_ad: current_oid_ad
+                }
+            });
+            if (currentUserByAD) {
+                return currentUserByAD;
+            }
+            currentUserByAD = await User.create({
+                id_organisation: 1, oid_ad: body.ad.idToken.oid, id_role: 1, id_avatar:body.id_avatar, nom: body.ad.name, actif: true
+            });
+            return currentUserByAD;
+        }
+    });
+    server.route({
         path: baseUrl + '/medailles',
         method: 'GET',
-        handler: function (request, h) {
-            const id_user = 1;
+        handler: async function (request, h) {
+            if (!request.state.oid_ad) return false;
             const db = request.getDb('odyssee_teams');
+            const User = db.getModel('User');
+            const currentUserByAD = await User.findOne({
+                where: {
+                    oid_ad: request.state.oid_ad
+                }
+            });
+            const id_user = currentUserByAD.id_user;
             let replacements = { lang: lang, user: id_user };
 
             return db.sequelize.query(`
@@ -72,8 +116,15 @@ const register = async (server, options) => {
         path: baseUrl + '/set-avatar',
         method: 'POST',
         handler: async function (request, h) {
-            const id_user = 1;
+            if (!request.state.oid_ad) return false;
             const db = request.getDb('odyssee_teams');
+            const User = db.getModel('User');
+            const currentUserByAD = await User.findOne({
+                where: {
+                    oid_ad: request.state.oid_ad
+                }
+            });
+            const id_user = currentUserByAD.id_user;
             let body = request.payload;
             if (!body) {
                 return { results: false };
@@ -93,8 +144,15 @@ const register = async (server, options) => {
         path: baseUrl + '/set-medaille-avatar',
         method: 'POST',
         handler: async function (request, h) {
-            const id_user = 1;
+            if (!request.state.oid_ad) return false;
             const db = request.getDb('odyssee_teams');
+            const User = db.getModel('User');
+            const currentUserByAD = await User.findOne({
+                where: {
+                    oid_ad: request.state.oid_ad
+                }
+            });
+            const id_user = currentUserByAD.id_user;
             let body = request.payload;
             if (!body) {
                 return { results: false };
