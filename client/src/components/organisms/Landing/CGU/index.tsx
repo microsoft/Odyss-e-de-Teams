@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withTranslation } from "react-i18next";
 
 import { Form, Button } from "react-bootstrap";
@@ -10,6 +10,8 @@ const CGU = (props) => {
 
   const isMobile = window.innerWidth < 768;
 
+  const [CGUAccepted, setCGUAccepted] = useState(false);
+
   return (
     <div className="CGU d-flex flex-column align-items-center justify-content-center h-100 mx-auto">
       {isMobile && (
@@ -18,7 +20,9 @@ const CGU = (props) => {
         </div>
       )}
       <div className="CGU__container p-4 m-2 m-md-0">
-        <div className="CGU__container__title mb-4">{t("landing.CGU.title")}</div>
+        <div className="CGU__container__title mb-4">
+          {t("landing.CGU.title")}
+        </div>
 
         <div className="CGU__container__body mb-4">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
@@ -79,6 +83,7 @@ const CGU = (props) => {
               <Form.Check
                 type="checkbox"
                 label={t("landing.CGU.acknowledge")}
+                onChange={(e) => setCGUAccepted(!CGUAccepted)}
               />
             </Form.Group>
 
@@ -87,6 +92,7 @@ const CGU = (props) => {
                 variant="light"
                 className="py-3 py-md-2"
                 onClick={onClickNext}
+                disabled={CGUAccepted === false}
               >
                 {t("landing.CGU.buttonText")}
               </Button>
@@ -100,6 +106,7 @@ const CGU = (props) => {
             variant="primary"
             className="btn__orange-gradiant py-3 py-md-2 w-100"
             onClick={onClickNext}
+            disabled={CGUAccepted === false}
           >
             {t("landing.CGU.buttonText")}
           </Button>

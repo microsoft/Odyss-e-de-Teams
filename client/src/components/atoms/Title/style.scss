@@ -1,0 +1,7 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.Title {
+  @include typo-title-component;
+  color: $color-primary;
+}

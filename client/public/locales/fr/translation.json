@@ -29,5 +29,25 @@
       },
       "buttonText": "Configuration terminée"
     }
+  },
+  "admin": {
+    "title": "Bienvenue à bord, Commandant !",
+    "outillage_desc": "Configuration et paramètres",
+    "planning_desc": "Communication aux Explorateurs, événements galactiques",
+    "classement_title": "Classements",
+    "classement_desc": "Classements et statistiques",
+    "classement_general": "Classement général",
+    "classement_points": "Points",
+    "classement_xp": "Classement XP",
+    "explorers_desc": "Explorateurs ont rejoint le voyage depuis le lancement",
+    "campaign_pending": "est en cours",
+    "campaign_week_goal": "Les explorateurs disposent d'une semaine pour effectuer la nouvelle mission",
+    "campaign_time_left": "Temps restant :"
+  },
+  "menu": {
+    "cockpit": "Cockpit",
+    "planning": "Planning",
+    "classement": "Classement",
+    "outillage": "Outillage"
   }
 }
