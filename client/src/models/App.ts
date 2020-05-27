@@ -6,4 +6,5 @@ export interface IAppProps extends RouteComponentProps {
 
 export interface IAppState {
   logged: boolean;
+  is_admin: boolean;
 }
