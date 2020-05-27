@@ -1,0 +1,70 @@
+@import "common/sass/_variables";
+
+.Rankings {
+  background-color: $color-white1;
+  border-radius: 15px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__icon {
+      width: 30%;
+    }
+
+    &__info {
+      width: 70%;
+
+      &__title {
+        font-weight: bold;
+        color: $color-primary;
+        font-size: 1.3em;
+      }
+    }
+  }
+
+  &__body {
+    margin-top: 1em;
+
+    &__separator {
+      margin-bottom: 1em;
+      margin-top: 1em;
+    }
+    &__exp {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &__avatar {
+          width: 5em;
+          height: 5em;
+
+          &__img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        &__user {
+          font-weight: bold;
+          text-align: center;
+        }
+
+        &__score {
+          text-align: center;
+        }
+      }
+    }
+
+    &__separator {
+      height: 1px;
+      background-color: $color-primary-light;
+      opacity: 0.3;
+    }
+  }
+}
