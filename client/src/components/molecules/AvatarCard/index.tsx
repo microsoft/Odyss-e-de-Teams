@@ -1,8 +1,8 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 
 import { IAvatarCard } from "./AvatarCard.model";
 
-import Button from "components/atoms/Button/Button";
 
 import "./style.scss";
 
@@ -20,25 +20,26 @@ const AvatarCard = (props: IAvatarCard) => {
 
   return (
     <div
-      className={`AvatarCard ${className} ${
+      className={`AvatarCard text-center px-4 ${className} ${
         selected ? "AvatarCard--selected" : ""
       }`}
     >
       <div className="AvatarCard__title">{title}</div>
-      <div className="AvatarCard__container">
+      <div className="AvatarCard__container mx-auto">
         <div className="AvatarCard__container__image">
           <img src={image} alt={title} />
         </div>
       </div>
 
-      <div className="AvatarCard__description">{description}</div>
+      <div className="AvatarCard__description mt-1">{description}</div>
 
-      <div className="AvatarCard__actions">
+      <div className="AvatarCard__actions mt-2">
         <Button
-          className="Button__white"
-          text={onClickActionText}
-          onClickAction={onClickAvatarAction.bind(this, id)}
-        />
+          variant="light"
+          onClick={onClickAvatarAction.bind(this, id)}
+        >
+          {onClickActionText}
+        </Button>
       </div>
     </div>
   );

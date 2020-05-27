@@ -1,7 +1,6 @@
 import React from "react";
 import { withTranslation, Trans } from "react-i18next";
-
-import Button from "components/atoms/Button/Button";
+import { Button } from "react-bootstrap";
 
 import "./style.scss";
 
@@ -9,11 +8,11 @@ const Description = (props) => {
   const { t, isMobile } = props;
 
   return (
-    <div className="Description">
-      <div className="Description__logo">
+    <div className="Description d-flex h-100 flex-column justify-content-center px-5 px-md-0 mx-auto">
+      <div className="Description__logo mt-4 mb-5">
         <img src="/images/logo/logo_gauche_blanc.png" alt="logo" />
       </div>
-      <div className="Description__body col-12">
+      <div className="Description__body mb-4 mt-3">
         <div className="Description__body__elt">
           <div className="Description__body__elt__img">
             <img
@@ -23,7 +22,7 @@ const Description = (props) => {
           </div>
           <div className="Description__body__elt__text">
             <Trans i18nKey="landing.description.medals">
-              25 <b>médailles</b> à collectionner pour exhiber votre talent
+              25 <strong>médailles</strong> à collectionner pour exhiber votre talent
               d'explorateur de la collaboration !
             </Trans>
           </div>
@@ -34,7 +33,7 @@ const Description = (props) => {
           </div>
           <div className="Description__body__elt__text">
             <Trans i18nKey="landing.description.questions">
-              200 <b>quesstions</b> pour vous propulser sur Microsoft Teams
+              200 <strong>quesstions</strong> pour vous propulser sur Microsoft Teams
             </Trans>
           </div>
         </div>
@@ -45,7 +44,7 @@ const Description = (props) => {
           </div>
           <div className="Description__body__elt__text">
             <Trans i18nKey="landing.description.reward">
-              Une <b> récompense d'honneur </b> pour le meilleur explorateur"
+              Une <strong> récompense d'honneur </strong> pour le meilleur explorateur"
             </Trans>
           </div>
         </div>
@@ -61,12 +60,13 @@ const Description = (props) => {
       </div>
       <div className="Description__button">
         <Button
-          text={t("landing.description.buttonText")}
-          className={`Welcome__button ${
-            isMobile ? "Button__orange-gradiant" : "Button__white"
-          } col-sm-4 col-10`}
-          onClickAction={props.onClickNext}
-        />
+          variant="light"
+          className={`d-inline-block py-3 py-md-2 mt-4 mt-md-2 ${
+            isMobile ? "btn__orange-gradiant" : ""
+            }`}
+          onClick={props.onClickNext}>
+          {t("landing.description.buttonText")}
+        </Button>
       </div>
     </div>
   );

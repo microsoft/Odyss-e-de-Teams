@@ -16,13 +16,17 @@
                 background: $color-primary-light;
                 color: #fff;
                 border: none;
-                padding: 1rem;
+                padding: .5rem;
+                vertical-align: middle;
             }
             th:first-child {
                 border-radius: 1rem 0 0 0;
             }
             th:last-child {
                 border-radius: 0 1rem 0 0;
+            }
+            th.th-nom {
+                width: 30%;
             }
         }
         tfoot {

@@ -1,0 +1,86 @@
+@import "../../common/sass/variables";
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+
+.steps {
+    background: url("/images/regle/fil_dekstop.svg") no-repeat left 6.5rem;
+    background-size: 82%;
+    padding-left: 16%;
+    .step {
+        position: relative;
+        font-size: 0.9em;
+        img {
+            width: 6rem;
+        }
+        .num-step {
+            background-color: $color-primary-light;
+            color: $color-white1;
+            border-radius: 100%;
+            -webkit-box-shadow: 0px 0px 5px 5px rgba(123, 131, 235, 0.62);
+            -moz-box-shadow: 0px 0px 5px 5px rgba(123, 131, 235, 0.62);
+            box-shadow: 0px 0px 5px 5px rgba(123, 131, 235, 0.62);
+            width: fit-content;
+            padding: 0.5rem;
+            line-height: 0.5rem;
+        }
+    }
+    .step2 {
+        margin-top: 4em;
+    }
+    .step3 {
+        img {
+            width: 6.5rem;
+        }
+    }
+    .step4 {
+        background: url(/images/regle/step4_desktop.svg) no-repeat 3rem -0.5rem;
+        background-size: 16rem;
+        margin-top: -4rem;
+        padding-top: 11rem;
+        padding-right: 1.25rem;
+    }
+}
+
+.cartouche {
+    background: $color-primary-light;
+    color: $color-white1;
+    border-radius: 1rem;
+    font-size: 0.9em;
+    height: 100%;
+}
+
+@include media-breakpoint-down(md) {
+    .steps {
+        flex-direction: column;
+        background: none;
+        padding-left: 0;
+        .step {
+            width: 50%;
+            .num-step {
+                position: relative;
+            }
+        }
+        .step1, .step3 {
+            .num-step {
+                float: right;
+                right: -.5rem;
+            }
+        }
+        .step2 {
+            margin-left: 50%;
+            .num-step {
+                float: left;
+                left: -2rem;
+            }
+        }
+        .step4 {
+            width: 100%;
+            background: none;
+            img {
+                width: 80%;
+            }
+        }
+    }
+}
