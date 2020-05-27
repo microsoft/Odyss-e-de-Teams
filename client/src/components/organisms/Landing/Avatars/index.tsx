@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withTranslation } from "react-i18next";
 import { Button } from "react-bootstrap";
 
@@ -11,9 +11,12 @@ const Avatars = (props) => {
 
   const isMobile = window.innerWidth < 768;
 
+  const [avatarSelected, setAvatarSelected] = useState(false);
+
   const onSelect = (id, event) => {
     event.preventDefault();
     onSelectAvatar(id);
+    setAvatarSelected(true);
   };
 
   const avatarsRender = avatars.map((avatar, index) =>
@@ -30,18 +33,18 @@ const Avatars = (props) => {
         onClickAvatarAction={onSelect}
       />
     ) : (
-        <AvatarCardMobile
-          className="Avatars__body__list__item m-1 d-flex justify-content-center"
-          key={index}
-          id={avatar.id_avatar}
-          title={avatar.nom}
-          description={avatar.description}
-          image={`/images/avatar/${avatar.image}`}
-          onClickActionText={t("landing.Avatars.body.selectAvatar")}
-          selected={avatar.selected}
-          onClickAvatarAction={onSelect}
-        />
-      )
+      <AvatarCardMobile
+        className="Avatars__body__list__item m-1 d-flex justify-content-center"
+        key={index}
+        id={avatar.id_avatar}
+        title={avatar.nom}
+        description={avatar.description}
+        image={`/images/avatar/${avatar.image}`}
+        onClickActionText={t("landing.Avatars.body.selectAvatar")}
+        selected={avatar.selected}
+        onClickAvatarAction={onSelect}
+      />
+    )
   );
 
   return (
@@ -52,7 +55,9 @@ const Avatars = (props) => {
         </div>
       )}
       <div className="Avatars__container p-4 m-2 m-md-0">
-        <h1 className="Avatars__title color-white1">{t("landing.Avatars.title")}</h1>
+        <h1 className="Avatars__title color-white1">
+          {t("landing.Avatars.title")}
+        </h1>
         <h4 className="Avatars__subtitle color-white1">
           {isMobile
             ? t("landing.Avatars.subtitle-mobile")
@@ -80,6 +85,7 @@ const Avatars = (props) => {
               variant="light"
               onClick={onClickNext}
               className={"d-none d-md-block"}
+              disabled={avatarSelected === false}
             >
               {t("landing.Avatars.buttonText")}
             </Button>
@@ -87,6 +93,7 @@ const Avatars = (props) => {
               variant="light"
               onClick={onClickNext}
               className={"d-block d-md-none btn__orange-gradiant"}
+              disabled={avatarSelected === false}
             >
               {t("landing.Avatars.buttonText")}
             </Button>
