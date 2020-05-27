@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./style.scss";
+import { withTranslation, WithTranslation } from "react-i18next";
 
 interface IPlanningWidget {
   notificationsCount: number;
@@ -9,8 +10,8 @@ interface IPlanningWidget {
   className?: string;
 }
 
-const PlanningWidget = (props: IPlanningWidget) => {
-  const { notificationsCount, redirectLink, className } = props;
+const PlanningWidget = (props: IPlanningWidget & WithTranslation) => {
+  const { notificationsCount, redirectLink, className, t } = props;
 
   return (
     <Link to={redirectLink} className={`${className} no-hover`}>
@@ -22,14 +23,13 @@ const PlanningWidget = (props: IPlanningWidget) => {
 
           <div className="Planning__container__content col-8 d-flex flex-column py-3 justify-content-center">
             <div className="Planning__container__content__title">
-              Planning
+              {t("menu.planning")}
               <div className="Planning__container__content__title__notif">
                 {notificationsCount}
               </div>
             </div>
             <div className="Planning__container__content__description">
-              Communication aux Explorateurs, événements galactiques et
-              programme de modules de questions
+              {t("admin.planning_desc")}
             </div>
           </div>
         </div>
@@ -38,4 +38,4 @@ const PlanningWidget = (props: IPlanningWidget) => {
   );
 };
 
-export default PlanningWidget;
+export default withTranslation()(PlanningWidget);
