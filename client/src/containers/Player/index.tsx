@@ -19,6 +19,7 @@ import Cockpit from "containers/Cockpit/Cockpit";
 import Profil from "containers/Profil/Profil";
 import Classement from "containers/Classement/Classement";
 import Regle from "containers/Regle/Regle";
+import Quizz from "containers/Jouer/Quizz/Quizz";
 
 //store
 import IStore from "store/IStore";
@@ -42,7 +43,7 @@ class Player extends React.Component<IPlayerProps, {}> {
               <Cockpit />
             </Route>
             <Route exact path="/Jouer">
-              <p>Jouer container</p>
+              <Quizz />
             </Route>
             <Route exact path="/Classement">
               <Classement />
