@@ -88,14 +88,6 @@ INSERT INTO public.t_niveau(nom, ordre, actif, horodatage, horodatage_creation)
 	('Version améliorée', 2, true, now(), now()),
 	('Version ultime', 3, true, now(), now());
 	
--- module
-INSERT INTO public.t_module(nom, actif, horodatage, horodatage_creation)
-	VALUES ('Collaborer en toute simplicité', true, now(), now()),
-	('Piloter un projet', true, now(), now()),
-	('Organiser la réunion parfaite', true, now(), now()),
-	('Manager une équipe', true, now(), now()),
-	('Travailler en mobilité', true, now(), now());
-
 -- navigation
 INSERT INTO public.t_page (nom, router_link, horodatage, actif, ordre, is_menu, picto) VALUES
 	('Cockpit', '/#/Cockpit', now(), true, 10, true, 'cockpit.svg'),
@@ -108,11 +100,32 @@ INSERT INTO public.t_page (nom, router_link, horodatage, actif, ordre, is_menu, 
 
 INSERT INTO public.j_role_page (id_role, id_page) VALUES (1, 1), (1, 2), (1, 4), (1, 6), (1, 7), (2, 1), (2, 3), (2, 4), (2, 5);
 
-
 -- agenda
 INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_creation) VALUES
 	('Activer la mission « Lancement »', current_date, true, now(), now()),
 	('Communication : Envoi d''un email de lancement', current_date, true, now(), now());
+
+
+/***************************/
+/******** question *********/
+/***************************/
+
+-- mecanique
+  INSERT INTO public.t_mecanique (nom, actif, horodatage, horodatage_creation) VALUES 	
+    ('QCM - Choix unique', true, now(), now()),
+    ('QCM - Choix multiple', true, now(), now()),	
+    ('QCM avec vidéo - Choix unique', true, now(), now()),
+    ('QCM avec vidéo - Choix multiple', true, now(), now()),
+    ('Remettre dans l''ordre', true, now(), now());
+	
+-- module
+  INSERT INTO public.t_module (nom, image, actif, horodatage, horodatage_creation) VALUES 	
+    ('Communiquer en toute simplicité', 'communiquer.svg', true, now(), now()),
+    ('Piloter un projet', 'piloter.svg', true, now(), now()),	
+    ('Organiser la réunion parfaite', 'reunion.svg', true, now(), now()),
+    ('Manager une équipe', 'manager.svg', true, now(), now()),
+    ('Travailler en mobilité', 'mobilite.svg', true, now(), now());
+	
 
 -- multilangue
 	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
@@ -124,13 +137,14 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 	UNION ALL
 	SELECT DISTINCT 'MODULE', id_module, 'fr', nom, NULL::text FROM public.t_module
 	UNION ALL
-	SELECT DISTINCT 'PAGE', id_page, 'fr', nom, NULL::text FROM public.t_page;
+	SELECT DISTINCT 'PAGE', id_page, 'fr', nom, NULL::text FROM public.t_page
+	UNION ALL
+	SELECT DISTINCT 'AGENDA', id_agenda, 'fr', nom, NULL::text FROM public.t_agenda;
 	
 -- type assets communication
   INSERT INTO public.t_type_asset_communication (nom, actif, horodatage, horodatage_creation) VALUES 	
     ('Emailing', true, now(), now()),
     ('RS', true, now(), now());
-
 
 
 -- user temp dev

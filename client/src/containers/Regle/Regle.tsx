@@ -40,8 +40,8 @@ const FadeInStep4 = styled.div`
 
 const FadeInUpCartouche = styled.div`
     opacity: 0;
-    animation-duration: 0.5s;
-    animation-delay: 0.5s;
+    animation-duration: 0.25s;
+    animation-delay: 0.25s;
     animation-name: ${fadeInUpBigAnimation};
     animation-fill-mode: forwards;
 `;
@@ -56,7 +56,7 @@ class Regle extends Component {
                 <h1 className={"color-white d-flex d-md-none justify-content-center"}>
                     <img
                         src={process.env.PUBLIC_URL + "/images/icone/bouclier.png"}
-                        alt="Ico Classement Général"
+                        alt="Ico Regles"
                         className={"ico-titre"}
                     />
                     Règles du jeu

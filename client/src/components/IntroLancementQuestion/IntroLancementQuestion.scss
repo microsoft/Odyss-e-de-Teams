@@ -1,0 +1,31 @@
+@import "../../common/sass/variables";
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+.main-intro {
+  .illustration-chronometre {
+    width: 25%;
+  }
+  .content {
+    width: 75%;
+  }
+  .btn {
+    width: fit-content;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .main-intro {
+    @include bg-encart;
+    .illustration-chronometre {
+      width: 50%;
+    }
+    .content {
+      width: 100%;
+    }
+    .btn {
+      width: 100%;
+    }
+  }
+}
