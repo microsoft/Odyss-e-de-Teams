@@ -15,8 +15,6 @@ const register = async (server, options) => {
         return false;
       }
 
-      console.log(request.query);
-
       let replacements = { id_organisation: request.query.id_organisation };
 
       const res = await Organisation.findOne({
