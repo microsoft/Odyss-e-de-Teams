@@ -42,7 +42,20 @@
     "explorers_desc": "Explorateurs ont rejoint le voyage depuis le lancement",
     "campaign_pending": "est en cours",
     "campaign_week_goal": "Les explorateurs disposent d'une semaine pour effectuer la nouvelle mission",
-    "campaign_time_left": "Temps restant :"
+    "campaign_time_left": "Temps restant :",
+    "outillage": {
+      "subtitle": "Salle des machines",
+      "subtitle_desc": "Configurez le logo de votre organisation qui apparaîtra sur le Cockpit de chaque Explorateur de votre organisation.",
+      "current_logo_title": "Logo actuellement déployé",
+      "current_logo_desc": "Commandant, il est recommandé d’importer un logo sur fond blanc pour assurer sa lisibilité.",
+      "logoChangeButtonLabel": "Charger un logo",
+      "logoChangeButtonReset": "Réinitialiser",
+      "logoChangeButtonSave": "Sauvegarder les modifications",
+      "no_logo_text": "Pas de logo :("
+    }
+  },
+  "outillage": {
+    "title": "Outillage et paramètres"
   },
   "menu": {
     "cockpit": "Cockpit",
