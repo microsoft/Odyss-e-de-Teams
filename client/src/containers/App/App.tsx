@@ -36,12 +36,15 @@ class App extends React.Component<IAppProps, IAppState> {
           this.setState(
             {
               userAD: user,
-              loading: false,
               error: null,
             },
             () => {
               if (user) {
                 this._loadCurrentUser();
+              } else {
+                this.setState({
+                  loading: false,
+                });
               }
             }
           );
@@ -96,8 +99,21 @@ class App extends React.Component<IAppProps, IAppState> {
               is_admin: data.id_role === 2,
             },
             () => {
-              const action_liste = { type: "SET_CURRENT_USER", value: data };
+              const action_liste = {
+                type: "SET_CURRENT_USER",
+                value: data,
+              };
               this.props.dispatch(action_liste);
+
+              // A supprimer un jour
+              // Le dispatch prend du temps, du coup le render se fait sans avoir les props remplies
+              // voir côté redux-promise ou redux-thunk
+              setTimeout(
+                function () {
+                  this.setState({ loading: false });
+                }.bind(this),
+                500
+              );
             }
           );
         }
