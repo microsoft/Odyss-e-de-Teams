@@ -49,5 +49,8 @@
     "planning": "Planning",
     "classement": "Classement",
     "outillage": "Outillage"
+  },
+  "login": {
+    "loginButtonText": "Connexion à l'AD"
   }
 }
