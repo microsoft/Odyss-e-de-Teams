@@ -1,27 +1,16 @@
 import React from "react";
-import { Switch, Route, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { Container, Button } from "react-bootstrap";
 import Cookies from "js-cookie";
 
 import "./App.scss";
 
-import Header from "components/Header/Header";
-
 // containers
-import Menu from "containers/Menu/Menu";
-import Cockpit from "containers/Cockpit/Cockpit";
 import Landing from "containers/Landing/index";
-import Profil from "containers/Profil/Profil";
-import Classement from "containers/Classement/Classement";
-import Regle from "containers/Regle/Regle";
-import Jouer from "../Jouer/Jouer";
-import Quizz from "../Jouer/Quizz/Quizz";
 
-//layouts
-import MainLayout from "layouts/Main";
-
-import Admin from "containers/Admin";
+import AdminContainer from "containers/Admin";
+import PlayerContainer from "containers/Player";
+import LoginContainer from "containers/Login";
 
 import UserAPI from "api/User";
 import AuthService from "api/sso/auth.service";
@@ -104,6 +93,7 @@ class App extends React.Component<IAppProps, IAppState> {
           this.setState(
             {
               logged: true,
+              is_admin: data.id_role === 2,
             },
             () => {
               const action_liste = { type: "SET_CURRENT_USER", value: data };
@@ -116,97 +106,42 @@ class App extends React.Component<IAppProps, IAppState> {
   };
 
   render() {
-    if (!AuthService.isCallback()) {
-      let hasGradient =
-        this.props.location.pathname.indexOf("/Jouer") !== -1 ? false : true;
-      const isMobile = window.innerWidth <= 768;
+    const isMobile = window.innerWidth <= 768;
+    const { loading } = this.state;
 
-      return this.state.userAD ? (
-        !this.state.logged ? (
-          <Landing
-            onCompleteLanding={this.onCompleteLanding}
-            isMobile={isMobile}
-          />
-        ) : (
-          <Container
-            fluid
-            className={`${
-              hasGradient ? "gradient" : ""
-            } main-container d-flex p-0`}
-          >
-            <Menu currentRouterLink={this.props.location.pathname} />
-            <div className={"main-content w-100 py-4 px-3 px-md-5"}>
-              <div className={"mb-3"}>
-                <Header hasGradient={hasGradient} />
-              </div>
-              <Switch>
-                <Route exact path="/Cockpit">
-                  <Cockpit />
-                </Route>
-                <Route exact path="/Jouer">
-                  <Jouer />
-                </Route>
-                <Route exact path="/Jouer/Quizz">
-                  <Quizz />
-                </Route>
-                <Route exact path="/Classement">
-                  <Classement />
-                </Route>
-                <Route exact path="/Profil">
-                  <Profil />
-                </Route>
-                <Route exact path="/Regles">
-                  <Regle />
-                </Route>
-                <Route exact path="/Planning">
-                  <p>Planning container</p>
-                </Route>
-                <Route exact path="/Outillage">
-                  <p>Outillage container</p>
-                </Route>
-                <Route exact path="/Landing">
-                  <Landing
-                    onCompleteLanding={this.onCompleteLanding}
-                    isMobile={isMobile}
-                  />
-                </Route>
-              </Switch>
-            </div>
-          </Container>
-        )
-      ) : (
-        <Container fluid className={`main-container d-flex p-0`}>
-          <div className="App-login">
-            <div className="App-login-image-container">
-              {/* <img
-                                                className="App-login-image"
-                                                alt="Taskmeow logo"
-                                                src={logo}
-                                            /> */}
-            </div>
-            <div className="App-login-button-container">
-              <Button variant="primary" onClick={() => this.login()}>
-                {/* <img
-                                                    className="App-login-button-image"
-                                                    alt="Microsoft logo"
-                                                    src={microsoftLogo}
-                                                /> */}
-                <span className="ms-Button-label label-46">Connexion AD</span>
-              </Button>
-            </div>
-          </div>
-        </Container>
-      );
+    if (loading) {
+      return <div> Loading</div>;
     } else {
-      return (
-        <div>
-          {this.state?.error ? (
-            <div className="App-error">{JSON.stringify(this.state.error)}</div>
-          ) : (
-            <p>Erreur non spécifiée</p>
-          )}
-        </div>
-      );
+      if (AuthService.isCallback()) {
+        return (
+          <div>
+            {this.state?.error ? (
+              <div className="App-error">
+                {JSON.stringify(this.state.error)}
+              </div>
+            ) : (
+              <p>Erreur non spécifiée</p>
+            )}
+          </div>
+        );
+      } else {
+        if (!this.state.userAD) {
+          return <LoginContainer login={this.login()} />;
+        } else {
+          if (!this.state.logged)
+            return (
+              <Landing
+                onCompleteLanding={this.onCompleteLanding}
+                isMobile={isMobile}
+              />
+            );
+
+          if (this.state.is_admin) return <AdminContainer />;
+
+          if (!this.state.is_admin)
+            return <PlayerContainer hasGradient={true} />;
+        }
+      }
     }
   }
 }

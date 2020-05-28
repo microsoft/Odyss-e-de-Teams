@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter, RouteComponentProps, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Translation, Trans } from "react-i18next";
+import { Translation } from "react-i18next";
 
 import "./style.scss";
 
