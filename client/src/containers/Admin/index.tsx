@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { withRouter, RouteComponentProps, Link } from "react-router-dom";
+import {
+  withRouter,
+  RouteComponentProps,
+  Switch,
+  Route,
+} from "react-router-dom";
 import { connect } from "react-redux";
 import { Translation } from "react-i18next";
 
@@ -14,12 +19,9 @@ import Menu from "containers/Menu/Menu";
 // components
 import Header from "components/Header/Header";
 
-// ressources
-import AdminAPI from "api/Admin";
-import ClassementAPI from "api/Classement";
 
 // router
-import AdminRouterBase from "containers/Admin/router";
+import AdminCockpit from "containers/Admin/Dashboard";
 
 import Outillage from "containers/Admin/Outillage";
 
@@ -54,8 +56,11 @@ class Admin extends Component<IAdminProps> {
           <div className={"mb-3"}>
             <Header hasGradient={hasGradiant} />
           </div>
-
-          <Outillage />
+          <Switch>
+            <Route exact path="/Cockpit" component={AdminCockpit} />
+            <Route exact path="/Outillage" component={Outillage} />
+            <Route component={AdminCockpit} />
+          </Switch>
         </div>
       </Main>
     );
