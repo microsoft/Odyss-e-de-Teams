@@ -36,7 +36,7 @@ const register = async (server, options) => {
             const db = request.getDb('odyssee_teams');
             let replacements = { lang: lang };
             
-            return db.sequelize.query("SELECT DISTINCT a.id_module, TRIM(b.nom) AS nom FROM public.t_module a INNER JOIN public.t_libelle_i18n b ON a.id_module=b.id_table AND TRIM(b.code)='MODULE' AND TRIM(b.lang)=:lang WHERE a.actif ORDER BY TRIM(b.nom)",{
+            return db.sequelize.query("SELECT DISTINCT a.id_module, TRIM(b.nom) AS nom, a.image FROM public.t_module a INNER JOIN public.t_libelle_i18n b ON a.id_module=b.id_table AND TRIM(b.code)='MODULE' AND TRIM(b.lang)=:lang WHERE a.actif ORDER BY TRIM(b.nom)",{
                 replacements: replacements, type: QueryTypes.SELECT
             }).then(result => {
                 return {

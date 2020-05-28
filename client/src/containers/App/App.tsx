@@ -11,6 +11,8 @@ import Cockpit from '../Cockpit/Cockpit';
 import Profil from '../Profil/Profil';
 import Classement from '../Classement/Classement';
 import Regle from '../Regle/Regle';
+import Jouer from '../Jouer/Jouer';
+import Quizz from '../Jouer/Quizz/Quizz';
 import Header from '../../components/Header/Header';
 import Landing from "../Landing/index";
 
@@ -117,7 +119,10 @@ class App extends React.Component<IAppProps, IAppState> {
                                             <Cockpit />
                                         </Route>
                                         <Route exact path="/Jouer">
-                                            <p>Jouer container</p>
+                                            <Jouer />
+                                        </Route>
+                                        <Route exact path="/Jouer/Quizz">
+                                            <Quizz />
                                         </Route>
                                         <Route exact path="/Classement">
                                             <Classement />
