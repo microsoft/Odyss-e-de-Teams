@@ -33,3 +33,14 @@
   @include main-font;
   font-weight: bold;
 }
+
+@mixin typo-title-component {
+  @include main-font;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+@mixin typo-body-component {
+  @include main-font;
+  font-size: 2em;
+}
