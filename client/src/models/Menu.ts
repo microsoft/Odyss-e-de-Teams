@@ -1,19 +1,20 @@
 import { IUser } from "./User";
 
 export interface IMenu {
-    id_page: number;
-    nom: string;
-    router_link: string;
-    ordre: number;
-    picto: string;
+  id_page: number;
+  nom: string;
+  router_link: string;
+  ordre: number;
+  picto: string;
 }
 
 export interface IMenuState {
-    listMenu: IMenu[];
-    selectedMenu?: IMenu;
+  listMenu: IMenu[];
+  selectedMenu?: IMenu;
+  organisationLogo: string;
 }
 
 export interface IMenuProps {
-    currentRouterLink: string;
-    currentUser: IUser;
+  currentRouterLink: string;
+  currentUser: IUser;
 }
