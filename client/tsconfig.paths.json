@@ -3,7 +3,11 @@
     "baseUrl": ".",
     "paths": {
       "components/*": ["src/components/*"],
-      "api/*": ["src/api/*"]
+      "api/*": ["src/api/*"],
+      "layouts/*": ["src/layouts/*"],
+      "containers/*": ["src/containers/*"],
+      "models/*": ["src/models/*"],
+      "store/*": ["src/store/*"]
     }
   }
 }
