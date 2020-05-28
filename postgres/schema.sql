@@ -442,6 +442,7 @@ CREATE TABLE public.t_module
 (
   id_module integer NOT NULL DEFAULT nextval('public.seq_t_module'::regclass),
   nom character(180),
+  image text,
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,

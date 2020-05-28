@@ -15,6 +15,13 @@ export const questionReducer: Reducer<IQuestionState, any> = (
                 listQuestion: action.value
             }
             return nextState || state
+        case 'SET_MODULE_NIVEAU':
+            nextState = {
+                ...state,
+                selectedModule: action.value.module,
+                selectedNiveau: action.value.niveau
+            }
+            return nextState || state
         default:
             return state;
     }
