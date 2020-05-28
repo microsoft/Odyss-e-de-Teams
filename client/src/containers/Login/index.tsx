@@ -7,8 +7,10 @@ interface ILoginProps {
   login: void;
 }
 
-const Login = (props: ILoginProps & WithTranslation) => {
-  const { login, t, tReady } = props;
+const Login = (props: ILoginProps) => {
+  const { login } = props;
+
+  console.log("Login container");
 
   return (
     <Container fluid className={`main-container d-flex p-0`}>
@@ -27,9 +29,7 @@ const Login = (props: ILoginProps & WithTranslation) => {
                                                 alt="Microsoft logo"
                                                 src={microsoftLogo}
                                             /> */}
-            <span className="ms-Button-label label-46">
-              {tReady && t("login.loginButtonText")}
-            </span>
+            <span className="ms-Button-label label-46">LOGIN</span>
           </Button>
         </div>
       </div>
@@ -37,4 +37,4 @@ const Login = (props: ILoginProps & WithTranslation) => {
   );
 };
 
-export default withTranslation()(Login);
+export default Login;
