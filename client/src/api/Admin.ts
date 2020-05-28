@@ -10,6 +10,14 @@ class Admin extends API {
   getCurrentCampaignInfo(): Promise<any> {
     return super.fetchGET(this.resource + "/current-mission");
   }
+
+  getCurrentCompanyInfo(): Promise<any> {
+    return super.fetchGET(this.resource + "/companyInfos");
+  }
+
+  uploadCompanyLogo(data: FormData): Promise<any> {
+    return super.fetchUploadData(this.resource + "/upload-logo", data);
+  }
 }
 
 export default new Admin();
