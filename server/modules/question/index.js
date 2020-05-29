@@ -5,28 +5,45 @@ let lang = 'fr';
 
 const register = async (server, options) => {
     server.route({
-        path: baseUrl + '/questionnaire',
+        path: baseUrl + '/quizz',
         method: 'GET',
-        handler: function (request, h) {
-            /* const db = request.getDb('odyssee_teams');
-            const params = request.query;
-            let limit_query = '', and_query = '', replacements = {};
-            if (params.limit && params.limit > 0) {
-                limit_query = ' LIMIT :limit';
-                replacements['limit'] = +params.limit;
+        handler: async function (request, h) {
+            const db = request.getDb("odyssee_teams");
+            const User = db.getModel("User");
+            if (!request.state.oid_ad) {
+                return false;
             }
-            if (params.query) {
-                and_query = " AND LOWER(TRIM(a.nom)) LIKE :q";
-                replacements['q'] = params.query + '%';
+            let currentUserByAD = await User.findOne({
+                where: {
+                oid_ad: request.state.oid_ad,
+                },
+            });
+            if (!currentUserByAD) {
+                return false;
             }
-            return db.sequelize.query("SELECT a.id_activite, TRIM(a.nom) AS nom FROM t_activite a WHERE a.actif" + and_query + " ORDER BY a.ordre" + limit_query,{
+            let replacements = {
+                'limit': 3
+            };
+            let main_query = `
+                SELECT DISTINCT a.id_question, a.id_module, a.id_thematique, a.id_niveau, a.id_mecanique, TRIM(a.nom) AS nom FROM public.t_question a WHERE a.actif LIMIT :limit
+            `;
+            const resultIdQuestion = await db.sequelize.query("SELECT DISTINCT array_agg(id_question) AS ids FROM (" + main_query + ")s0", { replacements: replacements, type: QueryTypes.SELECT, plain: true });
+            const tabIdQuestion = resultIdQuestion['ids'];
+
+            const resultReponse = await db.sequelize.query("SELECT DISTINCT a.id_reponse, a.id_question, TRIM(a.nom) AS nom FROM public.t_reponse a WHERE a.actif", { replacements: replacements, type: QueryTypes.SELECT });
+            const listReponse = resultReponse;
+            console.log(listReponse);
+
+            return db.sequelize.query(main_query,{
                 replacements: replacements, type: QueryTypes.SELECT
             }).then(result => {
+                result.forEach(dataQuestion => {
+                    dataQuestion['listReponse'] = listReponse.filter(r => r.id_question === dataQuestion.id_question);
+                });
                 return {
                     results: result
                 };
-            }); */
-            return [];
+            });
         }
     });
     server.route({

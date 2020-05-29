@@ -1,8 +1,10 @@
 import IStore from "./IStore";
 
 export const initialState: IStore = {
-  question: {
+  quizz: {
     isLoading: false,
+    step: 1,
+    hasReponse: false,
     listQuestion: [],
     selectedModule: null,
     selectedNiveau: null

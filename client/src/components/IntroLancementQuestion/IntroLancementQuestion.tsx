@@ -30,15 +30,25 @@ class IntroLancementQuestion extends Component<
     return (
       <FadeInIntro>
         <div className={"main-intro m-0 px-4 py-4 px-md-0 pt-md-0 pb-md-2"}>
-          <h2 className={"d-none d-md-block color-primary-light mb-2"}>
-            {this.props.selectedModule?.nom} - {this.props.selectedNiveau?.nom}
-          </h2>
-          <h2 className={"d-block d-md-none mb-2"}>
-            {this.props.selectedModule?.nom} - {this.props.selectedNiveau?.nom}
-          </h2>
-          <p className={"d-none d-md-block mb-2"}>
-            Derniers préparatifs avant le décollage
-          </p>
+          <div className={"d-none d-md-flex mb-2 titre"}>
+            <img
+              src={
+                process.env.PUBLIC_URL +
+                "/images/question/module/" +
+                this.props.selectedModule?.image
+              }
+              alt={`Illustration module ${this.props.selectedModule?.nom}`}
+            />
+            <div className={"ml-2"}>
+              <h2 className={"color-primary-light mb-1"}>
+                {this.props.selectedModule?.nom} -{" "}
+                <strong className={"color-primary"}>
+                  {this.props.selectedNiveau?.nom}
+                </strong>
+              </h2>
+              <p className={"mb-0"}>Derniers préparatifs avant le décollage</p>
+            </div>
+          </div>
           <h4 className={"d-none d-md-block mt-md-3 mb-2"}>
             Seras-tu capable de répondre à la vitesse de la lumière ?
           </h4>

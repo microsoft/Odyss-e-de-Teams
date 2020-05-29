@@ -42,8 +42,8 @@ class Jouer extends Component<IJouerProps, IJouerState> {
     };
     this.props.dispatch(action_liste);
     this.setState({
-        step: 3
-      });
+      step: 3,
+    });
   };
 
   render() {
