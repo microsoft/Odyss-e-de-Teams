@@ -1,0 +1,26 @@
+@import "../../common/sass/variables";
+
+.conteneur-reponse {
+  .list-group-item {
+    border: none;
+    border-radius: .5rem !important;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+    box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+    .num_reponse {
+      padding: .5rem .6rem;
+      border-radius: 100%;
+      -webkit-box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+      -moz-box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+      box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+      img {
+        width: 1.25rem;
+      }
+    }
+  }
+  .list-group-item.active {
+    background: rgba(123, 131, 235, 0.15);
+    border: solid 1px $color-primary-light;
+    color: initial;
+  }
+}

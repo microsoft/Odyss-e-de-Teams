@@ -1,13 +1,13 @@
 import { Reducer } from "react";
-import { IQuestionState } from "../../models/Question";
+import { IQuizzState } from "../../models/Question";
 
 import initialState from "../initialState";
 
-export const questionReducer: Reducer<IQuestionState, any> = (
-    state: IQuestionState = initialState.question,
+export const questionReducer: Reducer<IQuizzState, any> = (
+    state: IQuizzState = initialState.quizz,
     action: any
-): IQuestionState => {
-    let nextState: IQuestionState;
+): IQuizzState => {
+    let nextState: IQuizzState;
     switch (action.type) {
         case 'SET_LIST_QUESTION':
             nextState = {

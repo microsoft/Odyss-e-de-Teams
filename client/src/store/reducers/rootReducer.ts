@@ -6,7 +6,7 @@ import { userReducer } from "./userReducer";
 import IStore from "../IStore";
 
 const rootReducer = combineReducers<IStore>({
-  question: questionReducer,
+  quizz: questionReducer,
   user: userReducer,
 });
 
