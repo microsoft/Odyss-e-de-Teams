@@ -3,3 +3,5 @@ build
 .vscode/settings.json
 .DS_Store
 .env
+
+server/public/company-assets
