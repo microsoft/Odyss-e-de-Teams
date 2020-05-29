@@ -208,6 +208,50 @@ const register = async (server, options) => {
         });
     },
   });
+
+  //missions en cours
+  server.route({
+    path: baseUrl + "/current-mission",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD) {
+        return false;
+      }
+
+      const replacements = {
+        id_organisation: currentUserByAD.id_organisation,
+      };
+
+      return db.sequelize
+        .query(
+          "select ts.nom as mission_name, ts.horodatage + INTERVAL '14 day' as mission_end from t_organisation org inner join t_semaine ts  on ts.id_semaine = org.id_semaine where id_organisation =:id_organisation",
+          {
+            replacements: replacements,
+            type: QueryTypes.SELECT,
+          }
+        )
+        .then((result) => {
+          return {
+            results: result[0],
+          };
+        });
+    },
+  });
 };
 exports.plugin = {
   register,
