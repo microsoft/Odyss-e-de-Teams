@@ -32,9 +32,7 @@ class App extends React.Component<IAppProps, IAppState> {
   componentDidMount() {
     AuthService.getToken()
       .then((token) => {
-        console.log("here", token);
         return AuthService.getUser().then((user) => {
-          console.log("auth", user);
           this.setState(
             {
               userAD: user || false,
@@ -88,17 +86,13 @@ class App extends React.Component<IAppProps, IAppState> {
   };
 
   private _loadCurrentUser = () => {
-    console.log("load");
     if (this.state.userAD) {
-      console.log("userAd", this.state.userAD);
       Cookies.set("oid_ad", this.state.userAD.idToken.oid, {
         expires: 7,
         path: "/",
       });
       UserAPI.getUser("fr", "current").then((data) => {
-        console.log("here getUser", data);
         if (data) {
-          console.log("getUser 2 - data", data);
           this.setState(
             {
               logged: true,
@@ -130,8 +124,6 @@ class App extends React.Component<IAppProps, IAppState> {
   render() {
     const isMobile = window.innerWidth <= 768;
     const { loading } = this.state;
-
-    console.log(this.state);
 
     if (loading) {
       return <div> Loading</div>;
