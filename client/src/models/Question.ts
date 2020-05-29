@@ -85,6 +85,10 @@ export interface IMecaniqueQuestionProps {
   onSelect: any;
 }
 
+export interface IQCMProps extends IMecaniqueQuestionProps {
+  multiple?: boolean;
+}
+
 export interface IMecaniqueQuestionState {
   selectedReponseIds: number[];
 }

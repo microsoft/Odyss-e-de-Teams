@@ -4,8 +4,9 @@ import { Button } from "react-bootstrap";
 
 import QuestionAPI from "api/Question";
 
+import QCM from "components/MecaniqueQuestion/QCM/QCM";
+import RemettreOrdre from "components/MecaniqueQuestion/RemettreOrdre/RemettreOrdre";
 import Stopwatch from "components/StopWatch/StopWatch";
-import QCMUnique from "components/MecaniqueQuestion/QCMUnique/QCMUnique";
 
 import IStore from "src/store/IStore";
 import { IQuizzProps, IQuizzState, IQuestion } from "src/models/Question";
@@ -28,9 +29,9 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
   }
 
   componentDidMount() {
-    if (!(this.state.listQuestion.length > 0)) {
+    // todo if (!(this.state.listQuestion.length > 0)) {
       this._loadQuizz();
-    }
+    // }
   }
 
   private _loadQuizz = () => {
@@ -57,7 +58,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
   private _onSelect = (question: IQuestion, reponseIds: number[]) => {
     question.selectedReponseIds = reponseIds;
     this.setState({
-      hasReponse: true,
+      hasReponse: question.selectedReponseIds.length > 0,
     });
   };
 
@@ -69,13 +70,14 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
         return (
           <div>
             <p>Choisissez une réponse.</p>
-            <QCMUnique question={item} onSelect={this._onSelect} />
+            <QCM question={item} onSelect={this._onSelect} />
           </div>
         );
       case 2: // QCM - Choix multiple
         return (
           <div>
             <p>Cocher les bonnes réponses</p>
+            <QCM question={item} onSelect={this._onSelect} multiple={true} />
           </div>
         );
       case 3: // QCM avec vidéo - Choix unique
@@ -94,6 +96,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
         return (
           <div>
             <p>Cliquez sur les listes pour mettre les étapes dans l’ordre !</p>
+            <RemettreOrdre question={item} onSelect={this._onSelect} />
           </div>
         );
       case 6: // QCM avec pictos réponses - Choix unique
