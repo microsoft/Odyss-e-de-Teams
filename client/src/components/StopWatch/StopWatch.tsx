@@ -54,7 +54,7 @@ class Stopwatch extends Component<{}, IStopWatchState> {
           {minutes} : {seconds} : {centiseconds}
         </h3>
         {this.state.timerOn === false && this.state.timerTime > 0 && (
-            <Button variant="primary" onClick={this._stopTimer}>Reprendre la mission</Button>
+            <Button variant="primary" onClick={this._startTimer}>Reprendre la mission</Button>
         )}
         {this.state.timerOn === true && (
             <Button variant="primary" onClick={this._stopTimer}>Suspendre la mission</Button>
