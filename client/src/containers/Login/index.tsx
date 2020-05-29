@@ -1,14 +1,14 @@
 import React from "react";
 
 import { Container, Button } from "react-bootstrap";
-import { withTranslation, WithTranslation } from "react-i18next";
+// import { withTranslation, WithTranslation } from "react-i18next";
 
 interface ILoginProps {
   login: void;
 }
 
-const Login = (props: ILoginProps & WithTranslation) => {
-  const { login, t, tReady } = props;
+function Login(props: ILoginProps) {
+  const { login } = props;
 
   return (
     <Container fluid className={`main-container d-flex p-0`}>
@@ -27,14 +27,12 @@ const Login = (props: ILoginProps & WithTranslation) => {
                                                 alt="Microsoft logo"
                                                 src={microsoftLogo}
                                             /> */}
-            <span className="ms-Button-label label-46">
-              {tReady && t("login.loginButtonText")}
-            </span>
+            <span className="ms-Button-label label-46">Login</span>
           </Button>
         </div>
       </div>
     </Container>
   );
-};
+}
 
-export default withTranslation()(Login);
+export default Login;
