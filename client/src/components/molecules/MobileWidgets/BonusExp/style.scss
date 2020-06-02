@@ -1,0 +1,48 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.BonusEXP {
+  &__container {
+    border-radius: 15px;
+    background: url("/images/overlays/overlay-purple.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+    &__img {
+      display: flex;
+
+      &__first {
+        position: absolute;
+        transform: translate(-50%, 25%) scale(0.7);
+      }
+
+      &__second {
+        position: absolute;
+        transform: translate(40%, -15%) scale(1.2);
+      }
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+
+      &__bonus {
+        @include typo-title-component;
+        font-weight: bold;
+        color: $color-white1;
+      }
+
+      &__text {
+        @include typo-body-component;
+        color: $color-white1;
+        font-size: 1.1em;
+      }
+    }
+  }
+}
