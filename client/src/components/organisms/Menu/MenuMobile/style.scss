@@ -1,6 +1,8 @@
 @import "common/sass/_variables.scss";
 
 .MenuMobile {
+  position: fixed !important; //override bootstrap default position
+  z-index: 999;
   background: $color-white1;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -8,6 +10,7 @@
   height: 7em;
   overflow: hidden;
   transition: all 0.3s ease;
+  box-shadow: 0 3px 6px 0 rgba(67, 5, 139, 0.16);
 
   &__expand {
     height: 60%;
