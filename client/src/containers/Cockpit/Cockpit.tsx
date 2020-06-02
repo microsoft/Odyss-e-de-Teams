@@ -1,16 +1,22 @@
 import React, { Component } from "react";
-import { WithTranslation, withTranslation } from "react-i18next";
+import { WithTranslation, withTranslation, Trans } from "react-i18next";
 
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 import "./Cockpit.scss";
 
 import LaunchFollowWidget from "components/molecules/Widgets/CampaignFollow";
 
+import BonusEXPMobile from "components/molecules/MobileWidgets/BonusExp";
+
 import UserAPI from "api/User";
 import { Link } from "react-router-dom";
 
-class Cockpit extends Component<WithTranslation, {}> {
+interface ICockpit {
+  isMobile: boolean;
+}
+
+class Cockpit extends Component<WithTranslation & ICockpit, {}> {
   state = {
     campaign: {
       name: "",
@@ -36,11 +42,11 @@ class Cockpit extends Component<WithTranslation, {}> {
     }
   }
   render() {
-    const { t, tReady } = this.props;
+    const { t, tReady, isMobile } = this.props;
     const { loading, campaign } = this.state;
 
     if (loading) return <> Loading ... </>;
-    else
+    else if (!isMobile)
       return (
         <div className="Cockpit mt-4">
           <h1 className="color-primary">
@@ -142,7 +148,43 @@ class Cockpit extends Component<WithTranslation, {}> {
           </div>
         </div>
       );
+    else
+      return (
+        <div className="Cockpit ">
+          <h1 className="color-primary">
+            {tReady && t("player.cockpit.title")}
+          </h1>
+
+          <BonusEXPMobile className="col-12" />
+
+          <Col className="col-12"></Col>
+        </div>
+      );
   }
 }
 
 export default withTranslation()(Cockpit);
+
+// <LaunchFollowWidget
+//   className="col-12 p-4 Mobile_launchFollowWidget"
+//   campaign_name={campaign.name}
+//   campaign_end={campaign.date_end}
+//   translationDescKey="player.cockpit.campain_desc"
+// />
+
+// <Row className="col-12">
+//   <div className="Cockpit__mission">
+//     <div className="Cockpit__mission__title">
+//       Mission : « {campaign.name} !» en cours !
+//               </div>
+
+//     <div className="Cockpit__mission__desc">
+//       <Trans i18nKey="player.cockpit.campaign_desc">
+//         Cumulez des points au classement en répondant chaque semaine
+//         aux nouveaux modules de questions Teams et tentez de remporter
+//                   un <strong>Surface Headphone</strong> d'une valeur de 300,00
+//                   euros et de nombreux cadeaux ! "
+//                 </Trans>
+//     </div>
+//   </div>
+// </Row>
