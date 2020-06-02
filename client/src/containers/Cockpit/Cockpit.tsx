@@ -34,9 +34,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
       this.setState({
         campaign: {
           name: campainInfo.results.mission_name,
-          date_end: new Date(
-            campainInfo.results.mission_end.replace(" ", "T")
-          ).toString(),
+          date_end: campainInfo.results.mission_end.replace("T", " "),
         },
         loading: false,
       });
