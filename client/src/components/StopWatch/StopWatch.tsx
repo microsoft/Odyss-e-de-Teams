@@ -18,6 +18,10 @@ class Stopwatch extends Component<{}, IStopWatchState> {
       this._startTimer();
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
+
   private _startTimer = () => {
     this.setState({
       timerOn: true,
