@@ -10,6 +10,7 @@ import LaunchFollowWidget from "components/molecules/Widgets/CampaignFollow";
 import BonusEXPMobile from "components/molecules/MobileWidgets/BonusExp";
 import CampaignFollowMobile from "components/molecules/MobileWidgets/CampaignFollow";
 import GameLauncherMobile from "components/molecules/MobileWidgets/GameLauncher";
+import LinksMobile from "components/molecules/MobileWidgets/Links";
 
 import UserAPI from "api/User";
 import { Link } from "react-router-dom";
@@ -152,8 +153,8 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
       );
     else
       return (
-        <div className="Cockpit ">
-          <h1 className="color-primary">
+        <div className="Cockpit pb-4">
+          <h1 className="color-primary Cockpit__title mt-4 col-12">
             {tReady && t("player.cockpit.title")}
           </h1>
 
@@ -165,7 +166,34 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
             campaignName={campaign.name}
           />
 
-          <GameLauncherMobile className="col-12 mt-4" />
+          <Link to="/Jouer" className="no-hover">
+            <GameLauncherMobile className="col-12 mt-4" />
+          </Link>
+
+          <Link to="/Classement" className="no-hover">
+            <LinksMobile
+              className="col-12 mt-4 rotate-cup"
+              iconPath="/images/icone/cup.png"
+              i18nTitleKey="player.cockpit.ranking_title"
+              i18nDescriptionKey="player.cockpit.ranking_desc"
+            />
+          </Link>
+          <Link to="/Profil" className="no-hover">
+            <LinksMobile
+              className="col-12 mt-4"
+              iconPath="/images/icone/monde.png"
+              i18nTitleKey="player.cockpit.profile_title"
+              i18nDescriptionKey="player.cockpit.profile_desc"
+            />
+          </Link>
+          <Link to="/Regles" className="no-hover">
+            <LinksMobile
+              className="col-12 mt-4 fixheight-mobile"
+              iconPath="/images/icone/bouclier.png"
+              i18nTitleKey="player.cockpit.rules_title"
+              i18nDescriptionKey="player.cockpit.rules_desc"
+            />
+          </Link>
         </div>
       );
   }

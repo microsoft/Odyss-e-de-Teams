@@ -10,9 +10,18 @@
   .Cockpit__links__item__text {
     color: $color-black1;
   }
+
+  .Links__container__text__descrption {
+    color: $color-primary-light;
+  }
 }
 
 .Cockpit {
+  &__title {
+    font-size: 2em;
+    font-weight: bold;
+  }
+
   &__game {
     background: url("/images/overlays/overlay-yellow.svg");
     background-size: cover;
@@ -121,4 +130,16 @@
 
 .LaunchFollowWidget__container__timeleft {
   height: 1em;
+}
+
+.fixheight-mobile {
+  .Links__container {
+    height: 7em;
+  }
+}
+
+.rotate-cup {
+  .Links__container__icone img {
+    transform: translate(-25%, 0%) scale(1.2) rotate(25deg);
+  }
 }
