@@ -87,6 +87,7 @@ class AdminDashboard extends Component {
               campaign_name={this.state.campaign.name}
               campaign_end={this.state.campaign.date_end}
               className="col-7 offset-1 py-4"
+              translationDescKey="admin.campaign_week_goal"
             />
           </div>
 

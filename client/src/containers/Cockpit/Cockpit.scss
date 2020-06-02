@@ -1,0 +1,145 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+// anchor tag from <Link> Component
+.no-hover {
+  &:hover {
+    text-decoration: none;
+  }
+
+  .Cockpit__links__item__text {
+    color: $color-black1;
+  }
+
+  .Links__container__text__descrption {
+    color: $color-primary-light;
+  }
+}
+
+.Cockpit {
+  &__title {
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  &__game {
+    background: url("/images/overlays/overlay-yellow.svg");
+    background-size: cover;
+    border-radius: 15px;
+    height: 10rem;
+    display: flex;
+
+    &:hover {
+      cursor: pointer;
+    }
+    &__container {
+      color: $color-white1;
+
+      &__name {
+        @include typo-title-component;
+        position: relative;
+        font-size: 2.5em;
+      }
+
+      &__desc {
+        @include typo-body-component;
+        font-size: 1.2em;
+      }
+    }
+
+    &__icon {
+      width: 30%;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
+
+  &__exp {
+    background: url("/images/overlays/overlay-purple.svg");
+    border-radius: 15px;
+    height: 10rem;
+
+    &__container {
+      display: flex;
+
+      &__icon {
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+
+      &__title {
+        @include typo-title-component;
+        font-weight: bold;
+        color: $color-white1;
+        font-size: 1.5em;
+        padding-top: 1em;
+      }
+
+      &__text {
+        @include typo-body-component;
+        color: $color-white1;
+        font-size: 1em;
+      }
+    }
+  }
+
+  &__links {
+    display: flex;
+    margin-top: 1em;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    &__item {
+      background: $color-white1;
+      border-radius: 15px;
+      padding: 0.2em;
+      display: flex;
+      align-items: center;
+      height: 10rem;
+
+      &__icon {
+        width: 30%;
+      }
+
+      &__text {
+        margin-left: 1em;
+        &__content {
+          @include typo-title-component;
+          color: $color-primary;
+          font-size: 1.5em;
+        }
+
+        &__desc {
+          @include typo-body-component;
+          font-size: 1em;
+        }
+      }
+    }
+  }
+}
+
+.LaunchFollowWidget__background {
+  transform: scale(1.2);
+}
+
+.LaunchFollowWidget__container__timeleft {
+  height: 1em;
+}
+
+.fixheight-mobile {
+  .Links__container {
+    height: 7em;
+  }
+}
+
+.rotate-cup {
+  .Links__container__icone img {
+    transform: translate(-25%, 0%) scale(1.2) rotate(25deg);
+  }
+}
