@@ -8,7 +8,9 @@ class User extends API {
   }
 
   createUserByAD(lang: string, dataAD?: any): Promise<any> {
-    return super.fetchPOST(this.resource + "/createByAD", dataAD, { language: lang });
+    return super.fetchPOST(this.resource + "/createByAD", dataAD, {
+      language: lang,
+    });
   }
 
   getMedaille(lang: string): Promise<any> {
@@ -17,6 +19,10 @@ class User extends API {
 
   setMedailleAvatar(id: number): Promise<any> {
     return super.fetchPOST(this.resource + "/set-medaille-avatar", { id: id });
+  }
+
+  getCurrentCampaignInfo(): Promise<any> {
+    return super.fetchGET(this.resource + "/current-mission");
   }
 }
 

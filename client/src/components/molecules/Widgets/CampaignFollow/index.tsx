@@ -10,12 +10,20 @@ interface ILaunchFollowWidgetProps {
   campaign_end: string;
   campaign_name: string;
   className?: string;
+  translationDescKey: string;
 }
 
 const LaunchFollowWidget = (
   props: ILaunchFollowWidgetProps & WithTranslation
 ) => {
-  const { campaign_name, campaign_end, className, t, tReady } = props;
+  const {
+    campaign_name,
+    campaign_end,
+    className,
+    translationDescKey,
+    t,
+    tReady,
+  } = props;
 
   return (
     <div className={`LaunchFollowWidget ${className}`}>
@@ -28,8 +36,7 @@ const LaunchFollowWidget = (
         </div>
 
         <div className="LaunchFollowWidget__container__description col-10">
-          {tReady && t("admin.campaign_week_goal")} &laquo; {campaign_name}{" "}
-          &raquo;
+          {tReady && t(translationDescKey)} &laquo; {campaign_name} &raquo;
         </div>
 
         <div className="LaunchFollowWidget__container__timeleft col-8">

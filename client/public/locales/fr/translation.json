@@ -65,5 +65,23 @@
   },
   "login": {
     "loginButtonText": "Connexion à l'AD"
+  },
+  "player": {
+    "cockpit": {
+      "title": "Bienvenue à bord de ton vaisseau !",
+      "campain_desc": "Cumulez des points au classement en répondant chaque semaine aux nouveaux modules de questions Teams et tentez de remporter un <1>Surface Headphone</1> d'une valeur de 300,00 euros et de nombreux cadeaux ! ",
+      "start_game": "Lancer le jeu !",
+      "start_game_desc": "Chaque semaine, une nouvelle mission pour progresser dans ton expédition galactique sur Teams et obtenir des récompenses d'honneur",
+      "exp_points_desc": "points d'expérience",
+      "exp_daily_bonus": "Bonus activé aujourd'hui",
+      "ranking_title": "Classements",
+      "ranking_desc": "Classements génénal et par points d'EXP",
+      "profile_title": "Profil",
+      "profile_desc": "Niveau, statistiques et médailles",
+      "rules_title": "Règles",
+      "rules_desc": "Règles du jeu et récompenses",
+      "mobile_mission_title": "Mission : ",
+      "mobile_mission_pending": "en cours !"
+    }
   }
 }

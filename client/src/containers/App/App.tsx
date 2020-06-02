@@ -35,7 +35,7 @@ class App extends React.Component<IAppProps, IAppState> {
         return AuthService.getUser().then((user) => {
           this.setState(
             {
-              userAD: user,
+              userAD: user || false,
               error: null,
             },
             () => {
@@ -101,12 +101,12 @@ class App extends React.Component<IAppProps, IAppState> {
           this.setState({
             logged: true,
             is_admin: data.id_role === 2,
-            loading: false
+            loading: false,
           });
         } else {
           this.setState({
             logged: false,
-            loading: false
+            loading: false,
           });
         }
       });
