@@ -3,6 +3,22 @@ import { IUser } from "./User";
 export interface IQuestion {
   id_question: number;
   nom: string;
+  asset: string;
+  id_module: number;
+  id_thematique: number;
+  id_niveau: number;
+  id_mecanique: number;
+  listReponse: IReponse[];
+  selectedReponseIds?: number[]
+}
+
+
+export interface IReponse {
+  id_reponse: number;
+  id_question: number;
+  nom: string;
+  asset: string;
+  selected?: boolean;
 }
 
 export interface IModule {
@@ -14,13 +30,6 @@ export interface IModule {
 export interface INiveau {
   id_niveau: number;
   nom: string;
-}
-
-export interface IQuestionState {
-  isLoading: boolean;
-  selectedModule?: IModule;
-  selectedNiveau?: INiveau;
-  listQuestion?: IQuestion[];
 }
 
 export interface IJouerProps {
@@ -47,8 +56,45 @@ export interface IIntroLancementQuestionProps {
   onValid: any;
 }
 
+export interface IQuizzProps {
+  currentUser: IUser;
+  dataInitQuizz: any;
+}
+
+export interface IQuizzState {
+  isLoading: boolean;
+  step: number;
+  hasReponse: boolean;
+  selectedModule?: IModule;
+  selectedNiveau?: INiveau;
+  listQuestion?: IQuestion[];
+}
 
 export interface IQuizzProps {
   currentUser: IUser;
   dataInitQuizz: any;
+  dispatch?: any;
+}
+
+export interface IStopWatchState {
+  timerOn: boolean;
+  timerStart: number;
+  timerTime: number;
+}
+
+export interface IMecaniqueQuestionProps {
+  question: IQuestion;
+  onSelect: any;
+}
+
+export interface IQCMProps extends IMecaniqueQuestionProps {
+  multiple?: boolean;
+}
+
+export interface IMecaniqueQuestionState {
+  selectedReponseIds: number[];
+}
+
+export interface IRemettreOrdreState {
+  listReponseWithOrdre: any[];
 }

@@ -1,0 +1,19 @@
+@import "../../common/sass/variables";
+
+.main-quizz {
+    .titre {
+        img {
+            max-height: 3rem;
+        }
+    }
+}
+.toolbar-right {
+    width: 12rem;
+    .chrono {
+        @include bg-encart;
+        .btn {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    }
+}

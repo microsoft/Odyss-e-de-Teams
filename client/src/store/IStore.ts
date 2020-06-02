@@ -1,7 +1,7 @@
-import { IQuestionState } from "../models/Question";
+import { IQuizzState } from "../models/Question";
 import { IUserState } from "../models/User";
 
 export default interface IStore {
-  question: IQuestionState;
+  quizz: IQuizzState;
   user: IUserState;
 }

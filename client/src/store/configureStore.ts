@@ -9,7 +9,7 @@ const persistConfig = {
     key: 'root',
     storage: storage,
     stateReconciler: autoMergeLevel2,
-    whitelist: ['question']
+    whitelist: ['quizz']
 };
 
 const pReducer = persistReducer(persistConfig, rootReducer);

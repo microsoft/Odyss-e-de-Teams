@@ -4,6 +4,11 @@
 @import "~bootstrap/scss/mixins/_breakpoints.scss";
 
 .main-intro {
+  .titre {
+      img {
+          max-height: 3rem;
+      }
+  }
   .illustration-chronometre {
     width: 25%;
   }
