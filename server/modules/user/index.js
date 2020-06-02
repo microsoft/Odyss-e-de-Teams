@@ -1,5 +1,8 @@
 "use strict";
-const { QueryTypes } = require("sequelize");
+const { QueryTypes, Op } = require("sequelize");
+
+const dailyRewards = require("./daily_rewards.json");
+
 const baseUrl = "/user";
 let lang = "fr";
 
@@ -48,8 +51,18 @@ const register = async (server, options) => {
                     FROM public.t_medaille a
                         INNER JOIN public.t_libelle_i18n b ON a.id_medaille=b.id_table AND TRIM(b.code)='MEDAILLE' AND TRIM(b.lang)='fr'
                     WHERE a.actif
-                )
-                SELECT DISTINCT a.*, CASE WHEN c.id_medaille IS NOT NULL THEN c.nom ELSE b.nom END AS nom_avatar, CASE WHEN c.id_medaille IS NOT NULL THEN '/images/medaille/' || c.image ELSE '/images/avatar/' || b.image END AS image_avatar
+                ),
+                  logged_count as (
+                    SELECT COUNT(date_d) as days_logged
+                    FROM (
+                      SELECT date_trunc('day', horodatage) as date_d
+                      FROM public.h_user_login
+                      WHERE id_user=:user
+                      GROUP BY 1
+                      ORDER BY 1
+                    ) s)
+                SELECT DISTINCT a.*, CASE WHEN c.id_medaille IS NOT NULL THEN c.nom ELSE b.nom END AS nom_avatar, CASE WHEN c.id_medaille IS NOT NULL THEN '/images/medaille/' || c.image ELSE '/images/avatar/' || b.image END AS image_avatar,
+                      ( SELECT days_logged FROM logged_count)
                 FROM w0 a
                     LEFT JOIN w_avatar b ON a.id_avatar=b.id_avatar
                     LEFT JOIN w_medaille c ON a.id_medaille_avatar=c.id_medaille
@@ -250,6 +263,94 @@ const register = async (server, options) => {
             results: result[0],
           };
         });
+    },
+  });
+
+  // récompenses journalières
+
+  /**
+   * @summary Cette route "check" va permettre d'attribuer les rewards journaliers
+   * On va enregistrer une connexion utilisateur si ce dernier se connecte pour la première fois lors du jour courant
+   * Si c'est la première fois qu'il se connecte, alors on va calculer quelle récompense journalière il doit obtenir
+   */
+  server.route({
+    path: baseUrl + "/daily-rewards",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      const UserLogins = db.getModel("UserLogins");
+
+      const HistoMedaille = db.getModel("HMedailles");
+      const HistoGainXP = db.getModel("HGainXP");
+      const HistoGainPoints = db.getModel("HGainPoints");
+      const MedailleModel = db.getModel("Medaille");
+
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD) {
+        return false;
+      }
+
+      // check if user logged for the first time
+      const user_id = 1;
+      const countLoginToday = await db.sequelize.query(
+        `SELECT COUNT(*) as cnt_login from public.h_user_login WHERE id_user = ${user_id} AND horodatage::date = CURRENT_DATE`
+      );
+
+      if (Number(countLoginToday[0][0].cnt_login) < 0) {
+        return true; // recompense déjà donnée
+      } else {
+        // insert en base
+        await db.sequelize.query(
+          `INSERT INTO public.h_user_login ("id_user") VALUES(${user_id})`
+        );
+
+        // get le nombre de jours de connexion
+        const nbDaysOfConnexion = await db.sequelize.query(`
+          select date_trunc('day',horodatage) as dates
+          from public.h_user_login
+          where id_user = ${user_id}
+          group by 1
+          order by 1`);
+
+        let currentRewards =
+          dailyRewards[Number(nbDaysOfConnexion[0].length) + 1];
+
+        // on ajoute le score (points, exp, medaille) par rapport au type de gain journalier
+        if (currentRewards.type === "PTS") {
+          await HistoGainPoints.create({
+            id_user: user_id,
+            nb_point: currentRewards.value,
+          });
+        } else if (currentRewards.type == "EXP") {
+          await HistoGainXP.create({
+            id_user: user_id,
+            nb_point: currentRewards.value,
+          });
+        } else if (currentRewards.type == "MEDAL") {
+          const medaille = await MedailleModel.findOne({
+            where: { nom: currentRewards.value },
+          });
+          await HistoMedaille.create({
+            id_user: user_id,
+            id_medaille: medaille.id_medaille,
+          });
+        } else {
+        }
+
+        return true;
+      }
     },
   });
 };
