@@ -72,7 +72,29 @@ class Player extends React.Component<IPlayerProps, {}> {
     else
       return (
         <MobileLayout>
-          <Cockpit isMobile={isMobile} />
+          <Switch>
+            <Route exact path="/">
+              <Cockpit isMobile={isMobile} />
+            </Route>
+            <Route exact path="/Jouer">
+              <Quizz />
+            </Route>
+            <Route exact path="/Classement">
+              <Classement />
+            </Route>
+            <Route exact path="/Profil">
+              <Profil />
+            </Route>
+            <Route exact path="/Regles">
+              <Regle />
+            </Route>
+            <Route exact path="/Planning">
+              <p>Planning container</p>
+            </Route>
+            <Route exact path="/Outillage">
+              <p>Outillage container</p>
+            </Route>
+          </Switch>
         </MobileLayout>
       );
   }
