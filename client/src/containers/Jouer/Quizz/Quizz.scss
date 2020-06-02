@@ -6,6 +6,18 @@
             max-height: 3rem;
         }
     }
+    .question {
+        position: relative;
+        z-index: 5;
+        height: 0;
+        transition: opacity .5s ease-out;
+        opacity: 0;
+    }
+    .question.active {
+        z-index: 10;
+        height: auto;
+        opacity: 1;
+    }
 }
 .toolbar-right {
     width: 12rem;

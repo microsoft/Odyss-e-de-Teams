@@ -363,7 +363,10 @@ CREATE TABLE public.t_question
   id_thematique integer,
   id_niveau integer,
   id_mecanique integer,
-  nom character(180),
+  cle_fichier nchar(25),
+  reponse text,
+  nom text,
+  commentaire text,
   asset text,
   actif boolean,
   horodatage timestamp without time zone,
@@ -414,6 +417,7 @@ CREATE TABLE public.t_mecanique
 (
   id_mecanique integer NOT NULL DEFAULT nextval('public.seq_t_mecanique'::regclass),
   nom character(180),
+  cle_fichier text,
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
@@ -443,6 +447,7 @@ CREATE TABLE public.t_module
 (
   id_module integer NOT NULL DEFAULT nextval('public.seq_t_module'::regclass),
   nom character(180),
+  cle_fichier text,
   image text,
   actif boolean,
   horodatage timestamp without time zone,
@@ -519,6 +524,7 @@ CREATE TABLE public.t_niveau
 (
   id_niveau integer NOT NULL DEFAULT nextval('public.seq_t_niveau'::regclass),
   nom character(180),
+  cle_fichier text,
   ordre integer,
   actif boolean,
   horodatage timestamp without time zone,
@@ -555,10 +561,10 @@ CREATE TABLE public.t_reponse
 (
   id_reponse integer NOT NULL DEFAULT nextval('public.seq_t_reponse'::regclass),
   id_question integer,
-  nom character(180),
+  nom text,
   asset text,
+  ordre smallint,
   actif boolean,
-  valid boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
   CONSTRAINT pk_t_reponse PRIMARY KEY (id_reponse)
@@ -952,7 +958,7 @@ $BODY$;
 		code character(20),
 		id_table integer,
 		lang character(2),
-		nom character(180),
+		nom text,
 		description text,
 		CONSTRAINT pk_t_libelle_i18n PRIMARY KEY (id_libelle_i18n)
 	)
@@ -993,3 +999,93 @@ $BODY$;
 
 -- Foreign key semaine 
 ALTER TABLE t_organisation ADD FOREIGN KEY (id_semaine) REFERENCES t_semaine(id_semaine);
+
+
+CREATE OR REPLACE FUNCTION public.i_process_backlog_question(
+    OUT statut character,
+    OUT message text)
+    RETURNS record AS
+$BODY$
+
+--********************************************************************************************************
+--* fonction import du fichier CSV backlog des question
+--* la fonction retourne :
+--* 	- le statut d execution de la fonction OK ou KO
+--* 	- un message d information sur le statut
+--***********************************************************************************************************************************
+DECLARE
+	-- variables liees au statut de la fonction
+	i 			int; -- compteur d'ajout question
+	j 			int; -- compteur d'ajout reponse
+BEGIN
+-- INIT variables
+	message := '';
+	statut := 'OK';
+
+-- traitement
+--***************************************************************************************
+	-- raz table importation
+	DROP TABLE IF EXISTS public.i_question;
+	CREATE TABLE public.i_question (
+		code_module text,
+		niveau text,
+		code_question text,
+		thematique text,
+		question text,
+		reponse text,
+		bonne_pratique text,
+		reponse_ok text,
+		mecanique text,
+		CONSTRAINT pk_i_question PRIMARY KEY (code_module, code_question)
+	);
+	
+	COPY public.i_question FROM '/var/lib/postgresql/data/backlog_question.csv' DELIMITER ';' CSV HEADER;
+	 
+	-- thematique
+	TRUNCATE TABLE public.t_thematique;
+	ALTER SEQUENCE public.seq_t_thematique RESTART WITH 1;
+	
+	INSERT INTO public.t_thematique (nom, actif, horodatage, horodatage_creation) 
+		SELECT DISTINCT thematique, true, now(), now() FROM public.i_question;	
+		
+	-- question
+	TRUNCATE TABLE public.t_question;
+	ALTER SEQUENCE public.seq_t_question RESTART WITH 1;
+	
+	INSERT INTO public.t_question (id_module, id_niveau, id_thematique, id_mecanique, cle_fichier, nom, reponse, commentaire, actif, horodatage, horodatage_creation) 
+		SELECT DISTINCT b.id_module, c.id_niveau, d.id_thematique, e.id_mecanique, a.code_question, a.question, a.reponse_ok, a.bonne_pratique, true, now(), now()
+		FROM public.i_question a
+			INNER JOIN public.t_module b ON a.code_module=b.cle_fichier
+			INNER JOIN public.t_niveau c ON a.niveau=c.cle_fichier
+			INNER JOIN public.t_thematique d ON a.thematique=TRIM(d.nom)
+			INNER JOIN public.t_mecanique e ON a.mecanique=e.cle_fichier;
+	
+	-- reponse
+	TRUNCATE TABLE public.t_reponse;
+	ALTER SEQUENCE public.seq_t_reponse RESTART WITH 1;
+	
+	WITH w0 AS(
+		SELECT a.code_question, nom, ordre
+		FROM public.i_question a, regexp_split_to_table(a.reponse, '//') WITH ORDINALITY x(nom, ordre)
+	)
+	INSERT INTO public.t_reponse (id_question, nom, ordre, actif, horodatage, horodatage_creation) 
+		SELECT DISTINCT b.id_question, a.nom, a.ordre, true, now(), now()
+		FROM w0 a
+			INNER JOIN public.t_question b ON a.code_question=b.cle_fichier;
+	
+	EXECUTE 'SELECT CASE WHEN COUNT(*) = 0 THEN ''OK'' ELSE ''KO'' END
+		 FROM public.t_question a
+		 WHERE id_mecanique IN (1, 3, 6) AND LENGTH(TRIM(reponse))<>1' INTO statut;
+	IF statut = 'KO' THEN
+		message := 'Trop de réponses possibles pour une mécanique choix unique';
+	END IF;
+	
+	IF statut = 'OK' THEN
+		EXECUTE 'SELECT COUNT(*) FROM (SELECT DISTINCT id_question FROM public.t_question)s0' INTO i;
+		EXECUTE 'SELECT COUNT(*) FROM (SELECT DISTINCT id_reponse FROM public.t_reponse)s0' INTO j;
+		message := message || ' | ' || i::varchar(12) || ' question(s) ajoutée(s)' || ' | ' || j::varchar(12) || ' reponse(s) ajoutée(s)';
+	END IF;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE;
+

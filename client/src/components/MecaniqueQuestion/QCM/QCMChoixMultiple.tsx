@@ -59,6 +59,7 @@ class QCMChoixMultiple extends Component<IQCMProps, IMecaniqueQuestionState> {
                 id={`cb-reponse-${item.id_reponse}`}
                 aria-label={`Check réponse`}
                 onClick={() => this._onSelect(item)}
+                onChange={() => {}}
               />
               <p className={"mb-0 num_reponse"}>
                 <img

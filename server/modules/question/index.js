@@ -23,9 +23,13 @@ const register = async (server, options) => {
       }
       let replacements = {
         limit: 3,
+        lang: lang
       };
       let main_query = `
-                SELECT DISTINCT a.id_question, a.id_module, a.id_thematique, a.id_niveau, a.id_mecanique, TRIM(a.nom) AS nom, a.asset FROM public.t_question a WHERE a.actif LIMIT :limit
+                SELECT DISTINCT a.id_question, a.id_module, a.id_thematique, a.id_niveau, a.id_mecanique, TRIM(b.nom) AS nom, a.asset 
+                FROM public.t_question a 
+                  INNER JOIN public.t_libelle_i18n b ON a.id_question=b.id_table AND TRIM(b.code)='QUESTION' AND TRIM(b.lang)=:lang
+                WHERE a.actif LIMIT :limit
             `;
       const resultIdQuestion = await db.sequelize.query(
         "SELECT DISTINCT array_agg(id_question) AS ids FROM (" +
@@ -35,11 +39,15 @@ const register = async (server, options) => {
       );
       const tabIdQuestion = resultIdQuestion["ids"];
 
-      const resultReponse = await db.sequelize.query(
-        "SELECT DISTINCT a.id_reponse, a.id_question, TRIM(a.nom) AS nom, a.asset FROM public.t_reponse a WHERE a.actif AND a.id_question IN (:ids)",
+      const resultReponse = await db.sequelize.query(`
+        SELECT DISTINCT a.id_reponse, a.id_question, TRIM(b.nom) AS nom, a.asset, a.ordre 
+        FROM public.t_reponse a 
+          INNER JOIN public.t_libelle_i18n b ON a.id_reponse=b.id_table AND TRIM(b.code)='REPONSE' AND TRIM(b.lang)=:lang
+        WHERE a.actif AND a.id_question = ANY(:ids::int[]) ORDER BY a.id_question, a.ordre`,
         {
           replacements: {
-            ids: tabIdQuestion.join(','),
+            ids: "{" + tabIdQuestion.join(',') + "}",
+            lang: lang
           },
           type: QueryTypes.SELECT,
         }

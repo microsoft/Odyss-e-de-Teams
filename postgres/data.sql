@@ -83,10 +83,10 @@
 	('Le collectionneur de l''infini', 'Obtenir toutes les médailles communes et légendaires', 'collectionneur_infini.png', false, true, now(), now());
 
 -- niveau
-INSERT INTO public.t_niveau(nom, ordre, actif, horodatage, horodatage_creation)
-	VALUES ('Version basique', 1, true, now(), now()),
-	('Version améliorée', 2, true, now(), now()),
-	('Version ultime', 3, true, now(), now());
+INSERT INTO public.t_niveau(nom, cle_fichier, ordre, actif, horodatage, horodatage_creation)
+	VALUES ('Version basique', 'Deb', 1, true, now(), now()),
+	('Version améliorée', 'Inter', 2, true, now(), now()),
+	('Version ultime', 'Avance', 3, true, now(), now());
 	
 -- navigation
 INSERT INTO public.t_page (nom, router_link, horodatage, actif, ordre, is_menu, picto) VALUES
@@ -111,22 +111,23 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 /***************************/
 
 -- mecanique
-  INSERT INTO public.t_mecanique (nom, actif, horodatage, horodatage_creation) VALUES 	
-    ('QCM - Choix unique', true, now(), now()),
-    ('QCM - Choix multiple', true, now(), now()),	
-    ('QCM avec vidéo - Choix unique', true, now(), now()),
-    ('QCM avec vidéo - Choix multiple', true, now(), now()),
-    ('Remettre dans l''ordre', true, now(), now()),
-    ('QCM avec pictos réponses - Choix unique', true, now(), now()),
-    ('QCM avec pictos réponses - Choix multiple', true, now(), now());
+  INSERT INTO public.t_mecanique (nom, cle_fichier, actif, horodatage, horodatage_creation) VALUES 	
+    ('QCM - Choix unique', 'QCMUnique', true, now(), now()),
+    ('QCM - Choix multiple', 'QCMMultiple', true, now(), now()),	
+    ('QCM avec vidéo - Choix unique', 'QCMUniqueVideo', true, now(), now()),
+    ('QCM avec vidéo - Choix multiple', 'QCMMultipleVideo', true, now(), now()),
+    ('Remettre dans l''ordre', 'BonParcours', true, now(), now()),
+    ('QCM avec pictos réponses - Choix unique', 'QCMUniqueImage', true, now(), now()),
+    ('QCM avec pictos réponses - Choix multiple', 'QCMMultipleImage', true, now(), now());
 	
+
 -- module
-  INSERT INTO public.t_module (nom, image, actif, horodatage, horodatage_creation) VALUES 	
-    ('Communiquer en toute simplicité', 'communiquer.svg', true, now(), now()),
-    ('Piloter un projet', 'piloter.svg', true, now(), now()),	
-    ('Organiser la réunion parfaite', 'reunion.svg', true, now(), now()),
-    ('Manager une équipe', 'manager.svg', true, now(), now()),
-    ('Travailler en mobilité', 'mobilite.svg', true, now(), now());
+  INSERT INTO public.t_module (nom, cle_fichier, image, actif, horodatage, horodatage_creation) VALUES 	
+    ('Communiquer en toute simplicité', 'COMM', 'communiquer.svg', true, now(), now()),
+    ('Piloter un projet', 'PILPROJ', 'piloter.svg', true, now(), now()),	
+    ('Organiser la réunion parfaite', 'REU', 'reunion.svg', true, now(), now()),
+    ('Manager une équipe', 'MNG', 'manager.svg', true, now(), now()),
+    ('Travailler en mobilité', 'MOB', 'mobilite.svg', true, now(), now());
 	
 
 -- multilangue
@@ -165,15 +166,11 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, actif, horodatage, horodatage_creation, horodatage_connexion)
 	VALUES (1, 2, 6, 'Eddy Scylla', true, now(), now(), now());
 
--- question temps dev
-	INSERT INTO public.t_question (id_module, id_thematique, id_niveau, id_mecanique, nom, actif, horodatage, horodatage_creation) VALUES 
-		(3, 1, 1, 1, 'Vrai ou Faux? Je peux épingler une application dans une réunion Teams. ', true, now(), now());	
-  
-	INSERT INTO public.t_thematique (nom, actif, horodatage, horodatage_creation) VALUES 
-		('Applications', true, now(), now());	
-  
-	INSERT INTO public.t_reponse (id_question, nom, actif, valid, horodatage, horodatage_creation) VALUES 
-		(1, 'Vrai', true, false, now(), now()),
-		(1, 'Faux', true, true, now(), now());
-  
+-- question
+	SELECT public.i_process_backlog_question();
+
+	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
+	SELECT DISTINCT 'QUESTION', id_question, 'fr', nom, commentaire FROM public.t_question
+	UNION ALL
+	SELECT DISTINCT 'REPONSE', id_reponse, 'fr', nom, NULL::text FROM public.t_reponse;
 

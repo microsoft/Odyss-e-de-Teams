@@ -10,7 +10,12 @@ import QCMVideo from "components/MecaniqueQuestion/QCM/QCMVideo";
 import Stopwatch from "components/StopWatch/StopWatch";
 
 import IStore from "src/store/IStore";
-import { IQuizzProps, IQuizzState, IQuestion, IReponse } from "src/models/Question";
+import {
+  IQuizzProps,
+  IQuizzState,
+  IQuestion,
+  IReponse,
+} from "src/models/Question";
 
 import "./Quizz.scss";
 
@@ -31,7 +36,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
 
   componentDidMount() {
     // todo if (!(this.state.listQuestion.length > 0)) {
-      this._loadQuizz();
+    this._loadQuizz();
     // }
   }
 
@@ -63,7 +68,18 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
     });
   };
 
-  private _saveReponse() {}
+  private _saveReponse() {
+    let curStep: number = this.state.step;
+    this.setState(
+      {
+        step: ++curStep,
+        hasReponse: false,
+      },
+      () => {
+        // reinit list question
+      }
+    );
+  }
 
   private _renderMecanique(item: IQuestion) {
     switch (item.id_mecanique) {
@@ -85,18 +101,21 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
         return (
           <div>
             <p>Regardez la vidéo et sélectionnez la bonne réponse.</p>
-            <QCMVideo question={item} onSelect={this._onSelect}/>
+            <QCMVideo question={item} onSelect={this._onSelect} />
           </div>
         );
       case 4: // QCM avec vidéo - Choix multiple
         return (
           <div>
             <p>Regardez la vidéo et sélectionnez les bonnes réponses.</p>
-            <QCMVideo question={item} onSelect={this._onSelect} multiple={true} />
+            <QCMVideo
+              question={item}
+              onSelect={this._onSelect}
+              multiple={true}
+            />
           </div>
         );
       case 5: // Remettre dans l'ordre
-        this._shuffleArray(item.listReponse);
         return (
           <div>
             <p>Cliquez sur les listes pour mettre les étapes dans l’ordre !</p>
@@ -107,23 +126,23 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
         return (
           <div>
             <p>Trouvez l’intrus !</p>
+            <QCM question={item} onSelect={this._onSelect} /> {/* todo */}
           </div>
         );
       case 7: // QCM avec pictos réponses - Choix multiple
         return (
           <div>
             <p>Cliquez sur les vignettes.</p>
+            <QCM
+              question={item}
+              onSelect={this._onSelect}
+              multiple={true}
+            />{" "}
+            {/* todo */}
           </div>
         );
     }
   }
-
-  private _shuffleArray = (array: IReponse[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  };
 
   render() {
     return (
@@ -160,30 +179,59 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
                   </strong>
                 </h2>
                 <p className={"mb-0"}>
-                  Question {this.state.step} / {this.state.listQuestion?.length}
+                  Question{" "}
+                  {this.state.step <= this.state.listQuestion?.length
+                    ? this.state.step
+                    : this.state.listQuestion?.length}{" "}
+                  / {this.state.listQuestion?.length}
                 </p>
               </div>
             </div>
-            {this.state.listQuestion?.map((item: IQuestion) => {
-              return (
-                <div
-                  key={item.id_question}
-                  className={`question question${item.id_module}`}
-                >
-                  <h3 className={"mb-1"}>{item.nom}</h3>
-                  {this._renderMecanique(item)}
-                  <p className={"text-right mb-0 mt-4"}>
-                    <Button
-                      variant="primary"
-                      disabled={!this.state.hasReponse}
-                      onClick={() => this._saveReponse()}
-                    >
-                      Valider ma réponse
-                    </Button>
-                  </p>
-                </div>
-              );
-            })}
+            {this.state.step <= this.state.listQuestion?.length ? (
+              this.state.listQuestion?.map((item: IQuestion, i: number) => {
+                return (
+                  <div
+                    key={item.id_question}
+                    className={`question question${item.id_module} step${
+                      i + 1
+                    }${i + 1 === this.state.step ? " active" : ""}`}
+                  >
+                    <h3 className={"mb-1"}>{item.nom}</h3>
+                    {this._renderMecanique(item)}
+                    <p className={"text-right mb-0 mt-4"}>
+                      <Button
+                        variant="primary"
+                        disabled={!this.state.hasReponse}
+                        onClick={() => this._saveReponse()}
+                      >
+                        Valider ma réponse
+                      </Button>
+                    </p>
+                  </div>
+                );
+              })
+            ) : (
+              <div className={"text-center"}>
+                <h2 className={"color-primary-light mb-3 text-center"}>
+                  Module terminé !
+                </h2>
+                <p className={"mb-0"}>Félicitations Explorateur.trice,</p>
+                <p className={"mb-0"}>
+                  Tu viens de terminer le module Manager une équipe en Mode
+                  basique
+                </p>
+                <p className={"mb-0"}>
+                  Tu vas maintenant accéder à ton score et aux réponses !
+                </p>
+                <p className={"text-right mb-0 mt-4"}>
+                  <Button
+                    variant="primary"
+                  >
+                    Résultats de l’exploration
+                  </Button>
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div className={"toolbar-right ml-0 ml-md-5"}>
