@@ -364,6 +364,7 @@ CREATE TABLE public.t_question
   id_niveau integer,
   id_mecanique integer,
   nom character(180),
+  asset text,
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
@@ -555,7 +556,9 @@ CREATE TABLE public.t_reponse
   id_reponse integer NOT NULL DEFAULT nextval('public.seq_t_reponse'::regclass),
   id_question integer,
   nom character(180),
+  asset text,
   actif boolean,
+  valid boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
   CONSTRAINT pk_t_reponse PRIMARY KEY (id_reponse)
@@ -800,7 +803,6 @@ $BODY$;
 		id_user integer,
 		valeur text,
 		temps time without time zone,
-        valid boolean,
 		horodatage timestamp without time zone,
 		CONSTRAINT pk_h_reponse_user PRIMARY KEY (id_reponse_user)
 	)

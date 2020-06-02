@@ -116,7 +116,9 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
     ('QCM - Choix multiple', true, now(), now()),	
     ('QCM avec vidéo - Choix unique', true, now(), now()),
     ('QCM avec vidéo - Choix multiple', true, now(), now()),
-    ('Remettre dans l''ordre', true, now(), now());
+    ('Remettre dans l''ordre', true, now(), now()),
+    ('QCM avec pictos réponses - Choix unique', true, now(), now()),
+    ('QCM avec pictos réponses - Choix multiple', true, now(), now());
 	
 -- module
   INSERT INTO public.t_module (nom, image, actif, horodatage, horodatage_creation) VALUES 	
@@ -162,4 +164,16 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, actif, horodatage, horodatage_creation, horodatage_connexion)
 	VALUES (1, 2, 6, 'Eddy Scylla', true, now(), now(), now());
+
+-- question temps dev
+	INSERT INTO public.t_question (id_module, id_thematique, id_niveau, id_mecanique, nom, actif, horodatage, horodatage_creation) VALUES 
+		(3, 1, 1, 1, 'Vrai ou Faux? Je peux épingler une application dans une réunion Teams. ', true, now(), now());	
+  
+	INSERT INTO public.t_thematique (nom, actif, horodatage, horodatage_creation) VALUES 
+		('Applications', true, now(), now());	
+  
+	INSERT INTO public.t_reponse (id_question, nom, actif, valid, horodatage, horodatage_creation) VALUES 
+		(1, 'Vrai', true, false, now(), now()),
+		(1, 'Faux', true, true, now(), now());
+  
 
