@@ -4,38 +4,93 @@ import { ListGroup, Form } from "react-bootstrap";
 import {
   IMecaniqueQuestionProps,
   IReponse,
-  IMecaniqueQuestionState,
+  IRemettreOrdreState,
 } from "src/models/Question";
 
 import "./RemettreOrdre.scss";
 
 class RemettreOrdre extends Component<
   IMecaniqueQuestionProps,
-  IMecaniqueQuestionState
+  IRemettreOrdreState
 > {
   constructor(props: IMecaniqueQuestionProps) {
     super(props);
+    let ids: number[] = this.props.question?.listReponse?.map(
+      (item: IReponse) => item.id_reponse
+    );
+    let listReponseWithOrdre = [];
+    ids.forEach((id: number, i: number) => {
+      listReponseWithOrdre.push({ id: id, ordre: i });
+    });
     this.state = {
-      selectedReponseIds: this.props.question?.listReponse?.map((item: IReponse) => item.id_reponse),
+      listReponseWithOrdre: listReponseWithOrdre,
     };
   }
 
-  private _onChange = (item: IReponse) => {
-    console.log(item);
+  private _onChange = (item: IReponse, ordre: number) => {
+    let listReponseWithOrdre = this.state.listReponseWithOrdre;
+    let currentOrdre = listReponseWithOrdre.find(
+      (rep) => rep.id === item.id_reponse
+    );
+    let listReponseReorder;
+    if (ordre < currentOrdre.ordre) {
+      //si je descend l ordre, recalcul automatique de ceux en dessous qui s incremente
+      listReponseReorder = listReponseWithOrdre.filter(
+        (rep) => rep.ordre >= ordre && rep.ordre < currentOrdre.ordre
+      );
+      if (listReponseReorder.length > 0) {
+        listReponseReorder.forEach(rep => {
+          rep.ordre++;
+        });
+      }
+    } else if (ordre > currentOrdre.ordre) {
+      //si je monte l ordre, recalcul automatique de ceux au dessus qui se decremente
+      listReponseReorder = listReponseWithOrdre.filter(
+        (rep) => rep.ordre <= ordre && rep.ordre > currentOrdre.ordre
+      );
+      if (listReponseReorder.length > 0) {
+        listReponseReorder.forEach(rep => {
+          rep.ordre--;
+        });
+      }
+    }
+
+    currentOrdre.ordre = ordre;
+    this.setState(
+      {
+        listReponseWithOrdre: listReponseWithOrdre,
+      },
+      () => {
+        let selectedReponseOrder = this.state.listReponseWithOrdre.sort((a: any, b: any) => {
+          return a.ordre - b.ordre;
+        });
+        this.props.onSelect(this.props.question, selectedReponseOrder.map(rep => rep.id));
+      }
+    );
   };
 
   private _renderListeDeroulante = (item: IReponse) => {
-    return  (
-      <Form.Control as="select" onChange={() => this._onChange(item)}>
-          {
-            this.props.question?.listReponse?.map((reponse: IReponse, i: number) => {
-              return (
-                <option value={i} selected={i === this.state.selectedReponseIds.indexOf(item.id_reponse)}>{i + 1}</option>
-              );
-            })
+    return (
+      <Form.Control
+        as="select"
+        onChange={(e) => this._onChange(item, parseInt(e.target.value))}
+        value={
+          this.state.listReponseWithOrdre.find(
+            (rep) => rep.id === item.id_reponse
+          ).ordre
+        }
+      >
+        {this.state.listReponseWithOrdre?.map(
+          (reponse: any, i: number) => {
+            return (
+              <option value={i} key={reponse.id + "-" + i}>
+                {i + 1}
+              </option>
+            );
           }
+        )}
       </Form.Control>
-    )
+    );
   };
 
   render() {
