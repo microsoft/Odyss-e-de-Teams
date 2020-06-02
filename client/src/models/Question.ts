@@ -3,6 +3,7 @@ import { IUser } from "./User";
 export interface IQuestion {
   id_question: number;
   nom: string;
+  asset: string;
   id_module: number;
   id_thematique: number;
   id_niveau: number;
@@ -16,6 +17,7 @@ export interface IReponse {
   id_reponse: number;
   id_question: number;
   nom: string;
+  asset: string;
   selected?: boolean;
 }
 
@@ -91,4 +93,8 @@ export interface IQCMProps extends IMecaniqueQuestionProps {
 
 export interface IMecaniqueQuestionState {
   selectedReponseIds: number[];
+}
+
+export interface IRemettreOrdreState {
+  listReponseWithOrdre: any[];
 }

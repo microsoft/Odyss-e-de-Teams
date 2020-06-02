@@ -6,10 +6,11 @@ import QuestionAPI from "api/Question";
 
 import QCM from "components/MecaniqueQuestion/QCM/QCM";
 import RemettreOrdre from "components/MecaniqueQuestion/RemettreOrdre/RemettreOrdre";
+import QCMVideo from "components/MecaniqueQuestion/QCM/QCMVideo";
 import Stopwatch from "components/StopWatch/StopWatch";
 
 import IStore from "src/store/IStore";
-import { IQuizzProps, IQuizzState, IQuestion } from "src/models/Question";
+import { IQuizzProps, IQuizzState, IQuestion, IReponse } from "src/models/Question";
 
 import "./Quizz.scss";
 
@@ -84,15 +85,18 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
         return (
           <div>
             <p>Regardez la vidéo et sélectionnez la bonne réponse.</p>
+            <QCMVideo question={item} onSelect={this._onSelect}/>
           </div>
         );
       case 4: // QCM avec vidéo - Choix multiple
         return (
           <div>
             <p>Regardez la vidéo et sélectionnez les bonnes réponses.</p>
+            <QCMVideo question={item} onSelect={this._onSelect} multiple={true} />
           </div>
         );
       case 5: // Remettre dans l'ordre
+        this._shuffleArray(item.listReponse);
         return (
           <div>
             <p>Cliquez sur les listes pour mettre les étapes dans l’ordre !</p>
@@ -113,6 +117,13 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
         );
     }
   }
+
+  private _shuffleArray = (array: IReponse[]) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  };
 
   render() {
     return (
