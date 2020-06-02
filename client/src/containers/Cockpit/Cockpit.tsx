@@ -8,6 +8,8 @@ import "./Cockpit.scss";
 import LaunchFollowWidget from "components/molecules/Widgets/CampaignFollow";
 
 import BonusEXPMobile from "components/molecules/MobileWidgets/BonusExp";
+import CampaignFollowMobile from "components/molecules/MobileWidgets/CampaignFollow";
+import GameLauncherMobile from "components/molecules/MobileWidgets/GameLauncher";
 
 import UserAPI from "api/User";
 import { Link } from "react-router-dom";
@@ -155,9 +157,15 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
             {tReady && t("player.cockpit.title")}
           </h1>
 
-          <BonusEXPMobile className="col-12" />
+          <BonusEXPMobile className="col-12 mt-4" bonus={150} />
 
-          <Col className="col-12"></Col>
+          <CampaignFollowMobile
+            className="col-12 mt-4"
+            timerEnd={campaign.date_end}
+            campaignName={campaign.name}
+          />
+
+          <GameLauncherMobile className="col-12 mt-4" />
         </div>
       );
   }
