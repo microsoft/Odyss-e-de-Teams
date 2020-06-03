@@ -27,7 +27,6 @@ interface ICockpit {
 class Cockpit extends Component<WithTranslation & ICockpit, {}> {
   constructor(props) {
     super(props);
-    console.log("props cockpit", props);
   }
 
   state = {
@@ -57,11 +56,10 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
         elem.done = true;
         elem.current = false;
 
-        let text = "";
-        if (elem.type == "PTS") {
+        if (elem.type === "PTS") {
           elem.iconPath = "/images/icone/pts-bonus.png";
           elem.text = "player.cockpit.bonus.pts";
-        } else if (elem.type == "EXP") {
+        } else if (elem.type === "EXP") {
           elem.iconPath = "/images/icone/exp-bonus.png";
           elem.text = "player.cockpit.bonus.exp";
         } else {
@@ -74,11 +72,11 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
         rewards.push(elem);
       });
 
-      if (rewardsInfo.current.type == "PTS") {
+      if (rewardsInfo.current.type === "PTS") {
         rewardsInfo.current.iconPath = "/images/icone/pts-bonus.png";
 
         rewardsInfo.current.text = "player.cockpit.bonus.pts";
-      } else if (rewardsInfo.current.type == "EXP") {
+      } else if (rewardsInfo.current.type === "EXP") {
         rewardsInfo.current.iconPath = "/images/icone/exp-bonus.png";
 
         rewardsInfo.current.text = "player.cockpit.bonus.exp";
@@ -99,12 +97,11 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
         elem.done = false;
         elem.current = false;
 
-        let text = "";
-        if (elem.type == "PTS") {
+        if (elem.type === "PTS") {
           elem.iconPath = "/images/icone/pts-bonus.png";
 
           elem.text = "player.cockpit.bonus.pts";
-        } else if (elem.type == "EXP") {
+        } else if (elem.type === "EXP") {
           elem.iconPath = "/images/icone/exp-bonus.png";
 
           elem.text = "player.cockpit.bonus.exp";
@@ -143,7 +140,6 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
   };
 
   private _setShowModalMobile = (show: boolean) => {
-    console.log("here");
     this.setState({
       showModalMobile: show,
     });
@@ -154,7 +150,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
     const { loading, campaign, currentBonus } = this.state;
 
     let bonusDescription = null;
-    if (this.state.currentBonus.type == "EXP") {
+    if (this.state.currentBonus.type === "EXP") {
       bonusDescription = "EXP";
     }
 
