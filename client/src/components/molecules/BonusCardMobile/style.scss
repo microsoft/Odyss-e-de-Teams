@@ -44,6 +44,7 @@
         margin-bottom: 0;
         text-align: center;
         font-size: 1.5em;
+        font-weight: bold;
       }
       &__text {
         color: $color-yellow;
@@ -66,7 +67,10 @@
 
   &__locked {
     filter: grayscale(100%);
-    border: 1px solid $color-black1;
+
+    .BonusCardMobile__container__value__value {
+      font-weight: bold;
+    }
   }
 
   &__current {
