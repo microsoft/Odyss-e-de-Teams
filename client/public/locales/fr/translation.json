@@ -93,7 +93,14 @@
         "modalConfirm": "Bien reçu !",
         "exp": "Points d'expérience",
         "pts": "Points de classement",
-        "medal": "Médaille"
+        "medal": "Médaille",
+        "mobile_title": "Tes bonus journaliers",
+        "mobile_desc": "Ton bonus du",
+        "mobile_day": "jour",
+        "mobile_next_bonus": "Tes prochains bonus :",
+        "exp_mobile": "EXP",
+        "pts_mobile": "PTS",
+        "medal_mobile": "Médaille"
       }
     }
   },
