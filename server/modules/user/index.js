@@ -378,7 +378,10 @@ const register = async (server, options) => {
       if (!currentUserByAD) {
         return false;
       }
-
+      // if admin then skip
+      if (currentUserByAD.id_role == 2) {
+        return true;
+      }
       // get le nombre de jours de connexion
       const nbDaysOfConnexion = await db.sequelize.query(`
           select date_trunc('day',horodatage) as dates
