@@ -14,6 +14,7 @@ import LinksMobile from "components/molecules/MobileWidgets/Links";
 
 // modals
 import RewardModal from "components/organisms/RewardModal";
+import RewardModalMobile from "components/organisms/RewardModalMobile";
 
 import UserAPI from "api/User";
 import { Link } from "react-router-dom";
@@ -41,6 +42,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
     },
     allRewards: [],
     showModal: false,
+    showModalMobile: false,
     loading: true,
   };
 
@@ -140,9 +142,21 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
     });
   };
 
+  private _setShowModalMobile = (show: boolean) => {
+    console.log("here");
+    this.setState({
+      showModalMobile: show,
+    });
+  };
+
   render() {
     const { t, tReady, isMobile } = this.props;
     const { loading, campaign, currentBonus } = this.state;
+
+    let bonusDescription = null;
+    if (this.state.currentBonus.type == "EXP") {
+      bonusDescription = "EXP";
+    }
 
     if (loading) return <> Loading ... </>;
     else if (!isMobile)
@@ -257,7 +271,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
           <Modal
             show={this.state.showModal}
             onHide={() => this._setShowModal(false)}
-            dialogClassName="modal-profil"
+            dialogClassName="modal-cockpit"
             centered
           >
             <Modal.Body>
@@ -284,8 +298,13 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
             {tReady && t("player.cockpit.title")}
           </h1>
 
-          <BonusEXPMobile className="col-12 mt-4" bonus={150} />
-
+          <div onClick={() => this._setShowModalMobile(true)}>
+            <BonusEXPMobile
+              className="col-12 mt-4"
+              bonus={150}
+              bonusDesc={`${this.state.currentBonus.type.toLowerCase()}_mobile`}
+            />
+          </div>
           <CampaignFollowMobile
             className="col-12 mt-4"
             timerEnd={campaign.date_end}
@@ -320,6 +339,27 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
               i18nDescriptionKey="player.cockpit.rules_desc"
             />
           </Link>
+          <Modal
+            show={this.state.showModalMobile}
+            onHide={() => this._setShowModalMobile(false)}
+            dialogClassName="modal-mobile"
+          >
+            <Modal.Body>
+              <RewardModalMobile
+                bonus={this.state.allRewards}
+                currentBonus={this.state.currentBonus}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="warning"
+                className="mobile-button"
+                onClick={() => this._setShowModalMobile(false)}
+              >
+                {tReady && t("modal.confirm_reward")}
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       );
   }
