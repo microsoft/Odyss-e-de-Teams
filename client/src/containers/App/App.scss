@@ -1,5 +1,6 @@
-@import "../../common/sass/variables";
-@import "../../common/sass/common";
+@import "common/sass/variables";
+@import "common/sass/common";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
 
 html,
 body,
@@ -9,15 +10,20 @@ body,
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $color-black1;
 
   .main-container.gradient {
     background: rgb(244, 244, 255);
-    background: linear-gradient(180deg, rgba(244, 244, 255, 1) 0%, rgba(218, 216, 240, 1) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(244, 244, 255, 1) 0%,
+      rgba(218, 216, 240, 1) 100%
+    );
   }
   .main-container {
     background: url("/images/fond_principal.jpg") no-repeat top left;
@@ -50,6 +56,30 @@ body {
     background: $color-primary-light;
     backdrop-filter: blur(4px);
   }
+
+  @include media-breakpoint-up(md) {
+    .modal-backdrop {
+      background: none !important;
+      backdrop-filter: initial;
+    }
+  }
+  .modal-mobile {
+    margin: 0;
+
+    .modal-content {
+      padding: 0;
+      padding-top: 3em; //logo padding
+      background: url("/images/overlays/overlay-blue-mobile.svg");
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      .modal-body {
+        background: none;
+        padding: 0;
+      }
+    }
+  }
+
   /*** fin modal ***/
 
   /*** tooltip ***/
@@ -98,7 +128,7 @@ body {
 
 @include media-breakpoint-up(md) {
   body {
-    font-size: .85rem !important;
+    font-size: 0.85rem !important;
     line-height: 1.35;
   }
 }
