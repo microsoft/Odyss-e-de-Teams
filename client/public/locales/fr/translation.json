@@ -69,7 +69,7 @@
   "player": {
     "cockpit": {
       "title": "Bienvenue à bord de ton vaisseau !",
-      "campain_desc": "Cumulez des points au classement en répondant chaque semaine aux nouveaux modules de questions Teams et tentez de remporter un <1>Surface Headphone</1> d'une valeur de 300,00 euros et de nombreux cadeaux ! ",
+      "campaign_desc": "Cumulez des points au classement en répondant chaque semaine aux nouveaux modules de questions Teams et tentez de remporter un <1>Surface Headphone</1> d'une valeur de 300,00 euros et de nombreux cadeaux ! ",
       "start_game": "Lancer le jeu !",
       "start_game_desc": "Chaque semaine, une nouvelle mission pour progresser dans ton expédition galactique sur Teams et obtenir des récompenses d'honneur",
       "bonus_desc_PTS": "points bonus !",
