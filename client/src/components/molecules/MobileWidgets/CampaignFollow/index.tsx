@@ -25,7 +25,7 @@ const CampaignFollowMobile = (props: ICampaignFollow & WithTranslation) => {
         <div className="CampaignFollow__container__text pt-4">
           <Trans i18nKey="player.cockpit.campaign_desc">
             Cumulez des points au classement en répondant chaque semaine aux
-            nouveaux modules de questions Teams et tentez de remporter un{" "}
+            nouveaux modules de questions Teams et tentez de remporter un
             <strong>Surface Headphone</strong> d'une valeur de 300,00 euros et
             de nombreux cadeaux !
           </Trans>

@@ -6,10 +6,11 @@ import "./style.scss";
 interface IBonusEXP {
   className?: string;
   bonus: number;
+  bonusDesc: string;
 }
 
 const BonusEXP = (props: IBonusEXP & WithTranslation) => {
-  const { t, tReady, className, bonus } = props;
+  const { t, tReady, className, bonus, bonusDesc } = props;
 
   return (
     <div className={`BonusEXP ${className || ""}`}>
@@ -29,7 +30,7 @@ const BonusEXP = (props: IBonusEXP & WithTranslation) => {
 
         <div className="BonusEXP__container__content col-8">
           <div className="BonusEXP__container__content__bonus">
-            + {bonus} exp
+            + {bonus} {tReady && t(`player.cockpit.bonus.${bonusDesc}`)}
           </div>
 
           <div className="BonusEXP__container__content__text">

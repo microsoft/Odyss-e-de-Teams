@@ -1,5 +1,8 @@
 @import "common/sass/_variables";
 @import "common/sass/_typography";
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
 
 .BonusEXP {
   &__container {
@@ -42,7 +45,33 @@
         @include typo-body-component;
         color: $color-white1;
         font-size: 1.1em;
+        @include media-breakpoint-up(md) {
+          font-size: 0.9em;
+          text-align: center;
+        }
       }
     }
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .BonusEXP__container__content {
+    align-items: center;
+  }
+
+  .BonusEXP__container__content__text {
+    font-size: 0.9em;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .BonusEXP__container__content {
+    align-items: center;
+  }
+
+  .BonusEXP__container__content__text {
+    font-size: 0.9em;
+    text-align: center;
   }
 }
