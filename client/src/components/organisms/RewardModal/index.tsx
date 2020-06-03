@@ -25,8 +25,6 @@ interface IRewardModal {
 const RewardModal = (props: IRewardModal & WithTranslation) => {
   const { t, tReady, bonus } = props;
 
-  console.log("bonus", props);
-
   return (
     <div className="RewardModal">
       <div className="RewardModal__title">
