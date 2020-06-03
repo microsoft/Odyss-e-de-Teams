@@ -69,10 +69,12 @@
   "player": {
     "cockpit": {
       "title": "Bienvenue à bord de ton vaisseau !",
-      "campain_desc": "Cumulez des points au classement en répondant chaque semaine aux nouveaux modules de questions Teams et tentez de remporter un <1>Surface Headphone</1> d'une valeur de 300,00 euros et de nombreux cadeaux ! ",
+      "campaign_desc": "Cumulez des points au classement en répondant chaque semaine aux nouveaux modules de questions Teams et tentez de remporter un <1>Surface Headphone</1> d'une valeur de 300,00 euros et de nombreux cadeaux ! ",
       "start_game": "Lancer le jeu !",
       "start_game_desc": "Chaque semaine, une nouvelle mission pour progresser dans ton expédition galactique sur Teams et obtenir des récompenses d'honneur",
-      "exp_points_desc": "points d'expérience",
+      "bonus_desc_PTS": "points bonus !",
+      "bonus_desc_EXP": "points d'expérience !",
+      "bonus_desc_MEDAL": "médaille !",
       "exp_daily_bonus": "Bonus activé aujourd'hui",
       "ranking_title": "Classements",
       "ranking_desc": "Classements génénal et par points d'EXP",
@@ -81,7 +83,29 @@
       "rules_title": "Règles",
       "rules_desc": "Règles du jeu et récompenses",
       "mobile_mission_title": "Mission : ",
-      "mobile_mission_pending": "en cours !"
+      "mobile_mission_pending": "en cours !",
+      "bonus": {
+        "title": "Bonus journaliers",
+        "desc": "Tous les jours en te connectant, reçoit des précieuses récompenses d'honneur qui t'aideront dans ton exploration !",
+        "obtained": "Obtenu",
+        "day": "Jour",
+        "today": "Aujourd'hui",
+        "modalConfirm": "Bien reçu !",
+        "exp": "Points d'expérience",
+        "pts": "Points de classement",
+        "medal": "Médaille",
+        "mobile_title": "Tes bonus journaliers",
+        "mobile_desc": "Ton bonus du",
+        "mobile_day": "jour",
+        "mobile_next_bonus": "Tes prochains bonus :",
+        "exp_mobile": "EXP",
+        "pts_mobile": "PTS",
+        "medal_mobile": "Médaille"
+      }
     }
+  },
+  "modal": {
+    "cancel": "Annuler",
+    "confirm_reward": "Bien reçu !"
   }
 }

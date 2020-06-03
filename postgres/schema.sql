@@ -702,9 +702,9 @@ $BODY$;
 	CREATE TABLE public.h_gain_medaille
 	(
 		id_gain_medaille integer NOT NULL DEFAULT nextval('public.seq_h_gain_medaille'::regclass),
-		id_user integer,
-		id_medaille integer,
-		horodatage timestamp without time zone,
+		id_user integer REFERENCES t_user(id_user),
+		id_medaille integer REFERENCES t_medaille(id_medaille),
+		horodatage timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
 		CONSTRAINT pk_h_gain_medaille PRIMARY KEY (id_gain_medaille)
 	)
 	WITH (
@@ -738,9 +738,9 @@ $BODY$;
 	CREATE TABLE public.h_gain_point
 	(
 		id_gain_point integer NOT NULL DEFAULT nextval('public.seq_h_gain_point'::regclass),
-		id_user integer,
+		id_user integer REFERENCES t_user(id_user),
 		nb_point integer,
-		horodatage timestamp without time zone,
+		horodatage timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
 		CONSTRAINT pk_h_gain_point PRIMARY KEY (id_gain_point)
 	)
 	WITH (
@@ -769,9 +769,9 @@ $BODY$;
 	CREATE TABLE public.h_gain_xp
 	(
 		id_gain_xp integer NOT NULL DEFAULT nextval('public.seq_h_gain_xp'::regclass),
-		id_user integer,
+		id_user integer REFERENCES t_user(id_user),
 		nb_point integer,
-		horodatage timestamp without time zone,
+		horodatage timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
 		CONSTRAINT pk_h_gain_xp PRIMARY KEY (id_gain_xp)
 	)
 	WITH (
@@ -938,6 +938,21 @@ $BODY$;
 		ON public.h_agenda_done USING btree
 		(id_agenda)
 		TABLESPACE pg_default;
+
+
+
+-- Table historique connexions
+
+CREATE TABLE public.h_user_login (
+    id SERIAL PRIMARY KEY,
+    id_user integer REFERENCES t_user(id_user),
+    horodatage timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+GRANT ALL ON TABLE public.h_user_login TO odyssee_teams_appli;
+GRANT ALL ON SEQUENCE public.h_user_login_id_seq TO odyssee_teams_appli;
+
+
     
 /***************************/
 /******* multilangue *******/

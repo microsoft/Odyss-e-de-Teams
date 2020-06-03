@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { WithTranslation, withTranslation, Trans } from "react-i18next";
-
-import { Row, Col } from "react-bootstrap";
+import { WithTranslation, withTranslation } from "react-i18next";
+import { connect } from "react-redux";
+import { Row, Modal, Button } from "react-bootstrap";
 
 import "./Cockpit.scss";
 
@@ -12,39 +12,147 @@ import CampaignFollowMobile from "components/molecules/MobileWidgets/CampaignFol
 import GameLauncherMobile from "components/molecules/MobileWidgets/GameLauncher";
 import LinksMobile from "components/molecules/MobileWidgets/Links";
 
+// modals
+import RewardModal from "components/organisms/RewardModal";
+import RewardModalMobile from "components/organisms/RewardModalMobile";
+
 import UserAPI from "api/User";
 import { Link } from "react-router-dom";
+import IStore from "store/IStore";
 
 interface ICockpit {
   isMobile: boolean;
 }
 
 class Cockpit extends Component<WithTranslation & ICockpit, {}> {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     campaign: {
       name: "",
       date_end: "",
     },
+    currentBonus: {
+      day: null,
+      type: null,
+      value: null,
+    },
+    allRewards: [],
+    showModal: false,
+    showModalMobile: false,
     loading: true,
   };
 
   async componentDidMount() {
     try {
       const campainInfo = await UserAPI.getCurrentCampaignInfo();
+      const rewardsInfo = await UserAPI.getCurrentReward();
+
+      const rewards = [];
+
+      rewardsInfo.before.forEach((elem) => {
+        elem.done = true;
+        elem.current = false;
+
+        if (elem.type === "PTS") {
+          elem.iconPath = "/images/icone/pts-bonus.png";
+          elem.text = "player.cockpit.bonus.pts";
+        } else if (elem.type === "EXP") {
+          elem.iconPath = "/images/icone/exp-bonus.png";
+          elem.text = "player.cockpit.bonus.exp";
+        } else {
+          // img stockée dans le fichier json côté serveur
+          elem.iconPath = "/images/medaille/" + elem.img;
+          elem.text = "player.cockpit.bonus.medal";
+          elem.value = 1;
+        }
+
+        rewards.push(elem);
+      });
+
+      if (rewardsInfo.current.type === "PTS") {
+        rewardsInfo.current.iconPath = "/images/icone/pts-bonus.png";
+
+        rewardsInfo.current.text = "player.cockpit.bonus.pts";
+      } else if (rewardsInfo.current.type === "EXP") {
+        rewardsInfo.current.iconPath = "/images/icone/exp-bonus.png";
+
+        rewardsInfo.current.text = "player.cockpit.bonus.exp";
+      } else {
+        rewardsInfo.current.iconPath =
+          "/images/medaille/" + rewardsInfo.current.img;
+        rewardsInfo.current.value = 1;
+
+        rewardsInfo.current.text = "player.cockpit.bonus.medal";
+      }
+      rewardsInfo.current.current = true;
+      rewardsInfo.current.done = false;
+
+      rewards.push(rewardsInfo.current);
+
+      //after
+      rewardsInfo.after.forEach((elem) => {
+        elem.done = false;
+        elem.current = false;
+
+        if (elem.type === "PTS") {
+          elem.iconPath = "/images/icone/pts-bonus.png";
+
+          elem.text = "player.cockpit.bonus.pts";
+        } else if (elem.type === "EXP") {
+          elem.iconPath = "/images/icone/exp-bonus.png";
+
+          elem.text = "player.cockpit.bonus.exp";
+        } else {
+          elem.iconPath = "/images/medaille/" + elem.img;
+          elem.value = 1;
+
+          elem.text = "player.cockpit.bonus.medal";
+        }
+
+        rewards.push(elem);
+      });
+
       this.setState({
         campaign: {
           name: campainInfo.results.mission_name,
           date_end: campainInfo.results.mission_end.replace("T", " "),
         },
+        currentBonus: {
+          day: rewardsInfo.current.day,
+          type: rewardsInfo.current.type,
+          value: rewardsInfo.current.value,
+        },
+        allRewards: rewards,
         loading: false,
       });
     } catch (e) {
       console.error(e);
     }
   }
+
+  private _setShowModal = (show: boolean) => {
+    this.setState({
+      showModal: show,
+    });
+  };
+
+  private _setShowModalMobile = (show: boolean) => {
+    this.setState({
+      showModalMobile: show,
+    });
+  };
+
   render() {
     const { t, tReady, isMobile } = this.props;
-    const { loading, campaign } = this.state;
+    const { loading, campaign, currentBonus } = this.state;
+
+    let bonusDescription = null;
+    if (this.state.currentBonus.type === "EXP") {
+      bonusDescription = "EXP";
+    }
 
     if (loading) return <> Loading ... </>;
     else if (!isMobile)
@@ -80,17 +188,25 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
               </div>
             </Link>
 
-            <div className="Cockpit__exp col-3 p-4">
+            <div
+              className="Cockpit__exp col-3 p-4"
+              onClick={() => this._setShowModal(true)}
+            >
               <div className="Cockpit__exp__container">
                 <div className="Cockpit__exp__container__icon">
                   <img src="/images/icone/exp-bonus.png" alt="exp-bonus" />
                 </div>
-                <div className="Cockpit__exp__container__title">
-                  +150 {tReady && t("player.cockpit.exp_points_desc")}
+                <div className="Cockpit__exp__container__text">
+                  <div className="Cockpit__exp__container__text__title">
+                    +{currentBonus.value}{" "}
+                    {tReady &&
+                      t(`player.cockpit.bonus_desc_${currentBonus.type}`)}
+                  </div>
+
+                  <div className="Cockpit__exp__container__text__desc">
+                    {tReady && t("player.cockpit.exp_daily_bonus")}
+                  </div>
                 </div>
-              </div>
-              <div className="Cockpit__exp__container__text">
-                {tReady && t("player.cockpit.exp_daily_bonus")}
               </div>
             </div>
           </Row>
@@ -147,6 +263,28 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
               </div>
             </Link>
           </div>
+
+          <Modal
+            show={this.state.showModal}
+            onHide={() => this._setShowModal(false)}
+            dialogClassName="modal-cockpit"
+            centered
+          >
+            <Modal.Body>
+              <RewardModal
+                bonus={this.state.allRewards}
+                currentBonus={this.state.currentBonus}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="primary"
+                onClick={() => this._setShowModal(false)}
+              >
+                {tReady && t("modal.confirm_reward")}
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       );
     else
@@ -156,8 +294,13 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
             {tReady && t("player.cockpit.title")}
           </h1>
 
-          <BonusEXPMobile className="col-12 mt-4" bonus={150} />
-
+          <div onClick={() => this._setShowModalMobile(true)}>
+            <BonusEXPMobile
+              className="col-12 mt-4"
+              bonus={this.state.currentBonus.value}
+              bonusDesc={`${this.state.currentBonus.type.toLowerCase()}_mobile`}
+            />
+          </div>
           <CampaignFollowMobile
             className="col-12 mt-4"
             timerEnd={campaign.date_end}
@@ -192,33 +335,41 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
               i18nDescriptionKey="player.cockpit.rules_desc"
             />
           </Link>
+          <Modal
+            show={this.state.showModalMobile}
+            onHide={() => this._setShowModalMobile(false)}
+            dialogClassName="modal-mobile"
+          >
+            <Modal.Body>
+              <RewardModalMobile
+                bonus={this.state.allRewards}
+                currentBonus={this.state.currentBonus}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="warning"
+                className="mobile-button"
+                onClick={() => this._setShowModalMobile(false)}
+              >
+                {tReady && t("modal.confirm_reward")}
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       );
   }
 }
 
-export default withTranslation()(Cockpit);
+const mapStateToProps = (state: IStore) => {
+  return {
+    currentUser: state.user.currentUser,
+  };
+};
+export default withTranslation()(connect(mapStateToProps)(Cockpit));
 
-// <LaunchFollowWidget
-//   className="col-12 p-4 Mobile_launchFollowWidget"
-//   campaign_name={campaign.name}
-//   campaign_end={campaign.date_end}
-//   translationDescKey="player.cockpit.campain_desc"
-// />
-
-// <Row className="col-12">
-//   <div className="Cockpit__mission">
-//     <div className="Cockpit__mission__title">
-//       Mission : « {campaign.name} !» en cours !
-//               </div>
-
-//     <div className="Cockpit__mission__desc">
-//       <Trans i18nKey="player.cockpit.campaign_desc">
-//         Cumulez des points au classement en répondant chaque semaine
-//         aux nouveaux modules de questions Teams et tentez de remporter
-//                   un <strong>Surface Headphone</strong> d'une valeur de 300,00
-//                   euros et de nombreux cadeaux ! "
-//                 </Trans>
-//     </div>
-//   </div>
-// </Row>
+// export default withTranslation()(Cockpit);
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(withTranslation()(Component));
