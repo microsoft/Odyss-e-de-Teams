@@ -24,6 +24,14 @@ class User extends API {
   getCurrentCampaignInfo(): Promise<any> {
     return super.fetchGET(this.resource + "/current-mission");
   }
+
+  runChecks(): Promise<any> {
+    return super.fetchGET(this.resource + "/check-rewards");
+  }
+
+  getCurrentReward(): Promise<any> {
+    return super.fetchGET(this.resource + "/current-reward");
+  }
 }
 
 export default new User();

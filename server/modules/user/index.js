@@ -62,7 +62,7 @@ const register = async (server, options) => {
                       ORDER BY 1
                     ) s)
                 SELECT DISTINCT a.*, CASE WHEN c.id_medaille IS NOT NULL THEN c.nom ELSE b.nom END AS nom_avatar, CASE WHEN c.id_medaille IS NOT NULL THEN '/images/medaille/' || c.image ELSE '/images/avatar/' || b.image END AS image_avatar,
-                      ( SELECT days_logged FROM logged_count)
+                      ( SELECT days_logged FROM logged_count)::integer
                 FROM w0 a
                     LEFT JOIN w_avatar b ON a.id_avatar=b.id_avatar
                     LEFT JOIN w_medaille c ON a.id_medaille_avatar=c.id_medaille
@@ -70,6 +70,8 @@ const register = async (server, options) => {
           { replacements: replacements, type: QueryTypes.SELECT }
         )
         .then((result) => {
+          // force cast to number
+
           return oneResult ? result[0] : result;
         });
     },
@@ -274,7 +276,7 @@ const register = async (server, options) => {
    * Si c'est la première fois qu'il se connecte, alors on va calculer quelle récompense journalière il doit obtenir
    */
   server.route({
-    path: baseUrl + "/daily-rewards",
+    path: baseUrl + "/check-rewards",
     method: "GET",
     handler: async function (request, h) {
       const db = request.getDb("odyssee_teams");
@@ -303,14 +305,12 @@ const register = async (server, options) => {
       }
 
       // check if user logged for the first time
-      const user_id = 1;
+      const user_id = currentUserByAD.id_user;
       const countLoginToday = await db.sequelize.query(
         `SELECT COUNT(*) as cnt_login from public.h_user_login WHERE id_user = ${user_id} AND horodatage::date = CURRENT_DATE`
       );
 
-      if (Number(countLoginToday[0][0].cnt_login) < 0) {
-        return true; // recompense déjà donnée
-      } else {
+      if (Number(countLoginToday[0][0].cnt_login) == 0) {
         // insert en base
         await db.sequelize.query(
           `INSERT INTO public.h_user_login ("id_user") VALUES(${user_id})`
@@ -325,7 +325,7 @@ const register = async (server, options) => {
           order by 1`);
 
         let currentRewards =
-          dailyRewards[Number(nbDaysOfConnexion[0].length) + 1];
+          dailyRewards[Number(nbDaysOfConnexion[0].length) - 1];
 
         // on ajoute le score (points, exp, medaille) par rapport au type de gain journalier
         if (currentRewards.type === "PTS") {
@@ -340,7 +340,9 @@ const register = async (server, options) => {
           });
         } else if (currentRewards.type == "MEDAL") {
           const medaille = await MedailleModel.findOne({
-            where: { nom: currentRewards.value },
+            where: {
+              nom: currentRewards.value,
+            },
           });
           await HistoMedaille.create({
             id_user: user_id,
@@ -348,9 +350,78 @@ const register = async (server, options) => {
           });
         } else {
         }
-
-        return true;
       }
+
+      return true;
+    },
+  });
+
+  server.route({
+    path: baseUrl + "/current-reward",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD) {
+        return false;
+      }
+
+      // get le nombre de jours de connexion
+      const nbDaysOfConnexion = await db.sequelize.query(`
+          select date_trunc('day',horodatage) as dates
+          from public.h_user_login
+          where id_user = ${currentUserByAD.id_user}
+          group by 1
+          order by 1`);
+
+      let currentRewards =
+        dailyRewards[Number(nbDaysOfConnexion[0].length) - 1];
+
+      let index = Number(nbDaysOfConnexion[0].length - 1);
+
+      let before = [],
+        after = [];
+
+      if (index === 1) {
+        before = dailyRewards.slice(index - 1, index);
+      } else if (index === dailyRewards.length - 1) {
+        before = dailyRewards.slice(index - 4, index);
+      } else if (index > 1) {
+        before = dailyRewards.slice(index - 2, index);
+      } else {
+      }
+
+      if (index == dailyRewards.length - 1) {
+        after = dailyRewards.slice(index + 1, index + 2);
+      } else if (index === 1) {
+        after = dailyRewards.slice(index + 1, index + 4); // 3 elements after
+      } else if (index === 0) {
+        after = dailyRewards.slice(index + 1, index + 5);
+      } else if (index < dailyRewards.length - 1) {
+        after = dailyRewards.slice(index + 1, index + 3);
+      } else {
+      }
+
+      const result = {
+        current: currentRewards,
+        before: before,
+        after: after,
+      };
+
+      return result;
     },
   });
 };
