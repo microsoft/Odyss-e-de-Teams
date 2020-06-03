@@ -171,3 +171,9 @@
   width: 100%;
   height: 4em;
 }
+
+@media screen and (max-width: 768px) {
+  .BonusEXP__container__content {
+    align-items: baseline !important;
+  }
+}
