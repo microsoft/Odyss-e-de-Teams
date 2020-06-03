@@ -53,7 +53,7 @@ const RewardModalMobile = (props: IRewardModalMobile & WithTranslation) => {
         <div className="RewardModalMobile__currentbonus col-12">
           <BonusEXPMobile
             className="col-12 mt-4"
-            bonus={150}
+            bonus={currentBonus.value}
             bonusDesc={`${currentBonus.type.toLowerCase()}_mobile`}
           />
         </div>

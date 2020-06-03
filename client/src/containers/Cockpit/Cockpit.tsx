@@ -301,7 +301,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
           <div onClick={() => this._setShowModalMobile(true)}>
             <BonusEXPMobile
               className="col-12 mt-4"
-              bonus={150}
+              bonus={this.state.currentBonus.value}
               bonusDesc={`${this.state.currentBonus.type.toLowerCase()}_mobile`}
             />
           </div>
