@@ -52,6 +52,16 @@
       "logoChangeButtonReset": "Réinitialiser",
       "logoChangeButtonSave": "Sauvegarder les modifications",
       "no_logo_text": "Pas de logo :("
+    },
+    "planning": {
+      "subtitle": "Planning du commandant",
+      "board_title": "Tableau de board",
+      "board_desc": "Commandant, vous avez un certain nombre d'actions à mener chaque jour pour assurer la pérennité du voyage des Explorateurs !",
+      "menu_planning": "Planning",
+      "menu_email": "Emailings",
+      "menu_social": "Réseaux sociaux",
+      "menu_teams": "Notifications Teams",
+      "menu_missions": "Programme et missions"
     }
   },
   "outillage": {
