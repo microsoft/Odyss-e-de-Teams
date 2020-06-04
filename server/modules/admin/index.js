@@ -71,7 +71,7 @@ const register = async (server, options) => {
 
       return db.sequelize
         .query(
-          "select ts.nom as mission_name, ts.horodatage + INTERVAL '14 day' as mission_end from t_organisation org inner join t_semaine ts  on ts.id_semaine = org.id_semaine where id_organisation =:id_organisation",
+          "select ts.nom as mission_name, ts.horodatage + INTERVAL '7 day' as mission_end from t_organisation org inner join t_semaine ts  on ts.id_semaine = org.id_semaine where id_organisation =:id_organisation",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -93,10 +93,6 @@ const register = async (server, options) => {
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
       const Organisation = db.getModel("Organisation");
-
-      request.state = {
-        oid_ad: "edfd6301-53ce-4142-b78e-e5f27cd34ed9",
-      };
 
       // check oid_ad is present in request
       if (!request.state.oid_ad) {
@@ -246,7 +242,7 @@ const register = async (server, options) => {
         return false;
       }
 
-      let avaiableMissions = await Semaine.findAll();
+      let availableMissions = await Semaine.findAll();
 
       const currentOrga = await Organisation.findOne({
         where: {
@@ -254,12 +250,12 @@ const register = async (server, options) => {
         },
       });
 
-      avaiableMissions.map((mission) => {
+      availableMissions.map((mission) => {
         mission.actif = mission.id_semaine === currentOrga.id_semaine;
       });
 
       return {
-        avaiableMissions: avaiableMissions,
+        availableMissions: availableMissions,
       };
     },
   });
