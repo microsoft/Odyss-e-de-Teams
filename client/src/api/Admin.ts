@@ -18,6 +18,10 @@ class Admin extends API {
   uploadCompanyLogo(data: FormData): Promise<any> {
     return super.fetchUploadData(this.resource + "/upload-logo", data);
   }
+
+  getAllCampaigns(): Promise<any> {
+    return super.fetchGET(this.resource + "/available-missions");
+  }
 }
 
 export default new Admin();
