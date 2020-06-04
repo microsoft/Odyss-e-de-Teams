@@ -61,7 +61,12 @@
       "menu_email": "Emailings",
       "menu_social": "Réseaux sociaux",
       "menu_teams": "Notifications Teams",
-      "menu_missions": "Programme et missions"
+      "menu_missions": "Programme et missions",
+      "mission_week_short": "S",
+      "mission_week_to": "au",
+      "mission_active": "Mission activée",
+      "mission_pending": "Mission en attente",
+      "mission_label": "Mission : "
     }
   },
   "outillage": {
