@@ -1,6 +1,6 @@
 -- Semaine temp dev 
 	INSERT INTO "public"."t_semaine"("nom", "ordre", "description") 
-		VALUES ('Semaine 1', 1, 'admin.planning.week_1_desc'), ('Semaine 2', 2, 'admin.planning.week_2_desc'), ('Semaine 3', 3, 'admin.planning.week_3_desc'), ('Semaine 4', 4, 'admin.planning.week_4_desc');
+		VALUES ('Semaine 1', 1, 'Partir et commencer le programme'), ('Semaine 2', 2, 'Bien consolider ses connaissances'), ('Semaine 3', 3, 'Approfondir ses usages'), ('Semaine 4', 4, 'Dernière poussée pour être un pro de Teams');
 		
 -- organisation
   INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation, id_semaine) VALUES 	
