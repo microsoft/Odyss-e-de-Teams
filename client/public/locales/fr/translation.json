@@ -122,5 +122,21 @@
   "modal": {
     "cancel": "Annuler",
     "confirm_reward": "Bien reçu !"
+  },
+  "utils": {
+    "date": {
+      "january": "Janvier",
+      "february": "Février",
+      "march": "Mars",
+      "april": "April",
+      "may": "Mai",
+      "june": "Juin",
+      "july": "Juillet",
+      "august": "Août",
+      "september": "Septembre",
+      "october": "Octobre",
+      "november": "November",
+      "december": "Décembre"
+    }
   }
 }
