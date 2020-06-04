@@ -242,12 +242,6 @@ const register = async (server, options) => {
         },
       });
 
-      const currentUserByAD = await User.findOne({
-        where: {
-          oid_ad: "edfd6301-53ce-4142-b78e-e5f27cd34ed9",
-        },
-      });
-
       if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
         return false;
       }
