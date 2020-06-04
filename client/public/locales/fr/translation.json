@@ -66,7 +66,10 @@
       "mission_week_to": "au",
       "mission_active": "Mission activée",
       "mission_pending": "Mission en attente",
-      "mission_label": "Mission : "
+      "mission_label": "Mission : ",
+      "title": "Programme et missions - ",
+      "title_week": "Semaine ",
+      "description": "Commandant, dans cette section vous pouvez activer et désactiver chaque semaine les packages de missions qui sont ou seront à déployer sur les interfaces des Explorateurs de votre organisation."
     }
   },
   "outillage": {
