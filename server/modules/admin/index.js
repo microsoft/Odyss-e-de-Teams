@@ -220,7 +220,105 @@ const register = async (server, options) => {
       };
     },
   });
+
+  server.route({
+    path: "/admin/available-missions",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      const Semaine = db.getModel("Semaine");
+      const Organisation = db.getModel("Organisation");
+
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: "edfd6301-53ce-4142-b78e-e5f27cd34ed9",
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
+      let avaiableMissions = await Semaine.findAll();
+
+      const currentOrga = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
+
+      avaiableMissions.map((mission) => {
+        mission.actif = mission.id_semaine === currentOrga.id_semaine;
+      });
+
+      return {
+        avaiableMissions: avaiableMissions,
+      };
+    },
+  });
+
+  server.route({
+    path: "/admin/set-current-mission",
+    method: "PUT",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      const Organisation = db.getModel("Organisation");
+
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      const semaine_id = request.payload.id_semaine;
+
+      if (!semaine_id) return false;
+
+      try {
+        await Organisation.update(
+          {
+            id_semaine: semaine_id,
+          },
+          {
+            where: {
+              id_organisation: id_organisation,
+            },
+          }
+        );
+
+        return {
+          message: "success",
+        };
+      } catch (error) {
+        console.error(error);
+        return {
+          message: "error",
+        };
+      }
+    },
+  });
 };
+
 exports.plugin = {
   register,
   pkg: require("./package.json"),
