@@ -1,0 +1,32 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.MissionItem {
+  border-radius: 15px;
+
+  padding: 1em;
+
+  &__header {
+    display: inline-flex;
+    font-weight: bold;
+    color: $color-white1;
+    font-size: 1em;
+  }
+
+  &__body {
+    margin-top: 1.5em;
+    color: $color-white1;
+    &__title {
+      font-size: 2em;
+    }
+
+    &__desc {
+    }
+  }
+
+  &__footer {
+    margin-top: 2em;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+}
