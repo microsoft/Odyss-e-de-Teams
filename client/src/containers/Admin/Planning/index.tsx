@@ -6,6 +6,10 @@ import { Tabs, Tab } from "react-bootstrap";
 
 import AdminAPI from "api/Admin";
 
+import { getFullMonth } from "utils/dates";
+
+import AdminPlanning from "components/organisms/Admin/Planning";
+
 import "./style.scss";
 
 interface IPlanningContainerState {
@@ -19,7 +23,7 @@ class PlanningContainer extends React.Component<
   IPlanningContainerState
 > {
   state = {
-    loading: false,
+    loading: true,
     campaigns: [],
     curTabKey: "PLANNING",
   };
@@ -27,9 +31,23 @@ class PlanningContainer extends React.Component<
   async componentDidMount() {
     try {
       const missions = await AdminAPI.getAllCampaigns();
-      console.log(missions);
+
+      missions.availableMissions.map((mission) => {
+        let startDate = new Date(mission.debut_semaine);
+        let endDate = new Date(mission.fin_semaine);
+
+        mission.debut_semaine = `${startDate.getDate()} ${this.props
+          .t(getFullMonth(startDate))
+          .toLowerCase()}`;
+
+        mission.fin_semaine = `${endDate.getDate()} ${this.props
+          .t(getFullMonth(endDate))
+          .toLowerCase()}`;
+      });
+
       this.setState({
         campaigns: missions.availableMissions,
+        loading: false,
       });
     } catch (err) {
       console.error(err);
@@ -44,7 +62,7 @@ class PlanningContainer extends React.Component<
 
   render() {
     const { t, tReady } = this.props;
-    const { loading } = this.state;
+    const { loading, campaigns } = this.state;
 
     if (loading) return <div> Loading ...</div>;
     else
@@ -91,7 +109,7 @@ class PlanningContainer extends React.Component<
                   eventKey="MISSION"
                   title={t("admin.planning.menu_missions")}
                 >
-                  Missions
+                  <AdminPlanning missions={campaigns} />
                 </Tab>
               </Tabs>
             </div>
