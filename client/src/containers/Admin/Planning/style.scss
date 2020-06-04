@@ -1,0 +1,39 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.PlanningContainer {
+  background-color: $color-white1;
+  border-radius: 15px;
+
+  &__subtitle {
+    @include typo-bold;
+
+    h1 {
+      font-weight: bold;
+      color: $color-primary;
+    }
+  }
+
+  &__container {
+    background: url("/images/overlays/overlay-spacial.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &__planning {
+      &__tabs {
+        a {
+          background-color: $color-primary;
+          color: $color-white1;
+          font-weight: bold;
+          margin-right: 1em;
+        }
+
+        .active {
+          //surcharge bootstrap Tab active
+          background-color: $color-primary-light !important;
+          color: $color-white1 !important;
+        }
+      }
+    }
+  }
+}
