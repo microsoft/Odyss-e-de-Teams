@@ -11,6 +11,7 @@ module.exports = function (sequelize, DataTypes) {
       description: DataTypes.STRING,
       ordre: DataTypes.NUMBER,
       actif: DataTypes.BOOLEAN,
+      fin_semaine: DataTypes.DATE,
       updatedAt: {
         type: DataTypes.DATE,
         field: "horodatage",
