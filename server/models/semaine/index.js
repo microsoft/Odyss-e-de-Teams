@@ -11,6 +11,7 @@ module.exports = function (sequelize, DataTypes) {
       description: DataTypes.STRING,
       ordre: DataTypes.NUMBER,
       actif: DataTypes.BOOLEAN,
+      debut_semaine: DataTypes.DATE,
       fin_semaine: DataTypes.DATE,
       updatedAt: {
         type: DataTypes.DATE,
