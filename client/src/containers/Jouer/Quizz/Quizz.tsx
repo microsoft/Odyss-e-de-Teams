@@ -92,8 +92,8 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
     );
   }
 
-  private _onPlayVideo = () => {
-    console.log("TODO BONUS VIDEO");
+  private _onPlayVideo = (currentQuestion: IQuestion) => {
+    currentQuestion.video_ok = true;
     this.chronoComponent.current.stopTimer();
   };
 

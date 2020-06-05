@@ -15,6 +15,9 @@ export interface IQuestion {
   reponse_saisie?: number[];
   temps_reponse?: number;
   valid?: boolean;
+  video_ok?: boolean;
+  nb_xp?: number;
+  nb_point?: number;
 }
 
 
@@ -95,6 +98,8 @@ export interface IRecapQuizzState {
   currentNiveau?: INiveau;
   listQuestion?: IQuestion[];
   tempsTotal?: number;
+  nbXpTotal?: number;
+  nbPointTotal?: number;
 }
 
 export interface IStopWatchProps {
