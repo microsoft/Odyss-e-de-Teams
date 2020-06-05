@@ -71,7 +71,7 @@ const register = async (server, options) => {
 
       return db.sequelize
         .query(
-          "select ts.nom as mission_name, ts.horodatage + INTERVAL '7 day' as mission_end from t_organisation org inner join t_semaine ts  on ts.id_semaine = org.id_semaine where id_organisation =:id_organisation",
+          "select s.nom as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end from t_semaine s inner join j_organisation_semaine ts  on ts.id_semaine = s.id_semaine where id_organisation =:id_organisation",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -140,10 +140,6 @@ const register = async (server, options) => {
 
       const Organisation = db.getModel("Organisation");
       const User = db.getModel("User");
-
-      request.state = {
-        oid_ad: "edfd6301-53ce-4142-b78e-e5f27cd34ed9",
-      };
 
       // check oid_ad is present in request
       if (!request.state.oid_ad) {
@@ -225,6 +221,7 @@ const register = async (server, options) => {
       const User = db.getModel("User");
       const Semaine = db.getModel("Semaine");
       const Organisation = db.getModel("Organisation");
+      const OrganisationSemaine = db.getModel("OrganisationSemaine");
 
       // check oid_ad is present in request
       if (!request.state.oid_ad) {
@@ -242,7 +239,7 @@ const register = async (server, options) => {
         return false;
       }
 
-      let availableMissions = await Semaine.findAll();
+      let availableMissions = await Semaine.findAll({ raw: true });
 
       const currentOrga = await Organisation.findOne({
         where: {
@@ -250,9 +247,22 @@ const register = async (server, options) => {
         },
       });
 
-      availableMissions.map((mission) => {
-        mission.actif = mission.id_semaine === currentOrga.id_semaine;
+      const semaines = await OrganisationSemaine.findAll({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+        raw: true,
       });
+
+      availableMissions.forEach((mission) => {
+        let semaine = semaines.find((e) => e.id_semaine === mission.id_semaine);
+
+        mission.fin_semaine = new Date(semaine.fin_semaine);
+        mission.debut_semaine = new Date(semaine.debut_semaine);
+        mission.actif = mission.id_semaine === currentOrga.id_semaine_encours;
+      });
+
+      // console.log(semaines);
 
       return {
         availableMissions: availableMissions,
