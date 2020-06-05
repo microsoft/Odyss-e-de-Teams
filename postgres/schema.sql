@@ -17,7 +17,7 @@ GRANT ALL ON TABLE public.seq_t_organisation TO odyssee_teams_appli;
 CREATE TABLE public.t_organisation
 (
   id_organisation integer NOT NULL DEFAULT nextval('public.seq_t_organisation'::regclass),
-  id_semaine integer,
+  id_semaine_encours integer,
   tid_ad text,
   nom character(180),
   logo text,
@@ -40,7 +40,7 @@ ALTER TABLE public.t_organisation CLUSTER ON idx_organisation_pkey;
 CREATE INDEX idx_id_semaine_t_organisation
   ON public.t_organisation
   USING btree
-  (id_semaine);
+  (id_semaine_encours);
   
 CREATE INDEX idx_actif_t_organisation
   ON public.t_organisation
@@ -288,9 +288,6 @@ CREATE TABLE public.t_semaine
   nom character(80),
   description text,
   ordre integer,
-  actif boolean,
-  debut_semaine timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-  fin_semaine timestamp without time zone DEFAULT CURRENT_TIMESTAMP + INTERVAL '7 DAY',
   horodatage timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
   horodatage_creation timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT pk_t_semaine PRIMARY KEY (id_semaine)
@@ -310,11 +307,6 @@ CREATE INDEX idx_ordre_t_semaine
   ON public.t_semaine
   USING btree
   (ordre);
-
-CREATE INDEX idx_actif_t_semaine
-  ON public.t_semaine
-  USING btree
-  (actif);
 
 /***************************/
 /****** communication*******/
@@ -951,6 +943,26 @@ $BODY$;
 		TABLESPACE pg_default;
 
 
+-- Table jointure semaine organisation
+	CREATE SEQUENCE public.seq_j_organisation_semaine;
+	GRANT ALL ON TABLE public.seq_j_organisation_semaine TO odyssee_teams_appli;
+	
+CREATE TABLE "public"."j_organisation_semaine" (
+    "id" integer NOT NULL DEFAULT nextval('public.seq_j_organisation_semaine'::regclass),
+    "id_organisation" integer,
+    "id_semaine" integer ,
+    "actif" boolean,
+    "debut_semaine" timestamp DEFAULT CURRENT_TIMESTAMP,
+    "fin_semaine" timestamp DEFAULT CURRENT_TIMESTAMP + INTERVAL '7 DAY',
+    PRIMARY KEY ("id"),
+    FOREIGN KEY ("id_organisation") REFERENCES "public"."t_organisation"("id_organisation"),
+    FOREIGN KEY ("id_semaine") REFERENCES "public"."t_semaine"("id_semaine")
+);
+
+	GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE ON TABLE public.j_organisation_semaine TO odyssee_teams_appli;
+
+
+
  -- histo agenda done
 	CREATE SEQUENCE public.seq_h_agenda_done;
 	GRANT ALL ON TABLE public.seq_h_agenda_done TO odyssee_teams_appli;
@@ -1061,7 +1073,7 @@ GRANT ALL ON SEQUENCE public.h_user_login_id_seq TO odyssee_teams_appli;
 
 
 -- Foreign key semaine 
-ALTER TABLE t_organisation ADD FOREIGN KEY (id_semaine) REFERENCES t_semaine(id_semaine);
+ALTER TABLE t_organisation ADD FOREIGN KEY (id_semaine_encours) REFERENCES t_semaine(id_semaine);
 
 
 
