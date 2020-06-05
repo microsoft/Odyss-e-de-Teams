@@ -8,7 +8,7 @@ class User extends API {
   }
 
   createUserByAD(lang: string, dataAD?: any): Promise<any> {
-    return super.fetchPOST(this.resource + "/createByAD", dataAD, {
+    return super.fetchPOST(this.resource + "/create-by-ad", dataAD, {
       language: lang,
     });
   }
