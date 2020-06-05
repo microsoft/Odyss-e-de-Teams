@@ -148,8 +148,10 @@ class App extends React.Component<IAppProps, IAppState> {
 
           if (this.state.is_admin) return <AdminContainer />;
 
-          if (!this.state.is_admin)
-            return <PlayerContainer hasGradient={true} />;
+          if (!this.state.is_admin){
+            let hasGradient = this.props.location.pathname.indexOf('/Jouer') !== -1 ? false : true;
+            return <PlayerContainer hasGradient={hasGradient} />;
+          }
         }
       }
     }

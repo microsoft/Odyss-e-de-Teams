@@ -27,9 +27,9 @@ class QCM extends Component<IQCMProps, IMecaniqueQuestionState> {
       <div className={"conteneur-reponse"}>
         {
           this.props.multiple ? (
-            <QCMChoixMultiple onSelect={this._onSelect} question={this.props.question} />
+            <QCMChoixMultiple onSelect={this._onSelect} question={this.props.question} isRecap={this.props.isRecap} />
           ) : (
-            <QCMChoixUnique onSelect={this._onSelect} question={this.props.question} />
+            <QCMChoixUnique onSelect={this._onSelect} question={this.props.question} isRecap={this.props.isRecap} />
           )
         }
       </div>

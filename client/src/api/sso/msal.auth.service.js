@@ -11,7 +11,7 @@ class MsalAuthService {
             },
             cache: {
                 cacheLocation: "localStorage",
-                storeAuthStateInCookie: true
+                storeAuthStateInCookie: false
             }
         };
 
