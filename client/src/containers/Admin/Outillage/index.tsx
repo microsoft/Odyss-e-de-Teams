@@ -119,7 +119,7 @@ class Outillage extends Component<WithTranslation, IOutillageState> {
                   onClick={this.resetImg}
                   className="Outillage__form__input__reset"
                 >
-                  {tReady && t("admin.outillage.logoChangeButtonReset")}
+                  {tReady && t("utils.button.reset")}
                 </Button>
                 <Button
                   type="button"
@@ -127,7 +127,7 @@ class Outillage extends Component<WithTranslation, IOutillageState> {
                   className="Outillage__form__input__button"
                   disabled={!fileSelected}
                 >
-                  {tReady && t("admin.outillage.logoChangeButtonSave")}
+                  {tReady && t("utils.button.save")}
                 </Button>
               </div>
             </Form>
