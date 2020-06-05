@@ -101,7 +101,7 @@ const register = async (server, options) => {
       }
       let replacements = {
         user: id_user,
-        semaine: currentOrganisation.id_semaine
+        semaine: currentOrganisation.id_semaine_encours
       };
       //check validite reponse user
       const Question = db.getModel("Question");
@@ -157,7 +157,7 @@ const register = async (server, options) => {
         module: body.selectedModule.id_module,
         niveau: body.selectedNiveau.id_niveau,
         nb_reponse_ok: listQuestionWithValid.filter((q) => q.valid).length,
-        semaine: currentOrganisation.id_semaine
+        semaine: currentOrganisation.id_semaine_encours
       };
       await db.sequelize.query(
         `INSERT INTO public.h_questionnaire_complete(
@@ -277,7 +277,7 @@ const register = async (server, options) => {
           id_organisation: currentUserByAD.id_organisation,
         },
       });
-      let replacements = { user: currentUserByAD.id_user, semaine: currentOrganisation.id_semaine };
+      let replacements = { user: currentUserByAD.id_user, semaine: currentOrganisation.id_semaine_encours };
 
       return db.sequelize
         .query(
@@ -323,7 +323,7 @@ const register = async (server, options) => {
         niveau: params.niveau,
         lang: params.language,
         user: currentUserByAD.id_user,
-        semaine: currentOrganisation.id_semaine
+        semaine: currentOrganisation.id_semaine_encours
       };
       let main_query = `WITH w0 AS(
           SELECT DISTINCT a.id_question, a.valeur AS reponse_saisie, a.temps AS temps_reponse, a.valid
