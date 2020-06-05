@@ -364,7 +364,7 @@ CREATE TABLE public.t_question
   id_niveau integer,
   id_mecanique integer,
   cle_fichier nchar(25),
-  reponse text,
+  reponse integer[],
   nom text,
   commentaire text,
   asset text,
@@ -807,8 +807,10 @@ $BODY$;
 	(
 		id_reponse_user integer NOT NULL DEFAULT nextval('public.seq_h_reponse_user'::regclass),
 		id_user integer,
-		valeur text,
-		temps time without time zone,
+    id_question integer,
+    valid boolean,
+		valeur integer[],
+		temps bigint,
 		horodatage timestamp without time zone,
 		CONSTRAINT pk_h_reponse_user PRIMARY KEY (id_reponse_user)
 	)
@@ -829,6 +831,11 @@ $BODY$;
 	CREATE INDEX idx_id_user_h_reponse_user
 		ON public.h_reponse_user USING btree
 		(id_user)
+		TABLESPACE pg_default;
+
+	CREATE INDEX idx_id_question_h_reponse_user
+		ON public.h_reponse_user USING btree
+		(id_question)
 		TABLESPACE pg_default;
 
 -- histo questionnaire complete
@@ -1001,11 +1008,68 @@ $BODY$;
 ALTER TABLE t_organisation ADD FOREIGN KEY (id_semaine) REFERENCES t_semaine(id_semaine);
 
 
+
+-- fonctions diverses
+CREATE OR REPLACE FUNCTION f_reverse_string(text) 
+	RETURNS text
+    LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+    reversed_string text;
+    incoming alias for $1;
+BEGIN
+	reversed_string = '';
+	
+	for i in reverse char_length(incoming)..1 loop	
+		reversed_string = reversed_string || substring(incoming from i for 1);
+	end loop;
+
+	return reversed_string;
+END;
+$BODY$;
+
+
+CREATE OR REPLACE FUNCTION public.f_alphabet_letter()
+    RETURNS TABLE(ordre int, lettre text) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+DECLARE
+	nb_letter		int;
+	i				int;
+BEGIN
+	nb_letter	:= 26;
+	i			:= 0;
+	
+	CREATE TEMP TABLE alphabet (
+		ordre int, lettre text
+	);
+	WHILE i < nb_letter LOOP
+    	i = i + 1;
+		INSERT INTO alphabet VALUES (i, chr(64 + i));
+	END LOOP;
+	
+	RETURN QUERY SELECT * FROM alphabet;
+	DISCARD TEMP;
+END;
+$BODY$;
+
+
+-- FUNCTION: public.i_process_backlog_question()
+
 CREATE OR REPLACE FUNCTION public.i_process_backlog_question(
-    OUT statut character,
-    OUT message text)
-    RETURNS record AS
-$BODY$
+	OUT statut character,
+	OUT message text)
+    RETURNS record
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
 
 --********************************************************************************************************
 --* fonction import du fichier CSV backlog des question
@@ -1017,6 +1081,10 @@ DECLARE
 	-- variables liees au statut de la fonction
 	i 			int; -- compteur d'ajout question
 	j 			int; -- compteur d'ajout reponse
+	
+	
+	-- variables de travail
+	x			int;
 BEGIN
 -- INIT variables
 	message := '';
@@ -1052,14 +1120,37 @@ BEGIN
 	TRUNCATE TABLE public.t_question;
 	ALTER SEQUENCE public.seq_t_question RESTART WITH 1;
 	
-	INSERT INTO public.t_question (id_module, id_niveau, id_thematique, id_mecanique, cle_fichier, nom, reponse, commentaire, actif, horodatage, horodatage_creation) 
-		SELECT DISTINCT b.id_module, c.id_niveau, d.id_thematique, e.id_mecanique, a.code_question, a.question, a.reponse_ok, a.bonne_pratique, true, now(), now()
+	INSERT INTO public.t_question (id_module, id_niveau, id_thematique, id_mecanique, cle_fichier, nom, commentaire, actif, horodatage, horodatage_creation) 
+		SELECT DISTINCT b.id_module, c.id_niveau, d.id_thematique, e.id_mecanique, a.code_question, a.question, a.bonne_pratique, true, now(), now()
 		FROM public.i_question a
 			INNER JOIN public.t_module b ON a.code_module=b.cle_fichier
 			INNER JOIN public.t_niveau c ON a.niveau=c.cle_fichier
 			INNER JOIN public.t_thematique d ON a.thematique=TRIM(d.nom)
 			INNER JOIN public.t_mecanique e ON a.mecanique=e.cle_fichier;
 	
+	EXECUTE 'SELECT COUNT(*) FROM (SELECT DISTINCT id_question FROM public.t_question)s0' INTO i;
+	EXECUTE 'SELECT COUNT(*) FROM public.i_question' INTO x;
+	IF x <> i THEN	-- si nb question importees different de question dans le pull / erreur de jointure
+		statut := 'KO';
+		message := 'Le nombre de question importées ne correspond pas';
+		RETURN;
+	END IF;
+	
+	-- ajout asset images pour mecanique qcm avec video
+	WITH w0 AS(
+		SELECT DISTINCT id_module, id_question, cle_fichier, substring(cle_fichier, 1, length(cle_fichier) - position('_' in f_reverse_string(cle_fichier))) AS rep
+		FROM public.t_question 
+		WHERE id_mecanique IN (3,4)
+	)
+	UPDATE public.t_question 
+	SET asset=s0.asset
+	FROM (
+		SELECT DISTINCT a.id_question, '/' || b.cle_fichier || '/' || a.rep || '/' || a.cle_fichier || '/' || a.cle_fichier || '.mp4' AS asset
+		FROM w0 a
+			INNER JOIN public.t_module b ON a.id_module=b.id_module
+	) AS s0
+	WHERE public.t_question.id_question=s0.id_question;
+		
 	-- reponse
 	TRUNCATE TABLE public.t_reponse;
 	ALTER SEQUENCE public.seq_t_reponse RESTART WITH 1;
@@ -1075,17 +1166,62 @@ BEGIN
 	
 	EXECUTE 'SELECT CASE WHEN COUNT(*) = 0 THEN ''OK'' ELSE ''KO'' END
 		 FROM public.t_question a
-		 WHERE id_mecanique IN (1, 3, 6) AND LENGTH(TRIM(reponse))<>1' INTO statut;
+		 WHERE id_mecanique IN (1, 3, 6) AND array_length(reponse, 1)<>1' INTO statut;
 	IF statut = 'KO' THEN
 		message := 'Trop de réponses possibles pour une mécanique choix unique';
+		RETURN;
 	END IF;
 	
+	EXECUTE 'SELECT COUNT(*) FROM (SELECT DISTINCT id_reponse FROM public.t_reponse)s0' INTO j;
+	
+  -- update question avec les id reponse en reponse valide
+  WITH w0 AS (
+		WITH w0_0 AS(
+		  SELECT a.reponse_ok, b.id_question
+		  FROM public.i_question a
+			INNER JOIN public.t_question b ON a.code_question=b.cle_fichier--  AND id_question=30
+		)
+		SELECT a.id_question, rep, ordre
+		FROM w0_0 a, regexp_split_to_table(a.reponse_ok, '//') WITH ORDINALITY x(rep, ordre)
+	), w_alphabet AS (
+		SELECT * FROM public.f_alphabet_letter()
+	)
+	UPDATE public.t_question 
+	SET reponse=s0.reponse
+	FROM (
+    SELECT a.id_question, array_agg(c.id_reponse ORDER BY a.id_question, a.ordre) AS reponse
+    FROM w0 a
+      INNER JOIN w_alphabet b ON TRIM(a.rep)=TRIM(b.lettre)
+      INNER JOIN public.t_reponse c ON a.id_question=c.id_question AND b.ordre=c.ordre
+    GROUP BY a.id_question
+	) AS s0
+	WHERE public.t_question.id_question=s0.id_question;
+	
+	-- ajout asset images pour mecanique qcm avec images
+	WITH w_question AS (
+		WITH w0 AS(
+			SELECT DISTINCT id_module, id_question, cle_fichier, substring(cle_fichier, 1, length(cle_fichier) - position('_' in f_reverse_string(cle_fichier))) AS rep
+			FROM public.t_question 
+			WHERE id_mecanique IN (6,7)
+		)
+		SELECT DISTINCT a.id_question, '/' || b.cle_fichier || '/' || a.rep || '/' || a.cle_fichier || '/' AS rep
+		FROM w0 a
+			INNER JOIN public.t_module b ON a.id_module=b.id_module
+	), w_alphabet AS (
+		SELECT * FROM public.f_alphabet_letter()
+	)
+	UPDATE public.t_reponse 
+	SET asset=s0.asset
+	FROM (
+		SELECT b.id_reponse, b.ordre, rep || c.lettre || '.png' AS asset
+		FROM w_question a
+			INNER JOIN public.t_reponse b ON a.id_question=b.id_question
+			INNER JOIN w_alphabet c ON b.ordre=c.ordre
+	) AS s0
+	WHERE public.t_reponse.id_reponse=s0.id_reponse;
+			
 	IF statut = 'OK' THEN
-		EXECUTE 'SELECT COUNT(*) FROM (SELECT DISTINCT id_question FROM public.t_question)s0' INTO i;
-		EXECUTE 'SELECT COUNT(*) FROM (SELECT DISTINCT id_reponse FROM public.t_reponse)s0' INTO j;
 		message := message || ' | ' || i::varchar(12) || ' question(s) ajoutée(s)' || ' | ' || j::varchar(12) || ' reponse(s) ajoutée(s)';
 	END IF;
 END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE;
-
+$BODY$;

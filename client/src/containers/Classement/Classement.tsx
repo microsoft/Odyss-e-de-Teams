@@ -159,7 +159,7 @@ class Classement extends Component<{}, IClassementState> {
                             />
                             Classement points EXP
                         </Button>
-                        <Button
+                        {/* suppression classement monde / demande MS <Button
                             variant={this.state.viewMonde ? "primary" : "secondary"}
                             onClick={() => this._setViewMonde()}
                             className={"mr-3 d-inline-flex align-items-center"}
@@ -170,7 +170,7 @@ class Classement extends Component<{}, IClassementState> {
                                 className={"btn-ico"}
                             />
                             Classement monde
-                        </Button>
+                        </Button> */}
                     </div>
                     <div className={"d-md-none mb-4 text-center"}>
                         {" "}
@@ -198,7 +198,7 @@ class Classement extends Component<{}, IClassementState> {
                             EXP
                         </Button>
                         </ButtonGroup>
-                        <Button
+                        {/* suppression classement monde / demande MS  <Button
                             variant={this.state.viewMonde ? "primary" : "secondary"}
                             onClick={() => this._setViewMonde()}
                         >
@@ -208,7 +208,7 @@ class Classement extends Component<{}, IClassementState> {
                                 className={"btn-ico d-block mx-auto"}
                             />
                             monde
-                        </Button>
+                        </Button> */}
                         {/* podium mobile */}
                         <div className={"position-relative d-flex podium"}>
                             {userTop2 ? (
