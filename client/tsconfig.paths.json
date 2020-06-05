@@ -7,7 +7,8 @@
       "layouts/*": ["src/layouts/*"],
       "containers/*": ["src/containers/*"],
       "models/*": ["src/models/*"],
-      "store/*": ["src/store/*"]
+      "store/*": ["src/store/*"],
+      "utils/*": ["src/utils/*"]
     }
   }
 }

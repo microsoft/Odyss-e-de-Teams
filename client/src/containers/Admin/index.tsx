@@ -6,7 +6,6 @@ import {
   Route,
 } from "react-router-dom";
 import { connect } from "react-redux";
-import { Translation } from "react-i18next";
 
 import "./style.scss";
 
@@ -19,11 +18,11 @@ import Menu from "containers/Menu/Menu";
 // components
 import Header from "components/Header/Header";
 
-
 // router
 import AdminCockpit from "containers/Admin/Dashboard";
 
 import Outillage from "containers/Admin/Outillage";
+import Planning from "containers/Admin/Planning";
 
 // models
 import { IUser } from "models/User";
@@ -59,6 +58,7 @@ class Admin extends Component<IAdminProps> {
           <Switch>
             <Route exact path="/Cockpit" component={AdminCockpit} />
             <Route exact path="/Outillage" component={Outillage} />
+            <Route exact path="/Planning" component={Planning} />
             <Route component={AdminCockpit} />
           </Switch>
         </div>

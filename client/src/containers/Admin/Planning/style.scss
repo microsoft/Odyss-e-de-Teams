@@ -1,0 +1,69 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.PlanningContainer {
+  &__subtitle {
+    @include typo-bold;
+
+    h1 {
+      font-weight: bold;
+      color: $color-primary;
+    }
+  }
+
+  &__container {
+    background: url("/images/overlays/overlay-spacial.svg"),
+      linear-gradient($color-white3, $color-white1);
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+    box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+    border-radius: 15px;
+
+    padding: 1em;
+    padding-top: 2em;
+
+    &__title {
+      font-size: 1.3em;
+
+      h2 {
+        color: $color-primary-light;
+        font-weight: bold;
+      }
+
+      p {
+        color: $color-black1;
+        font-size: 0.8em;
+        font-weight: normal;
+      }
+    }
+
+    &__planning {
+      .tab-content {
+        background-color: $color-white1;
+        padding: 1.5em;
+      }
+      border-radius: 15px;
+      &__tabs {
+        a {
+          background-color: $color-primary;
+          color: $color-white1;
+          font-weight: bold;
+          margin-right: 1em;
+        }
+
+        .active {
+          //surcharge bootstrap Tab active
+          background-color: $color-primary-light !important;
+          color: $color-white1 !important;
+        }
+      }
+
+      .nav-tabs {
+        border-top-left-radius: 1em !important;
+        border-top-right-radius: 1em !important;
+      }
+    }
+  }
+}

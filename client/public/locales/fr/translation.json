@@ -49,9 +49,25 @@
       "current_logo_title": "Logo actuellement déployé",
       "current_logo_desc": "Commandant, il est recommandé d’importer un logo sur fond blanc pour assurer sa lisibilité.",
       "logoChangeButtonLabel": "Charger un logo",
-      "logoChangeButtonReset": "Réinitialiser",
-      "logoChangeButtonSave": "Sauvegarder les modifications",
       "no_logo_text": "Pas de logo :("
+    },
+    "planning": {
+      "subtitle": "Planning du commandant",
+      "board_title": "Tableau de board",
+      "board_desc": "Commandant, vous avez un certain nombre d'actions à mener chaque jour pour assurer la pérennité du voyage des Explorateurs !",
+      "menu_planning": "Planning",
+      "menu_email": "Emailings",
+      "menu_social": "Réseaux sociaux",
+      "menu_teams": "Notifications Teams",
+      "menu_missions": "Programme et missions",
+      "mission_week_short": "S",
+      "mission_week_to": "au",
+      "mission_active": "Mission activée",
+      "mission_pending": "Mission en attente",
+      "mission_label": "Mission : ",
+      "title": "Programme et missions - ",
+      "title_week": "Semaine ",
+      "description": "Commandant, dans cette section vous pouvez activer et désactiver chaque semaine les packages de missions qui sont ou seront à déployer sur les interfaces des Explorateurs de votre organisation."
     }
   },
   "outillage": {
@@ -107,5 +123,25 @@
   "modal": {
     "cancel": "Annuler",
     "confirm_reward": "Bien reçu !"
+  },
+  "utils": {
+    "date": {
+      "january": "Janvier",
+      "february": "Février",
+      "march": "Mars",
+      "april": "April",
+      "may": "Mai",
+      "june": "Juin",
+      "july": "Juillet",
+      "august": "Août",
+      "september": "Septembre",
+      "october": "Octobre",
+      "november": "November",
+      "december": "Décembre"
+    },
+    "button": {
+      "reset": "Réinitialiser",
+      "save": "Sauvegarder les modifications"
+    }
   }
 }

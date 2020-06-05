@@ -252,6 +252,8 @@ CREATE TABLE public.t_semaine
   description text,
   ordre integer,
   actif boolean,
+  debut_semaine timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+  fin_semaine timestamp without time zone DEFAULT CURRENT_TIMESTAMP + INTERVAL '7 DAY',
   horodatage timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
   horodatage_creation timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT pk_t_semaine PRIMARY KEY (id_semaine)
