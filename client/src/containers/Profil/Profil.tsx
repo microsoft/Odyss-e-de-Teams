@@ -25,6 +25,7 @@ class Profil extends Component<IProfilProps, IProfilState> {
   }
 
   componentDidMount() {
+    this._loadCurrentUser();
     this._loadDataProfil();
   }
 
