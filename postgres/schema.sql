@@ -18,6 +18,7 @@ CREATE TABLE public.t_organisation
 (
   id_organisation integer NOT NULL DEFAULT nextval('public.seq_t_organisation'::regclass),
   id_semaine_encours integer,
+  tid_ad text,
   nom character(180),
   logo text,
   actif boolean,
@@ -45,7 +46,43 @@ CREATE INDEX idx_actif_t_organisation
   ON public.t_organisation
   USING btree
   (actif);
+
+
+ ----- maitre du jeu / ceux qui activent les organisations  
+CREATE SEQUENCE public.seq_t_maitre_jeu;
+GRANT ALL ON TABLE public.seq_t_maitre_jeu TO odyssee_teams_appli;
+
+CREATE TABLE public.t_maitre_jeu
+(
+  id_maitre_jeu integer NOT NULL DEFAULT nextval('public.seq_t_maitre_jeu'::regclass),
+  id_organisation integer,
+  mail character(255),
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_maitre_jeu PRIMARY KEY (id_maitre_jeu)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_maitre_jeu TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_maitre_jeu_pkey
+  ON public.t_maitre_jeu
+  USING btree
+  (id_maitre_jeu);
+ALTER TABLE public.t_maitre_jeu CLUSTER ON idx_maitre_jeu_pkey;
+
+CREATE INDEX idx_id_organisation_t_maitre_jeu
+  ON public.t_maitre_jeu
+  USING btree
+  (id_organisation);
   
+CREATE INDEX idx_actif_t_maitre_jeu
+  ON public.t_maitre_jeu
+  USING btree
+  (actif);
+
  ----- user 
 CREATE SEQUENCE public.seq_t_user;
 GRANT ALL ON TABLE public.seq_t_user TO odyssee_teams_appli;

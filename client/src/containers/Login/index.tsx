@@ -1,38 +1,47 @@
 import React from "react";
-
 import { Container, Button } from "react-bootstrap";
-// import { withTranslation, WithTranslation } from "react-i18next";
+
+import "./Login.scss";
 
 interface ILoginProps {
-  login: void;
+  onLogin: any;
 }
 
-function Login(props: ILoginProps) {
-  const { login } = props;
+class Login extends React.Component<ILoginProps, {}> {
+  render() {
+    const { onLogin } = this.props;
 
-  return (
-    <Container fluid className={`main-container d-flex p-0`}>
-      <div className="App-login">
-        <div className="App-login-image-container">
-          {/* <img
-                                            className="App-login-image"
-                                            alt="Taskmeow logo"
-                                            src={logo}
-                                        /> */}
+    return (
+      <Container
+        fluid
+        className={`main-container h-100 d-flex flex-column align-items-center justify-content-center p-0`}
+      >
+        <div className="App-login px-3">
+          <div className="App-login-image-container">
+            <img
+              src={
+                process.env.PUBLIC_URL + "/images/logo/logo_centre_violet.png"
+              }
+              alt={"Logo"}
+              className={"logo"}
+            />
+          </div>
+          <div className="App-login-button-container text-center pb-4">
+            <Button variant="primary" className={"d-inline-flex align-items-center"} onClick={() => onLogin()}>
+              <img
+                className="btn-ico mr-2"
+                alt="Microsoft logo"
+                src={
+                  process.env.PUBLIC_URL + "/images/logo/microsoft.png"
+                }
+              />
+              <span className="label">Se connecter</span>
+            </Button>
+          </div>
         </div>
-        <div className="App-login-button-container">
-          <Button variant="primary" onClick={() => login}>
-            {/* <img
-                                                className="App-login-button-image"
-                                                alt="Microsoft logo"
-                                                src={microsoftLogo}
-                                            /> */}
-            <span className="ms-Button-label label-46">Login</span>
-          </Button>
-        </div>
-      </div>
-    </Container>
-  );
+      </Container>
+    );
+  }
 }
 
 export default Login;
