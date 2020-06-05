@@ -14,7 +14,7 @@ const monthNamesKeys = [
 ];
 
 const getFullMonth = (d: Date) => {
-  return monthNamesKeys[d.getMonth() + 1];
+  return monthNamesKeys[d.getMonth()];
 };
 
 export { getFullMonth };
