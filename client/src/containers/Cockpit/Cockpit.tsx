@@ -163,7 +163,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
               className="col-12 p-4"
               campaign_name={campaign.name}
               campaign_end={campaign.date_end}
-              translationDescKey="player.cockpit.campain_desc"
+              translationDescKey="player.cockpit.campaign_desc"
             />
           </Row>
 
