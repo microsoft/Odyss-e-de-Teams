@@ -151,21 +151,35 @@ const register = async (server, options) => {
         niveau: body.selectedNiveau.id_niveau,
         nb_reponse_ok: listQuestionWithValid.filter((q) => q.valid).length,
       };
-      return db.sequelize
-        .query(
-          `INSERT INTO public.h_questionnaire_complete(
+      await db.sequelize.query(
+        `INSERT INTO public.h_questionnaire_complete(
             id_module, id_niveau, id_user, nb_reponse_ok, horodatage)
           VALUES (:module, :niveau, :user, :nb_reponse_ok, now());`,
-          {
-            replacements: replacementsQuestionnaire,
-            type: QueryTypes.INSERT,
-          }
-        )
-        .then(() => {
-          return {
-            result: true,
-          };
-        });
+        {
+          replacements: replacementsQuestionnaire,
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `UPDATE public.t_user 
+          SET nb_questionnaire_complete=s0.nb
+          FROM (
+            SELECT DISTINCT id_user, COUNT(*) AS nb
+            FROM public.h_questionnaire_complete
+            WHERE id_user=:user
+            GROUP BY id_user
+          ) AS s0
+          WHERE public.t_user.id_user=s0.id_user;`,
+        {
+          replacements: {
+            user: id_user,
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      return {
+        result: true,
+      };
     },
   });
   server.route({
@@ -174,7 +188,9 @@ const register = async (server, options) => {
     handler: function (request, h) {
       const db = request.getDb("odyssee_teams");
       const params = request.query;
-      let replacements = { lang: lang }, oneResult = false, and_query = "";
+      let replacements = { lang: lang },
+        oneResult = false,
+        and_query = "";
       if (params.id) {
         replacements["module"] = +params.id;
         and_query = " AND a.id_module=:module";
@@ -183,7 +199,9 @@ const register = async (server, options) => {
 
       return db.sequelize
         .query(
-          "SELECT DISTINCT a.id_module, TRIM(b.nom) AS nom, a.image FROM public.t_module a INNER JOIN public.t_libelle_i18n b ON a.id_module=b.id_table AND TRIM(b.code)='MODULE' AND TRIM(b.lang)=:lang WHERE a.actif" + and_query + " ORDER BY TRIM(b.nom)",
+          "SELECT DISTINCT a.id_module, TRIM(b.nom) AS nom, a.image FROM public.t_module a INNER JOIN public.t_libelle_i18n b ON a.id_module=b.id_table AND TRIM(b.code)='MODULE' AND TRIM(b.lang)=:lang WHERE a.actif" +
+            and_query +
+            " ORDER BY TRIM(b.nom)",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -202,7 +220,9 @@ const register = async (server, options) => {
     handler: function (request, h) {
       const db = request.getDb("odyssee_teams");
       const params = request.query;
-      let replacements = { lang: lang }, oneResult = false, and_query = "";
+      let replacements = { lang: lang },
+        oneResult = false,
+        and_query = "";
       if (params.id) {
         replacements["niveau"] = +params.id;
         and_query = " AND a.id_niveau=:niveau";
@@ -211,7 +231,9 @@ const register = async (server, options) => {
 
       return db.sequelize
         .query(
-          "SELECT a.id_niveau, TRIM(b.nom) AS nom FROM public.t_niveau a INNER JOIN public.t_libelle_i18n b ON a.id_niveau=b.id_table AND TRIM(b.code)='NIVEAU' AND TRIM(b.lang)=:lang WHERE a.actif" + and_query + " ORDER BY a.ordre",
+          "SELECT a.id_niveau, TRIM(b.nom) AS nom FROM public.t_niveau a INNER JOIN public.t_libelle_i18n b ON a.id_niveau=b.id_table AND TRIM(b.code)='NIVEAU' AND TRIM(b.lang)=:lang WHERE a.actif" +
+            and_query +
+            " ORDER BY a.ordre",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
