@@ -47,7 +47,7 @@ class RecapQuizz extends Component<RouteComponentProps, IRecapQuizzState> {
         let listQuestion: IQuestion[] = data[2].results ? data[2].results : [];
         let tempsTotal: number = 0;
         if (listQuestion && listQuestion.length > 0) {
-          tempsTotal = listQuestion.map((q) => q.temps_reponse).reduce(reducer);
+          tempsTotal = listQuestion.map((q) => parseInt(q.temps_reponse.toString())).reduce(reducer);
         }
         this.setState({
           currentModule: data[0].results,

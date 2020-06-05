@@ -89,12 +89,19 @@ const register = async (server, options) => {
         return false;
       }
       const id_user = currentUserByAD.id_user;
+      const Organisation = db.getModel("Organisation");
+      const currentOrganisation = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
       let body = request.payload;
       if (!body) {
         return { results: false };
       }
       let replacements = {
         user: id_user,
+        semaine: currentOrganisation.id_semaine
       };
       //check validite reponse user
       const Question = db.getModel("Question");
@@ -125,7 +132,7 @@ const register = async (server, options) => {
         replacements["valid" + i] = q.valid;
         replacements["temps" + i] = q.temps_reponse;
         main_query +=
-          "(:user, :question" +
+          "(:user, :semaine, :question" +
           i +
           ", :reponse" +
           i +
@@ -136,7 +143,7 @@ const register = async (server, options) => {
           ", now())";
       });
       main_query =
-        "INSERT INTO public.h_reponse_user(id_user, id_question, valeur, valid, temps, horodatage) VALUES" +
+        "INSERT INTO public.h_reponse_user(id_user, id_semaine, id_question, valeur, valid, temps, horodatage) VALUES" +
         main_query +
         ";";
       await db.sequelize.query(main_query, {
@@ -150,22 +157,37 @@ const register = async (server, options) => {
         module: body.selectedModule.id_module,
         niveau: body.selectedNiveau.id_niveau,
         nb_reponse_ok: listQuestionWithValid.filter((q) => q.valid).length,
+        semaine: currentOrganisation.id_semaine
       };
-      return db.sequelize
-        .query(
-          `INSERT INTO public.h_questionnaire_complete(
-            id_module, id_niveau, id_user, nb_reponse_ok, horodatage)
-          VALUES (:module, :niveau, :user, :nb_reponse_ok, now());`,
-          {
-            replacements: replacementsQuestionnaire,
-            type: QueryTypes.INSERT,
-          }
-        )
-        .then(() => {
-          return {
-            result: true,
-          };
-        });
+      await db.sequelize.query(
+        `INSERT INTO public.h_questionnaire_complete(
+            id_semaine, id_module, id_niveau, id_user, nb_reponse_ok, horodatage)
+          VALUES (:semaine, :module, :niveau, :user, :nb_reponse_ok, now());`,
+        {
+          replacements: replacementsQuestionnaire,
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `UPDATE public.t_user 
+          SET nb_questionnaire_complete=s0.nb
+          FROM (
+            SELECT DISTINCT id_user, COUNT(*) AS nb
+            FROM public.h_questionnaire_complete
+            WHERE id_user=:user
+            GROUP BY id_user
+          ) AS s0
+          WHERE public.t_user.id_user=s0.id_user;`,
+        {
+          replacements: {
+            user: id_user,
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      return {
+        result: true,
+      };
     },
   });
   server.route({
@@ -174,7 +196,9 @@ const register = async (server, options) => {
     handler: function (request, h) {
       const db = request.getDb("odyssee_teams");
       const params = request.query;
-      let replacements = { lang: lang }, oneResult = false, and_query = "";
+      let replacements = { lang: lang },
+        oneResult = false,
+        and_query = "";
       if (params.id) {
         replacements["module"] = +params.id;
         and_query = " AND a.id_module=:module";
@@ -183,7 +207,9 @@ const register = async (server, options) => {
 
       return db.sequelize
         .query(
-          "SELECT DISTINCT a.id_module, TRIM(b.nom) AS nom, a.image FROM public.t_module a INNER JOIN public.t_libelle_i18n b ON a.id_module=b.id_table AND TRIM(b.code)='MODULE' AND TRIM(b.lang)=:lang WHERE a.actif" + and_query + " ORDER BY TRIM(b.nom)",
+          "SELECT DISTINCT a.id_module, TRIM(b.nom) AS nom, a.image FROM public.t_module a INNER JOIN public.t_libelle_i18n b ON a.id_module=b.id_table AND TRIM(b.code)='MODULE' AND TRIM(b.lang)=:lang WHERE a.actif" +
+            and_query +
+            " ORDER BY TRIM(b.nom)",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -202,7 +228,9 @@ const register = async (server, options) => {
     handler: function (request, h) {
       const db = request.getDb("odyssee_teams");
       const params = request.query;
-      let replacements = { lang: lang }, oneResult = false, and_query = "";
+      let replacements = { lang: lang },
+        oneResult = false,
+        and_query = "";
       if (params.id) {
         replacements["niveau"] = +params.id;
         and_query = " AND a.id_niveau=:niveau";
@@ -211,7 +239,9 @@ const register = async (server, options) => {
 
       return db.sequelize
         .query(
-          "SELECT a.id_niveau, TRIM(b.nom) AS nom FROM public.t_niveau a INNER JOIN public.t_libelle_i18n b ON a.id_niveau=b.id_table AND TRIM(b.code)='NIVEAU' AND TRIM(b.lang)=:lang WHERE a.actif" + and_query + " ORDER BY a.ordre",
+          "SELECT a.id_niveau, TRIM(b.nom) AS nom FROM public.t_niveau a INNER JOIN public.t_libelle_i18n b ON a.id_niveau=b.id_table AND TRIM(b.code)='NIVEAU' AND TRIM(b.lang)=:lang WHERE a.actif" +
+            and_query +
+            " ORDER BY a.ordre",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -241,11 +271,17 @@ const register = async (server, options) => {
       if (!currentUserByAD) {
         return false;
       }
-      let replacements = { user: currentUserByAD.id_user };
+      const Organisation = db.getModel("Organisation");
+      const currentOrganisation = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
+      let replacements = { user: currentUserByAD.id_user, semaine: currentOrganisation.id_semaine };
 
       return db.sequelize
         .query(
-          "SELECT DISTINCT id_module, id_niveau, nb_reponse_ok, horodatage FROM h_questionnaire_complete WHERE id_user=:user",
+          "SELECT DISTINCT id_module, id_niveau, nb_reponse_ok, horodatage FROM h_questionnaire_complete WHERE id_user=:user AND id_semaine=:semaine;",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -275,17 +311,24 @@ const register = async (server, options) => {
       if (!currentUserByAD) {
         return false;
       }
+      const Organisation = db.getModel("Organisation");
+      const currentOrganisation = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
       const params = request.query;
       let replacements = {
         module: params.module,
         niveau: params.niveau,
         lang: params.language,
         user: currentUserByAD.id_user,
+        semaine: currentOrganisation.id_semaine
       };
       let main_query = `WITH w0 AS(
           SELECT DISTINCT a.id_question, a.valeur AS reponse_saisie, a.temps AS temps_reponse, a.valid
           FROM h_reponse_user a
-          WHERE a.id_user=:user
+          WHERE a.id_user=:user AND id_semaine=:semaine
         )
         SELECT DISTINCT a.*, TRIM(c.nom) AS nom, c.description AS astuce, b.asset, b.reponse, b.id_mecanique
         FROM w0 a
