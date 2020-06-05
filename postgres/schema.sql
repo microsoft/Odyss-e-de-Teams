@@ -620,6 +620,49 @@ CREATE INDEX idx_actif_t_reponse
   ON public.t_reponse
   USING btree
   (actif);
+
+
+----- bareme_reponse  
+CREATE SEQUENCE public.seq_t_bareme_reponse;
+GRANT ALL ON TABLE public.seq_t_bareme_reponse TO odyssee_teams_appli;
+
+CREATE TABLE public.t_bareme_reponse
+(
+  id_bareme_reponse integer NOT NULL DEFAULT nextval('public.seq_t_bareme_reponse'::regclass),
+  id_niveau integer,
+  reponse_valid_xp smallint,
+  reponse_valid_point smallint,
+  last_reponse_valid_xp smallint,
+  last_reponse_valid_point smallint,
+  bonus_video_xp smallint,
+  bonus_video_point smallint,
+  bonus_temps_xp smallint,
+  bonus_temps_point smallint,
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_bareme_reponse PRIMARY KEY (id_bareme_reponse)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_bareme_reponse TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_bareme_reponse_pkey
+  ON public.t_bareme_reponse
+  USING btree
+  (id_bareme_reponse);
+ALTER TABLE public.t_bareme_reponse CLUSTER ON idx_bareme_reponse_pkey;
+
+CREATE INDEX idx_id_niveau_t_bareme_reponse
+  ON public.t_bareme_reponse
+  USING btree
+  (id_niveau);
+  
+CREATE INDEX idx_actif_t_bareme_reponse
+  ON public.t_bareme_reponse
+  USING btree
+  (actif);
   
  
 /***************************/
@@ -841,6 +884,8 @@ $BODY$;
 		id_user integer,
     id_question integer,
     valid boolean,
+    nb_point integer,
+    nb_xp integer,
 		valeur integer[],
 		temps bigint,
 		horodatage timestamp without time zone,
@@ -882,6 +927,8 @@ $BODY$;
     id_niveau integer,
 		id_user integer,
 		nb_reponse_ok integer,
+    nb_point integer,
+    nb_xp integer,
 		horodatage timestamp without time zone,
 		CONSTRAINT pk_h_questionnaire_complete PRIMARY KEY (id_questionnaire_complete)
 	)
@@ -1018,7 +1065,6 @@ CREATE TABLE public.h_user_login (
 GRANT ALL ON TABLE public.h_user_login TO odyssee_teams_appli;
 GRANT ALL ON SEQUENCE public.h_user_login_id_seq TO odyssee_teams_appli;
 
-
     
 /***************************/
 /******* multilangue *******/
@@ -1074,7 +1120,6 @@ GRANT ALL ON SEQUENCE public.h_user_login_id_seq TO odyssee_teams_appli;
 
 -- Foreign key semaine 
 ALTER TABLE t_organisation ADD FOREIGN KEY (id_semaine_encours) REFERENCES t_semaine(id_semaine);
-
 
 
 -- fonctions diverses

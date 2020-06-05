@@ -45,9 +45,11 @@ class RecapQuizz extends Component<RouteComponentProps, IRecapQuizzState> {
         const reducer = (accumulator: number, currentValue: number) =>
           accumulator + currentValue;
         let listQuestion: IQuestion[] = data[2].results ? data[2].results : [];
-        let tempsTotal: number = 0;
+        let tempsTotal: number = 0, nbPointTotal: number = 0, nbXpTotal: number = 0;
         if (listQuestion && listQuestion.length > 0) {
           tempsTotal = listQuestion.map((q) => parseInt(q.temps_reponse.toString())).reduce(reducer);
+          nbXpTotal = listQuestion.map((q) => q.nb_xp).reduce(reducer);
+          nbPointTotal = listQuestion.map((q) => q.nb_point).reduce(reducer);
         }
         this.setState({
           currentModule: data[0].results,
@@ -55,6 +57,8 @@ class RecapQuizz extends Component<RouteComponentProps, IRecapQuizzState> {
           listQuestion: listQuestion,
           isLoading: false,
           tempsTotal: tempsTotal,
+          nbXpTotal: nbXpTotal,
+          nbPointTotal: nbPointTotal,
         });
       });
   };
@@ -209,14 +213,14 @@ class RecapQuizz extends Component<RouteComponentProps, IRecapQuizzState> {
                   <h5 className={"d-block d-md-none color-white1 mt-2"}>
                     Points d’expérience remportés
                   </h5>
-                  <h2 className={"total-xp mb-0"}>+ xx EXP</h2>
+                  <h2 className={"total-xp mb-0"}>+ {this.state.nbXpTotal} EXP</h2>
                   <p className={"mb-4 d-none d-md-block"}>
                     <small>Points d’expérience remportés</small>
                   </p>
                   <h5 className={"d-block d-md-none color-white1 mt-2"}>
                     Points de classement remportés
                   </h5>
-                  <h2 className={"total-point mb-0"}>+ xx Points</h2>
+                  <h2 className={"total-point mb-0"}>+ {this.state.nbPointTotal} Points</h2>
                   <p className={"mb-0 d-none d-md-block"}>
                     <small>Points de classement remportés</small>
                   </p>

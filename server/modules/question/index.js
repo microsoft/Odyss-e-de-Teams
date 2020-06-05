@@ -1,6 +1,7 @@
 "use strict";
 const { QueryTypes, Op } = require("sequelize");
 const QuizzUtils = require("./../../utils/Quizz");
+const GainPointUtils = require("./../../utils/GainPoint");
 const baseUrl = "/question";
 let lang = "fr";
 
@@ -101,8 +102,9 @@ const register = async (server, options) => {
       }
       let replacements = {
         user: id_user,
-        semaine: currentOrganisation.id_semaine_encours
+        semaine: currentOrganisation.id_semaine_encours,
       };
+
       //check validite reponse user
       const Question = db.getModel("Question");
       const currentQuestions = await Question.findAll({
@@ -120,9 +122,18 @@ const register = async (server, options) => {
       });
       let listQuestionWithValid = QuizzUtils.getReponseValid(body.listQuestion);
 
+      // recuperation bareme et calcul des points
+      const BaremeReponse = db.getModel("BaremeReponse");
+      const listBareme = await BaremeReponse.findAll();
+      const dataCalculBareme = GainPointUtils.GetPointReponse(
+        listQuestionWithValid,
+        listBareme
+      );
+      let listQuestionWithValidAndPoint = dataCalculBareme.questions;
+
       // enregistrement reponse
       let main_query = "";
-      listQuestionWithValid.forEach((q, i) => {
+      listQuestionWithValidAndPoint.forEach((q, i) => {
         if (main_query.length > 0) {
           main_query += ",";
         }
@@ -131,6 +142,8 @@ const register = async (server, options) => {
           "{" + q.selectedReponseIds.join(",") + "}";
         replacements["valid" + i] = q.valid;
         replacements["temps" + i] = q.temps_reponse;
+        replacements["nb_xp" + i] = q.nb_xp;
+        replacements["nb_point" + i] = q.nb_point;
         main_query +=
           "(:user, :semaine, :question" +
           i +
@@ -138,12 +151,16 @@ const register = async (server, options) => {
           i +
           ", :valid" +
           i +
+          ", :nb_point" +
+          i +
+          ", :nb_xp" +
+          i +
           ", :temps" +
           i +
           ", now())";
       });
       main_query =
-        "INSERT INTO public.h_reponse_user(id_user, id_semaine, id_question, valeur, valid, temps, horodatage) VALUES" +
+        "INSERT INTO public.h_reponse_user(id_user, id_semaine, id_question, valeur, valid, nb_point, nb_xp, temps, horodatage) VALUES" +
         main_query +
         ";";
       await db.sequelize.query(main_query, {
@@ -156,13 +173,16 @@ const register = async (server, options) => {
         user: id_user,
         module: body.selectedModule.id_module,
         niveau: body.selectedNiveau.id_niveau,
-        nb_reponse_ok: listQuestionWithValid.filter((q) => q.valid).length,
-        semaine: currentOrganisation.id_semaine_encours
+        nb_reponse_ok: listQuestionWithValidAndPoint.filter((q) => q.valid)
+          .length,
+        nb_point: dataCalculBareme.total_point,
+        nb_xp: dataCalculBareme.total_xp,
+        semaine: currentOrganisation.id_semaine_encours,
       };
       await db.sequelize.query(
         `INSERT INTO public.h_questionnaire_complete(
-            id_semaine, id_module, id_niveau, id_user, nb_reponse_ok, horodatage)
-          VALUES (:semaine, :module, :niveau, :user, :nb_reponse_ok, now());`,
+            id_semaine, id_module, id_niveau, id_user, nb_reponse_ok, nb_point, nb_xp, horodatage)
+          VALUES (:semaine, :module, :niveau, :user, :nb_reponse_ok, :nb_point, :nb_xp, now());`,
         {
           replacements: replacementsQuestionnaire,
           type: QueryTypes.INSERT,
@@ -173,6 +193,23 @@ const register = async (server, options) => {
           SET nb_questionnaire_complete=s0.nb
           FROM (
             SELECT DISTINCT id_user, COUNT(*) AS nb
+            FROM public.h_questionnaire_complete
+            WHERE id_user=:user
+            GROUP BY id_user
+          ) AS s0
+          WHERE public.t_user.id_user=s0.id_user;`,
+        {
+          replacements: {
+            user: id_user,
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `UPDATE public.t_user 
+          SET nb_xp=s0.nb_xp, nb_point=s0.nb_point
+          FROM (
+            SELECT DISTINCT id_user, SUM(nb_point) AS nb_point, SUM(nb_xp) AS nb_xp
             FROM public.h_questionnaire_complete
             WHERE id_user=:user
             GROUP BY id_user
@@ -277,11 +314,14 @@ const register = async (server, options) => {
           id_organisation: currentUserByAD.id_organisation,
         },
       });
-      let replacements = { user: currentUserByAD.id_user, semaine: currentOrganisation.id_semaine_encours };
+      let replacements = {
+        user: currentUserByAD.id_user,
+        semaine: currentOrganisation.id_semaine_encours,
+      };
 
       return db.sequelize
         .query(
-          "SELECT DISTINCT id_module, id_niveau, nb_reponse_ok, horodatage FROM h_questionnaire_complete WHERE id_user=:user AND id_semaine=:semaine;",
+          "SELECT DISTINCT id_module, id_niveau, nb_reponse_ok, nb_xp, nb_point, horodatage FROM h_questionnaire_complete WHERE id_user=:user AND id_semaine=:semaine;",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -323,10 +363,10 @@ const register = async (server, options) => {
         niveau: params.niveau,
         lang: params.language,
         user: currentUserByAD.id_user,
-        semaine: currentOrganisation.id_semaine_encours
+        semaine: currentOrganisation.id_semaine_encours,
       };
       let main_query = `WITH w0 AS(
-          SELECT DISTINCT a.id_question, a.valeur AS reponse_saisie, a.temps AS temps_reponse, a.valid
+          SELECT DISTINCT a.id_question, a.id_semaine, a.valeur AS reponse_saisie, a.temps AS temps_reponse, a.valid, a.nb_xp, a.nb_point
           FROM h_reponse_user a
           WHERE a.id_user=:user AND id_semaine=:semaine
         )

@@ -158,6 +158,12 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 	UNION ALL
 	SELECT DISTINCT 'REPONSE', id_reponse, 'fr', nom, NULL::text FROM public.t_reponse;
 
+-- bareme point reponse
+	INSERT INTO public.t_bareme_reponse (id_niveau, reponse_valid_xp, reponse_valid_point, last_reponse_valid_xp, last_reponse_valid_point, bonus_video_xp, bonus_video_point, bonus_temps_xp, bonus_temps_point, actif, horodatage, horodatage_creation) VALUES 
+		(1, 10, 3, 15, 5, 5, 1, 5, 1, true, now(), now()),
+		(2, 12, 4, 17, 6, 6, 2, 6, 2, true, now(), now()),
+		(3, 15, 6, 20, 8, 8, 3, 8, 3, true, now(), now());
+
 
 -- user temp dev
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
@@ -177,7 +183,7 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 
 -- ajout tid SAEGUS / Pas de maitre du jeu qui active
 	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine_encours=1 WHERE id_organisation=1;
-	
+
 -- maitre jeu
 	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) 
 	VALUES (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
