@@ -12,6 +12,7 @@ import Landing from "containers/Landing/index";
 import AdminContainer from "containers/Admin";
 import PlayerContainer from "containers/Player";
 import LoginContainer from "containers/Login";
+import LoadingContainer from "containers/Loading";
 
 import UserAPI from "api/User";
 import AuthService from "api/sso/auth.service";
@@ -61,7 +62,6 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   login = () => {
-    this.setState({ loading: true });
     AuthService.login()
       .then((user) => {
         if (user) {
@@ -80,7 +80,7 @@ class App extends React.Component<IAppProps, IAppState> {
   onCompleteLanding = (e: any) => {
     UserAPI.createUserByAD("fr", {
       ad: this.state.userAD,
-      id_avatar: e.avatarSelected,
+      id_avatar: e.avatarSelected
     }).then((result: any) => {
       this._loadCurrentUser();
     });
@@ -125,7 +125,7 @@ class App extends React.Component<IAppProps, IAppState> {
     const { loading } = this.state;
 
     if (loading) {
-      return <div> Loading</div>;
+      return <LoadingContainer />;
     } else {
       if (AuthService.isCallback()) {
         return (
@@ -141,7 +141,7 @@ class App extends React.Component<IAppProps, IAppState> {
         );
       } else {
         if (!this.state.userAD) {
-          return <LoginContainer login={this.login()} />;
+          return <LoginContainer onLogin={() => this.login()} />;
         } else {
           if (!this.state.logged)
             return (
