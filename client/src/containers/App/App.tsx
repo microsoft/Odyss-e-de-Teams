@@ -12,6 +12,7 @@ import Landing from "containers/Landing/index";
 import AdminContainer from "containers/Admin";
 import PlayerContainer from "containers/Player";
 import LoginContainer from "containers/Login";
+import LoadingContainer from "containers/Loading";
 
 import UserAPI from "api/User";
 import AuthService from "api/sso/auth.service";
@@ -124,7 +125,7 @@ class App extends React.Component<IAppProps, IAppState> {
     const { loading } = this.state;
 
     if (loading) {
-      return <div>Loading</div>;
+      return <LoadingContainer />;
     } else {
       if (AuthService.isCallback()) {
         return (
