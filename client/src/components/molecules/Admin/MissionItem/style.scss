@@ -16,11 +16,19 @@
   &__body {
     margin-top: 1.5em;
     color: $color-white1;
+    height: 10em;
+    overflow: hidden;
+    margin-bottom: 1em;
     &__title {
-      font-size: 2em;
+      font-size: 1.7em;
+      font-weight: bold;
+      p {
+        margin-bottom: 0;
+      }
     }
 
     &__desc {
+      margin-top: 1em;
     }
   }
 
@@ -28,5 +36,13 @@
     margin-top: 2em;
     text-align: center;
     margin-bottom: 1em;
+
+    .btn {
+      font-size: 1em !important;
+    }
+
+    &__pending {
+      cursor: pointer;
+    }
   }
 }

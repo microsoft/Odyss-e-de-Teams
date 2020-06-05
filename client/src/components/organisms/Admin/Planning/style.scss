@@ -35,4 +35,11 @@
       background: url("/images/overlays/overlay-yellow.svg");
     }
   }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 1em;
+  }
 }
