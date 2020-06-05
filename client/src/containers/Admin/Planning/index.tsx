@@ -32,7 +32,7 @@ class PlanningContainer extends React.Component<
     try {
       const missions = await AdminAPI.getAllCampaigns();
 
-      missions.availableMissions.map((mission) => {
+      missions.availableMissions.forEach((mission) => {
         let startDate = new Date(mission.debut_semaine);
         let endDate = new Date(mission.fin_semaine);
 
