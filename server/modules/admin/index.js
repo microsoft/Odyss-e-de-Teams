@@ -262,7 +262,7 @@ const register = async (server, options) => {
 
   server.route({
     path: "/admin/set-current-mission",
-    method: "PUT",
+    method: "POST",
     handler: async function (request, h) {
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
@@ -291,7 +291,7 @@ const register = async (server, options) => {
           },
           {
             where: {
-              id_organisation: id_organisation,
+              id_organisation: currentUserByAD.id_organisation,
             },
           }
         );
