@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const SemaineModel = sequelize.define(
+  const Semaine = sequelize.define(
     "Semaine",
     {
       id_semaine: {
@@ -24,5 +24,5 @@ module.exports = function (sequelize, DataTypes) {
     }
   );
 
-  return SemaineModel;
+  return Semaine;
 };
