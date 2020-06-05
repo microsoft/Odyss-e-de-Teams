@@ -10,6 +10,7 @@ module.exports = function override(config) {
       containers: path.resolve(__dirname, "src", "containers"),
       models: path.resolve(__dirname, "src", "models"),
       store: path.resolve(__dirname, "src", "store"),
+      utils: path.resolve(__dirname, "src", "utils"),
     },
   };
   return config;

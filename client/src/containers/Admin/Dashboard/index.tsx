@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter, RouteComponentProps, Link } from "react-router-dom";
+import { RouteComponentProps, Link } from "react-router-dom";
 import { Translation } from "react-i18next";
 
 // atoms

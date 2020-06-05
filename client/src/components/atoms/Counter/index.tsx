@@ -26,7 +26,7 @@ class Countdown extends Component<ICountdownProps, ICountdownState> {
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      const { timeTillDate, timeFormat } = this.props;
+      const { timeTillDate } = this.props;
       const then = moment(new Date(timeTillDate));
       const now = moment();
       const countdown = moment(Number(then) - Number(now));
