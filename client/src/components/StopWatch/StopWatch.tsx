@@ -1,24 +1,30 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 
-import { IStopWatchState } from "src/models/Question";
+import { IStopWatchProps, IStopWatchState } from "src/models/Question";
 
-class Stopwatch extends Component<{}, IStopWatchState> {
+import "./StopWatch.scss";
+
+class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
   timer: number;
-  constructor(props: any) {
+  constructor(props: IStopWatchProps) {
     super(props);
     this.state = {
-      timerOn: false,
-      timerStart: 0,
-      timerTime: 0,
+      timerOn: props.done ? true : false,
+      timerStart: props.initTimer ? props.initTimer : 0,
+      timerTime: props.initTimer ? props.initTimer : 0,
     };
   }
 
-  componentDidMount() {
-      this._startTimer();
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
-  private _startTimer = () => {
+  public getCurrentTime = () => {
+    return this.state.timerTime;
+  };
+
+  public startTimer = () => {
     this.setState({
       timerOn: true,
       timerTime: this.state.timerTime,
@@ -31,16 +37,22 @@ class Stopwatch extends Component<{}, IStopWatchState> {
     }, 10);
   };
 
-  private _stopTimer = () => {
+  public stopTimer = () => {
     this.setState({ timerOn: false });
     clearInterval(this.timer);
   };
 
-  private _resetTimer = () => {
-    this.setState({
-      timerStart: 0,
-      timerTime: 0,
-    });
+  public restartTimer = () => {
+    clearInterval(this.timer);
+    this.setState(
+      {
+        timerStart: 0,
+        timerTime: 0,
+      },
+      () => {
+        this.startTimer();
+      }
+    );
   };
 
   render() {
@@ -49,31 +61,45 @@ class Stopwatch extends Component<{}, IStopWatchState> {
     let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
     let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
     return (
-      <div className="Stopwatch">
-        <h3 className={"text-center"}>
-          {minutes} : {seconds} : {centiseconds}
-        </h3>
-        {this.state.timerOn === false && this.state.timerTime > 0 && (
-            <Button variant="primary" onClick={this._startTimer}>Reprendre la mission</Button>
-        )}
-        {this.state.timerOn === true && (
-            <Button variant="primary" onClick={this._stopTimer}>Suspendre la mission</Button>
-        )}
-        {/* {this.state.timerOn === false && this.state.timerTime === 0 && (
-          <button onClick={this._startTimer}>Start</button>
-        )}
-        {this.state.timerOn === true && (
-          <button onClick={this._stopTimer}>Stop</button>
-        )}
-        {this.state.timerOn === false && this.state.timerTime > 0 && (
-          <button onClick={this._startTimer}>Resume</button>
-        )}
-        {this.state.timerOn === false && this.state.timerTime > 0 && (
-          <button onClick={this._resetTimer}>Reset</button>
-        )} */}
+      <div className={"chrono"}>
+        <p className={"text-center mb-0"}>
+          <img
+            src={process.env.PUBLIC_URL + "/images/question/chronometre.svg"}
+            alt={`Illustration Chronometre`}
+            className={"illustration-chronometre"}
+          />
+        </p>
+        <div className="stopwatch">
+          <h3 className={"text-center"}>
+            {minutes} : {seconds} : {centiseconds}
+          </h3>
+          {this.state.timerOn === false && this.state.timerTime > 0 && (
+            <Button variant="primary" onClick={this.startTimer}>
+              Reprendre la mission
+            </Button>
+          )}
+          {this.state.timerOn === true && (
+            <Button variant={this.props.done ? 'dark' : 'primary'} onClick={this.stopTimer}>
+              <span className={this.props.done ? 'd-none' : 'd-inline'}>Suspendre la mission</span>
+              <span className={this.props.done ? 'd-inline' : 'd-none'}>Mission terminée</span>
+            </Button>
+          )}
+          {/* {this.state.timerOn === false && this.state.timerTime === 0 && (
+                <button onClick={this._startTimer}>Start</button>
+              )}
+              {this.state.timerOn === true && (
+                <button onClick={this._stopTimer}>Stop</button>
+              )}
+              {this.state.timerOn === false && this.state.timerTime > 0 && (
+                <button onClick={this._startTimer}>Resume</button>
+              )}
+              {this.state.timerOn === false && this.state.timerTime > 0 && (
+                <button onClick={this._resetTimer}>Reset</button>
+              )} */}
+        </div>
       </div>
     );
   }
 }
 
-export default Stopwatch;
+export default StopWatch;

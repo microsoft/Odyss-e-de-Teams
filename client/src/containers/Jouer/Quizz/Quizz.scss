@@ -1,19 +1,27 @@
-@import "../../common/sass/variables";
-
 .main-quizz {
     .titre {
         img {
-            max-height: 3rem;
+            max-height: 2.25rem;
+        }
+    }
+    .question {
+        position: relative;
+        z-index: 5;
+        height: 0;
+        transition: opacity .5s ease-out;
+        opacity: 0;
+    }
+    .question.active {
+        z-index: 10;
+        height: auto;
+        opacity: 1;
+    }
+    .outro {
+        .illustration-module-done {
+            width: 9rem;
         }
     }
 }
 .toolbar-right {
     width: 12rem;
-    .chrono {
-        @include bg-encart;
-        .btn {
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-    }
 }

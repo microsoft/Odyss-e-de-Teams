@@ -20,7 +20,9 @@ import Cockpit from "containers/Cockpit/Cockpit";
 import Profil from "containers/Profil/Profil";
 import Classement from "containers/Classement/Classement";
 import Regle from "containers/Regle/Regle";
+import Jouer from "containers/Jouer/Jouer";
 import Quizz from "containers/Jouer/Quizz/Quizz";
+import RecapQuizz from "containers/Jouer/RecapQuizz/RecapQuizz";
 
 //store
 import IStore from "store/IStore";
@@ -77,8 +79,12 @@ class Player extends React.Component<IPlayerProps, {}> {
               <Cockpit isMobile={isMobile} />
             </Route>
             <Route exact path="/Jouer">
+              <Jouer />
+            </Route>
+            <Route exact path="/Jouer/Quizz">
               <Quizz />
             </Route>
+            <Route exact path="/Jouer/RecapQuizz/:moduleId/:niveauId" component={RecapQuizz} />
             <Route exact path="/Classement">
               <Classement />
             </Route>

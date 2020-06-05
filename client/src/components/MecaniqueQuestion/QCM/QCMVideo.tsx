@@ -5,15 +5,15 @@ import videojs from "video.js";
 import QCMChoixMultiple from "./QCMChoixMultiple";
 import QCMChoixUnique from "./QCMChoixUnique";
 
-import { IQCMProps, IMecaniqueQuestionState } from "src/models/Question";
+import { IQCMVideoProps, IMecaniqueQuestionState } from "src/models/Question";
 
 import "./QCMVideo.scss";
 
-class QCMVideo extends Component<IQCMProps, IMecaniqueQuestionState> {
+class QCMVideo extends Component<IQCMVideoProps, IMecaniqueQuestionState> {
   videoNode: any;
   player: any;
 
-  constructor(props: IQCMProps) {
+  constructor(props: IQCMVideoProps) {
     super(props);
     this.state = {
       selectedReponseIds: [],
@@ -41,9 +41,11 @@ class QCMVideo extends Component<IQCMProps, IMecaniqueQuestionState> {
         ]
       },
       () => {
-        console.log("onPlayerReady", this.player);
-        this.player.on('playing', function() {
-          console.log('BONUS');
+        this.player.on('playing', () => {
+          this.props.onPlay();
+        });
+        this.player.on('pause', () => {
+          this.props.onPause();
         });
       }
     );
@@ -77,11 +79,13 @@ class QCMVideo extends Component<IQCMProps, IMecaniqueQuestionState> {
               <QCMChoixMultiple
                 onSelect={this._onSelect}
                 question={this.props.question}
+                isRecap={this.props.isRecap}
               />
             ) : (
               <QCMChoixUnique
                 onSelect={this._onSelect}
                 question={this.props.question}
+                isRecap={this.props.isRecap}
               />
             )}
           </Col>

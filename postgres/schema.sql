@@ -363,7 +363,10 @@ CREATE TABLE public.t_question
   id_thematique integer,
   id_niveau integer,
   id_mecanique integer,
-  nom character(180),
+  cle_fichier nchar(25),
+  reponse integer[],
+  nom text,
+  commentaire text,
   asset text,
   actif boolean,
   horodatage timestamp without time zone,
@@ -414,6 +417,7 @@ CREATE TABLE public.t_mecanique
 (
   id_mecanique integer NOT NULL DEFAULT nextval('public.seq_t_mecanique'::regclass),
   nom character(180),
+  cle_fichier text,
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
@@ -443,6 +447,7 @@ CREATE TABLE public.t_module
 (
   id_module integer NOT NULL DEFAULT nextval('public.seq_t_module'::regclass),
   nom character(180),
+  cle_fichier text,
   image text,
   actif boolean,
   horodatage timestamp without time zone,
@@ -519,6 +524,7 @@ CREATE TABLE public.t_niveau
 (
   id_niveau integer NOT NULL DEFAULT nextval('public.seq_t_niveau'::regclass),
   nom character(180),
+  cle_fichier text,
   ordre integer,
   actif boolean,
   horodatage timestamp without time zone,
@@ -555,10 +561,10 @@ CREATE TABLE public.t_reponse
 (
   id_reponse integer NOT NULL DEFAULT nextval('public.seq_t_reponse'::regclass),
   id_question integer,
-  nom character(180),
+  nom text,
   asset text,
+  ordre smallint,
   actif boolean,
-  valid boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
   CONSTRAINT pk_t_reponse PRIMARY KEY (id_reponse)
@@ -801,8 +807,10 @@ $BODY$;
 	(
 		id_reponse_user integer NOT NULL DEFAULT nextval('public.seq_h_reponse_user'::regclass),
 		id_user integer,
-		valeur text,
-		temps time without time zone,
+    id_question integer,
+    valid boolean,
+		valeur integer[],
+		temps bigint,
 		horodatage timestamp without time zone,
 		CONSTRAINT pk_h_reponse_user PRIMARY KEY (id_reponse_user)
 	)
@@ -823,6 +831,11 @@ $BODY$;
 	CREATE INDEX idx_id_user_h_reponse_user
 		ON public.h_reponse_user USING btree
 		(id_user)
+		TABLESPACE pg_default;
+
+	CREATE INDEX idx_id_question_h_reponse_user
+		ON public.h_reponse_user USING btree
+		(id_question)
 		TABLESPACE pg_default;
 
 -- histo questionnaire complete
@@ -967,7 +980,7 @@ GRANT ALL ON SEQUENCE public.h_user_login_id_seq TO odyssee_teams_appli;
 		code character(20),
 		id_table integer,
 		lang character(2),
-		nom character(180),
+		nom text,
 		description text,
 		CONSTRAINT pk_t_libelle_i18n PRIMARY KEY (id_libelle_i18n)
 	)
@@ -1008,3 +1021,222 @@ GRANT ALL ON SEQUENCE public.h_user_login_id_seq TO odyssee_teams_appli;
 
 -- Foreign key semaine 
 ALTER TABLE t_organisation ADD FOREIGN KEY (id_semaine) REFERENCES t_semaine(id_semaine);
+
+
+
+-- fonctions diverses
+CREATE OR REPLACE FUNCTION f_reverse_string(text) 
+	RETURNS text
+    LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+    reversed_string text;
+    incoming alias for $1;
+BEGIN
+	reversed_string = '';
+	
+	for i in reverse char_length(incoming)..1 loop	
+		reversed_string = reversed_string || substring(incoming from i for 1);
+	end loop;
+
+	return reversed_string;
+END;
+$BODY$;
+
+
+CREATE OR REPLACE FUNCTION public.f_alphabet_letter()
+    RETURNS TABLE(ordre int, lettre text) 
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+DECLARE
+	nb_letter		int;
+	i				int;
+BEGIN
+	nb_letter	:= 26;
+	i			:= 0;
+	
+	CREATE TEMP TABLE alphabet (
+		ordre int, lettre text
+	);
+	WHILE i < nb_letter LOOP
+    	i = i + 1;
+		INSERT INTO alphabet VALUES (i, chr(64 + i));
+	END LOOP;
+	
+	RETURN QUERY SELECT * FROM alphabet;
+	DISCARD TEMP;
+END;
+$BODY$;
+
+
+-- FUNCTION: public.i_process_backlog_question()
+
+CREATE OR REPLACE FUNCTION public.i_process_backlog_question(
+	OUT statut character,
+	OUT message text)
+    RETURNS record
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+
+--********************************************************************************************************
+--* fonction import du fichier CSV backlog des question
+--* la fonction retourne :
+--* 	- le statut d execution de la fonction OK ou KO
+--* 	- un message d information sur le statut
+--***********************************************************************************************************************************
+DECLARE
+	-- variables liees au statut de la fonction
+	i 			int; -- compteur d'ajout question
+	j 			int; -- compteur d'ajout reponse
+	
+	
+	-- variables de travail
+	x			int;
+BEGIN
+-- INIT variables
+	message := '';
+	statut := 'OK';
+
+-- traitement
+--***************************************************************************************
+	-- raz table importation
+	DROP TABLE IF EXISTS public.i_question;
+	CREATE TABLE public.i_question (
+		code_module text,
+		niveau text,
+		code_question text,
+		thematique text,
+		question text,
+		reponse text,
+		bonne_pratique text,
+		reponse_ok text,
+		mecanique text,
+		CONSTRAINT pk_i_question PRIMARY KEY (code_module, code_question)
+	);
+	
+	COPY public.i_question FROM '/var/lib/postgresql/data/backlog_question.csv' DELIMITER ';' CSV HEADER;
+	 
+	-- thematique
+	TRUNCATE TABLE public.t_thematique;
+	ALTER SEQUENCE public.seq_t_thematique RESTART WITH 1;
+	
+	INSERT INTO public.t_thematique (nom, actif, horodatage, horodatage_creation) 
+		SELECT DISTINCT thematique, true, now(), now() FROM public.i_question;	
+		
+	-- question
+	TRUNCATE TABLE public.t_question;
+	ALTER SEQUENCE public.seq_t_question RESTART WITH 1;
+	
+	INSERT INTO public.t_question (id_module, id_niveau, id_thematique, id_mecanique, cle_fichier, nom, commentaire, actif, horodatage, horodatage_creation) 
+		SELECT DISTINCT b.id_module, c.id_niveau, d.id_thematique, e.id_mecanique, a.code_question, a.question, a.bonne_pratique, true, now(), now()
+		FROM public.i_question a
+			INNER JOIN public.t_module b ON a.code_module=b.cle_fichier
+			INNER JOIN public.t_niveau c ON a.niveau=c.cle_fichier
+			INNER JOIN public.t_thematique d ON a.thematique=TRIM(d.nom)
+			INNER JOIN public.t_mecanique e ON a.mecanique=e.cle_fichier;
+	
+	EXECUTE 'SELECT COUNT(*) FROM (SELECT DISTINCT id_question FROM public.t_question)s0' INTO i;
+	EXECUTE 'SELECT COUNT(*) FROM public.i_question' INTO x;
+	IF x <> i THEN	-- si nb question importees different de question dans le pull / erreur de jointure
+		statut := 'KO';
+		message := 'Le nombre de question importées ne correspond pas';
+		RETURN;
+	END IF;
+	
+	-- ajout asset images pour mecanique qcm avec video
+	WITH w0 AS(
+		SELECT DISTINCT id_module, id_question, cle_fichier, substring(cle_fichier, 1, length(cle_fichier) - position('_' in f_reverse_string(cle_fichier))) AS rep
+		FROM public.t_question 
+		WHERE id_mecanique IN (3,4)
+	)
+	UPDATE public.t_question 
+	SET asset=s0.asset
+	FROM (
+		SELECT DISTINCT a.id_question, '/' || b.cle_fichier || '/' || a.rep || '/' || a.cle_fichier || '/' || a.cle_fichier || '.mp4' AS asset
+		FROM w0 a
+			INNER JOIN public.t_module b ON a.id_module=b.id_module
+	) AS s0
+	WHERE public.t_question.id_question=s0.id_question;
+		
+	-- reponse
+	TRUNCATE TABLE public.t_reponse;
+	ALTER SEQUENCE public.seq_t_reponse RESTART WITH 1;
+	
+	WITH w0 AS(
+		SELECT a.code_question, nom, ordre
+		FROM public.i_question a, regexp_split_to_table(a.reponse, '//') WITH ORDINALITY x(nom, ordre)
+	)
+	INSERT INTO public.t_reponse (id_question, nom, ordre, actif, horodatage, horodatage_creation) 
+		SELECT DISTINCT b.id_question, a.nom, a.ordre, true, now(), now()
+		FROM w0 a
+			INNER JOIN public.t_question b ON a.code_question=b.cle_fichier;
+	
+	EXECUTE 'SELECT CASE WHEN COUNT(*) = 0 THEN ''OK'' ELSE ''KO'' END
+		 FROM public.t_question a
+		 WHERE id_mecanique IN (1, 3, 6) AND array_length(reponse, 1)<>1' INTO statut;
+	IF statut = 'KO' THEN
+		message := 'Trop de réponses possibles pour une mécanique choix unique';
+		RETURN;
+	END IF;
+	
+	EXECUTE 'SELECT COUNT(*) FROM (SELECT DISTINCT id_reponse FROM public.t_reponse)s0' INTO j;
+	
+  -- update question avec les id reponse en reponse valide
+  WITH w0 AS (
+		WITH w0_0 AS(
+		  SELECT a.reponse_ok, b.id_question
+		  FROM public.i_question a
+			INNER JOIN public.t_question b ON a.code_question=b.cle_fichier--  AND id_question=30
+		)
+		SELECT a.id_question, rep, ordre
+		FROM w0_0 a, regexp_split_to_table(a.reponse_ok, '//') WITH ORDINALITY x(rep, ordre)
+	), w_alphabet AS (
+		SELECT * FROM public.f_alphabet_letter()
+	)
+	UPDATE public.t_question 
+	SET reponse=s0.reponse
+	FROM (
+    SELECT a.id_question, array_agg(c.id_reponse ORDER BY a.id_question, a.ordre) AS reponse
+    FROM w0 a
+      INNER JOIN w_alphabet b ON TRIM(a.rep)=TRIM(b.lettre)
+      INNER JOIN public.t_reponse c ON a.id_question=c.id_question AND b.ordre=c.ordre
+    GROUP BY a.id_question
+	) AS s0
+	WHERE public.t_question.id_question=s0.id_question;
+	
+	-- ajout asset images pour mecanique qcm avec images
+	WITH w_question AS (
+		WITH w0 AS(
+			SELECT DISTINCT id_module, id_question, cle_fichier, substring(cle_fichier, 1, length(cle_fichier) - position('_' in f_reverse_string(cle_fichier))) AS rep
+			FROM public.t_question 
+			WHERE id_mecanique IN (6,7)
+		)
+		SELECT DISTINCT a.id_question, '/' || b.cle_fichier || '/' || a.rep || '/' || a.cle_fichier || '/' AS rep
+		FROM w0 a
+			INNER JOIN public.t_module b ON a.id_module=b.id_module
+	), w_alphabet AS (
+		SELECT * FROM public.f_alphabet_letter()
+	)
+	UPDATE public.t_reponse 
+	SET asset=s0.asset
+	FROM (
+		SELECT b.id_reponse, b.ordre, rep || c.lettre || '.png' AS asset
+		FROM w_question a
+			INNER JOIN public.t_reponse b ON a.id_question=b.id_question
+			INNER JOIN w_alphabet c ON b.ordre=c.ordre
+	) AS s0
+	WHERE public.t_reponse.id_reponse=s0.id_reponse;
+			
+	IF statut = 'OK' THEN
+		message := message || ' | ' || i::varchar(12) || ' question(s) ajoutée(s)' || ' | ' || j::varchar(12) || ' reponse(s) ajoutée(s)';
+	END IF;
+END;
+$BODY$;
