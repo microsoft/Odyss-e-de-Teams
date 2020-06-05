@@ -39,8 +39,8 @@ body {
         font-size: 0.75rem;
     }
 
-    .color-primary {
-        color: $color-primary;
+    .color-primary, .text-primary {
+        color: $color-primary !important;
     }
     .color-primary-light {
         color: $color-primary-light;
