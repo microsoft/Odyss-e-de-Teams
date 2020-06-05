@@ -25,10 +25,6 @@ interface ICockpit {
 }
 
 class Cockpit extends Component<WithTranslation & ICockpit, {}> {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     campaign: {
       name: "",
