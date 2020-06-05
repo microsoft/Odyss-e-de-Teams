@@ -21,9 +21,27 @@ const register = async (server, options) => {
   server.route({
     path: "/admin/explorers-count",
     method: "GET",
-    handler: function (request, h) {
+    handler: async function (request, h) {
       const db = request.getDb("odyssee_teams");
-      let replacements = { id_organisation: 1 }; // TODO: change id with session user orga
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
+      const replacements = {
+        id_organisation: currentUserByAD.id_organisation,
+      };
 
       return db.sequelize
         .query(
@@ -290,6 +308,10 @@ const register = async (server, options) => {
         },
       });
 
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
       const semaine_id = request.payload.id_semaine;
 
       if (!semaine_id) return false;
@@ -315,6 +337,99 @@ const register = async (server, options) => {
           message: "error",
         };
       }
+    },
+  });
+
+  server.route({
+    path: "/admin/current-agenda",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      const OrganisationAgenda = db.getModel("OrganisationAgenda");
+      const Agenda = db.getModel("Agenda");
+      const Semaine = db.getModel("Semaine");
+      const Organisation = db.getModel("Organisation");
+      // // check oid_ad is present in request
+      // if (!request.state.oid_ad) {
+      //   return false;
+      // }
+
+      // // Look for user and check if he is admin
+      // const currentUserByAD = await User.findOne({
+      //   where: {
+      //     oid_ad: request.state.oid_ad,
+      //   },
+      // });
+
+      // if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+      //   return false;
+      // }
+      const id_organisation = 1;
+      try {
+        const organisationAgenda = await OrganisationAgenda.findAll({
+          include: [Agenda, Organisation, Semaine],
+          where: {
+            id_organisation: id_organisation,
+          },
+        });
+        return {
+          organisationAgenda,
+        };
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
+
+  server.route({
+    path: "/admin/set-agenda-done",
+    method: "POST",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      const OrganisationAgenda = db.getModel("OrganisationAgenda");
+      const Agenda = db.getModel("Agenda");
+      const Semaine = db.getModel("Semaine");
+      const Organisation = db.getModel("Organisation");
+
+      // // check oid_ad is present in request
+      // if (!request.state.oid_ad) {
+      //   return false;
+      // }
+
+      // // Look for user and check if he is admin
+      // const currentUserByAD = await User.findOne({
+      //   where: {
+      //     oid_ad: request.state.oid_ad,
+      //   },
+      // });
+
+      // if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+      //   return false;
+      // }
+      const { id_item } = request.payload;
+
+      try {
+        await OrganisationAgenda.update(
+          {
+            done: true,
+          },
+          {
+            where: {
+              id: id_item,
+            },
+          }
+        );
+
+        return true;
+      } catch (e) {
+        return false;
+      }
+
+      return {
+        organisationAgenda,
+      };
     },
   });
 };
