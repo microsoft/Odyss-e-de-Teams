@@ -190,7 +190,7 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 INSERT INTO public.j_organisation_semaine("id_organisation","id_semaine")
 	VALUES(1,1), (1,2),(1,3),(1,4);
 	-- ajout tid SAEGUS / Pas de maitre du jeu qui active
-	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine=1 WHERE id_organisation=1;
+	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine_encours=1 WHERE id_organisation=1;
 -- maitre jeu
 	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) 
 	VALUES (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
