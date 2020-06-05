@@ -7,7 +7,8 @@ module.exports = function (sequelize, DataTypes) {
         autoIncrement: true,
         primaryKey: true,
       },
-      id_semaine_encours: DataTypes.INTEGER, // TODO: Ajouter clé relation semaine
+      id_semaine_encours: DataTypes.INTEGER,
+      tid_ad: DataTypes.STRING,
       nom: DataTypes.STRING,
       logo: DataTypes.STRING,
       actif: DataTypes.BOOLEAN,

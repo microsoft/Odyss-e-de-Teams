@@ -150,6 +150,15 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
     ('RS', true, now(), now());
 
 
+-- question
+	SELECT public.i_process_backlog_question();
+
+	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
+	SELECT DISTINCT 'QUESTION', id_question, 'fr', nom, commentaire FROM public.t_question
+	UNION ALL
+	SELECT DISTINCT 'REPONSE', id_reponse, 'fr', nom, NULL::text FROM public.t_reponse;
+
+
 -- user temp dev
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
 	VALUES (1, 1, 1, 'Catherine Kefhi', 5, 100, 255, 15, 12, 5, 5, 5, true, now(), now(), now());
@@ -180,3 +189,8 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 -- Organisation semaine fixtures
 INSERT INTO public.j_organisation_semaine("id_organisation","id_semaine")
 	VALUES(1,1), (1,2),(1,3),(1,4);
+	-- ajout tid SAEGUS / Pas de maitre du jeu qui active
+	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine=1 WHERE id_organisation=1;
+-- maitre jeu
+	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) 
+	VALUES (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
