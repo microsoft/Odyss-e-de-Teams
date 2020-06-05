@@ -49,8 +49,6 @@
       "current_logo_title": "Logo actuellement déployé",
       "current_logo_desc": "Commandant, il est recommandé d’importer un logo sur fond blanc pour assurer sa lisibilité.",
       "logoChangeButtonLabel": "Charger un logo",
-      "logoChangeButtonReset": "Réinitialiser",
-      "logoChangeButtonSave": "Sauvegarder les modifications",
       "no_logo_text": "Pas de logo :("
     },
     "planning": {
@@ -140,6 +138,10 @@
       "october": "Octobre",
       "november": "November",
       "december": "Décembre"
+    },
+    "button": {
+      "reset": "Réinitialiser",
+      "save": "Sauvegarder les modifications"
     }
   }
 }
