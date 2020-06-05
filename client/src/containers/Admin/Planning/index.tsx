@@ -54,6 +54,13 @@ class PlanningContainer extends React.Component<
     }
   }
 
+  activateMission = async (mission) => {
+    await AdminAPI.setCurrentMission({
+      id_semaine: mission.id_semaine,
+    });
+    this.componentDidMount();
+  };
+
   private _setCurrentTab = (key) => {
     this.setState({
       curTabKey: key,
@@ -109,7 +116,10 @@ class PlanningContainer extends React.Component<
                   eventKey="MISSION"
                   title={t("admin.planning.menu_missions")}
                 >
-                  <AdminPlanning missions={campaigns} />
+                  <AdminPlanning
+                    missions={campaigns}
+                    onMissionActivate={this.activateMission}
+                  />
                 </Tab>
               </Tabs>
             </div>

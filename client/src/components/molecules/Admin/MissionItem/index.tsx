@@ -13,7 +13,7 @@ interface MissionItem {
   mission_title: string;
   mission_number: number;
   mission_description: string;
-  onMissionClick?: void;
+  onMissionClick?: any;
   className?: string;
 }
 
@@ -28,7 +28,15 @@ const MissionItem = (props: MissionItem & WithTranslation) => {
     mission_title,
     mission_description,
     className,
+    onMissionClick,
   } = props;
+
+  let clickAction = (e) => {
+    e.preventDefault();
+    onMissionClick({
+      mission_number: mission_number,
+    });
+  };
 
   return (
     <div className={`MissionItem ${className || ""}`}>
@@ -56,7 +64,7 @@ const MissionItem = (props: MissionItem & WithTranslation) => {
             {tReady && t("admin.planning.mission_active")}
           </Button>
         ) : (
-          <Button variant="secondary">
+          <Button variant="secondary" onClick={clickAction}>
             {tReady && t("admin.planning.mission_pending")}
           </Button>
         )}

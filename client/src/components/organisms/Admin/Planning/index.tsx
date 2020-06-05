@@ -1,23 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { withTranslation, WithTranslation } from "react-i18next";
-
+import { Button } from "react-bootstrap";
 import MissionItem from "components/molecules/Admin/MissionItem";
 
 import "./style.scss";
 
 interface IPlanning {
   missions: any;
+  onMissionActivate: any;
 }
 
 const Planning = (props: IPlanning & WithTranslation) => {
-  const { t, tReady, missions } = props;
-
-  console.log(props);
+  const { t, tReady, missions, onMissionActivate } = props;
 
   const activeMissionIndex = missions.findIndex((m) => m.actif === true);
 
-  console.log(missions[activeMissionIndex]);
+  const [curMission, setCurMission] = useState(activeMissionIndex);
 
   return (
     <div className="PlanningComponent">
@@ -31,19 +30,37 @@ const Planning = (props: IPlanning & WithTranslation) => {
       <div className="PlanningComponent__subtitle">
         {tReady && t("admin.planning.description")}
       </div>
-      <div className="PlanningComponent__missions col-12 p-4">
+      <div className="PlanningComponent__missions col-12 pt-4">
         {missions.map((mission, index) => (
           <MissionItem
             key={`mission-${index}`}
             mission_number={index + 1}
             date_start={mission.debut_semaine}
             date_end={mission.fin_semaine}
-            mission_started={mission.actif}
+            mission_started={index === curMission}
             mission_title={mission.nom}
             mission_description={mission.description}
             className="col-3 m-1"
+            onMissionClick={() => setCurMission(index)}
           />
         ))}
+      </div>
+
+      <div className="PlanningComponent__buttons">
+        <Button
+          variant="secondary"
+          className="m-1"
+          onClick={() => setCurMission(activeMissionIndex)}
+        >
+          {tReady && t("utils.button.reset")}
+        </Button>
+        <Button
+          variant="primary"
+          className="m-1"
+          onClick={() => onMissionActivate(missions[curMission])}
+        >
+          {tReady && t("utils.button.save")}
+        </Button>
       </div>
     </div>
   );
