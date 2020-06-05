@@ -3,7 +3,7 @@
 		VALUES ('Semaine 1', 1, 'Partir et commencer le programme'), ('Semaine 2', 2, 'Bien consolider ses connaissances'), ('Semaine 3', 3, 'Approfondir ses usages'), ('Semaine 4', 4, 'Dernière poussée pour être un pro de Teams');
 		
 -- organisation
-  INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation, id_semaine) VALUES 	
+  INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation, id_semaine_encours) VALUES 	
     ('Saegus', true, now(), now(),1),
 	('Air France', false, now(), now(),1),
 	('Alstom', false, now(), now(),1),
@@ -37,7 +37,7 @@
 	('VINCI AUTOROUTES', false, now(), now(),1),
 	('VINCI CONSTRUCTION', false, now(), now(),1);
 
-	UPDATE public.t_organisation SET id_semaine=1 WHERE id_organisation=1;
+	UPDATE public.t_organisation SET id_semaine_encours=1 WHERE id_organisation=1;
 
 -- role
   INSERT INTO public.t_role (nom, actif, horodatage, horodatage_creation) VALUES 	
@@ -174,3 +174,9 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 	UNION ALL
 	SELECT DISTINCT 'REPONSE', id_reponse, 'fr', nom, NULL::text FROM public.t_reponse;
 
+
+
+
+-- Organisation semaine fixtures
+INSERT INTO public.j_organisation_semaine("id_organisation","id_semaine")
+	VALUES(1,1), (1,2),(1,3),(1,4);
