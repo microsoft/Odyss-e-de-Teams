@@ -123,11 +123,11 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 
 -- module
   INSERT INTO public.t_module (nom, cle_fichier, image, actif, horodatage, horodatage_creation) VALUES 	
-    ('Communiquer en toute simplicité', 'COMM', 'communiquer.svg', true, now(), now()),
-    ('Piloter un projet', 'PILPROJ', 'piloter.svg', true, now(), now()),	
-    ('Organiser la réunion parfaite', 'REU', 'reunion.svg', true, now(), now()),
-    ('Manager une équipe', 'MNG', 'manager.svg', true, now(), now()),
-    ('Travailler en mobilité', 'MOB', 'mobilite.svg', true, now(), now());
+    ('Communiquer efficacement', 'COMM', 'communiquer.png', true, now(), now()),
+    ('Animer et piloter des projets', 'PILPROJ', 'piloter.png', true, now(), now()),	
+    ('Optimiser les réunions', 'REU', 'reunion.png', true, now(), now()),
+    ('Mieux collaborer en équipe', 'MNG', 'manager.png', true, now(), now()),
+    ('Mieux travailler en mobilité', 'MOB', 'mobilite.png', true, now(), now());
 	
 
 -- multilangue

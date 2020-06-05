@@ -7,21 +7,19 @@ import QuestionAPI from "api/Question";
 import QCM from "components/MecaniqueQuestion/QCM/QCM";
 import RemettreOrdre from "components/MecaniqueQuestion/RemettreOrdre/RemettreOrdre";
 import QCMVideo from "components/MecaniqueQuestion/QCM/QCMVideo";
-import Stopwatch from "components/StopWatch/StopWatch";
+import StopWatch from "components/StopWatch/StopWatch";
 
 import IStore from "src/store/IStore";
-import {
-  IQuizzProps,
-  IQuizzState,
-  IQuestion,
-  IReponse,
-} from "src/models/Question";
+import { IQuizzProps, IQuizzState, IQuestion } from "src/models/Question";
 
 import "./Quizz.scss";
 
 class Quizz extends Component<IQuizzProps, IQuizzState> {
+  chronoComponent: any;
+
   constructor(props: IQuizzProps) {
     super(props);
+    this.chronoComponent = React.createRef();
     this.state = {
       isLoading: true,
       step: 1,
@@ -35,9 +33,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
   }
 
   componentDidMount() {
-    // todo if (!(this.state.listQuestion.length > 0)) {
     this._loadQuizz();
-    // }
   }
 
   private _loadQuizz = () => {
@@ -51,6 +47,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
           isLoading: false,
         },
         () => {
+          this.chronoComponent.current.startTimer();
           const action_liste = {
             type: "SET_LIST_QUESTION",
             value: this.state.listQuestion,
@@ -68,18 +65,36 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
     });
   };
 
-  private _saveReponse() {
+  private _saveReponse(currentQuestion: IQuestion) {
     let curStep: number = this.state.step;
+    let currentTime = this.chronoComponent.current.getCurrentTime();
+    currentQuestion.temps_reponse = currentTime;
     this.setState(
       {
         step: ++curStep,
         hasReponse: false,
       },
       () => {
-        // reinit list question
+        if (this.state.step > this.state.listQuestion.length) {
+          this.chronoComponent.current.stopTimer();
+          QuestionAPI.setReponseQuizz({
+            listQuestion: this.state.listQuestion,
+            selectedModule: this.props.dataInitQuizz.selectedModule,
+            selectedNiveau: this.props.dataInitQuizz.selectedNiveau,
+          });
+        }
       }
     );
   }
+
+  private _onPlayVideo = () => {
+    console.log("TODO BONUS VIDEO");
+    this.chronoComponent.current.stopTimer();
+  };
+
+  private _onPauseVideo = () => {
+    this.chronoComponent.current.startTimer();
+  };
 
   private _renderMecanique(item: IQuestion) {
     switch (item.id_mecanique) {
@@ -101,7 +116,12 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
         return (
           <div>
             <p>Regardez la vidéo et sélectionnez la bonne réponse.</p>
-            <QCMVideo question={item} onSelect={this._onSelect} />
+            <QCMVideo
+              question={item}
+              onSelect={this._onSelect}
+              onPlay={this._onPlayVideo}
+              onPause={this._onPauseVideo}
+            />
           </div>
         );
       case 4: // QCM avec vidéo - Choix multiple
@@ -112,6 +132,8 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
               question={item}
               onSelect={this._onSelect}
               multiple={true}
+              onPlay={this._onPlayVideo}
+              onPause={this._onPauseVideo}
             />
           </div>
         );
@@ -126,19 +148,14 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
         return (
           <div>
             <p>Trouvez l’intrus !</p>
-            <QCM question={item} onSelect={this._onSelect} /> {/* todo */}
+            <QCM question={item} onSelect={this._onSelect} />
           </div>
         );
       case 7: // QCM avec pictos réponses - Choix multiple
         return (
           <div>
             <p>Cliquez sur les vignettes.</p>
-            <QCM
-              question={item}
-              onSelect={this._onSelect}
-              multiple={true}
-            />{" "}
-            {/* todo */}
+            <QCM question={item} onSelect={this._onSelect} multiple={true} />
           </div>
         );
     }
@@ -162,7 +179,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
             {this.props.dataInitQuizz.selectedNiveau?.nom}
           </h1>
           <div className={"main-encart"}>
-            <div className={"d-none d-md-flex mb-2 titre"}>
+            <div className={"d-none d-md-flex mb-2 titre align-items-center"}>
               <img
                 src={
                   process.env.PUBLIC_URL +
@@ -173,9 +190,9 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
               />
               <div className={"ml-2"}>
                 <h2 className={"color-primary-light mb-1"}>
-                  {this.props.dataInitQuizz.selectedModule?.nom} -{" "}
+                  {this.props.dataInitQuizz.selectedModule?.nom}{" "}
                   <strong className={"color-primary"}>
-                    {this.props.dataInitQuizz.selectedNiveau?.nom}
+                    - {this.props.dataInitQuizz.selectedNiveau?.nom}
                   </strong>
                 </h2>
                 <p className={"mb-0"}>
@@ -202,7 +219,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
                       <Button
                         variant="primary"
                         disabled={!this.state.hasReponse}
-                        onClick={() => this._saveReponse()}
+                        onClick={() => this._saveReponse(item)}
                       >
                         Valider ma réponse
                       </Button>
@@ -211,7 +228,18 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
                 );
               })
             ) : (
-              <div className={"text-center"}>
+              <div className={"text-center outro mt-4"}>
+                <p className={"text-center mb-5"}>
+                  <img
+                    src={
+                      process.env.PUBLIC_URL +
+                      "/images/question/module/astro_" +
+                      this.props.dataInitQuizz?.selectedModule?.image
+                    }
+                    alt={`Illustration module ${this.props.dataInitQuizz?.selectedModule?.nom}`}
+                    className={"illustration-module-done"}
+                  />
+                </p>
                 <h2 className={"color-primary-light mb-3 text-center"}>
                   Module terminé !
                 </h2>
@@ -225,7 +253,8 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
                 </p>
                 <p className={"text-right mb-0 mt-4"}>
                   <Button
-                    variant="primary"
+                    variant={"primary"}
+                    href={`/#/Jouer/RecapQuizz/${this.props.dataInitQuizz?.selectedModule?.id_module}/${this.props.dataInitQuizz.selectedNiveau?.id_niveau}`}
                   >
                     Résultats de l’exploration
                   </Button>
@@ -235,18 +264,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
           </div>
         </div>
         <div className={"toolbar-right ml-0 ml-md-5"}>
-          <div className={"chrono"}>
-            <p className={"text-center mb-0"}>
-              <img
-                src={
-                  process.env.PUBLIC_URL + "/images/question/chronometre.svg"
-                }
-                alt={`Illustration Chronometre`}
-                className={"illustration-chronometre"}
-              />
-            </p>
-            <Stopwatch />
-          </div>
+          <StopWatch ref={this.chronoComponent} />
         </div>
       </div>
     );

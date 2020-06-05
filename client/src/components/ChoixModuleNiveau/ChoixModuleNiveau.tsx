@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
+import { FaRegEye } from "react-icons/fa";
 import { forkJoin } from "rxjs";
 import styled, { keyframes } from "styled-components";
 //@ts-ignore
@@ -43,12 +44,19 @@ class ChoixModuleNiveau extends Component<
   }
 
   private _loadDataLancementJeu = () => {
-    forkJoin([QuestionAPI.getModule("fr"), QuestionAPI.getNiveau("fr")])
+    forkJoin([
+      QuestionAPI.getModule("fr"),
+      QuestionAPI.getNiveau("fr"),
+      QuestionAPI.getHistoQuestionnaireComplete(),
+    ])
       .toPromise()
       .then((data) => {
         this.setState({
           listModule: data[0].results ? data[0].results : [],
           listNiveau: data[1].results ? data[1].results : [],
+          listHistoQuestionnaireComplete: data[2].results
+            ? data[2].results
+            : [],
         });
       });
   };
@@ -104,7 +112,32 @@ class ChoixModuleNiveau extends Component<
                     </h4>
                     <div className={"d-flex flex-column align-items-end"}>
                       {this.state.listNiveau?.map((itemNiv: INiveau) => {
-                        return (
+                        const alreadyComplete =
+                          this.state.listHistoQuestionnaireComplete.filter(
+                            (h) =>
+                              h.id_module === item.id_module &&
+                              h.id_niveau === itemNiv.id_niveau
+                          ).length > 0;
+                        return alreadyComplete ? (
+                          <div
+                            className={"d-flex w-100"}
+                            key={"done" + itemNiv.id_niveau}
+                          >
+                            <Button
+                              variant={"dark"}
+                              className={`w-100 mt-2 mr-2 niveau niveau${itemNiv.id_niveau}`}
+                            >
+                              Terminé !
+                            </Button>
+                            <Button
+                              variant={"dark"}
+                              className={`niveau mt-2 px-2 niveau${itemNiv.id_niveau}`}
+                              href={`/#/Jouer/RecapQuizz/${item.id_module}/${itemNiv.id_niveau}`}
+                            >
+                              <FaRegEye />
+                            </Button>
+                          </div>
+                        ) : (
                           <Button
                             variant={"primary"}
                             key={itemNiv.id_niveau}

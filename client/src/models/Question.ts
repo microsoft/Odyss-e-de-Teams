@@ -9,7 +9,12 @@ export interface IQuestion {
   id_niveau: number;
   id_mecanique: number;
   listReponse: IReponse[];
+  reponse?: number[];
+  astuce?: string;
   selectedReponseIds?: number[]
+  reponse_saisie?: number[];
+  temps_reponse?: number;
+  valid?: boolean;
 }
 
 
@@ -32,6 +37,13 @@ export interface INiveau {
   nom: string;
 }
 
+export interface IHistoQuestionnaireComplete {
+  id_module: number;
+  id_niveau: number;
+  nb_reponse_ok: number;
+  horodatage: string;
+}
+
 export interface IJouerProps {
   dispatch?: any;
 }
@@ -48,6 +60,7 @@ export interface IChoixModuleNiveauProps {
 export interface IChoixModuleNiveauState {
   listModule?: IModule[];
   listNiveau?: INiveau[];
+  listHistoQuestionnaireComplete?: IHistoQuestionnaireComplete[];
 }
 
 export interface IIntroLancementQuestionProps {
@@ -76,6 +89,19 @@ export interface IQuizzProps {
   dispatch?: any;
 }
 
+export interface IRecapQuizzState {
+  isLoading: boolean;
+  currentModule?: IModule;
+  currentNiveau?: INiveau;
+  listQuestion?: IQuestion[];
+  tempsTotal?: number;
+}
+
+export interface IStopWatchProps {
+  done?: boolean;
+  initTimer?: number;
+}
+
 export interface IStopWatchState {
   timerOn: boolean;
   timerStart: number;
@@ -84,11 +110,17 @@ export interface IStopWatchState {
 
 export interface IMecaniqueQuestionProps {
   question: IQuestion;
-  onSelect: any;
+  onSelect?: any;
+  isRecap?: boolean;
 }
 
 export interface IQCMProps extends IMecaniqueQuestionProps {
   multiple?: boolean;
+}
+
+export interface IQCMVideoProps extends IQCMProps {
+  onPlay?: any;
+  onPause?: any;
 }
 
 export interface IMecaniqueQuestionState {

@@ -30,7 +30,7 @@ class IntroLancementQuestion extends Component<
     return (
       <FadeInIntro>
         <div className={"main-intro m-0 px-4 py-4 px-md-0 pt-md-0 pb-md-2"}>
-          <div className={"d-none d-md-flex mb-2 titre"}>
+          <div className={"d-none d-md-flex mb-2 titre align-items-center"}>
             <img
               src={
                 process.env.PUBLIC_URL +
@@ -41,9 +41,9 @@ class IntroLancementQuestion extends Component<
             />
             <div className={"ml-2"}>
               <h2 className={"color-primary-light mb-1"}>
-                {this.props.selectedModule?.nom} -{" "}
+                {this.props.selectedModule?.nom} {" "}
                 <strong className={"color-primary"}>
-                  {this.props.selectedNiveau?.nom}
+                  -{this.props.selectedNiveau?.nom}
                 </strong>
               </h2>
               <p className={"mb-0"}>Derniers préparatifs avant le décollage</p>
