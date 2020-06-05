@@ -806,6 +806,7 @@ $BODY$;
 	CREATE TABLE public.h_reponse_user
 	(
 		id_reponse_user integer NOT NULL DEFAULT nextval('public.seq_h_reponse_user'::regclass),
+    id_semaine integer,
 		id_user integer,
     id_question integer,
     valid boolean,
@@ -845,8 +846,9 @@ $BODY$;
 	CREATE TABLE public.h_questionnaire_complete
 	(
 		id_questionnaire_complete integer NOT NULL DEFAULT nextval('public.seq_h_questionnaire_complete'::regclass),
-        id_module integer,
-        id_niveau integer,
+    id_semaine integer,
+    id_module integer,
+    id_niveau integer,
 		id_user integer,
 		nb_reponse_ok integer,
 		horodatage timestamp without time zone,

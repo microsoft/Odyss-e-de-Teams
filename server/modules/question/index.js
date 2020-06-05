@@ -89,12 +89,19 @@ const register = async (server, options) => {
         return false;
       }
       const id_user = currentUserByAD.id_user;
+      const Organisation = db.getModel("Organisation");
+      const currentOrganisation = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
       let body = request.payload;
       if (!body) {
         return { results: false };
       }
       let replacements = {
         user: id_user,
+        semaine: currentOrganisation.id_semaine
       };
       //check validite reponse user
       const Question = db.getModel("Question");
@@ -125,7 +132,7 @@ const register = async (server, options) => {
         replacements["valid" + i] = q.valid;
         replacements["temps" + i] = q.temps_reponse;
         main_query +=
-          "(:user, :question" +
+          "(:user, :semaine, :question" +
           i +
           ", :reponse" +
           i +
@@ -136,7 +143,7 @@ const register = async (server, options) => {
           ", now())";
       });
       main_query =
-        "INSERT INTO public.h_reponse_user(id_user, id_question, valeur, valid, temps, horodatage) VALUES" +
+        "INSERT INTO public.h_reponse_user(id_user, id_semaine, id_question, valeur, valid, temps, horodatage) VALUES" +
         main_query +
         ";";
       await db.sequelize.query(main_query, {
@@ -150,11 +157,12 @@ const register = async (server, options) => {
         module: body.selectedModule.id_module,
         niveau: body.selectedNiveau.id_niveau,
         nb_reponse_ok: listQuestionWithValid.filter((q) => q.valid).length,
+        semaine: currentOrganisation.id_semaine
       };
       await db.sequelize.query(
         `INSERT INTO public.h_questionnaire_complete(
-            id_module, id_niveau, id_user, nb_reponse_ok, horodatage)
-          VALUES (:module, :niveau, :user, :nb_reponse_ok, now());`,
+            id_semaine, id_module, id_niveau, id_user, nb_reponse_ok, horodatage)
+          VALUES (:semaine, :module, :niveau, :user, :nb_reponse_ok, now());`,
         {
           replacements: replacementsQuestionnaire,
           type: QueryTypes.INSERT,
@@ -263,11 +271,17 @@ const register = async (server, options) => {
       if (!currentUserByAD) {
         return false;
       }
-      let replacements = { user: currentUserByAD.id_user };
+      const Organisation = db.getModel("Organisation");
+      const currentOrganisation = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
+      let replacements = { user: currentUserByAD.id_user, semaine: currentOrganisation.id_semaine };
 
       return db.sequelize
         .query(
-          "SELECT DISTINCT id_module, id_niveau, nb_reponse_ok, horodatage FROM h_questionnaire_complete WHERE id_user=:user",
+          "SELECT DISTINCT id_module, id_niveau, nb_reponse_ok, horodatage FROM h_questionnaire_complete WHERE id_user=:user AND id_semaine=:semaine;",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -297,17 +311,24 @@ const register = async (server, options) => {
       if (!currentUserByAD) {
         return false;
       }
+      const Organisation = db.getModel("Organisation");
+      const currentOrganisation = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
       const params = request.query;
       let replacements = {
         module: params.module,
         niveau: params.niveau,
         lang: params.language,
         user: currentUserByAD.id_user,
+        semaine: currentOrganisation.id_semaine
       };
       let main_query = `WITH w0 AS(
           SELECT DISTINCT a.id_question, a.valeur AS reponse_saisie, a.temps AS temps_reponse, a.valid
           FROM h_reponse_user a
-          WHERE a.id_user=:user
+          WHERE a.id_user=:user AND id_semaine=:semaine
         )
         SELECT DISTINCT a.*, TRIM(c.nom) AS nom, c.description AS astuce, b.asset, b.reponse, b.id_mecanique
         FROM w0 a
