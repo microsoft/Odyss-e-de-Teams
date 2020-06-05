@@ -254,7 +254,7 @@ const register = async (server, options) => {
 
       return db.sequelize
         .query(
-          "select ts.nom as mission_name, ts.horodatage + INTERVAL '14 day' as mission_end from t_organisation org inner join t_semaine ts  on ts.id_semaine = org.id_semaine where id_organisation =:id_organisation",
+          "select s.nom as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end from t_semaine s inner join j_organisation_semaine ts  on ts.id_semaine = s.id_semaine where id_organisation =:id_organisation",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
