@@ -50,8 +50,16 @@ class Player extends React.Component<IPlayerProps, {}> {
                 <Cockpit isMobile={isMobile} />
               </Route>
               <Route exact path="/Jouer">
+                <Jouer />
+              </Route>
+              <Route exact path="/Jouer/Quizz">
                 <Quizz />
               </Route>
+              <Route
+                exact
+                path="/Jouer/RecapQuizz/:moduleId/:niveauId"
+                component={RecapQuizz}
+              />
               <Route exact path="/Classement">
                 <Classement />
               </Route>
@@ -84,7 +92,11 @@ class Player extends React.Component<IPlayerProps, {}> {
             <Route exact path="/Jouer/Quizz">
               <Quizz />
             </Route>
-            <Route exact path="/Jouer/RecapQuizz/:moduleId/:niveauId" component={RecapQuizz} />
+            <Route
+              exact
+              path="/Jouer/RecapQuizz/:moduleId/:niveauId"
+              component={RecapQuizz}
+            />
             <Route exact path="/Classement">
               <Classement />
             </Route>
