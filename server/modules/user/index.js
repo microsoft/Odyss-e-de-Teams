@@ -83,7 +83,6 @@ const register = async (server, options) => {
       const body = request.payload;
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
-      const MaitreJeu = db.getModel("MaitreJeu");
       const Organisation = db.getModel("Organisation");
       const current_oid_ad =
         body && body.ad && body.ad.idToken
@@ -101,18 +100,20 @@ const register = async (server, options) => {
         return currentUserByAD;
       }
       let currentOrganisation;
-      if (body.activate_organisation) {
-        let currentMaitreJeu = await db.sequelize.query(
-          `
-          SELECT DISTINCT a.id_organisation FROM public.t_maitre_jeu a WHERE actif AND mail=:mail;`,
-          {
-            replacements: {
-              mail: body.ad.userName,
-            },
-            type: QueryTypes.SELECT,
-            plain: true,
-          }
-        );
+      const currentMaitreJeu = await db.sequelize.query(
+        `
+        SELECT DISTINCT a.id_organisation FROM public.t_maitre_jeu a WHERE actif AND mail=:mail;`,
+        {
+          replacements: {
+            mail: body.ad.userName,
+          },
+          type: QueryTypes.SELECT,
+          plain: true,
+        }
+      );
+      let isMaitreJeu = false;
+      if (currentMaitreJeu && currentMaitreJeu["id_organisation"] > 0) {
+        isMaitreJeu = true;
         currentOrganisation = await Organisation.findOne({
           where: {
             id_organisation: currentMaitreJeu["id_organisation"],
@@ -146,7 +147,7 @@ const register = async (server, options) => {
       currentUserByAD = await User.create({
         id_organisation: currentOrganisation["id_organisation"],
         oid_ad: body.ad.idToken.oid,
-        id_role: body.activate_organisation ? 2 : 1,
+        id_role: isMaitreJeu ? 2 : 1,
         id_avatar: body.id_avatar,
         nom: body.ad.name,
         actif: true,
