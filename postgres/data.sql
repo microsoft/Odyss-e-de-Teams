@@ -3,39 +3,40 @@
 		VALUES ('Semaine 1', 1, 'Partir et commencer le programme'), ('Semaine 2', 2, 'Bien consolider ses connaissances'), ('Semaine 3', 3, 'Approfondir ses usages'), ('Semaine 4', 4, 'Dernière poussée pour être un pro de Teams');
 		
 -- organisation
-  INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation, id_semaine) VALUES 	
-    ('Saegus', true, now(), now(),1),
-	('Air France', false, now(), now(),1),
-	('Alstom', false, now(), now(),1),
-	('ALTEN SA', false, now(), now(),1),
-	('AXA GIE', false, now(), now(),1),
-	('BPCE', false, now(), now(),1),
-	('Colas', false, now(), now(),1),
-	('Edenred', false, now(), now(),1),
-	('EDF Renouvelable', false, now(), now(),1),
-	('EUROVIA', false, now(), now(),1),
-	('Grtgaz', false, now(), now(),1),
-	('JCDecaux', false, now(), now(),1),
-	('Kenzo', false, now(), now(),1),
-	('Kering', false, now(), now(),1),
-	('KIABI', false, now(), now(),1),
-	('La Poste', false, now(), now(),1),
-	('LVMH', false, now(), now(),1),
-	('MANUFACTURE FRANCAISE DES PNEUMATIQUES MICHELIN', false, now(), now(),1),
-	('Moet Hennessy', false, now(), now(),1),
-	('PUBLICIS', false, now(), now(),1),
-	('RATP', false, now(), now(),1),
-	('RENAULT SAS', false, now(), now(),1),
-	('SANOFI', false, now(), now(),1),
-	('SERVIER', false, now(), now(),1),
-	('SNCF', false, now(), now(),1),
-	('SONEPAR', false, now(), now(),1),
-	('SOPRA STERIA GROUP', false, now(), now(),1),
-	('SPIE SA', false, now(), now(),1),
-	('Suez', false, now(), now(),1),
-	('Total', false, now(), now(),1),
-	('VINCI AUTOROUTES', false, now(), now(),1),
-	('VINCI CONSTRUCTION', false, now(), now(),1);
+  INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 	
+    ('Saegus', true, now(), now()),
+    ('Microsoft', true, now(), now()),
+	('Air France', false, now(), now()),
+	('Alstom', false, now(), now()),
+	('ALTEN SA', false, now(), now()),
+	('AXA GIE', false, now(), now()),
+	('BPCE', false, now(), now()),
+	('Colas', false, now(), now()),
+	('Edenred', false, now(), now()),
+	('EDF Renouvelable', false, now(), now()),
+	('EUROVIA', false, now(), now()),
+	('Grtgaz', false, now(), now()),
+	('JCDecaux', false, now(), now()),
+	('Kenzo', false, now(), now()),
+	('Kering', false, now(), now()),
+	('KIABI', false, now(), now()),
+	('La Poste', false, now(), now()),
+	('LVMH', false, now(), now()),
+	('MANUFACTURE FRANCAISE DES PNEUMATIQUES MICHELIN', false, now(), now()),
+	('Moet Hennessy', false, now(), now()),
+	('PUBLICIS', false, now(), now()),
+	('RATP', false, now(), now()),
+	('RENAULT SAS', false, now(), now()),
+	('SANOFI', false, now(), now()),
+	('SERVIER', false, now(), now()),
+	('SNCF', false, now(), now()),
+	('SONEPAR', false, now(), now()),
+	('SOPRA STERIA GROUP', false, now(), now()),
+	('SPIE SA', false, now(), now()),
+	('Suez', false, now(), now()),
+	('Total', false, now(), now()),
+	('VINCI AUTOROUTES', false, now(), now()),
+	('VINCI CONSTRUCTION', false, now(), now());
 
 	UPDATE public.t_organisation SET id_semaine=1 WHERE id_organisation=1;
 
@@ -176,7 +177,7 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 	VALUES (1, 2, 6, 'Eddy Scylla', true, now(), now(), now());
 
 	-- ajout tid SAEGUS / Pas de maitre du jeu qui active
-	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e' WHERE id_organisation=1;
+	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine=1 WHERE id_organisation=1;
 -- maitre jeu
 	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) 
 	VALUES (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
