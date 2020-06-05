@@ -61,7 +61,6 @@ class App extends React.Component<IAppProps, IAppState> {
   }
 
   login = () => {
-    this.setState({ loading: true });
     AuthService.login()
       .then((user) => {
         if (user) {
@@ -81,6 +80,7 @@ class App extends React.Component<IAppProps, IAppState> {
     UserAPI.createUserByAD("fr", {
       ad: this.state.userAD,
       id_avatar: e.avatarSelected,
+      activate_organisation: this.props.location.pathname === '/ActivateOrganisation'
     }).then((result: any) => {
       this._loadCurrentUser();
     });
@@ -125,7 +125,7 @@ class App extends React.Component<IAppProps, IAppState> {
     const { loading } = this.state;
 
     if (loading) {
-      return <div> Loading</div>;
+      return <div>Loading</div>;
     } else {
       if (AuthService.isCallback()) {
         return (
@@ -141,7 +141,7 @@ class App extends React.Component<IAppProps, IAppState> {
         );
       } else {
         if (!this.state.userAD) {
-          return <LoginContainer login={this.login()} />;
+          return <LoginContainer onLogin={() => this.login()} />;
         } else {
           if (!this.state.logged)
             return (

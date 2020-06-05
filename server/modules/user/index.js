@@ -1,5 +1,5 @@
 "use strict";
-const { QueryTypes, Op } = require("sequelize");
+const { QueryTypes, where, fn } = require("sequelize");
 
 const dailyRewards = require("./daily_rewards.json");
 
@@ -77,12 +77,14 @@ const register = async (server, options) => {
     },
   });
   server.route({
-    path: baseUrl + "/createByAD",
+    path: baseUrl + "/create-by-ad",
     method: "POST",
     handler: async function (request, h) {
       const body = request.payload;
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
+      const MaitreJeu = db.getModel("MaitreJeu");
+      const Organisation = db.getModel("Organisation");
       const current_oid_ad =
         body && body.ad && body.ad.idToken
           ? body.ad.idToken.oid
@@ -98,10 +100,53 @@ const register = async (server, options) => {
       if (currentUserByAD) {
         return currentUserByAD;
       }
+      let currentOrganisation;
+      if (body.activate_organisation) {
+        let currentMaitreJeu = await db.sequelize.query(
+          `
+          SELECT DISTINCT a.id_organisation FROM public.t_maitre_jeu a WHERE actif AND mail=:mail;`,
+          {
+            replacements: {
+              mail: body.ad.userName,
+            },
+            type: QueryTypes.SELECT,
+            plain: true,
+          }
+        );
+        currentOrganisation = await Organisation.findOne({
+          where: {
+            id_organisation: currentMaitreJeu["id_organisation"],
+          },
+        });
+        if (!currentOrganisation) {
+          return false;
+        }
+        try {
+          await Organisation.update(
+            { tid_ad: body.ad.idToken.tid },
+            {
+              where: {
+                id_organisation: currentOrganisation["id_organisation"],
+              },
+            }
+          );
+        } catch (err) {
+          return false;
+        }
+      } else {
+        currentOrganisation = await Organisation.findOne({
+          where: {
+            tid_ad: body.ad.idToken.tid,
+          },
+        });
+        if (!currentOrganisation) {
+          return false;
+        }
+      }
       currentUserByAD = await User.create({
-        id_organisation: 1,
+        id_organisation: currentOrganisation["id_organisation"],
         oid_ad: body.ad.idToken.oid,
-        id_role: 1,
+        id_role: body.activate_organisation ? 2 : 1,
         id_avatar: body.id_avatar,
         nom: body.ad.name,
         actif: true,
