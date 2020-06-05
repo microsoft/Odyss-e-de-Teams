@@ -79,8 +79,7 @@ class App extends React.Component<IAppProps, IAppState> {
   onCompleteLanding = (e: any) => {
     UserAPI.createUserByAD("fr", {
       ad: this.state.userAD,
-      id_avatar: e.avatarSelected,
-      activate_organisation: this.props.location.pathname === '/ActivateOrganisation'
+      id_avatar: e.avatarSelected
     }).then((result: any) => {
       this._loadCurrentUser();
     });
