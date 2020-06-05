@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import "./App.scss";
@@ -116,6 +117,10 @@ class App extends React.Component<IAppProps, IAppState> {
   };
 
   render() {
+    if (this.state.logged && this.props.location.pathname === '/') {
+      return <Redirect to="/Cockpit" />;
+    }
+
     const isMobile = window.innerWidth <= 768;
     const { loading } = this.state;
 
