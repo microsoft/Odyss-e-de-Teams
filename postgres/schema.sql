@@ -926,6 +926,7 @@ $BODY$;
     id_module integer,
     id_niveau integer,
 		id_user integer,
+		nb_reponse integer,
 		nb_reponse_ok integer,
     nb_point integer,
     nb_xp integer,
@@ -1221,10 +1222,13 @@ BEGIN
 	);
 	
 	COPY public.i_question FROM '/var/lib/postgresql/data/backlog_question.csv' DELIMITER ';' CSV HEADER;
+	
+	UPDATE public.i_question SET reponse_ok=regexp_replace(reponse_ok, '\r|\n', '', 'g');
 	 
 	-- thematique
 	TRUNCATE TABLE public.t_thematique;
 	ALTER SEQUENCE public.seq_t_thematique RESTART WITH 1;
+	DELETE FROM public.t_libelle_i18n WHERE TRIM(code)='THEMATIQUE';
 	
 	INSERT INTO public.t_thematique (nom, actif, horodatage, horodatage_creation) 
 		SELECT DISTINCT thematique, true, now(), now() FROM public.i_question;	
@@ -1232,6 +1236,7 @@ BEGIN
 	-- question
 	TRUNCATE TABLE public.t_question;
 	ALTER SEQUENCE public.seq_t_question RESTART WITH 1;
+	DELETE FROM public.t_libelle_i18n WHERE TRIM(code)='QUESTION';
 	
 	INSERT INTO public.t_question (id_module, id_niveau, id_thematique, id_mecanique, cle_fichier, nom, commentaire, actif, horodatage, horodatage_creation) 
 		SELECT DISTINCT b.id_module, c.id_niveau, d.id_thematique, e.id_mecanique, a.code_question, a.question, a.bonne_pratique, true, now(), now()
@@ -1267,6 +1272,7 @@ BEGIN
 	-- reponse
 	TRUNCATE TABLE public.t_reponse;
 	ALTER SEQUENCE public.seq_t_reponse RESTART WITH 1;
+	DELETE FROM public.t_libelle_i18n WHERE TRIM(code)='REPONSE';
 	
 	WITH w0 AS(
 		SELECT a.code_question, nom, ordre
@@ -1292,7 +1298,7 @@ BEGIN
 		WITH w0_0 AS(
 		  SELECT a.reponse_ok, b.id_question
 		  FROM public.i_question a
-			INNER JOIN public.t_question b ON a.code_question=b.cle_fichier--  AND id_question=30
+			INNER JOIN public.t_question b ON a.code_question=b.cle_fichier
 		)
 		SELECT a.id_question, rep, ordre
 		FROM w0_0 a, regexp_split_to_table(a.reponse_ok, '//') WITH ORDINALITY x(rep, ordre)

@@ -173,6 +173,7 @@ const register = async (server, options) => {
         user: id_user,
         module: body.selectedModule.id_module,
         niveau: body.selectedNiveau.id_niveau,
+        nb_reponse: listQuestionWithValidAndPoint.length,
         nb_reponse_ok: listQuestionWithValidAndPoint.filter((q) => q.valid)
           .length,
         nb_point: dataCalculBareme.total_point,
@@ -181,8 +182,8 @@ const register = async (server, options) => {
       };
       await db.sequelize.query(
         `INSERT INTO public.h_questionnaire_complete(
-            id_semaine, id_module, id_niveau, id_user, nb_reponse_ok, nb_point, nb_xp, horodatage)
-          VALUES (:semaine, :module, :niveau, :user, :nb_reponse_ok, :nb_point, :nb_xp, now());`,
+            id_semaine, id_module, id_niveau, id_user, nb_reponse, nb_reponse_ok, nb_point, nb_xp, horodatage)
+          VALUES (:semaine, :module, :niveau, :user, :nb_reponse, :nb_reponse_ok, :nb_point, :nb_xp, now());`,
         {
           replacements: replacementsQuestionnaire,
           type: QueryTypes.INSERT,
@@ -205,11 +206,40 @@ const register = async (server, options) => {
           type: QueryTypes.INSERT,
         }
       );
+      // get nb_reponse_consecutive_top & nb_reponse_consecutive_en_cours
+      const main_query_reponse_consecutive = `
+        WITH w0 AS (
+          WITH w0_0 AS (
+            SELECT DISTINCT id_reponse_user, valid
+            FROM public.h_reponse_user
+            WHERE id_user=:user
+          )
+          SELECT CASE WHEN valid != lag(valid) OVER (ORDER BY id_reponse_user) THEN 1 END AS rst, *
+          FROM w0_0
+        ), w_rst AS(
+          WITH w_rst_0 AS(
+            SELECT count(rst) OVER (ORDER BY id_reponse_user) AS grp, *
+            FROM w0
+          )
+          SELECT row_number() OVER (PARTITION BY grp ORDER BY id_reponse_user) AS nb, id_reponse_user, valid
+          FROM w_rst_0
+        ), w_valid AS (
+          SELECT *
+          FROM w_rst
+        )
+        SELECT * FROM w_valid
+      `;
+      const resultReponseConsecutiveTop = await db.sequelize.query("SELECT MAX(nb) AS nb FROM (" + main_query_reponse_consecutive + " WHERE valid)s0", { replacements: { user: id_user}, type: QueryTypes.SELECT, plain: true });
+      let nbReponseConsecutiveTop = resultReponseConsecutiveTop['nb'];
+      const resultReponseConsecutiveEnCours = await db.sequelize.query("SELECT DISTINCT id_reponse_user, CASE WHEN valid=true THEN nb ELSE 0 END AS nb FROM (" + main_query_reponse_consecutive + " ORDER BY id_reponse_user DESC LIMIT 1)s0", { replacements: { user: id_user}, type: QueryTypes.SELECT, plain: true });
+      let nbReponseConsecutiveEnCours = resultReponseConsecutiveEnCours['nb'];
+
+      // maj nb_point / nb_point / nb_reponse / nb_reponse_ok / nb_reponse_consecutive_top / nb_reponse_consecutive_en_cours
       await db.sequelize.query(
         `UPDATE public.t_user 
-          SET nb_xp=s0.nb_xp, nb_point=s0.nb_point
+          SET nb_xp=s0.nb_xp, nb_point=s0.nb_point, nb_reponse=s0.nb_reponse, nb_reponse_ok=s0.nb_reponse_ok, nb_reponse_consecutive_top=:nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours=:nb_reponse_consecutive_en_cours
           FROM (
-            SELECT DISTINCT id_user, SUM(nb_point) AS nb_point, SUM(nb_xp) AS nb_xp
+            SELECT DISTINCT id_user, SUM(nb_point) AS nb_point, SUM(nb_xp) AS nb_xp, SUM(nb_reponse) AS nb_reponse, SUM(nb_reponse_ok) AS nb_reponse_ok
             FROM public.h_questionnaire_complete
             WHERE id_user=:user
             GROUP BY id_user
@@ -218,6 +248,8 @@ const register = async (server, options) => {
         {
           replacements: {
             user: id_user,
+            nb_reponse_consecutive_en_cours: nbReponseConsecutiveEnCours || 0,
+            nb_reponse_consecutive_top: nbReponseConsecutiveTop || 0
           },
           type: QueryTypes.INSERT,
         }
