@@ -1,6 +1,6 @@
 "use strict";
 const { QueryTypes } = require("sequelize");
-
+const moment = require("moment");
 const File = require("./../../utils/File");
 const path = require("path");
 
@@ -23,6 +23,8 @@ const register = async (server, options) => {
     method: "GET",
     handler: async function (request, h) {
       const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+
       // check oid_ad is present in request
       if (!request.state.oid_ad) {
         return false;
@@ -347,6 +349,7 @@ const register = async (server, options) => {
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
       const OrganisationAgenda = db.getModel("OrganisationAgenda");
+      const OrganisationSemaine = db.getModel("OrganisationSemaine");
       const Agenda = db.getModel("Agenda");
       const Semaine = db.getModel("Semaine");
       const Organisation = db.getModel("Organisation");
@@ -368,12 +371,119 @@ const register = async (server, options) => {
       const id_organisation = 1;
       try {
         const organisationAgenda = await OrganisationAgenda.findAll({
-          include: [Agenda, Organisation, Semaine],
+          include: [Agenda, Organisation, Semaine, OrganisationSemaine],
           where: {
             id_organisation: id_organisation,
           },
+          raw: true,
         });
+
+        let result = [];
+
+        /**
+         *       {
+        id_semaine: 1,
+        name: "S1",
+        date_start: "2020-06-08T07:36:52.090Z",
+        date_end: "2020-06-15T07:36:52.090Z",
+        agenda: {
+          "2020-06-08T07:36:52.090Z": [
+            {
+              id: 2,
+              name: "Communication : Envoi d'un email de lancement",
+              desc: "Email organisation",
+              done: false,
+              date: "2020-06-08T09:00:00.000Z",
+            }
+         */
+
+        return organisationAgenda;
+
+        organisationAgenda.forEach((elem) => {
+          let found = result.findIndex((e) => e.id_semaine === elem.id_semaine);
+
+          console.log(
+            "current",
+            moment(elem["Agenda.date_agenda"]).format("DD-MM-YYYY"),
+            found
+          );
+
+          if (found === -1) {
+            let agendaDays = [];
+            let weekAgenda = {};
+            let firstDay = moment(elem["OrganisationSemaine.debut_semaine"]);
+            agendaDays.push(firstDay.format("DD-MM-YYYY"));
+            agendaDays.push(
+              moment(elem["OrganisationSemaine.debut_semaine"])
+                .add(1, "days")
+                .format("DD-MM-YYYY")
+            );
+            agendaDays.push(
+              moment(elem["OrganisationSemaine.debut_semaine"])
+                .add(2, "days")
+                .format("DD-MM-YYYY")
+            );
+            agendaDays.push(
+              moment(elem["OrganisationSemaine.debut_semaine"])
+                .add(3, "days")
+                .format("DD-MM-YYYY")
+            );
+            agendaDays.push(
+              moment(elem["OrganisationSemaine.debut_semaine"])
+                .add(4, "days")
+                .format("DD-MM-YYYY")
+            );
+
+            agendaDays.forEach((e) => {
+              weekAgenda[e] = [];
+            });
+
+            result.push({
+              id_semaine: elem.id_semaine,
+              name: elem["Semaine.nom"],
+              date_start: elem["OrganisationSemaine.debut_semaine"],
+              date_end: elem["OrganisationSemaine.fin_semaine"],
+              agenda: weekAgenda,
+            });
+
+            console.log("before", result);
+
+            // ajout de la date du jour
+            let newIdx = result.findIndex(
+              (e) => e.id_semaine === elem.id_semaine
+            );
+
+            console.log(
+              "newIdx",
+              newIdx,
+              result[newIdx],
+              moment(elem["Agenda.date_agenda"]).format("DD-MM-YYYY")
+            );
+
+            result[newIdx].agenda[
+              moment(elem["Agenda.date_agenda"]).format("DD-MM-YYYY")
+            ].push({
+              id: elem["Agenda.id_agenda"],
+              name: elem["Agenda.nom"],
+              desc: elem["Agenda.description"],
+              done: elem["done"],
+              date: elem["Agenda.date_agenda"],
+            });
+          } else {
+            result[found].agenda[
+              moment(elem["Agenda.date_agenda"]).format("DD-MM-YYYY")
+            ].push({
+              id: elem["Agenda.id_agenda"],
+              name: elem["Agenda.nom"],
+              desc: elem["Agenda.description"],
+              done: elem["done"],
+              date: elem["Agenda.date_agenda"],
+            });
+          }
+        });
+
         return {
+          result,
           organisationAgenda,
         };
       } catch (e) {
@@ -418,6 +528,7 @@ const register = async (server, options) => {
           {
             where: {
               id: id_item,
+              id_organisation: currentUserByAD.id_organisation,
             },
           }
         );
@@ -426,10 +537,6 @@ const register = async (server, options) => {
       } catch (e) {
         return false;
       }
-
-      return {
-        organisationAgenda,
-      };
     },
   });
 };
