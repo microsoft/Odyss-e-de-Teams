@@ -13,16 +13,16 @@ GainPoint.GetPointReponse = (questions, baremes) => {
       //gain point sur bonne réponse
       nb_xp += (i < i_question_last ? baremeNiveau.reponse_valid_xp : baremeNiveau.last_reponse_valid_xp);
       nb_point += (i < i_question_last ? baremeNiveau.reponse_valid_point : baremeNiveau.last_reponse_valid_point);
+      if (q.temps_reponse <= 30000) {
+        //bonus repondu en moins de 30 secondes
+        nb_xp += baremeNiveau.bonus_temps_xp;
+        nb_point += baremeNiveau.bonus_temps_point;
+      }
     }
     if (q.video_ok) {
       //bonus video lue
       nb_xp += baremeNiveau.bonus_video_xp;
       nb_point += baremeNiveau.bonus_video_point;
-    }
-    if (q.temps_reponse <= 30000) {
-      //bonus repondu en moins de 30 secondes
-      nb_xp += baremeNiveau.bonus_temps_xp;
-      nb_point += baremeNiveau.bonus_temps_point;
     }
     q.nb_point = nb_point;
     q.nb_xp = nb_xp;
