@@ -59,8 +59,8 @@ body {
 
   @include media-breakpoint-up(md) {
     .modal-backdrop {
-      background: none !important;
-      backdrop-filter: initial;
+      /* background: none !important;
+      backdrop-filter: initial; */
     }
   }
   .modal-mobile {
@@ -130,5 +130,8 @@ body {
   body {
     font-size: 0.85rem !important;
     line-height: 1.35;
+    .modal-dialog {
+      max-width: 800px;
+    }
   }
 }

@@ -138,8 +138,8 @@ class Profil extends Component<IProfilProps, IProfilState> {
                       <p className={"h1 mb-0 pt-0 color-primary"}>
                         {this.props.currentUser?.nb_reponse > 0 ? (
                           <span>
-                            {(100 * this.props.currentUser?.nb_reponse_ok) /
-                              this.props.currentUser?.nb_reponse}
+                            {((100 * this.props.currentUser?.nb_reponse_ok) /
+                              this.props.currentUser?.nb_reponse).toFixed(2)}
                           </span>
                         ) : (
                           <span>0</span>
