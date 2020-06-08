@@ -68,6 +68,9 @@
       "title": "Programme et missions - ",
       "title_week": "Semaine ",
       "description": "Commandant, dans cette section vous pouvez activer et désactiver chaque semaine les packages de missions qui sont ou seront à déployer sur les interfaces des Explorateurs de votre organisation."
+    },
+    "agenda": {
+      "title": "Planning - Programme de missions"
     }
   },
   "outillage": {

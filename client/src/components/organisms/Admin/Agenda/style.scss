@@ -1,0 +1,11 @@
+.AdminAgenda {
+  &__body {
+    display: flex;
+    justify-content: space-around;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
