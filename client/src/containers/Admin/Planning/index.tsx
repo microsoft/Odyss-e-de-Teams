@@ -9,12 +9,14 @@ import AdminAPI from "api/Admin";
 import { getFullMonth } from "utils/dates";
 
 import AdminPlanning from "components/organisms/Admin/Planning";
+import AdminAgenda from "components/organisms/Admin/Agenda";
 
 import "./style.scss";
 
 interface IPlanningContainerState {
   loading: boolean;
   campaigns: any;
+  agenda: any;
   curTabKey: string;
 }
 
@@ -25,12 +27,14 @@ class PlanningContainer extends React.Component<
   state = {
     loading: true,
     campaigns: [],
+    agenda: [],
     curTabKey: "PLANNING",
   };
 
   async componentDidMount() {
     try {
       const missions = await AdminAPI.getAllCampaigns();
+      const agenda = await AdminAPI.getAgenda();
 
       missions.availableMissions.forEach((mission) => {
         let startDate = new Date(mission.debut_semaine);
@@ -97,7 +101,7 @@ class PlanningContainer extends React.Component<
                   title={t("admin.planning.menu_planning")}
                   className="PlanningContainer__container__planning__tabs__item"
                 >
-                  Planning
+                  <AdminAgenda />
                 </Tab>
 
                 <Tab eventKey="EMAIL" title={t("admin.planning.menu_email")}>
