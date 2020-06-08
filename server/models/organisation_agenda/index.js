@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
       id_organisation: DataTypes.INTEGER,
       id_agenda: DataTypes.INTEGER,
       id_semaine: DataTypes.INTEGER,
+      date_event: DataTypes.DATE,
       done: DataTypes.BOOLEAN,
     },
     {
@@ -28,6 +29,11 @@ module.exports = function (sequelize, DataTypes) {
       sourceKey: "id_organisation",
     });
     OrganisationAgenda.hasOne(models.Semaine, {
+      foreignKey: "id_semaine",
+      sourceKey: "id_semaine",
+    });
+
+    OrganisationAgenda.hasOne(models.OrganisationSemaine, {
       foreignKey: "id_semaine",
       sourceKey: "id_semaine",
     });
