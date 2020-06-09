@@ -8,6 +8,7 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
       },
       nom: DataTypes.INTEGER,
+      description: DataTypes.TEXT,
       date_agenda: DataTypes.DATE,
       updatedAt: {
         type: DataTypes.DATE,

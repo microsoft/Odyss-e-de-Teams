@@ -353,139 +353,99 @@ const register = async (server, options) => {
       const Agenda = db.getModel("Agenda");
       const Semaine = db.getModel("Semaine");
       const Organisation = db.getModel("Organisation");
-      // // check oid_ad is present in request
-      // if (!request.state.oid_ad) {
-      //   return false;
-      // }
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
 
-      // // Look for user and check if he is admin
-      // const currentUserByAD = await User.findOne({
-      //   where: {
-      //     oid_ad: request.state.oid_ad,
-      //   },
-      // });
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
 
-      // if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
-      //   return false;
-      // }
-      const id_organisation = 1;
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
       try {
-        const organisationAgenda = await OrganisationAgenda.findAll({
-          include: [Agenda, Organisation, Semaine, OrganisationSemaine],
-          where: {
-            id_organisation: id_organisation,
-          },
-          raw: true,
-        });
+        const replacements = {
+          id_organisation: 1,
+        };
+        const organisationAgenda = await db.sequelize.query(
+          `
+          SELECT a.id as mission_id, TRIM(ag.nom) as mission_name, ag.description as mission_description, a.date_event as mission_date, a.done as mission_done, a.id_semaine, s.nom as semaine_name, s.description as semaine_description, os.debut_semaine as semaine_start, os.fin_semaine as semaine_end
+          FROM j_organisation_agenda a
+          INNER JOIN t_semaine s 
+          ON s.id_semaine = a.id_semaine
+          INNER JOIN j_organisation_semaine os
+          ON os.id_semaine = a.id_semaine
+          INNER JOIN t_agenda ag
+          ON ag.id_agenda = a.id_agenda
+          WHERE a.id_organisation = :id_organisation
+          ORDER BY a.date_event ASC
+        `,
+          {
+            replacements: replacements,
+            type: QueryTypes.SELECT,
+          }
+        );
 
         let result = [];
 
-        /**
-         *       {
-        id_semaine: 1,
-        name: "S1",
-        date_start: "2020-06-08T07:36:52.090Z",
-        date_end: "2020-06-15T07:36:52.090Z",
-        agenda: {
-          "2020-06-08T07:36:52.090Z": [
-            {
-              id: 2,
-              name: "Communication : Envoi d'un email de lancement",
-              desc: "Email organisation",
-              done: false,
-              date: "2020-06-08T09:00:00.000Z",
-            }
-         */
-
-        return organisationAgenda;
-
+        // prepare the output once
         organisationAgenda.forEach((elem) => {
           let found = result.findIndex((e) => e.id_semaine === elem.id_semaine);
-
-          console.log(
-            "current",
-            moment(elem["Agenda.date_agenda"]).format("DD-MM-YYYY"),
-            found
-          );
-
           if (found === -1) {
             let agendaDays = [];
             let weekAgenda = {};
-            let firstDay = moment(elem["OrganisationSemaine.debut_semaine"]);
+            let firstDay = moment(elem["semaine_start"]);
             agendaDays.push(firstDay.format("DD-MM-YYYY"));
             agendaDays.push(
-              moment(elem["OrganisationSemaine.debut_semaine"])
-                .add(1, "days")
-                .format("DD-MM-YYYY")
+              moment(elem["semaine_start"]).add(1, "days").format("DD-MM-YYYY")
             );
             agendaDays.push(
-              moment(elem["OrganisationSemaine.debut_semaine"])
-                .add(2, "days")
-                .format("DD-MM-YYYY")
+              moment(elem["semaine_start"]).add(2, "days").format("DD-MM-YYYY")
             );
             agendaDays.push(
-              moment(elem["OrganisationSemaine.debut_semaine"])
-                .add(3, "days")
-                .format("DD-MM-YYYY")
+              moment(elem["semaine_start"]).add(3, "days").format("DD-MM-YYYY")
             );
             agendaDays.push(
-              moment(elem["OrganisationSemaine.debut_semaine"])
-                .add(4, "days")
-                .format("DD-MM-YYYY")
+              moment(elem["semaine_start"]).add(4, "days").format("DD-MM-YYYY")
             );
-
             agendaDays.forEach((e) => {
               weekAgenda[e] = [];
             });
 
             result.push({
               id_semaine: elem.id_semaine,
-              name: elem["Semaine.nom"],
-              date_start: elem["OrganisationSemaine.debut_semaine"],
-              date_end: elem["OrganisationSemaine.fin_semaine"],
+              name: elem["semaine_name"].trim(),
+              desc: elem["semaine_description"],
+              date_start: elem["semaine_start"],
+              date_end: elem["semaine_end"],
               agenda: weekAgenda,
-            });
-
-            console.log("before", result);
-
-            // ajout de la date du jour
-            let newIdx = result.findIndex(
-              (e) => e.id_semaine === elem.id_semaine
-            );
-
-            console.log(
-              "newIdx",
-              newIdx,
-              result[newIdx],
-              moment(elem["Agenda.date_agenda"]).format("DD-MM-YYYY")
-            );
-
-            result[newIdx].agenda[
-              moment(elem["Agenda.date_agenda"]).format("DD-MM-YYYY")
-            ].push({
-              id: elem["Agenda.id_agenda"],
-              name: elem["Agenda.nom"],
-              desc: elem["Agenda.description"],
-              done: elem["done"],
-              date: elem["Agenda.date_agenda"],
-            });
-          } else {
-            result[found].agenda[
-              moment(elem["Agenda.date_agenda"]).format("DD-MM-YYYY")
-            ].push({
-              id: elem["Agenda.id_agenda"],
-              name: elem["Agenda.nom"],
-              desc: elem["Agenda.description"],
-              done: elem["done"],
-              date: elem["Agenda.date_agenda"],
             });
           }
         });
 
-        return {
-          result,
-          organisationAgenda,
-        };
+        // then affect the agenda
+
+        organisationAgenda.forEach((elem) => {
+          let index = result.findIndex((e) => e.id_semaine === elem.id_semaine);
+          let formatedDate = moment(elem.mission_date).format("DD-MM-YYYY");
+
+          // on a l'index et la bonne date donc on ajoute à l'agenda
+          result[index].agenda[formatedDate].push({
+            id: elem.mission_id,
+            name: elem.mission_name,
+            desc: elem.mission_description,
+            date: moment(elem.mission_date).format("HH:mm"),
+            done: elem.mission_done,
+          });
+        });
+
+        return result;
       } catch (e) {
         console.error(e);
       }
@@ -499,31 +459,29 @@ const register = async (server, options) => {
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
       const OrganisationAgenda = db.getModel("OrganisationAgenda");
-      const Agenda = db.getModel("Agenda");
-      const Semaine = db.getModel("Semaine");
-      const Organisation = db.getModel("Organisation");
 
-      // // check oid_ad is present in request
-      // if (!request.state.oid_ad) {
-      //   return false;
-      // }
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
 
-      // // Look for user and check if he is admin
-      // const currentUserByAD = await User.findOne({
-      //   where: {
-      //     oid_ad: request.state.oid_ad,
-      //   },
-      // });
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
 
-      // if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
-      //   return false;
-      // }
-      const { id_item } = request.payload;
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
+      const { id_item, item_status } = request.payload;
 
       try {
         await OrganisationAgenda.update(
           {
-            done: true,
+            done: item_status,
           },
           {
             where: {
@@ -535,6 +493,7 @@ const register = async (server, options) => {
 
         return true;
       } catch (e) {
+        console.error(e);
         return false;
       }
     },
