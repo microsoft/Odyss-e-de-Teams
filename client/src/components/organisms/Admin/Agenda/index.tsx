@@ -1,94 +1,24 @@
 import React from "react";
+
 import moment from "moment";
+
 import { withTranslation, WithTranslation } from "react-i18next";
 
 import AgendaWeekSwitcher from "components/molecules/Admin/AgendaWeekSwitcher";
 import AgendaDay from "components/molecules/Admin/Agenda/AgendaDay";
-import { get5daysInterval } from "utils/dates";
+
+import AdminAPI from "api/Admin";
 
 import "./style.scss";
 
+import { getFullMonth } from "utils/dates";
+
 class AdminAgenda extends React.Component<WithTranslation, {}> {
   state = {
-    result: [
-      {
-        id_semaine: 1,
-        name: "S1",
-        date_start: "2020-06-08T07:36:52.090Z",
-        date_end: "2020-06-15T07:36:52.090Z",
-        agenda: {
-          "2020-06-08T07:36:52.090Z": [
-            {
-              id: 2,
-              name: "Communication : Envoi d'un email de lancement",
-              desc: "Email organisation",
-              done: false,
-              date: "2020-06-08T09:00:00.000Z",
-            },
-            {
-              id: 1,
-              name: "Activer la mission « Lancement »",
-              desc: "Board Joueurs",
-              done: false,
-              date: "2020-06-08T09:00:00.000Z",
-            },
+    result: [],
 
-            {
-              id: 3,
-              name: "Notification Teams Mission en cours",
-              desc: "Team joueurs",
-              done: false,
-              date: "2020-06-08T14:00:00.000Z",
-            },
-          ],
-          "2020-06-09T07:36:52.090Z": [],
-          "2020-06-10T07:36:52.090Z": [
-            {
-              id: 4,
-              name: "Notification Teams Mission en cours",
-              desc: "Team joueurs",
-              done: false,
-              date: "2020-06-10T14:00:00.000Z",
-            },
-          ],
-          "2020-06-11T07:36:52.090Z": [
-            {
-              id: 5,
-              name: "Activer la mission « Lancement »",
-              desc: "Board joueur",
-              done: false,
-              date: "2020-06-11T09:00:00.000Z",
-            },
-          ],
-          "2020-06-12T07:36:52.090Z": [
-            {
-              id: 6,
-              name: "Mission en cours !  « Lancement »",
-              desc: "Email organisation",
-              done: false,
-              date: "2020-06-12T09:00:00.000Z",
-            },
-          ],
-        },
-      },
-      {
-        id_semaine: 2,
-        name: "S2",
-        date_start: "2020-06-08T07:36:52.090Z",
-        date_end: "2020-06-15T07:36:52.090Z",
-        agenda: [
-          {
-            id: 7,
-            name: "Notification Teams Mission en cours",
-            desc: "Teams joueurs",
-            done: false,
-            date: "2020-06-14T09:00:00.000Z",
-          },
-        ],
-      },
-    ],
-
-    currentWeek: 0, // a changer par rapport à la date
+    currentWeek: 0,
+    loading: true,
   };
 
   goPreviousWeek = () => {
@@ -107,48 +37,88 @@ class AdminAgenda extends React.Component<WithTranslation, {}> {
     });
   };
 
+  async componentDidMount() {
+    await this.fetchData();
+  }
+
+  async fetchData() {
+    const res = await AdminAPI.getAgenda();
+
+    let currentWeek = 0;
+
+    res.forEach((elem, index) => {
+      if (moment().isBetween(moment(elem.date_start), moment(elem.date_end))) {
+        currentWeek = index;
+      }
+    });
+
+    this.setState({
+      result: res,
+      loading: false,
+      currentWeek: currentWeek,
+    });
+  }
+
+  onAgendaItemClick = async (elem) => {
+    await AdminAPI.setAgendaItemStatus({
+      id_item: elem.id,
+      item_status: elem.status,
+    });
+
+    await this.fetchData();
+  };
+
   render() {
     const { tReady, t } = this.props;
 
-    const semaines = this.state.result.map((r) => {
-      return {
-        id_semaine: r.id_semaine,
-        name: r.name,
-      };
-    });
+    const { loading, currentWeek } = this.state;
 
-    const curWeekAgenda = this.state.result[this.state.currentWeek].agenda;
+    const curMonthTranslation = getFullMonth(new Date());
+    window.moment = moment;
 
-    console.log(
-      Object.entries(curWeekAgenda),
-      curWeekAgenda,
-      this.state.result[0].agenda
-    );
+    if (loading) return <> Loading ... </>;
+    else {
+      const semaines = this.state.result.map((r) => {
+        return {
+          id_semaine: r.id_semaine,
+          name: r.name,
+        };
+      });
 
-    return (
-      <div className="AdminAgenda">
-        <div className="AdminAgenda__title">
-          {tReady && t("admin.agenda.title")}
+      const curWeekAgenda = this.state.result[this.state.currentWeek].agenda;
+      return (
+        <div className="AdminAgenda">
+          <div className="AdminAgenda__header">
+            <div className="AdminAgenda__header__title">
+              {tReady && t("admin.agenda.title")}{" "}
+              {tReady && t(curMonthTranslation)} {new Date().getFullYear()}
+            </div>
+            <div className="AdminAgenda__header__actions">
+              <AgendaWeekSwitcher
+                semaines={semaines}
+                onClickPreviousWeek={this.goPreviousWeek}
+                onClickNextWeek={this.goNextWeek}
+                currentWeek={this.state.currentWeek}
+                previousAvailable={currentWeek > 0}
+                nextAvailable={currentWeek < this.state.result.length}
+              />
+            </div>
+          </div>
+
+          <div className="AdminAgenda__body">
+            {Object.keys(curWeekAgenda).map((dayAgenda, index) => (
+              <AgendaDay
+                className="AdminAgenda__body__item p-0"
+                key={`agenda-${index}`}
+                items={curWeekAgenda[dayAgenda]}
+                day={dayAgenda}
+                onAgendaItemClick={this.onAgendaItemClick}
+              />
+            ))}
+          </div>
         </div>
-        <div className="AdminAgenda__actions">
-          <AgendaWeekSwitcher
-            semaines={semaines}
-            onClickPreviousWeek={this.goPreviousWeek}
-            onClickNextWeek={this.goNextWeek}
-          />
-        </div>
-
-        <div className="AdminAgenda__body">
-          {Object.keys(curWeekAgenda).map((dayAgenda, index) => (
-            <AgendaDay
-              className="AdminAgenda__body__item"
-              key={`agenda-${index}`}
-              items={curWeekAgenda[dayAgenda]}
-            />
-          ))}
-        </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
