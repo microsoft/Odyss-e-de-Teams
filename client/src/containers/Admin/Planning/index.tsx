@@ -10,6 +10,7 @@ import { getFullMonth } from "utils/dates";
 
 import AdminPlanning from "components/organisms/Admin/Planning";
 import AdminAgenda from "components/organisms/Admin/Agenda";
+import AdminEmailing from "components/organisms/Admin/Emailing";
 
 import "./style.scss";
 
@@ -105,7 +106,7 @@ class PlanningContainer extends React.Component<
                 </Tab>
 
                 <Tab eventKey="EMAIL" title={t("admin.planning.menu_email")}>
-                  Email
+                  <AdminEmailing />
                 </Tab>
 
                 <Tab eventKey="SOCIAL" title={t("admin.planning.menu_social")}>
