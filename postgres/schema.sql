@@ -219,10 +219,11 @@ CREATE TABLE public.t_agenda
 (
   id_agenda integer NOT NULL DEFAULT nextval('public.seq_t_agenda'::regclass),
   nom character(80),
+	description text,
   date_agenda timestamp,
   actif boolean,
-  horodatage timestamp without time zone,
-  horodatage_creation timestamp without time zone,
+  horodatage timestamp without time zone default CURRENT_TIMESTAMP,
+  horodatage_creation timestamp without time zone default CURRENT_TIMESTAMP,
   CONSTRAINT pk_t_agenda PRIMARY KEY (id_agenda)
 )
 WITH (
@@ -1299,6 +1300,7 @@ CREATE TABLE "public"."j_organisation_agenda" (
     "id_organisation" integer,
     "id_semaine" integer,
     "id_agenda" integer,
+		"date_event" timestamp DEFAULT CURRENT_TIMESTAMP,
     "done" boolean DEFAULT FALSE,
     FOREIGN KEY ("id_organisation") REFERENCES "public"."t_organisation"("id_organisation"),
     FOREIGN KEY ("id_semaine") REFERENCES "public"."t_semaine"("id_semaine"),
