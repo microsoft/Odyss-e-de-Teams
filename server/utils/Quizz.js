@@ -3,7 +3,7 @@ const { QueryTypes } = require("sequelize");
 const Quizz = {};
 
 Quizz.getReponseValid = (questions) => {
-  questions.forEach(q => {
+  questions.forEach((q) => {
     const reponse_user = q.selectedReponseIds;
     const reponse_ok = q.reponse_ok;
     switch (q.id_mecanique) {
@@ -20,22 +20,33 @@ Quizz.getReponseValid = (questions) => {
         // on met donc les deux table dans l ordre croissant, on ne compare que les valeurs
         reponse_user.sort();
         reponse_ok.sort();
-        q.valid = reponse_user.length === reponse_ok.length && reponse_user.every((value, index) => { return value === reponse_ok[index]});
+        q.valid =
+          reponse_user.length === reponse_ok.length &&
+          reponse_user.every((value, index) => {
+            return value === reponse_ok[index];
+          });
         break;
       case 5:
         //multiple avec ordre
-        q.valid = reponse_user.length === reponse_ok.length && reponse_user.every((value, index) => { return value === reponse_ok[index]});
+        q.valid =
+          reponse_user.length === reponse_ok.length &&
+          reponse_user.every((value, index) => {
+            return value === reponse_ok[index];
+          });
         break;
     }
   });
   return questions;
 };
 
-Quizz.getReponseByQuestionQuery = async (db, main_query, replacements, lang) => {
+Quizz.getReponseByQuestionQuery = async (
+  db,
+  main_query,
+  replacements,
+  lang
+) => {
   const resultIdQuestion = await db.sequelize.query(
-    "SELECT DISTINCT array_agg(id_question) AS ids FROM (" +
-      main_query +
-      ")s0",
+    "SELECT DISTINCT array_agg(id_question) AS ids FROM (" + main_query + ")s0",
     { replacements: replacements, type: QueryTypes.SELECT, plain: true }
   );
   const tabIdQuestion = resultIdQuestion["ids"];

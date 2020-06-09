@@ -42,7 +42,7 @@ class QCMVideo extends Component<IQCMVideoProps, IMecaniqueQuestionState> {
       },
       () => {
         this.player.on('playing', () => {
-          this.props.onPlay();
+          this.props.onPlay(this.props.question);
         });
         this.player.on('pause', () => {
           this.props.onPause();

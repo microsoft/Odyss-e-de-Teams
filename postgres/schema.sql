@@ -621,6 +621,49 @@ CREATE INDEX idx_actif_t_reponse
   ON public.t_reponse
   USING btree
   (actif);
+
+
+----- bareme_reponse  
+CREATE SEQUENCE public.seq_t_bareme_reponse;
+GRANT ALL ON TABLE public.seq_t_bareme_reponse TO odyssee_teams_appli;
+
+CREATE TABLE public.t_bareme_reponse
+(
+  id_bareme_reponse integer NOT NULL DEFAULT nextval('public.seq_t_bareme_reponse'::regclass),
+  id_niveau integer,
+  reponse_valid_xp smallint,
+  reponse_valid_point smallint,
+  last_reponse_valid_xp smallint,
+  last_reponse_valid_point smallint,
+  bonus_video_xp smallint,
+  bonus_video_point smallint,
+  bonus_temps_xp smallint,
+  bonus_temps_point smallint,
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_bareme_reponse PRIMARY KEY (id_bareme_reponse)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_bareme_reponse TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_bareme_reponse_pkey
+  ON public.t_bareme_reponse
+  USING btree
+  (id_bareme_reponse);
+ALTER TABLE public.t_bareme_reponse CLUSTER ON idx_bareme_reponse_pkey;
+
+CREATE INDEX idx_id_niveau_t_bareme_reponse
+  ON public.t_bareme_reponse
+  USING btree
+  (id_niveau);
+  
+CREATE INDEX idx_actif_t_bareme_reponse
+  ON public.t_bareme_reponse
+  USING btree
+  (actif);
   
  
 /***************************/
@@ -838,9 +881,12 @@ $BODY$;
 	CREATE TABLE public.h_reponse_user
 	(
 		id_reponse_user integer NOT NULL DEFAULT nextval('public.seq_h_reponse_user'::regclass),
+    id_semaine integer,
 		id_user integer,
     id_question integer,
     valid boolean,
+    nb_point integer,
+    nb_xp integer,
 		valeur integer[],
 		temps bigint,
 		horodatage timestamp without time zone,
@@ -877,10 +923,14 @@ $BODY$;
 	CREATE TABLE public.h_questionnaire_complete
 	(
 		id_questionnaire_complete integer NOT NULL DEFAULT nextval('public.seq_h_questionnaire_complete'::regclass),
-        id_module integer,
-        id_niveau integer,
+    id_semaine integer,
+    id_module integer,
+    id_niveau integer,
 		id_user integer,
+		nb_reponse integer,
 		nb_reponse_ok integer,
+    nb_point integer,
+    nb_xp integer,
 		horodatage timestamp without time zone,
 		CONSTRAINT pk_h_questionnaire_complete PRIMARY KEY (id_questionnaire_complete)
 	)
@@ -1017,7 +1067,6 @@ CREATE TABLE public.h_user_login (
 GRANT ALL ON TABLE public.h_user_login TO odyssee_teams_appli;
 GRANT ALL ON SEQUENCE public.h_user_login_id_seq TO odyssee_teams_appli;
 
-
     
 /***************************/
 /******* multilangue *******/
@@ -1073,7 +1122,6 @@ GRANT ALL ON SEQUENCE public.h_user_login_id_seq TO odyssee_teams_appli;
 
 -- Foreign key semaine 
 ALTER TABLE t_organisation ADD FOREIGN KEY (id_semaine_encours) REFERENCES t_semaine(id_semaine);
-
 
 
 -- fonctions diverses
@@ -1175,10 +1223,13 @@ BEGIN
 	);
 	
 	COPY public.i_question FROM '/var/lib/postgresql/data/backlog_question.csv' DELIMITER ';' CSV HEADER;
+	
+	UPDATE public.i_question SET reponse_ok=regexp_replace(reponse_ok, '\r|\n', '', 'g');
 	 
 	-- thematique
 	TRUNCATE TABLE public.t_thematique;
 	ALTER SEQUENCE public.seq_t_thematique RESTART WITH 1;
+	DELETE FROM public.t_libelle_i18n WHERE TRIM(code)='THEMATIQUE';
 	
 	INSERT INTO public.t_thematique (nom, actif, horodatage, horodatage_creation) 
 		SELECT DISTINCT thematique, true, now(), now() FROM public.i_question;	
@@ -1186,6 +1237,7 @@ BEGIN
 	-- question
 	TRUNCATE TABLE public.t_question;
 	ALTER SEQUENCE public.seq_t_question RESTART WITH 1;
+	DELETE FROM public.t_libelle_i18n WHERE TRIM(code)='QUESTION';
 	
 	INSERT INTO public.t_question (id_module, id_niveau, id_thematique, id_mecanique, cle_fichier, nom, commentaire, actif, horodatage, horodatage_creation) 
 		SELECT DISTINCT b.id_module, c.id_niveau, d.id_thematique, e.id_mecanique, a.code_question, a.question, a.bonne_pratique, true, now(), now()
@@ -1221,6 +1273,7 @@ BEGIN
 	-- reponse
 	TRUNCATE TABLE public.t_reponse;
 	ALTER SEQUENCE public.seq_t_reponse RESTART WITH 1;
+	DELETE FROM public.t_libelle_i18n WHERE TRIM(code)='REPONSE';
 	
 	WITH w0 AS(
 		SELECT a.code_question, nom, ordre
@@ -1246,7 +1299,7 @@ BEGIN
 		WITH w0_0 AS(
 		  SELECT a.reponse_ok, b.id_question
 		  FROM public.i_question a
-			INNER JOIN public.t_question b ON a.code_question=b.cle_fichier--  AND id_question=30
+			INNER JOIN public.t_question b ON a.code_question=b.cle_fichier
 		)
 		SELECT a.id_question, rep, ordre
 		FROM w0_0 a, regexp_split_to_table(a.reponse_ok, '//') WITH ORDINALITY x(rep, ordre)
