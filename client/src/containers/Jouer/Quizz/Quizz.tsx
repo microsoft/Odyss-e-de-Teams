@@ -65,10 +65,15 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
     });
   };
 
-  private _saveReponse(currentQuestion: IQuestion) {
+  private _saveReponse(currentQuestion: IQuestion, iQuestion: number) {
     let curStep: number = this.state.step;
-    let currentTime = this.chronoComponent.current.getCurrentTime();
-    currentQuestion.temps_reponse = currentTime;
+    let currentTotalTime: number = this.chronoComponent.current.getCurrentTime();
+    let questionTime: number = currentTotalTime;
+    for (let i = 0; i < iQuestion; i++) {
+      console.log(this.state.listQuestion[i]);
+      questionTime -= this.state.listQuestion[i].temps_reponse;
+    }
+    currentQuestion.temps_reponse = questionTime;
     this.setState(
       {
         step: ++curStep,
@@ -87,8 +92,8 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
     );
   }
 
-  private _onPlayVideo = () => {
-    console.log("TODO BONUS VIDEO");
+  private _onPlayVideo = (currentQuestion: IQuestion) => {
+    currentQuestion.video_ok = true;
     this.chronoComponent.current.stopTimer();
   };
 
@@ -219,7 +224,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
                       <Button
                         variant="primary"
                         disabled={!this.state.hasReponse}
-                        onClick={() => this._saveReponse(item)}
+                        onClick={() => this._saveReponse(item, i)}
                       >
                         Valider ma réponse
                       </Button>

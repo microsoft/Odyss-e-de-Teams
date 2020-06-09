@@ -41,7 +41,7 @@ const startServer = async function () {
 
     server.route({
       method: "GET",
-      path: "/static/{param*}",
+      path: "/static-server/{param*}",
       config: {
         handler: {
           directory: {
