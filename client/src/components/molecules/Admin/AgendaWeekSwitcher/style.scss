@@ -1,0 +1,42 @@
+@import "common/sass/_variables";
+
+.AgendaWeekSwitcher {
+  display: flex;
+  align-items: center;
+  height: 3em;
+
+  .btn {
+    height: 100%;
+  }
+
+  &__previous {
+    height: 100%;
+
+    .btn {
+      border-radius: 0;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+      margin-right: 0.1em;
+    }
+  }
+
+  &__current {
+    height: 100%;
+    background-color: $color-primary-light;
+    display: flex;
+    align-items: center;
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+
+  &__next {
+    height: 100%;
+
+    .btn {
+      margin-left: 0.05em;
+      border-radius: 0;
+      border-top-right-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+  }
+}
