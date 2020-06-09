@@ -13,8 +13,18 @@ const monthNamesKeys = [
   "utils.date.december",
 ];
 
+const weekDaysKeys = [
+  "utils.date.monday",
+  "utils.date.tuesday",
+  "utils.date.wednesday",
+  "utils.date.thursday",
+  "utils.date.friday",
+  "utils.date.saturday",
+  "utils.date.sunday",
+];
+
 const getFullMonth = (d: Date) => {
   return monthNamesKeys[d.getMonth()];
 };
 
-export { getFullMonth };
+export { getFullMonth, weekDaysKeys, monthNamesKeys };
