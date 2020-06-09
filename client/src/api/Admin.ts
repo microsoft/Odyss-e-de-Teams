@@ -30,6 +30,10 @@ class Admin extends API {
   getAgenda(): Promise<any> {
     return super.fetchGET(this.resource + "/current-agenda");
   }
+
+  setAgendaItemStatus(data): Promise<any> {
+    return super.fetchPOST(this.resource + "/set-agenda-done", data);
+  }
 }
 
 export default new Admin();
