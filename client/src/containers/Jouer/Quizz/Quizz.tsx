@@ -70,7 +70,6 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
     let currentTotalTime: number = this.chronoComponent.current.getCurrentTime();
     let questionTime: number = currentTotalTime;
     for (let i = 0; i < iQuestion; i++) {
-      console.log(this.state.listQuestion[i]);
       questionTime -= this.state.listQuestion[i].temps_reponse;
     }
     currentQuestion.temps_reponse = questionTime;

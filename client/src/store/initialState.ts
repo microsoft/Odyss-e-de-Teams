@@ -11,6 +11,7 @@ export const initialState: IStore = {
   },
   user: {
     currentUser: null,
+    dataLevelUp: null
   },
 };
 

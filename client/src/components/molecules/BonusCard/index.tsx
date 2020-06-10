@@ -26,8 +26,6 @@ const BonusCard = (props: IBonusCard & WithTranslation) => {
     current,
   } = props;
 
-  console.log(props);
-
   let displayLabel = "";
   if (locked) {
     displayLabel = t("player.cockpit.bonus.obtained");

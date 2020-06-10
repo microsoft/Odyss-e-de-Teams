@@ -664,7 +664,42 @@ CREATE INDEX idx_actif_t_bareme_reponse
   USING btree
   (actif);
   
- 
+----- bareme_niveau  
+CREATE SEQUENCE public.seq_t_bareme_niveau;
+GRANT ALL ON TABLE public.seq_t_bareme_niveau TO odyssee_teams_appli;
+
+CREATE TABLE public.t_bareme_niveau
+(
+  id_bareme_niveau integer NOT NULL DEFAULT nextval('public.seq_t_bareme_niveau'::regclass),
+  niveau smallint,
+  nb_xp smallint,
+  recompense json[],
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_bareme_niveau PRIMARY KEY (id_bareme_niveau)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_bareme_niveau TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_bareme_niveau_pkey
+  ON public.t_bareme_niveau
+  USING btree
+  (id_bareme_niveau);
+ALTER TABLE public.t_bareme_niveau CLUSTER ON idx_bareme_niveau_pkey;
+
+CREATE INDEX idx_nb_xp_t_bareme_niveau
+  ON public.t_bareme_niveau
+  USING btree
+  (nb_xp);
+
+CREATE INDEX idx_actif_t_bareme_niveau
+  ON public.t_bareme_niveau
+  USING btree
+  (actif);
+
 /***************************/
 /******** navigation *******/
 /***************************/

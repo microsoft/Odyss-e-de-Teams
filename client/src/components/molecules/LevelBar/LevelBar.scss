@@ -1,0 +1,44 @@
+@import "common/sass/_variables";
+
+.content-next-level {
+  .loader-next-level {
+    position: relative;
+    background: url("/images/rewards/chargement_fond.png") no-repeat top left;
+    width: 100%;
+    max-width: 200px;
+    height: .9rem;
+    border-radius: .85rem .35rem;
+    z-index: 50;
+    overflow: hidden;
+    .bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      margin: 0;
+      z-index: 55;
+      background: url("/images/rewards/chargement_100.png") no-repeat top left;
+      background-size: cover;
+    }
+  }
+  .next-level {
+    position: relative;
+    z-index: 60;
+    line-height: .75rem;
+    padding: .75rem .85rem;
+    font-size: 1.25em;
+    background: $color-orange;
+    color: $color-white1;
+    border-radius: 100%;
+    -webkit-box-shadow: 0px 0px 10px -7px rgba(66, 75, 176, 1);
+    -moz-box-shadow: 0px 0px 10px -7px rgba(66, 75, 176, 1);
+    box-shadow: 0px 0px 10px -7px rgba(66, 75, 176, 1);
+  }
+}
+.content-next-level.levelbar-levelup {
+  .loader-next-level {
+    left: .75rem;
+  }
+}

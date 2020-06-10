@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "react-router-dom";
 import { IUser } from "./User";
 
 export interface IQuestion {
@@ -90,6 +91,10 @@ export interface IQuizzProps {
   currentUser: IUser;
   dataInitQuizz: any;
   dispatch?: any;
+}
+
+export interface IRecapQuizzProps extends RouteComponentProps {
+  dispatch: any;
 }
 
 export interface IRecapQuizzState {

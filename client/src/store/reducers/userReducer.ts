@@ -15,6 +15,12 @@ export const userReducer: Reducer<IUserState, any> = (
                 currentUser: action.value
             }
             return nextState || state
+        case 'LEVEL_UP':
+            nextState = {
+                ...state,
+                dataLevelUp: action.value
+            }
+            return nextState || state
         default:
             return state;
     }

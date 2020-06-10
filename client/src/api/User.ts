@@ -32,6 +32,10 @@ class User extends API {
   getCurrentReward(): Promise<any> {
     return super.fetchGET(this.resource + "/current-reward");
   }
+
+  checkLevelUp(): Promise<any> {
+    return super.fetchGET(this.resource + "/check-level-up");
+  }
 }
 
 export default new User();

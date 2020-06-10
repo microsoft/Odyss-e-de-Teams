@@ -15,6 +15,7 @@ import LinksMobile from "components/molecules/MobileWidgets/Links";
 // modals
 import RewardModal from "components/organisms/RewardModal";
 import RewardModalMobile from "components/organisms/RewardModalMobile";
+import { ILevelUp } from "models/User";
 
 import UserAPI from "api/User";
 import { Link } from "react-router-dom";
@@ -22,6 +23,7 @@ import IStore from "store/IStore";
 
 interface ICockpit {
   isMobile: boolean;
+  dispatch: any;
 }
 
 class Cockpit extends Component<WithTranslation & ICockpit, {}> {
@@ -37,12 +39,13 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
     },
     allRewards: [],
     showModal: false,
-    showModalMobile: false,
     loading: true,
+    hasNewDailyReward: false
   };
 
   async componentDidMount() {
     try {
+      const checkDailyRewards = await UserAPI.runChecks();
       const campainInfo = await UserAPI.getCurrentCampaignInfo();
       const rewardsInfo = await UserAPI.getCurrentReward();
 
@@ -123,6 +126,11 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
         },
         allRewards: rewards,
         loading: false,
+        hasNewDailyReward: checkDailyRewards.hasNewDailyReward
+      }, () => {
+        if (this.state.hasNewDailyReward) {
+          this._setShowModal(true);
+        }
       });
     } catch (e) {
       console.error(e);
@@ -130,15 +138,36 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
   }
 
   private _setShowModal = (show: boolean) => {
-    this.setState({
-      showModal: show,
-    });
-  };
-
-  private _setShowModalMobile = (show: boolean) => {
-    this.setState({
-      showModalMobile: show,
-    });
+    this.setState(
+      {
+        showModal: show,
+      },
+      () => {
+        if (!show && this.state.hasNewDailyReward) {
+          UserAPI.checkLevelUp().then((dataLevelUp: ILevelUp) => {
+            if (dataLevelUp && dataLevelUp.hasLevelUp) {
+              UserAPI.getUser("fr", "current").then((user) => {
+                const action_liste_user = {
+                  type: "SET_CURRENT_USER",
+                  value: user,
+                };
+                this.props.dispatch(action_liste_user);
+                const action_liste_level_up = {
+                  type: "LEVEL_UP",
+                  value: dataLevelUp,
+                };
+                this.props.dispatch(action_liste_level_up);
+                this.setState(
+                  {
+                    hasNewDailyReward: false
+                  }
+                );
+              });
+            }
+          });
+        }
+      }
+    );
   };
 
   render() {
@@ -290,7 +319,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
             {tReady && t("player.cockpit.title")}
           </h1>
 
-          <div onClick={() => this._setShowModalMobile(true)}>
+          <div onClick={() => this._setShowModal(true)}>
             <BonusEXPMobile
               className="col-12 mt-4"
               bonus={this.state.currentBonus.value}
@@ -332,8 +361,8 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
             />
           </Link>
           <Modal
-            show={this.state.showModalMobile}
-            onHide={() => this._setShowModalMobile(false)}
+            show={this.state.showModal}
+            onHide={() => this._setShowModal(false)}
             dialogClassName="modal-mobile"
           >
             <Modal.Body>
@@ -346,7 +375,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
               <Button
                 variant="warning"
                 className="mobile-button"
-                onClick={() => this._setShowModalMobile(false)}
+                onClick={() => this._setShowModal(false)}
               >
                 {tReady && t("modal.confirm_reward")}
               </Button>

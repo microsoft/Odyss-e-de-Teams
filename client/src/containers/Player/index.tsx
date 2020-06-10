@@ -7,6 +7,9 @@ import {
 } from "react-router-dom";
 import { connect } from "react-redux";
 
+// API
+import UserAPI from "api/User";
+
 // layout
 import Main from "layouts/Main";
 import MobileLayout from "layouts/Mobile";
@@ -24,18 +27,67 @@ import Jouer from "containers/Jouer/Jouer";
 import Quizz from "containers/Jouer/Quizz/Quizz";
 import RecapQuizz from "containers/Jouer/RecapQuizz/RecapQuizz";
 
-//store
+//models
 import IStore from "store/IStore";
+import { ILevelUp } from "models/User";
+import LevelUpModal from "components/organisms/LevelUpModal/LevelUpModal";
 
 interface IPlayerProps extends RouteComponentProps {
   hasGradient: boolean;
+  dataLevelUp: ILevelUp;
+  dispatch: any;
 }
 
-class Player extends React.Component<IPlayerProps, {}> {
+interface IPlayerState {
+  showModalLevelUp?: boolean;
+}
+
+class Player extends React.Component<
+  IPlayerProps,
+  IPlayerState
+> {
+  constructor(props: IPlayerProps) {
+    super(props);
+    this.state = {
+      showModalLevelUp: false,
+    };
+  }
+
+  componentDidUpdate() {
+    this._levelUp();
+  }
+
+  private _levelUp = () => {
+    if (
+      this.props.dataLevelUp &&
+      this.props.dataLevelUp.hasLevelUp &&
+      !this.state.showModalLevelUp
+    ) {
+      this._setShowModalLevelUp(true);
+    }
+  };
+
+  private _setShowModalLevelUp = (show: boolean) => {
+    this.setState({
+      showModalLevelUp: show,
+    });
+  };
+
+  private _setLevelUpChecked = () => {
+    UserAPI.checkLevelUp().then((data: ILevelUp) => {
+      const action_liste = {
+        type: "LEVEL_UP",
+        value: data && data.hasLevelUp ? data : null,
+      };
+      this.props.dispatch(action_liste);
+      this._setShowModalLevelUp(false);
+    });
+  };
+
   render() {
     const isMobile = window.innerWidth < 768;
 
-    const { hasGradient } = this.props;
+    const { hasGradient, dataLevelUp } = this.props;
 
     if (!isMobile)
       return (
@@ -77,6 +129,7 @@ class Player extends React.Component<IPlayerProps, {}> {
               </Route>
             </Switch>
           </div>
+          <LevelUpModal dataLevelUp={dataLevelUp} show={this.state.showModalLevelUp} setLevelUpChecked={this._setLevelUpChecked} />
         </Main>
       );
     else
@@ -113,6 +166,7 @@ class Player extends React.Component<IPlayerProps, {}> {
               <p>Outillage container</p>
             </Route>
           </Switch>
+          <LevelUpModal dataLevelUp={dataLevelUp} show={this.state.showModalLevelUp} setLevelUpChecked={this._setLevelUpChecked} />
         </MobileLayout>
       );
   }
@@ -121,6 +175,8 @@ class Player extends React.Component<IPlayerProps, {}> {
 const PlayerRouter = withRouter(Player);
 
 const mapStateToProps = (state: IStore) => {
-  return {};
+  return {
+    dataLevelUp: state.user.dataLevelUp,
+  };
 };
 export default connect(mapStateToProps)(PlayerRouter);

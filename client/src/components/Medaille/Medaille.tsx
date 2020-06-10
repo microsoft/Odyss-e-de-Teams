@@ -10,7 +10,7 @@ class Medaille extends Component<IMedailleProps, {}> {
     private _renderTooltip = (medaille: IMedaille) => {
         return (
             <Tooltip id="medaille-tooltip">
-                <p className={"h3"}>{medaille.nom}</p>
+                <p className={"h4"}>{medaille.nom}</p>
                 {medaille.description}
             </Tooltip>
         );
