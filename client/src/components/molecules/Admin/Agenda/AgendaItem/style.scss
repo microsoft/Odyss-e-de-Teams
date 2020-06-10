@@ -1,0 +1,43 @@
+@import "common/sass/_variables";
+
+.AgendaItem {
+  background-color: $color-primary-light;
+  border-radius: 15px;
+  padding: 1em;
+
+  &__done {
+    background-color: $color-green;
+
+    .AgendaItem__actions .btn {
+      background-color: $color-white1;
+      color: $color-green;
+      border: none;
+    }
+  }
+
+  &__date {
+    color: $color-white1;
+  }
+
+  &__name {
+    font-weight: bold;
+    color: $color-white1;
+  }
+
+  &__desc {
+    color: $color-white1;
+  }
+
+  &__actions {
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+
+    .btn {
+      padding: 0.5em;
+      font-size: 1em;
+      width: 100%;
+      background-color: $color-primary-light;
+    }
+  }
+}

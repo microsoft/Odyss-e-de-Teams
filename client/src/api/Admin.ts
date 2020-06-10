@@ -26,6 +26,14 @@ class Admin extends API {
   setCurrentMission(data): Promise<any> {
     return super.fetchPOST(this.resource + "/set-current-mission", data);
   }
+
+  getAgenda(): Promise<any> {
+    return super.fetchGET(this.resource + "/current-agenda");
+  }
+
+  setAgendaItemStatus(data): Promise<any> {
+    return super.fetchPOST(this.resource + "/set-agenda-done", data);
+  }
 }
 
 export default new Admin();

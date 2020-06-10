@@ -102,9 +102,13 @@ INSERT INTO public.t_page (nom, router_link, horodatage, actif, ordre, is_menu, 
 INSERT INTO public.j_role_page (id_role, id_page) VALUES (1, 1), (1, 2), (1, 4), (1, 6), (1, 7), (2, 1), (2, 3), (2, 4), (2, 5);
 
 -- agenda
-INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_creation) VALUES
-	('Activer la mission « Lancement »', current_date, true, now(), now()),
-	('Communication : Envoi d''un email de lancement', current_date, true, now(), now());
+INSERT INTO public.t_agenda (nom, description, date_agenda, actif, horodatage, horodatage_creation) VALUES
+	('Activer la mission « Lancement »','Board joueurs', current_date, true, now(), now()),
+	('Communication : Envoi d''un email de lancement', 'Email organisation',current_date, true, now(), now()),
+	('Notification Teams: Mission en cours', 'Teams joueurs',current_date, true, now(), now()),
+	('Notification Teams: Mission en cours', 'Teams joueurs',current_date, true, now(), now()),
+		('Activer la mission « Lancement »','Board joueurs', current_date, true, now(), now());
+
 
 
 /***************************/
@@ -208,5 +212,20 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 	VALUES (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
 
 -- Organisation semaine fixtures
-INSERT INTO public.j_organisation_semaine("id_organisation","id_semaine")
-	VALUES(1,1), (1,2),(1,3),(1,4);
+INSERT INTO public.j_organisation_semaine("id_organisation","id_semaine","debut_semaine","fin_semaine")
+	VALUES (1,1, '2020-06-09 08:08:02.296738','2020-06-14 08:08:02.296738'), (1,2, '2020-06-15 08:08:02.296738','2020-06-21 08:08:02.296738'),(1,3, '2020-06-22 08:08:02.296738', '2020-06-26 08:08:02.296738'),(1,4, '2020-06-29 08:08:02.296738', '2020-07-05 08:08:02.296738');
+
+
+	-- ajout tid SAEGUS / Pas de maitre du jeu qui active
+	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine_encours=1 WHERE id_organisation=1;
+-- maitre jeu
+	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) 
+	VALUES (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
+
+
+
+-- Agenda semaine
+INSERT INTO "public"."j_organisation_agenda"("id_organisation", "id_semaine", "id_agenda") VALUES(1, 1, 1), (1,1,2);
+
+INSERT INTO "public"."j_organisation_agenda"("id_organisation", "id_semaine", "id_agenda", "date_event") 
+VALUES (1, 1, 3, '2020-06-11 07:59:22.877164'), (1, 1, 4, '2020-06-12 07:59:22.877164'), (1, 1, 5, '2020-06-12 09:00:00.877164');
