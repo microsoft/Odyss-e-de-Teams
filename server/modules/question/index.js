@@ -168,6 +168,30 @@ const register = async (server, options) => {
         type: QueryTypes.INSERT,
       });
 
+      // enregistrement histo gain point / xp
+      await db.sequelize.query(
+        `INSERT INTO public.h_gain_point(id_user, nb_point, horodatage)
+          VALUES (:user, :nb_point, now());`,
+        {
+          replacements: {
+            user: id_user,
+            nb_point: dataCalculBareme.total_point
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.h_gain_xp(id_user, nb_point, horodatage)
+          VALUES (:user, :nb_point, now());`,
+        {
+          replacements: {
+            user: id_user,
+            nb_point: dataCalculBareme.total_xp
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+
       // enregistrement questionnaire complete
       let replacementsQuestionnaire = {
         user: id_user,
@@ -234,17 +258,11 @@ const register = async (server, options) => {
       const resultReponseConsecutiveEnCours = await db.sequelize.query("SELECT DISTINCT id_reponse_user, CASE WHEN valid=true THEN nb ELSE 0 END AS nb FROM (" + main_query_reponse_consecutive + " ORDER BY id_reponse_user DESC LIMIT 1)s0", { replacements: { user: id_user}, type: QueryTypes.SELECT, plain: true });
       let nbReponseConsecutiveEnCours = resultReponseConsecutiveEnCours['nb'];
 
-      // maj nb_point / nb_point / nb_reponse / nb_reponse_ok / nb_reponse_consecutive_top / nb_reponse_consecutive_en_cours
+      // nb_reponse_consecutive_top / nb_reponse_consecutive_en_cours
       await db.sequelize.query(
         `UPDATE public.t_user 
-          SET nb_xp=s0.nb_xp, nb_point=s0.nb_point, nb_reponse=s0.nb_reponse, nb_reponse_ok=s0.nb_reponse_ok, nb_reponse_consecutive_top=:nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours=:nb_reponse_consecutive_en_cours
-          FROM (
-            SELECT DISTINCT id_user, SUM(nb_point) AS nb_point, SUM(nb_xp) AS nb_xp, SUM(nb_reponse) AS nb_reponse, SUM(nb_reponse_ok) AS nb_reponse_ok
-            FROM public.h_questionnaire_complete
-            WHERE id_user=:user
-            GROUP BY id_user
-          ) AS s0
-          WHERE public.t_user.id_user=s0.id_user;`,
+          SET nb_reponse_consecutive_top=:nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours=:nb_reponse_consecutive_en_cours
+          WHERE id_user=:user;`,
         {
           replacements: {
             user: id_user,
@@ -254,6 +272,10 @@ const register = async (server, options) => {
           type: QueryTypes.INSERT,
         }
       );
+
+      // maj nb_point / nb_point / nb_reponse / nb_reponse_ok 
+      GainPointUtils.UpdatePointUser(db, currentUserByAD);
+
       return {
         result: true,
       };

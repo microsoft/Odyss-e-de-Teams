@@ -1,3 +1,8 @@
+
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
 .container-avatar-user {
     width: 30%;
     margin: 0 auto;
@@ -9,7 +14,7 @@
     padding-left: 1.75rem;
 }
 
-@media (min-width: 576px) {
+@include media-breakpoint-up(md) {
     .modal-profil {
         width: 60%;
         max-width: 60% !important;

@@ -122,7 +122,13 @@
   },
   "modal": {
     "cancel": "Annuler",
-    "confirm_reward": "Bien reçu !"
+    "confirm_reward": "Bien reçu !",
+    "collect_reward": "Collecter",
+    "reward_levelup": {
+      "desc_medal": "Une nouvelle médaille obtenue",
+      "desc_exp": "Points d’expérience remportés",
+      "desc_pts": "Points de classement remportés"
+    }
   },
   "utils": {
     "date": {

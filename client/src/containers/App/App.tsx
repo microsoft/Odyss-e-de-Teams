@@ -92,26 +92,24 @@ class App extends React.Component<IAppProps, IAppState> {
         expires: 7,
         path: "/",
       });
-      UserAPI.runChecks().then(() => {
-        UserAPI.getUser("fr", "current").then((data) => {
-          if (data) {
-            const action_liste = {
-              type: "SET_CURRENT_USER",
-              value: data,
-            };
-            this.props.dispatch(action_liste);
-            this.setState({
-              logged: true,
-              is_admin: data.id_role === 2,
-              loading: false,
-            });
-          } else {
-            this.setState({
-              logged: false,
-              loading: false,
-            });
-          }
-        });
+      UserAPI.getUser("fr", "current").then((data) => {
+        if (data) {
+          const action_liste = {
+            type: "SET_CURRENT_USER",
+            value: data,
+          };
+          this.props.dispatch(action_liste);
+          this.setState({
+            logged: true,
+            is_admin: data.id_role === 2,
+            loading: false,
+          });
+        } else {
+          this.setState({
+            logged: false,
+            loading: false,
+          });
+        }
       });
     }
   };

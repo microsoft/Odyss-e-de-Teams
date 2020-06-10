@@ -20,8 +20,23 @@ export interface IUser {
   image_avatar: string;
 }
 
+export interface IReward {
+  type: string;
+  value: number;
+}
+
+export interface ILevelUp {
+  hasLevelUp: boolean;
+  level?: number;
+  nb_xp?: number;
+  rewards?: IReward[]; 
+  medaille?: IMedaille;
+  nextLevel?: ILevelUp;
+}
+
 export interface IUserState {
   currentUser?: IUser;
+  dataLevelUp?: ILevelUp;
 }
 
 export interface IProfilProps {
@@ -34,10 +49,12 @@ export interface IProfilState {
   showModalProfil?: boolean;
   classementXP?: number;
   classementPoint?: number;
+  dataLevelUp?: ILevelUp;
   selectedMedailleAvatar?: IMedaille;
   hasUpdatedMedailleAvatar?: boolean;
 }
 
 export interface IUserAvatarProps {
   user: IUser;
+  withoutName?: boolean;
 }

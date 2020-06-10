@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) =>
   sequelize.define(
-    "HGainMedailles",
+    "HMedaille",
     {
       id_gain_medaille: {
         type: DataTypes.INTEGER,

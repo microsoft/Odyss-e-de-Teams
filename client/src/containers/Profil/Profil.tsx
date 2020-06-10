@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { forkJoin } from "rxjs";
 import { connect } from "react-redux";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
+import { withTranslation, WithTranslation } from "react-i18next";
 
 import UserAPI from "api/User";
 import ClassementAPI from "api/Classement";
 
 import Medaille from "../../components/Medaille/Medaille";
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
+import LevelBar from "components/molecules/LevelBar/LevelBar";
 
 import { IProfilProps, IProfilState } from "../../models/User";
 import { IMedaille } from "../../models/Medaille";
@@ -15,8 +17,8 @@ import IStore from "../../store/IStore";
 
 import "./Profil.scss";
 
-class Profil extends Component<IProfilProps, IProfilState> {
-  constructor(props: IProfilProps) {
+class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
+  constructor(props: IProfilProps & WithTranslation) {
     super(props);
     this.state = {
       listMedaille: [],
@@ -34,6 +36,7 @@ class Profil extends Component<IProfilProps, IProfilState> {
       UserAPI.getMedaille("fr"),
       ClassementAPI.getClassement("fr", "xp", 0, 1),
       ClassementAPI.getClassement("fr", "point", 0, 1),
+      UserAPI.checkLevelUp(),
     ])
       .toPromise()
       .then((data) => {
@@ -42,6 +45,7 @@ class Profil extends Component<IProfilProps, IProfilState> {
           listMedaille: listMedaille,
           classementXP: data[1] ? parseInt(data[1].rang) : 0,
           classementPoint: data[2] ? parseInt(data[2].rang) : 0,
+          dataLevelUp: data[3],
         });
       });
   };
@@ -110,6 +114,14 @@ class Profil extends Component<IProfilProps, IProfilState> {
                           {this.props.currentUser?.nb_xp}
                         </strong>
                       </div>
+                      <div className={"mb-3"}>
+                        <LevelBar
+                          currentXP={this.props.currentUser?.nb_xp}
+                          nextXP={this.state.dataLevelUp?.nb_xp}
+                          nextLevel={this.state.dataLevelUp?.level}
+                          src={"profil"}
+                        />
+                      </div>
                     </div>
                   </div>
                   <p className={"text-right"}>
@@ -138,8 +150,10 @@ class Profil extends Component<IProfilProps, IProfilState> {
                       <p className={"h1 mb-0 pt-0 color-primary"}>
                         {this.props.currentUser?.nb_reponse > 0 ? (
                           <span>
-                            {((100 * this.props.currentUser?.nb_reponse_ok) /
-                              this.props.currentUser?.nb_reponse).toFixed(2)}
+                            {(
+                              (100 * this.props.currentUser?.nb_reponse_ok) /
+                              this.props.currentUser?.nb_reponse
+                            ).toFixed(2)}
                           </span>
                         ) : (
                           <span>0</span>
@@ -288,4 +302,4 @@ const mapStateToProps = (state: IStore) => {
     currentUser: state.user.currentUser,
   };
 };
-export default connect(mapStateToProps)(Profil);
+export default withTranslation()(connect(mapStateToProps)(Profil));

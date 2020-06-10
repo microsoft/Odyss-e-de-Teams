@@ -1,3 +1,5 @@
+const { QueryTypes } = require("sequelize");
+
 const GainPoint = {};
 
 GainPoint.GetPointReponse = (questions, baremes) => {
@@ -35,5 +37,42 @@ GainPoint.GetPointReponse = (questions, baremes) => {
     total_xp: total_xp
   };
 };
+
+GainPoint.UpdatePointUser = async (db, user) => {
+  await db.sequelize.query(
+    `UPDATE public.t_user 
+      SET nb_xp=s0.nb_point
+      FROM (
+        SELECT DISTINCT id_user, SUM(nb_point) AS nb_point
+        FROM public.h_gain_xp
+        WHERE id_user=:user
+        GROUP BY id_user
+      ) AS s0
+      WHERE public.t_user.id_user=s0.id_user;`,
+    {
+      replacements: {
+        user: user.id_user
+      },
+      type: QueryTypes.INSERT,
+    }
+  );
+  await db.sequelize.query(
+    `UPDATE public.t_user 
+      SET nb_point=s0.nb_point
+      FROM (
+        SELECT DISTINCT id_user, SUM(nb_point) AS nb_point
+        FROM public.h_gain_point
+        WHERE id_user=:user
+        GROUP BY id_user
+      ) AS s0
+      WHERE public.t_user.id_user=s0.id_user;`,
+    {
+      replacements: {
+        user: user.id_user
+      },
+      type: QueryTypes.INSERT,
+    }
+  );
+}
 
 module.exports = GainPoint;

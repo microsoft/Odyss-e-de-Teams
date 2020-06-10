@@ -1,5 +1,8 @@
 "use strict";
-const { QueryTypes, where, fn } = require("sequelize");
+const { QueryTypes } = require("sequelize");
+const LevelUpUtils = require("./../../utils/LevelUp");
+const RewardUtils = require("./../../utils/Reward");
+const GainPointUtils = require("./../../utils/GainPoint");
 
 const dailyRewards = require("./daily_rewards.json");
 
@@ -327,9 +330,8 @@ const register = async (server, options) => {
     handler: async function (request, h) {
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
-      const UserLogins = db.getModel("UserLogins");
 
-      const HistoMedaille = db.getModel("HMedailles");
+      const HistoMedaille = db.getModel("HMedaille");
       const HistoGainXP = db.getModel("HGainXP");
       const HistoGainPoints = db.getModel("HGainPoints");
       const MedailleModel = db.getModel("Medaille");
@@ -356,7 +358,9 @@ const register = async (server, options) => {
         `SELECT COUNT(*) as cnt_login from public.h_user_login WHERE id_user = ${user_id} AND horodatage::date = CURRENT_DATE`
       );
 
+      let hasNewDailyReward = false;
       if (Number(countLoginToday[0][0].cnt_login) == 0) {
+        hasNewDailyReward = true;
         // insert en base
         await db.sequelize.query(
           `INSERT INTO public.h_user_login ("id_user") VALUES(${user_id})`
@@ -394,11 +398,10 @@ const register = async (server, options) => {
             id_user: user_id,
             id_medaille: medaille.id_medaille,
           });
-        } else {
         }
+        await GainPointUtils.UpdatePointUser(db, currentUserByAD);
       }
-
-      return true;
+      return { hasNewDailyReward: hasNewDailyReward };
     },
   });
 
@@ -471,6 +474,62 @@ const register = async (server, options) => {
       };
 
       return result;
+    },
+  });
+
+  // montee de niveau
+  /**
+   * @summary Cette route "check" va permettre d'attribuer la montee de niveau
+   */
+  server.route({
+    path: baseUrl + "/check-level-up",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+
+      if (!request.state.oid_ad) {
+        return false;
+      }
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+      if (!currentUserByAD) {
+        return false;
+      }
+
+      let dataLevelUp = await LevelUpUtils.CheckLevelUp(db, currentUserByAD);
+      if (dataLevelUp.hasLevelUp) {
+        if (dataLevelUp.rewards) {
+          dataLevelUp.rewards.forEach(async (reward) => {
+            await RewardUtils.SetReward(db, currentUserByAD, reward);
+            if (reward.type === "MEDAL") {
+              dataLevelUp["medaille"] = await db.sequelize.query(`SELECT DISTINCT a.id_medaille, a.image FROM public.t_medaille a WHERE a.actif AND a.id_medaille = :medaille;`,
+                {
+                  replacements: {
+                    medaille: reward.value,
+                  },
+                  type: QueryTypes.SELECT,
+                  plain: true
+                }
+              );
+            }
+          });
+        }
+        await GainPointUtils.UpdatePointUser(db, currentUserByAD);
+        await User.update(
+          {
+            niveau: dataLevelUp.level,
+          },
+          { where: { id_user: currentUserByAD.id_user } }
+        );
+        let nextLevel = await LevelUpUtils.CheckLevelUp(db, { niveau: dataLevelUp.level });
+        dataLevelUp.nextLevel = nextLevel;
+      }
+      
+      return dataLevelUp;
     },
   });
 };

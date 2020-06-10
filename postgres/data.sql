@@ -48,12 +48,12 @@
 
 -- avatar
   INSERT INTO public.t_avatar(nom, description, image, actif, horodatage, horodatage_creation)
-	VALUES ('Apollo20', 'Téméraire et robuste', 'apollo20.svg', true, now(), now()),
-	('Discovery Two', 'Puissant et imposant', 'discovery_two.svg', true, now(), now()),
-	('Odysseus', 'Attentif et réfléchi', 'odysseus.svg', true, now(), now()),
-	('USS Teams', 'Multi-usages', 'uss_teams.svg', true, now(), now()),
-	('Haddock 17', 'Audacieux et prudent', 'haddock17.svg', true, now(), now()),
-	('Llewsor 47', 'Énergique et curieux', 'llewsor47.svg', true, now(), now());
+	VALUES ('Apollo20', 'Téméraire et robuste', 'apollo20.png', true, now(), now()),
+	('Discovery Two', 'Puissant et imposant', 'discovery_two.png', true, now(), now()),
+	('Odysseus', 'Attentif et réfléchi', 'odysseus.png', true, now(), now()),
+	('USS Teams', 'Multi-usages', 'uss_teams.png', true, now(), now()),
+	('Haddock 17', 'Audacieux et prudent', 'haddock17.png', true, now(), now()),
+	('Llewsor 47', 'Énergique et curieux', 'llewsor47.png', true, now(), now());
 
 -- medaille
  INSERT INTO public.t_medaille(nom, description, image, legendaire, actif, horodatage, horodatage_creation)
@@ -167,11 +167,26 @@ INSERT INTO public.t_agenda (nom, date_agenda, actif, horodatage, horodatage_cre
 		(2, 12, 4, 17, 6, 6, 2, 6, 2, true, now(), now()),
 		(3, 15, 6, 20, 8, 8, 3, 8, 3, true, now(), now());
 
+-- bareme niveau
+	INSERT INTO public.t_bareme_niveau (niveau, nb_xp, recompense, actif, horodatage, horodatage_creation) VALUES 
+		(2, 55, ARRAY['{ "type": "EXP", "value": 25 }']::json[], true, now(), now()),
+		(3, 130, NULL, true, now(), now()),
+		(4, 230, ARRAY['{ "type": "EXP", "value": 50 }']::json[], true, now(), now()),
+		(5, 380, ARRAY['{ "type": "EXP", "value": 100 }', '{ "type": "MEDAL", "value": 1 }']::json[], true, now(), now()),
+		(6, 580, NULL, true, now(), now()),
+		(7, 830, NULL, true, now(), now()),
+		(8, 1130, ARRAY['{ "type": "EXP", "value": 150 }']::json[], true, now(), now()),
+		(9, 1480, NULL, true, now(), now()),
+		(10, 1880, ARRAY['{ "type": "EXP", "value": 200 }', '{ "type": "MEDAL", "value": 2 }', '{ "type": "PTS", "value": 15 }']::json[], true, now(), now()),
+		(11, 2380, NULL, true, now(), now()),
+		(12, 2980, ARRAY['{ "type": "EXP", "value": 250 }']::json[], true, now(), now()),
+		(13, 3680, NULL, true, now(), now()),
+		(14, 4530, ARRAY['{ "type": "EXP", "value": 300 }']::json[], true, now(), now()),
+		(15, 5530, ARRAY['{ "type": "EXP", "value": 550 }', '{ "type": "MEDAL", "value": 3 }', '{ "type": "PTS", "value": 50 }']::json[], true, now(), now());
 
 -- user temp dev
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
 	VALUES (1, 1, 1, 'Catherine Kefhi', 5, 100, 255, 15, 12, 5, 5, 5, true, now(), now(), now());
-	INSERT INTO public.h_gain_medaille(id_user, id_medaille, horodatage) VALUES (1, 1, now());
 	
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
 	VALUES (1, 1, 2, 'Barney Highfive', 7, 150, 300, 42, 27, 9, 2, 8, true, now(), now(), now());

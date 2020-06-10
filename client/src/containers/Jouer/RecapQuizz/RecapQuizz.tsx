@@ -1,21 +1,26 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
-import { RouteComponentProps } from "react-router-dom";
 import { forkJoin } from "rxjs";
 
 import QuestionAPI from "api/Question";
+import UserAPI from "api/User";
 
 import QCM from "components/MecaniqueQuestion/QCM/QCM";
 import QCMVideo from "components/MecaniqueQuestion/QCM/QCMVideo";
 import RemettreOrdre from "components/MecaniqueQuestion/RemettreOrdre/RemettreOrdre";
 import StopWatch from "components/StopWatch/StopWatch";
 
-import { IRecapQuizzState, IQuestion } from "src/models/Question";
+import {
+  IRecapQuizzProps,
+  IRecapQuizzState,
+  IQuestion,
+} from "src/models/Question";
 
 import "./RecapQuizz.scss";
 
-class RecapQuizz extends Component<RouteComponentProps, IRecapQuizzState> {
-  constructor(props: RouteComponentProps) {
+class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
+  constructor(props: IRecapQuizzProps) {
     super(props);
     this.state = {
       isLoading: true,
@@ -39,27 +44,50 @@ class RecapQuizz extends Component<RouteComponentProps, IRecapQuizzState> {
         id_module: params.moduleId,
         id_niveau: params.niveauId,
       }),
+      UserAPI.checkLevelUp(),
     ])
       .toPromise()
       .then((data) => {
         const reducer = (accumulator: number, currentValue: number) =>
           accumulator + currentValue;
         let listQuestion: IQuestion[] = data[2].results ? data[2].results : [];
-        let tempsTotal: number = 0, nbPointTotal: number = 0, nbXpTotal: number = 0;
+        let tempsTotal: number = 0,
+          nbPointTotal: number = 0,
+          nbXpTotal: number = 0;
         if (listQuestion && listQuestion.length > 0) {
-          tempsTotal = listQuestion.map((q) => parseInt(q.temps_reponse.toString())).reduce(reducer);
+          tempsTotal = listQuestion
+            .map((q) => parseInt(q.temps_reponse.toString()))
+            .reduce(reducer);
           nbXpTotal = listQuestion.map((q) => q.nb_xp).reduce(reducer);
           nbPointTotal = listQuestion.map((q) => q.nb_point).reduce(reducer);
         }
-        this.setState({
-          currentModule: data[0].results,
-          currentNiveau: data[1].results,
-          listQuestion: listQuestion,
-          isLoading: false,
-          tempsTotal: tempsTotal,
-          nbXpTotal: nbXpTotal,
-          nbPointTotal: nbPointTotal,
-        });
+        this.setState(
+          {
+            currentModule: data[0].results,
+            currentNiveau: data[1].results,
+            listQuestion: listQuestion,
+            isLoading: false,
+            tempsTotal: tempsTotal,
+            nbXpTotal: nbXpTotal,
+            nbPointTotal: nbPointTotal,
+          },
+          () => {
+            if (data[3] && data[3].hasLevelUp) {
+              UserAPI.getUser("fr", "current").then((user) => {
+                const action_liste_user = {
+                  type: "SET_CURRENT_USER",
+                  value: user,
+                };
+                this.props.dispatch(action_liste_user);
+                const action_liste = {
+                  type: "LEVEL_UP",
+                  value: data[3],
+                };
+                this.props.dispatch(action_liste);
+              });
+            }
+          }
+        );
       });
   };
   private _renderMecanique(item: IQuestion) {
@@ -213,14 +241,18 @@ class RecapQuizz extends Component<RouteComponentProps, IRecapQuizzState> {
                   <h5 className={"d-block d-md-none color-white1 mt-2"}>
                     Points d’expérience remportés
                   </h5>
-                  <h2 className={"total-xp mb-0"}>+ {this.state.nbXpTotal} EXP</h2>
+                  <h2 className={"total-xp mb-0"}>
+                    + {this.state.nbXpTotal} EXP
+                  </h2>
                   <p className={"mb-4 d-none d-md-block"}>
                     <small>Points d’expérience remportés</small>
                   </p>
                   <h5 className={"d-block d-md-none color-white1 mt-2"}>
                     Points de classement remportés
                   </h5>
-                  <h2 className={"total-point mb-0"}>+ {this.state.nbPointTotal} Points</h2>
+                  <h2 className={"total-point mb-0"}>
+                    + {this.state.nbPointTotal} Points
+                  </h2>
                   <p className={"mb-0 d-none d-md-block"}>
                     <small>Points de classement remportés</small>
                   </p>
@@ -264,7 +296,9 @@ class RecapQuizz extends Component<RouteComponentProps, IRecapQuizzState> {
                   <div className={"mt-4"}>{this._renderMecanique(item)}</div>
                   {item.astuce ? (
                     <div className={"pl-md-3 mt-3"}>
-                      <h3 className={"color-primary-light"}>Petite astuce Teams !</h3>
+                      <h3 className={"color-primary-light"}>
+                        Petite astuce Teams !
+                      </h3>
                       <p className={"mb-0"}>{item.astuce}</p>
                     </div>
                   ) : (
@@ -303,4 +337,4 @@ class RecapQuizz extends Component<RouteComponentProps, IRecapQuizzState> {
   }
 }
 
-export default RecapQuizz;
+export default connect()(RecapQuizz);
