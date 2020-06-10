@@ -1,15 +1,15 @@
 module.exports = function (sequelize, DataTypes) {
-  const Semaine = sequelize.define(
-    "Semaine",
+  const Agenda = sequelize.define(
+    "Agenda",
     {
-      id_semaine: {
+      id_agenda: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      nom: DataTypes.STRING,
-      description: DataTypes.STRING,
-      ordre: DataTypes.NUMBER,
+      nom: DataTypes.INTEGER,
+      description: DataTypes.TEXT,
+      date_agenda: DataTypes.DATE,
       updatedAt: {
         type: DataTypes.DATE,
         field: "horodatage",
@@ -20,9 +20,9 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     {
-      tableName: "t_semaine",
+      tableName: "t_agenda",
     }
   );
 
-  return Semaine;
+  return Agenda;
 };

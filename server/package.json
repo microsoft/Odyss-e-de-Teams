@@ -7,11 +7,12 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@hapi/hapi": "^19.1.1",
     "@hapi/glue": "^7.0.0",
+    "@hapi/hapi": "^19.1.1",
     "@hapi/inert": "^6.0.1",
     "blipp": "^4.0.1",
     "hapi-sequelizejs": "^4.0.0",
+    "moment": "^2.26.0",
     "pg": "^8.1.0",
     "pg-hstore": "^2.3.3",
     "pptxgenjs": "^3.1.1",
