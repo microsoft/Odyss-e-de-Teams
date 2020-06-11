@@ -3,6 +3,7 @@ const { QueryTypes } = require("sequelize");
 const moment = require("moment");
 const File = require("./../../utils/File");
 const path = require("path");
+const Jimp = require("jimp");
 
 // constants
 const UPLOAD_PATH = path.resolve(
@@ -496,6 +497,58 @@ const register = async (server, options) => {
         console.error(e);
         return false;
       }
+    },
+  });
+
+  server.route({
+    path: "/admin/emailing/template-lancement",
+    method: "GET",
+    handler: async function (request, h) {
+      const template = path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "public",
+        "templates",
+        "emailing",
+        "Template1.png"
+      );
+      const icon = path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "public",
+        "company-assets",
+        "1",
+        "1590679975822-ci_recto.jpg"
+      );
+
+      let imgActive = "active/image.jpg";
+      let imgExported = "export/image1.jpg";
+
+      try {
+        const image = await Jimp.read(template);
+        const logo = await Jimp.read(icon);
+        logo.resize(Jimp.AUTO, 50);
+
+        const composite = await image.composite(logo, 375, 88);
+        await composite.quality(100).write("export/test.png");
+      } catch (e) {
+        console.error(e);
+      }
+      // return Jimp.read(template)
+      //   .then((tpl) => tpl.clone().write(imgActive))
+      //   .then(() => Jimp.read(imgActive))
+      //   .then((tpl) =>
+      //     Jimp.read(icon).then((logoTpl) => tpl.composite(logoTpl, 277, 88))
+      //   )
+      //   .then((tpl) => tpl.quality(100).write(imgExported))
+      //   .then((tpl) => {
+      //     console.log("exported file: " + imgExported);
+      //   })
+      //   .catch((err) => {
+      //     console.error(err);
+      //   });
     },
   });
 };
