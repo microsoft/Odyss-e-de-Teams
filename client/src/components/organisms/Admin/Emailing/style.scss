@@ -1,7 +1,7 @@
 @import "common/sass/_variables";
 
-$a-tags: "a, a:active, a:hover, a:visited";
-$a-tags-hover: "a:active, a:hover";
+$btn-tags: "button, button:active, button:hover, button:visited";
+$btn-tags-hover: "button:active, button:hover";
 
 .Emailing {
   &__header {
@@ -26,18 +26,43 @@ $a-tags-hover: "a:active, a:hover";
           margin-left: 1em !important;
           vertical-align: 0em;
           content: "∨";
+          border: 0;
           border-left: 1px solid;
           padding-left: 0.3em;
           font-size: 1.2em;
         }
+      }
 
-        #{$a-tags} {
-          background-color: initial !important;
-          color: initial !important;
-          outline: none !important;
-          box-shadow: none;
-        }
+      .btn,
+      .btn:hover {
+        background-color: $color-white1 !important;
+        color: $color-primary !important;
+      }
+
+      #{$btn-tags} {
+        background-color: initial !important;
+        color: initial !important;
+        outline: none !important;
+        @include box-shadow-app;
       }
     }
+
+    &__editor2 {
+    }
   }
+}
+
+.Emailing__body__editor2 {
+  height: 200px;
+  width: 200px;
+  background-image: url("http://localhost:8080/static-server/company-assets/1/test.png");
+  // background-image: url("/images/overlays/overlay-blue.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.Emailing__body__editor {
+  background-image: url("http://localhost:8080/static-server/company-assets/1/test.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }

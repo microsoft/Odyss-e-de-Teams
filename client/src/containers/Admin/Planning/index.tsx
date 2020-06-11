@@ -29,7 +29,8 @@ class PlanningContainer extends React.Component<
     loading: true,
     campaigns: [],
     agenda: [],
-    curTabKey: "PLANNING",
+    // curTabKey: "PLANNING",
+    curTabKey: "EMAIL",
   };
 
   async componentDidMount() {
