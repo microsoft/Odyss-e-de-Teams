@@ -66,7 +66,16 @@ class QCMChoixMultiple extends Component<IQCMProps, IMecaniqueQuestionState> {
                   key={`col-${item.id_reponse}`}
                   className={"mb-4"}
                 >
-                  <div className={"m-0 p-0 position-relative conteneur-img"}>
+                  <div
+                    className={`m-0 p-0 position-relative conteneur-img${
+                      !isRecap &&
+                      this.state.selectedReponseIds?.indexOf(
+                        item.id_reponse
+                      ) !== -1
+                        ? " img-active"
+                        : ""
+                    }`}
+                  >
                     {isRecap ? (
                       <span></span>
                     ) : (

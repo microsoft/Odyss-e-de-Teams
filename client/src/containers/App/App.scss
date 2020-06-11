@@ -17,17 +17,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: $color-black1;
 
-  .main-container.gradient {
-    background: rgb(244, 244, 255);
-    background: linear-gradient(
-      180deg,
-      rgba(244, 244, 255, 1) 0%,
-      rgba(218, 216, 240, 1) 100%
-    );
-  }
   .main-container {
-    background: url("/images/fond_principal.jpg") no-repeat top left;
-    background-size: cover;
     .main-content {
       min-height: 100%;
       height: fit-content;
@@ -37,6 +27,18 @@ body {
       padding: 1.25rem 1.5rem;
       margin-bottom: 2rem;
     }
+  }
+  .main-container:not(.gradient) {
+    background: url("/images/fond_principal.jpg") no-repeat top left;
+    background-size: cover;
+  }
+  .main-container.gradient {
+    background: rgb(244, 244, 255);
+    background: linear-gradient(
+      180deg,
+      rgba(244, 244, 255, 1) 0%,
+      rgba(218, 216, 240, 1) 100%
+    );
   }
 
   /*** modal ***/

@@ -30,7 +30,9 @@ const register = async (server, options) => {
 
       const params = request.query;
       let and_query = "";
-      let replacements = {},
+      let replacements = {
+          lang: lang,
+        },
         oneResult = false;
       if (params.mode && params.mode === "current") {
         replacements["user"] = currentUserByAD.id_user;
@@ -47,12 +49,12 @@ const register = async (server, options) => {
                 ), w_avatar AS(
                     SELECT DISTINCT a.id_avatar, TRIM(b.nom) AS nom, a.image
                     FROM public.t_avatar a
-                        INNER JOIN public.t_libelle_i18n b ON a.id_avatar=b.id_table AND TRIM(b.code)='AVATAR' AND TRIM(b.lang)='fr'
+                        INNER JOIN public.t_libelle_i18n b ON a.id_avatar=b.id_table AND TRIM(b.code)='AVATAR' AND TRIM(b.lang)=:lang
                     WHERE a.actif
                 ), w_medaille AS(
                     SELECT DISTINCT a.id_medaille, TRIM(b.nom) AS nom, a.image
                     FROM public.t_medaille a
-                        INNER JOIN public.t_libelle_i18n b ON a.id_medaille=b.id_table AND TRIM(b.code)='MEDAILLE' AND TRIM(b.lang)='fr'
+                        INNER JOIN public.t_libelle_i18n b ON a.id_medaille=b.id_table AND TRIM(b.code)='MEDAILLE' AND TRIM(b.lang)=:lang
                     WHERE a.actif
                 ),
                   logged_count as (
@@ -506,13 +508,14 @@ const register = async (server, options) => {
           dataLevelUp.rewards.forEach(async (reward) => {
             await RewardUtils.SetReward(db, currentUserByAD, reward);
             if (reward.type === "MEDAL") {
-              dataLevelUp["medaille"] = await db.sequelize.query(`SELECT DISTINCT a.id_medaille, a.image FROM public.t_medaille a WHERE a.actif AND a.id_medaille = :medaille;`,
+              dataLevelUp["medaille"] = await db.sequelize.query(
+                `SELECT DISTINCT a.id_medaille, a.image FROM public.t_medaille a WHERE a.actif AND a.id_medaille = :medaille;`,
                 {
                   replacements: {
                     medaille: reward.value,
                   },
                   type: QueryTypes.SELECT,
-                  plain: true
+                  plain: true,
                 }
               );
             }
@@ -525,11 +528,258 @@ const register = async (server, options) => {
           },
           { where: { id_user: currentUserByAD.id_user } }
         );
-        let nextLevel = await LevelUpUtils.CheckLevelUp(db, { niveau: dataLevelUp.level });
+        let nextLevel = await LevelUpUtils.CheckLevelUp(db, {
+          niveau: dataLevelUp.level,
+        });
         dataLevelUp.nextLevel = nextLevel;
       }
-      
+
       return dataLevelUp;
+    },
+  });
+  // nouvelles medailles
+  /**
+   * @summary Cette route "check" va permettre d'attribuer les nouvelles medailles
+   */
+  server.route({
+    path: baseUrl + "/check-new-medal",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      const HistoMedaille = db.getModel("HMedaille");
+
+      if (!request.state.oid_ad) {
+        return false;
+      }
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+      if (!currentUserByAD) {
+        return false;
+      }
+
+      let listIdMedalValid = [],
+        listIdMedalDejaObtenu = [];
+      const resultMedalUser = await db.sequelize.query(
+        `
+        SELECT array_agg(a.id_medaille) AS ids
+        FROM public.h_gain_medaille a
+          INNER JOIN public.t_medaille b ON a.id_medaille = b.id_medaille AND b.actif AND a.id_user=:user;
+      `,
+        {
+          replacements: {
+            user: currentUserByAD.id_user,
+          },
+          type: QueryTypes.SELECT,
+          plain: true,
+        }
+      );
+      listIdMedalDejaObtenu = resultMedalUser["ids"] || [];
+
+      //medal nb reponse valid par module
+
+      const resultNbResponseParModule = await db.sequelize.query(
+        `
+        WITH w0 AS(
+          SELECT DISTINCT a.id_question
+          FROM public.h_reponse_user a
+          WHERE a.id_user=:user AND a.valid
+        )
+        SELECT DISTINCT a.id_module, COUNT(*) AS nb
+        FROM public.t_question a
+          INNER JOIN w0 B ON a.id_question=b.id_question
+        GROUP BY 1`,
+        {
+          replacements: {
+            user: currentUserByAD.id_user,
+          },
+          type: QueryTypes.SELECT,
+        }
+      );
+      if (resultNbResponseParModule && resultNbResponseParModule.length > 0) {
+        resultNbResponseParModule.forEach((data) => {
+          switch (data.id_module) {
+            case 1: //  Communiquer efficacement / COMM
+              if (data.nb >= 5) {
+                listIdMedalValid.push(19);
+              }
+              if (data.nb >= 30) {
+                listIdMedalValid.push(20);
+              }
+              break;
+            case 2: //  Animer et piloter des projets / PILPROJ
+              if (data.nb >= 5) {
+                listIdMedalValid.push(17);
+              }
+              if (data.nb >= 30) {
+                listIdMedalValid.push(18);
+              }
+              break;
+            case 3: //  Optimiser les réunions / REU
+              if (data.nb >= 5) {
+                listIdMedalValid.push(21);
+              }
+              if (data.nb >= 30) {
+                listIdMedalValid.push(22);
+              }
+              break;
+            case 4: //  Mieux collaborer en équipe / MNG
+              if (data.nb >= 5) {
+                listIdMedalValid.push(15);
+              }
+              if (data.nb >= 30) {
+                listIdMedalValid.push(16);
+              }
+              break;
+            case 5: //  Mieux travailler en mobilité / MOB
+              if (data.nb >= 5) {
+                listIdMedalValid.push(23);
+              }
+              if (data.nb >= 30) {
+                listIdMedalValid.push(24);
+              }
+              break;
+          }
+        });
+      }
+
+      //medal nb reponse valid total
+      const resultNbReponseValid = await db.sequelize.query(
+        `
+        SELECT COUNT(*) AS nb
+        FROM public.h_reponse_user a
+        WHERE a.id_user=:user AND a.valid;
+      `,
+        {
+          replacements: {
+            user: currentUserByAD.id_user,
+          },
+          type: QueryTypes.SELECT,
+          plain: true,
+        }
+      );
+      if (resultNbReponseValid.nb >= 20) {
+        listIdMedalValid.push(6);
+      }
+      if (resultNbReponseValid.nb >= 50) {
+        listIdMedalValid.push(7);
+      }
+      if (resultNbReponseValid.nb >= 150) {
+        listIdMedalValid.push(8);
+      }
+
+      //medal fusee / nb question repondue ok en moins de 60s
+      const resultNbReponseFusee = await db.sequelize.query(
+        `
+        SELECT COUNT(*) AS nb
+        FROM public.h_reponse_user a
+        WHERE a.id_user=:user AND a.valid AND a.temps < 60000
+      `,
+        {
+          replacements: {
+            user: currentUserByAD.id_user,
+          },
+          type: QueryTypes.SELECT,
+          plain: true,
+        }
+      );
+      if (resultNbReponseFusee.nb >= 20) {
+        listIdMedalValid.push(12);
+      }
+
+      //medal jamais 2 sans 3 / nb question numero 3 repondue ok
+      const resultJamais2sans3 = await db.sequelize.query(
+        `
+        SELECT COUNT(*) AS nb
+        FROM public.h_reponse_user a
+        WHERE a.id_user=:user AND a.valid AND a.ordre = 3
+      `,
+        {
+          replacements: {
+            user: currentUserByAD.id_user,
+          },
+          type: QueryTypes.SELECT,
+          plain: true,
+        }
+      );
+      if (resultJamais2sans3.nb >= 15) {
+        listIdMedalValid.push(14);
+      }
+
+      //medal videaste / lecture de 5 videos
+      const resultVideaste = await db.sequelize.query(
+        `
+        SELECT COUNT(*) AS nb
+        FROM public.h_reponse_user a
+        WHERE a.id_user=:user AND a.bonus_video
+      `,
+        {
+          replacements: {
+            user: currentUserByAD.id_user,
+          },
+          type: QueryTypes.SELECT,
+          plain: true,
+        }
+      );
+      if (resultVideaste.nb >= 5) {
+        listIdMedalValid.push(13);
+      }
+
+      //medal collectionneur / toutes les medailles obtenues
+      const resultTotalMedaille = await db.sequelize.query(
+        `
+        SELECT COUNT(*) AS nb
+        FROM public.t_medaille a
+        WHERE a.actif
+      `,
+        {
+          replacements: {
+            user: currentUserByAD.id_user,
+          },
+          type: QueryTypes.SELECT,
+          plain: true,
+        }
+      );
+      const listIdMedalUser = [...listIdMedalDejaObtenu, ...listIdMedalValid];
+      if (listIdMedalUser.length === resultTotalMedaille.nb - 1) {
+        listIdMedalValid.push(13);
+      }
+      let listIdNewMedal = [];
+      for (let i = 0; i < listIdMedalValid.length; i++) {
+        if (listIdMedalDejaObtenu.indexOf(listIdMedalValid[i]) === -1) {
+          // si nouvelle medaille valide, pas encore obtenue, on insere
+          listIdNewMedal.push(listIdMedalValid[i]);
+          await HistoMedaille.create({
+            id_user: currentUserByAD.id_user,
+            id_medaille: listIdMedalValid[i],
+          });
+        }
+      }
+      let listMedal = [];
+      if (listIdNewMedal.length > 0) {
+        const resultNewMedal = await db.sequelize.query(
+          `
+          SELECT DISTINCT a.id_medaille, TRIM(a.image) AS image, a.legendaire, TRIM(b.nom) AS nom, TRIM(b.description) AS description 
+          FROM public.t_medaille a 
+              INNER JOIN public.t_libelle_i18n b ON a.id_medaille=b.id_table AND TRIM(b.code)='MEDAILLE' AND TRIM(b.lang)=:lang
+          WHERE a.actif AND a.id_medaille=ANY(:ids::int[])
+            `,
+          {
+            replacements: {
+              ids: "{" + listIdNewMedal.join(",") + "}",
+              lang: lang,
+            },
+            type: QueryTypes.SELECT,
+          }
+        );
+        resultNewMedal.forEach((medal) => {
+          listMedal.push(medal);
+        });
+      }
+      return listMedal;
     },
   });
 };

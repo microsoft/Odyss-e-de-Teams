@@ -320,7 +320,7 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                 className={"d-inline-block"}
                 href={"/#/Cockpit"}
               >
-                Retour au cokpit
+                Retour au cockpit
               </Button>
             </p>
           </div>

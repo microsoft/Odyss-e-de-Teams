@@ -62,25 +62,25 @@
 	('Explorateur galactique', 'Atteindre le niveau 15', 'explorateur_galactique.png', true, true, now(), now()),
 	('Challenger', 'Atteindre le top 100 d''un classement', 'challenger.png', false, true, now(), now()),
 	('Pour la gloire !', 'Atteindre le top 20 d''un classement', 'pour_la_gloire.png', true, true, now(), now()),
-	('Naissance d''un astre', 'Répondre juste à 20 questions', 'naissance_astre.png', false, true, now(), now()),
-	('Chasseur d''usages Teams', 'Répondre juste à 50 questions', 'chasseur_usage_teams.png', false, true, now(), now()),
-	('Commandant des usages', 'Répondre juste à 150 questions', 'commandant_usages_teams.png', true, true, now(), now()),
+	('Naissance d''un astre', 'Répondre correctement à 20 questions', 'naissance_astre.png', false, true, now(), now()),
+	('Chasseur d''usages Teams', 'Répondre correctement à 50 questions', 'chasseur_usage_teams.png', false, true, now(), now()),
+	('Commandant des usages', 'Répondre correctement à 150 questions', 'commandant_usages_teams.png', true, true, now(), now()),
 	('Premier contact', 'Se connecter 5 jours de suite', 'premier_contact.png', false, true, now(), now()),
 	('Emissaire subspatial', 'Se connecter 10 jours de suite', 'emissaire_subspatial.png', false, true, now(), now()),
 	('Ambassadeur intergalactique', 'Se connecter 15 jours de suite', 'ambassadeur_intergalactique.png', true, true, now(), now()),
-	('Je suis une fusée', 'Répondre à 20 questions en moins de 30 secondes', 'je_suis_fusee.png', false, true, now(), now()),
-	('Par le hublot du vaisseau', 'Lancer 20 vidéos Teams via les différents questionnaires', 'hublot_vaisseau.png', false, true, now(), now()),
-	('Jamais 4 sans 5', 'Répondre 15 fois juste à la 5ème question d’un questionnaire', 'jamais4_sans5.png', true, true, now(), now()),
-	('Intendant interstellaire', 'Répondre juste à 5 questions du module Manager', 'intendant_interstellaire.png', false, true, now(), now()),
-	('Maître des réunions', 'Répondre juste à 30 questions du module Manager', 'maitre_reunions.png', true, true, now(), now()),
-	('Rapide comme l''éclair', 'Répondre juste à 5 questions du module Pilotage', 'rapide_eclair.png', false, true, now(), now()),
-	('Maître de la collaboration', 'Répondre juste à 30 questions du module Pilotage', 'maitre_collaboration.png', true, true, now(), now()),
-	('Vengeur spatio-temporel', 'Répondre juste à 5 questions du module Collaboration', 'vengeur_spatio_temporel.png', false, true, now(), now()),
-	('Maître de la communication', 'Répondre juste à 30 questions du module Collaboration', 'maitre_communication.png', true, true, now(), now()),
-	('Concentration gravitationnelle', 'Répondre juste à 5 questions du module Meetings', 'concentration_gravitationnelle.png', false, true, now(), now()),
-	('Le magnétiseur gravitationnel', 'Répondre juste à 30 questions du module Meetings', 'magnetiseur_gravitationnel.png', true, true, now(), now()),
-	('La météore de Pégase', 'Répondre juste à 5 questions du module Mobilité', 'meteore_pegase.png', false, true, now(), now()),
-	('Maître de la mobilité', 'Répondre juste à 30 questions du module Mobilité', 'maitre_mobilite.png', true, true, now(), now()),
+	('Je suis une fusée', 'Répondre à 20 questions en moins d''une minute', 'je_suis_fusee.png', false, true, now(), now()),
+	('Cinéphile des étoiles', 'Lancer 5 vidéos Teams via les différents questionnaires', 'hublot_vaisseau.png', false, true, now(), now()),
+	('Jamais 2 sans 3', 'Répondre 15 fois juste à la 3ème question d’un questionnaire', 'jamais4_sans5.png', true, true, now(), now()),
+	('Intendant interstellaire', 'Répondre correctement à 5 questions du module « Mieux collaborer en équipe »', 'intendant_interstellaire.png', false, true, now(), now()),
+	('Maître de la collaboration', 'Répondre correctement à 30 questions du module « Mieux collaborer en équipe »', 'maitre_reunions.png', true, true, now(), now()),
+	('Rapide comme l''éclair', 'Répondre correctement à 5 questions du module « Animer et piloter des projets »', 'rapide_eclair.png', false, true, now(), now()),
+	('Maître de l''animation', 'Répondre correctement à 30 questions du module « Animer et piloter des projets »', 'maitre_collaboration.png', true, true, now(), now()),
+	('Vengeur spatio-temporel', 'Répondre correctement à 5 questions du module « Communiquer efficacement »', 'vengeur_spatio_temporel.png', false, true, now(), now()),
+	('Maître de la communication', 'Répondre correctement à 30 questions du module « Communiquer efficacement »', 'maitre_communication.png', true, true, now(), now()),
+	('Concentration gravitationnelle', 'Répondre correctement à 5 questions du module « Optimiser les réunions »', 'concentration_gravitationnelle.png', false, true, now(), now()),
+	('Le magnétiseur gravitationnel', 'Répondre correctement à 30 questions du module « Optimiser les réunions »', 'magnetiseur_gravitationnel.png', true, true, now(), now()),
+	('La météore de Pégase', 'Répondre correctement à 5 questions du module « Mieux travailler en mobilité »', 'meteore_pegase.png', false, true, now(), now()),
+	('Maître de la mobilité', 'Répondre correctement à 30 questions du module « Mieux travailler en mobilité »', 'maitre_mobilite.png', true, true, now(), now()),
 	('Le collectionneur de l''infini', 'Obtenir toutes les médailles communes et légendaires', 'collectionneur_infini.png', false, true, now(), now());
 
 -- niveau
@@ -215,14 +215,8 @@ INSERT INTO public.t_agenda (nom, description, date_agenda, actif, horodatage, h
 INSERT INTO public.j_organisation_semaine("id_organisation","id_semaine","debut_semaine","fin_semaine")
 	VALUES (1,1, '2020-06-09 08:08:02.296738','2020-06-14 08:08:02.296738'), (1,2, '2020-06-15 08:08:02.296738','2020-06-21 08:08:02.296738'),(1,3, '2020-06-22 08:08:02.296738', '2020-06-26 08:08:02.296738'),(1,4, '2020-06-29 08:08:02.296738', '2020-07-05 08:08:02.296738');
 
-
-	-- ajout tid SAEGUS / Pas de maitre du jeu qui active
-	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine_encours=1 WHERE id_organisation=1;
--- maitre jeu
-	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) 
-	VALUES (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
-
-
+INSERT INTO public.j_organisation_semaine("id_organisation","id_semaine","debut_semaine","fin_semaine")
+	VALUES (2,1, '2020-06-09 08:08:02.296738','2020-06-14 08:08:02.296738'), (2,2, '2020-06-15 08:08:02.296738','2020-06-21 08:08:02.296738'),(2,3, '2020-06-22 08:08:02.296738', '2020-06-26 08:08:02.296738'),(2,4, '2020-06-29 08:08:02.296738', '2020-07-05 08:08:02.296738');
 
 -- Agenda semaine
 INSERT INTO "public"."j_organisation_agenda"("id_organisation", "id_semaine", "id_agenda") VALUES(1, 1, 1), (1,1,2);

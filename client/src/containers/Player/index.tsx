@@ -46,6 +46,8 @@ class Player extends React.Component<
   IPlayerProps,
   IPlayerState
 > {
+  subscriptionLevelUp: any;
+
   constructor(props: IPlayerProps) {
     super(props);
     this.state = {
@@ -54,7 +56,11 @@ class Player extends React.Component<
   }
 
   componentDidUpdate() {
-    this._levelUp();
+    this.subscriptionLevelUp = this._levelUp();
+  }
+
+  componentWillUnmount() {
+    delete this.subscriptionLevelUp;
   }
 
   private _levelUp = () => {
