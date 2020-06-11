@@ -36,6 +36,10 @@ class User extends API {
   checkLevelUp(): Promise<any> {
     return super.fetchGET(this.resource + "/check-level-up");
   }
+
+  checkNewMedal(): Promise<any> {
+    return super.fetchGET(this.resource + "/check-new-medal");
+  }
 }
 
 export default new User();

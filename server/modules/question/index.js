@@ -144,6 +144,11 @@ const register = async (server, options) => {
         replacements["temps" + i] = q.temps_reponse;
         replacements["nb_xp" + i] = q.nb_xp;
         replacements["nb_point" + i] = q.nb_point;
+        replacements["ordre" + i] = i + 1;
+        replacements["bonus_video" + i] = null;
+        if (q.id_mecanique === 3 || q.id_mecanique === 3) {
+          replacements["bonus_video" + i] = q.video_ok ? true : false;
+        }
         main_query +=
           "(:user, :semaine, :question" +
           i +
@@ -157,10 +162,14 @@ const register = async (server, options) => {
           i +
           ", :temps" +
           i +
+          ", :ordre" +
+          i +
+          ", :bonus_video" +
+          i +
           ", now())";
       });
       main_query =
-        "INSERT INTO public.h_reponse_user(id_user, id_semaine, id_question, valeur, valid, nb_point, nb_xp, temps, horodatage) VALUES" +
+        "INSERT INTO public.h_reponse_user(id_user, id_semaine, id_question, valeur, valid, nb_point, nb_xp, temps, ordre, bonus_video, horodatage) VALUES" +
         main_query +
         ";";
       await db.sequelize.query(main_query, {
@@ -273,7 +282,26 @@ const register = async (server, options) => {
         }
       );
 
-      // maj nb_point / nb_point / nb_reponse / nb_reponse_ok 
+      // maj nb_reponse / nb_reponse_ok
+      await db.sequelize.query(
+        `UPDATE public.t_user 
+          SET nb_reponse=s0.nb_reponse, nb_reponse_ok=s0.nb_reponse_ok
+          FROM (
+            SELECT DISTINCT id_user, SUM(nb_reponse) AS nb_reponse, SUM(nb_reponse_ok) AS nb_reponse_ok
+            FROM public.h_questionnaire_complete
+            WHERE id_user=:user
+            GROUP BY id_user
+          ) AS s0
+          WHERE public.t_user.id_user=s0.id_user;`,
+        {
+          replacements: {
+            user: id_user
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+
+      // maj nb_point / nb_xp
       GainPointUtils.UpdatePointUser(db, currentUserByAD);
 
       return {

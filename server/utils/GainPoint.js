@@ -15,8 +15,8 @@ GainPoint.GetPointReponse = (questions, baremes) => {
       //gain point sur bonne réponse
       nb_xp += (i < i_question_last ? baremeNiveau.reponse_valid_xp : baremeNiveau.last_reponse_valid_xp);
       nb_point += (i < i_question_last ? baremeNiveau.reponse_valid_point : baremeNiveau.last_reponse_valid_point);
-      if (q.temps_reponse <= 30000) {
-        //bonus repondu en moins de 30 secondes
+      if (q.temps_reponse <= 60000) {
+        //bonus repondu en moins de 60 secondes
         nb_xp += baremeNiveau.bonus_temps_xp;
         nb_point += baremeNiveau.bonus_temps_point;
       }

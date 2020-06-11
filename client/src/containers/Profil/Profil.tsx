@@ -32,22 +32,24 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
   }
 
   private _loadDataProfil = () => {
-    forkJoin([
-      UserAPI.getMedaille("fr"),
-      ClassementAPI.getClassement("fr", "xp", 0, 1),
-      ClassementAPI.getClassement("fr", "point", 0, 1),
-      UserAPI.checkLevelUp(),
-    ])
-      .toPromise()
-      .then((data) => {
-        let listMedaille = data[0].results ? data[0].results : [];
-        this.setState({
-          listMedaille: listMedaille,
-          classementXP: data[1] ? parseInt(data[1].rang) : 0,
-          classementPoint: data[2] ? parseInt(data[2].rang) : 0,
-          dataLevelUp: data[3],
+    UserAPI.checkNewMedal().then(() => {
+      forkJoin([
+        UserAPI.getMedaille("fr"),
+        ClassementAPI.getClassement("fr", "xp", 0, 1),
+        ClassementAPI.getClassement("fr", "point", 0, 1),
+        UserAPI.checkLevelUp(),
+      ])
+        .toPromise()
+        .then((data) => {
+          let listMedaille = data[0].results ? data[0].results : [];
+          this.setState({
+            listMedaille: listMedaille,
+            classementXP: data[1] ? parseInt(data[1].rang) : 0,
+            classementPoint: data[2] ? parseInt(data[2].rang) : 0,
+            dataLevelUp: data[3],
+          });
         });
-      });
+    });
   };
 
   private _setShowModalProfil = (show: boolean) => {

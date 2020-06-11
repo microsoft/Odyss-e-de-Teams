@@ -915,17 +915,19 @@ $BODY$;
 	
 	CREATE TABLE public.h_reponse_user
 	(
-		id_reponse_user integer NOT NULL DEFAULT nextval('public.seq_h_reponse_user'::regclass),
+	id_reponse_user integer NOT NULL DEFAULT nextval('public.seq_h_reponse_user'::regclass),
     id_semaine integer,
-		id_user integer,
+	id_user integer,
     id_question integer,
+	ordre smallint,
     valid boolean,
     nb_point integer,
     nb_xp integer,
-		valeur integer[],
-		temps bigint,
-		horodatage timestamp without time zone,
-		CONSTRAINT pk_h_reponse_user PRIMARY KEY (id_reponse_user)
+	valeur integer[],
+	temps bigint,
+	bonus_video boolean,
+	horodatage timestamp without time zone,
+	CONSTRAINT pk_h_reponse_user PRIMARY KEY (id_reponse_user)
 	)
 	WITH (
 		OIDS = FALSE

@@ -62,8 +62,7 @@ class IntroLancementQuestion extends Component<
           <p className={"text-center content mx-auto"}>
             Explorateur.trice, le chronomètre va te permettre de gagner{" "}
             <strong className={"color-primary-light"}>
-              5 points d’XP supplémentaires si tu réponds en dessous des 30
-              secondes
+              5 points d’XP supplémentaires si tu réponds en dessous d'une minute
             </strong>{" "}
             à chaque bonnes réponses.
           </p>

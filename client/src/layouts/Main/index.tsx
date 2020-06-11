@@ -11,7 +11,7 @@ const Main = (props: IMainProps) => {
   return (
     <Container
       fluid
-      className={`${hasGradient ? "gradient" : ""} main-container d-flex p-0`}
+      className={`${hasGradient ? "gradient " : ""}main-container d-flex p-0`}
     >
       {children}
     </Container>
