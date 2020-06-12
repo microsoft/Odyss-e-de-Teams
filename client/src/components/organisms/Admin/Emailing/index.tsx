@@ -1,6 +1,6 @@
 import React from "react";
 
-import html2canvas from "html2canvas";
+import domtoimage from "dom-to-image";
 
 import { withTranslation, WithTranslation } from "react-i18next";
 
@@ -10,79 +10,43 @@ import { Editor } from "@tinymce/tinymce-react";
 import "./style.scss";
 
 class AdminEmailing extends React.Component<WithTranslation, {}> {
+  componentDidMount() {
+    setTimeout(() => {
+      let node = document.getElementsByClassName("mce-content-body ")[0];
+      // @ts-ignore
+      node.style.backgroundImage =
+        "url('http://localhost:8080/static-server/company-assets/1/test.png')";
+      // @ts-ignore
+      node.style.backgroundSize = "cover";
+      // @ts-ignore
+      node.style.backgroundRepeat = "no-repeat";
+    }, 1000);
+  }
+
   copyClipBoard = async (e) => {
-    // let elem = document
-    //   .getElementsByTagName("iframe")[0]
-    //   .contentWindow.document.getElementById("tinymce");
+    let node = document.getElementsByClassName("mce-content-body ")[0];
 
-    let elem = document.getElementById("test");
-
-    html2canvas(elem, {
-      allowTaint: true,
-      logging: true,
-      useCORS: true,
-      // height: 1000,
-      // width: 1000,
-      x: 0,
-      y: 0,
-    }).then((canvas) => {
-      document.getElementById("result").appendChild(canvas);
-      // canvas.toBlob((blob) => {
-      //   try {
-      //     // @ts-ignore
-      //     navigator.clipboard.write([
-      //       new ClipboardItem({
-      //         "image/png": blob,
-      //       }),
-      //     ]);
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
-      // });
-    });
+    domtoimage
+      .toBlob(node)
+      .then(function (dataUrl) {
+        try {
+          // @ts-ignore
+          navigator.clipboard.write([
+            new ClipboardItem({
+              "image/png": dataUrl,
+            }),
+          ]);
+        } catch (error) {
+          console.error(error);
+        }
+      })
+      .catch(function (error) {
+        console.error("oops, something went wrong!", error);
+      });
   };
-
-  // try {
-  //   const img = await fetch(
-  //     "http://localhost:8080/static-server/company-assets/1/module_manager.png"
-  //   );
-  //   console.log("img", img);
-  //   const b = await img.blob();
-  //   console.log("img", b);
-  //   navigator.clipboard["write"]([
-  //     new ClipboardItem({
-  //       "image/png": b,
-  //     }),
-  //   ]);
-  // } catch (error) {
-  //   console.error(error);
-  // }
-
-  //     try {
-  //     navigator.clipboard.write([
-  //         new ClipboardItem({
-  //             'image/png': blob
-  //         })
-  //     ]);
-  // } catch (error) {
-  //     console.error(error);
-  // }
-
-  // html2canvas(c).then((canvas) => {
-  //   canvas.toBlob( (blob) => {
-  //     navigator.clipboard.write([
-  //       new ClipboardItem({
-  //         [blob.type]:  blob
-  //       })
-  //     ])
-  // });
-  // });
 
   render() {
     const { tReady, t } = this.props;
-
-    // @ts-ignore
-    window.html2canvas = html2canvas;
 
     return (
       <div className="Emailing">
@@ -125,15 +89,11 @@ class AdminEmailing extends React.Component<WithTranslation, {}> {
              alignleft aligncenter alignright alignjustify | \
              bullist numlist outdent indent | removeformat | help",
                 body_class: "Emailing__body__editor",
+                id: "text_editor",
+                inline: true,
               }}
             />
           </div>
-
-          <div id="test" className="Emailing__body__editor2">
-            kdozadzaokdpazokdza
-          </div>
-
-          <div id="result"></div>
         </div>
 
         <div className="Emailing__actions">
