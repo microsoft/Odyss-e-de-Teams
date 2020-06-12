@@ -33,7 +33,7 @@ class Medaille extends Component<IMedailleProps, {}> {
                     medaille.unlock ? (
                         <img className={`medaille ${canSelect ? 'pointer' : ''} ${selected ? 'selected' : ''}`} onClick={() => this._onClickMedaille(medaille)} src={process.env.PUBLIC_URL + '/images/medaille/' + medaille.image} alt={"Médaille " + medaille.nom} />
                     ) : (
-                        <img className={"medaille"} src={process.env.PUBLIC_URL + '/images/medaille/lock.png'} alt={"Médaille " + medaille.nom} />
+                        <img className={"medaille lock"} src={process.env.PUBLIC_URL + '/images/medaille/lock.png'} alt={"Médaille " + medaille.nom} />
                     )
                 }
             </OverlayTrigger>

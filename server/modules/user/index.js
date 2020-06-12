@@ -304,8 +304,11 @@ const register = async (server, options) => {
       };
 
       return db.sequelize
-        .query(
-          "select s.nom as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end from t_semaine s inner join j_organisation_semaine ts  on ts.id_semaine = s.id_semaine where id_organisation =:id_organisation",
+        .query(`
+          select s.nom as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end 
+          from t_semaine s 
+            inner join j_organisation_semaine ts on ts.id_semaine = s.id_semaine AND id_organisation =:id_organisation
+            inner join t_organisation c on ts.id_organisation = c.id_organisation and c.id_semaine_encours=s.id_semaine`,
           {
             replacements: replacements,
             type: QueryTypes.SELECT,

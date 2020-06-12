@@ -14,9 +14,20 @@
     padding-left: 1.75rem;
 }
 
+.encart-stats {
+    background: url(/images/astronaute/astro_hello.png) no-repeat 97% 186% #FFF;
+    background-size: 6rem;
+}
+
 @include media-breakpoint-up(md) {
+    .avatar {
+        max-height: 8rem;
+    }
     .modal-profil {
         width: 60%;
         max-width: 60% !important;
+    }
+    .main-col1, .main-col2 {
+        height: 100%;
     }
 }

@@ -2,13 +2,12 @@
 @import "common/sass/_typography";
 
 .RewardModal {
-  padding: 1em;
   &__title {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2em;
+    margin-bottom: 1rem;
 
     &__icon {
       display: flex;
@@ -20,13 +19,13 @@
       &__container {
         height: 100%;
         img {
-          max-width: 100%;
+          max-width: 85%;
           max-height: 100%;
         }
       }
 
       &__container:first-child {
-        margin-top: 3em;
+        margin-top: 3rem;
         img {
           transform: rotate(45deg);
         }
@@ -39,7 +38,7 @@
       }
 
       &__container:nth-child(3) {
-        margin-top: 3em;
+        margin-top: 3rem;
         img {
           transform: rotate(-45deg);
         }
@@ -49,7 +48,7 @@
     &__title {
       @include typo-title-component;
       color: $color-primary;
-      margin-top: 1em;
+      margin-top: 1.25rem;
     }
 
     &__description {

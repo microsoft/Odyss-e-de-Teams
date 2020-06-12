@@ -60,6 +60,7 @@ export interface IJouerState {
 
 export interface IChoixModuleNiveauProps {
   onSelect: any;
+  currentCampaign: any;
 }
 export interface IChoixModuleNiveauState {
   listModule?: IModule[];

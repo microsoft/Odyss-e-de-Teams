@@ -20,6 +20,13 @@ export interface IUser {
   image_avatar: string;
 }
 
+export interface IOrganisation {
+  id_organisation: number;
+  nom: string;
+  id_semaine_encours?: number;
+  logo?: string;
+}
+
 export interface IReward {
   type: string;
   value: number;
@@ -37,6 +44,8 @@ export interface ILevelUp {
 export interface IUserState {
   currentUser?: IUser;
   dataLevelUp?: ILevelUp;
+  currentOrganisation?: IOrganisation;
+  currentCampaign?: any;
 }
 
 export interface IProfilProps {

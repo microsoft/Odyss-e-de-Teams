@@ -40,7 +40,8 @@
     "classement_points": "Points",
     "classement_xp": "Classement XP",
     "explorers_desc": "Explorateurs ont rejoint le voyage depuis le lancement",
-    "campaign_pending": "est en cours",
+    "campaign_pending0": "La mission",
+    "campaign_pending": "est en cours !",
     "campaign_week_goal": "Les explorateurs disposent d'une semaine pour effectuer la nouvelle mission",
     "campaign_time_left": "Temps restant :",
     "outillage": {
@@ -91,7 +92,7 @@
   "player": {
     "cockpit": {
       "title": "Bienvenue à bord de ton vaisseau !",
-      "campaign_desc": "Cumulez des points au classement en répondant chaque semaine aux nouveaux modules de questions Teams et tentez de remporter un <1>Surface Headphone</1> d'une valeur de 300,00 euros et de nombreux cadeaux ! ",
+      "campaign_desc": "Tentez de remporter des lots et des goodies en répondant chaque semaine aux nouvelles questions ! Cumulez des points de jeu et des points d’expérience pour vous démarquer des autres Explorateurs !​",
       "start_game": "Lancer le jeu !",
       "start_game_desc": "Chaque semaine, une nouvelle mission pour progresser dans ton expédition galactique sur Teams et obtenir des récompenses d'honneur",
       "bonus_desc_PTS": "points bonus !",

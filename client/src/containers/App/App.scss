@@ -16,6 +16,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $color-black1;
+  background: url("/images/backgrounds/fond_principal_decore.jpg") no-repeat top left;
+  background-size: 100%;
+  background-attachment: fixed;
 
   .main-container {
     .main-content {
@@ -27,10 +30,6 @@ body {
       padding: 1.25rem 1.5rem;
       margin-bottom: 2rem;
     }
-  }
-  .main-container:not(.gradient) {
-    background: url("/images/fond_principal.jpg") no-repeat top left;
-    background-size: cover;
   }
   .main-container.gradient {
     background: rgb(244, 244, 255);
@@ -45,7 +44,10 @@ body {
   .modal-dialog {
     .modal-content {
       padding: 1rem;
-      background: #fff;
+      border-radius: .5rem;
+      background: #fff url("/images/overlays/overlay_modal.jpg") no-repeat;
+      background-size: cover;
+      background-position: left top;
       .modal-header {
         border: none;
       }
@@ -71,7 +73,8 @@ body {
     .modal-content {
       padding: 0;
       padding-top: 3em; //logo padding
-      background: url("/images/overlays/overlay-blue-mobile.svg");
+      //background: url("/images/overlays/overlay-blue-mobile.png");
+      background: url("/images/overlays/overlay-blue.png");
       background-size: cover;
       background-repeat: no-repeat;
 

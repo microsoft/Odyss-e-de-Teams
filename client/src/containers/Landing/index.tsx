@@ -36,8 +36,8 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
     });
 
     // don't display the second background
-    document.getElementById("landing_step1").style.display = "block";
-    document.getElementById("landing_step2").style.display = "none";
+    // document.getElementById("landing_step1").style.display = "block";
+    // document.getElementById("landing_step2").style.display = "none";
   }
 
   changeStep = () => {
@@ -49,12 +49,12 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
       () => {
         // hide first div and show the second background
         if (this.state.curStep > 1) {
-          document.getElementById("landing_step1").style.display = "none";
-          document.getElementById("landing_step2").style.display = "block";
+          //document.getElementById("landing_step1").style.display = "none";
+          //document.getElementById("landing_step2").style.display = "block";
         }
 
         if (this.state.curStep > 2 && !this.props.isMobile) {
-          document.getElementById("landing_step2").style.display = "block";
+          //document.getElementById("landing_step2").style.display = "block";
         }
       }
     );
@@ -85,7 +85,8 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
         <div
           className={`Landing__withbackground ${
             isMobile ? "Landing__background-mobile-0" : "Landing__background-0"
-          }`}
+          }
+          ${this.state.curStep > 1 ? "slide" : ""}`}
           id="landing_step1"
         >
           {this.state.curStep === 1 && (
@@ -95,7 +96,8 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
         <div
           className={`Landing__withbackground ${
             isMobile ? "Landing__background-mobile-1" : "Landing__background-1"
-          }`}
+          }
+          ${this.state.curStep > 1 ? "slide" : ""}`}
           id="landing_step2"
         >
           {this.state.curStep === 2 && (

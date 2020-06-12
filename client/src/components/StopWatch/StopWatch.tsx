@@ -64,9 +64,9 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
       <div className={"chrono"}>
         <p className={"text-center mb-0"}>
           <img
-            src={process.env.PUBLIC_URL + "/images/question/chronometre.svg"}
+            src={process.env.PUBLIC_URL + "/images/question/chronometre.png"}
             alt={`Illustration Chronometre`}
-            className={"illustration-chronometre"}
+            className={"illustration-chronometre my-3"}
           />
         </p>
         <div className="stopwatch">

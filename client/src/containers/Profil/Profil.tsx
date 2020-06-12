@@ -86,13 +86,13 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
       <div>
         <h1 className={"color-primary"}>Mon profil de jeu</h1>
         <Row>
-          <Col xs={12} md={6}>
+          <Col xs={12} md={6} className={"main-col1"}>
             <Container fluid>
               <Row>
                 <Col className={"main-encart"}>
                   <h2 className={"color-primary-light mb-2"}>Mon niveau</h2>
                   <div className={"d-flex"}>
-                    <div className={"flex-1"}>
+                    <div className={"flex-1 pl-0 pl-md-3"}>
                       {this.props.currentUser?.image_avatar ? (
                         <img
                           src={
@@ -100,13 +100,13 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                             this.props.currentUser.image_avatar
                           }
                           alt="Avatar"
-                          className={"mw-100"}
+                          className={"avatar mw-100"}
                         />
                       ) : (
                         <span className={"d-none"}></span>
                       )}
                     </div>
-                    <div className={"flex-1 flex-grow-3 pl-2 pl-md-5"}>
+                    <div className={"flex-1 flex-grow-3 pl-2 pl-md-3"}>
                       <p className={"h1 mb-2 pt-0 color-primary"}>
                         Niveau {this.props.currentUser?.niveau}
                       </p>
@@ -137,7 +137,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                 </Col>
               </Row>
               <Row>
-                <Col className={"main-encart"}>
+                <Col className={"main-encart encart-stats mb-0"}>
                   <h2 className={"color-primary-light mb-3"}>
                     Mes statistiques d'exploration
                   </h2>
@@ -205,7 +205,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
             </Container>
           </Col>
           <Col xs={12} md={6}>
-            <div className={"main-encart"}>
+            <div className={"main-encart mb-0 main-col2"}>
               <h2 className={"color-primary-light d-none d-md-block mb-2"}>
                 Ma collection de récompenses d'honneur
               </h2>

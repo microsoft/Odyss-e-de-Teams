@@ -5,9 +5,9 @@
 
 
 .steps {
-    background: url("/images/regle/fil_dekstop.svg") no-repeat left 6.5rem;
-    background-size: 82%;
-    padding-left: 16%;
+    background: url("/images/regle/fil_dekstop.png") no-repeat left 6.5rem;
+    background-size: 85%;
+    padding-left: 15%;
     .step {
         position: relative;
         font-size: 0.9em;
@@ -27,19 +27,20 @@
         }
     }
     .step2 {
-        margin-top: 4em;
+        margin-top: 4.5em;
     }
     .step3 {
+        margin-top: 1.25em;
         img {
             width: 6.5rem;
         }
     }
     .step4 {
-        background: url(/images/regle/step4_desktop.svg) no-repeat 3rem -0.5rem;
-        background-size: 16rem;
-        margin-top: -4rem;
+        background: url(/images/regle/step4_desktop.png) no-repeat 4rem -0.5rem;
+        background-size: 13rem;
+        margin-top: -3.25rem;
         padding-top: 11rem;
-        padding-right: 1.25rem;
+        padding-right: .5rem;
     }
 }
 
@@ -70,6 +71,7 @@
         }
         .step2 {
             margin-left: 50%;
+            margin-top: 2rem;
             .num-step {
                 float: left;
                 left: -2rem;
@@ -78,6 +80,7 @@
         .step4 {
             width: 100%;
             background: none;
+            padding-top: 7rem;
             img {
                 width: 80%;
             }

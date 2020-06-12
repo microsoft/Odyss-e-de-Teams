@@ -24,6 +24,7 @@ import IStore from "store/IStore";
 interface ICockpit {
   isMobile: boolean;
   dispatch: any;
+  currentCampaign: any;
 }
 
 class Cockpit extends Component<WithTranslation & ICockpit, {}> {
@@ -40,13 +41,12 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
     allRewards: [],
     showModal: false,
     loading: true,
-    hasNewDailyReward: false
+    hasNewDailyReward: false,
   };
 
   async componentDidMount() {
     try {
       const checkDailyRewards = await UserAPI.runChecks();
-      const campainInfo = await UserAPI.getCurrentCampaignInfo();
       const rewardsInfo = await UserAPI.getCurrentReward();
 
       const rewards = [];
@@ -114,24 +114,27 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
         rewards.push(elem);
       });
 
-      this.setState({
-        campaign: {
-          name: campainInfo.results.mission_name,
-          date_end: campainInfo.results.mission_end.replace("T", " "),
+      this.setState(
+        {
+          campaign: {
+            name: this.props.currentCampaign?.mission_name,
+            date_end: this.props.currentCampaign?.mission_end.replace("T", " "),
+          },
+          currentBonus: {
+            day: rewardsInfo.current.day,
+            type: rewardsInfo.current.type,
+            value: rewardsInfo.current.value,
+          },
+          allRewards: rewards,
+          loading: false,
+          hasNewDailyReward: checkDailyRewards.hasNewDailyReward,
         },
-        currentBonus: {
-          day: rewardsInfo.current.day,
-          type: rewardsInfo.current.type,
-          value: rewardsInfo.current.value,
-        },
-        allRewards: rewards,
-        loading: false,
-        hasNewDailyReward: checkDailyRewards.hasNewDailyReward
-      }, () => {
-        if (this.state.hasNewDailyReward) {
-          this._setShowModal(true);
+        () => {
+          if (this.state.hasNewDailyReward) {
+            this._setShowModal(true);
+          }
         }
-      });
+      );
     } catch (e) {
       console.error(e);
     }
@@ -157,11 +160,9 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
                   value: dataLevelUp,
                 };
                 this.props.dispatch(action_liste_level_up);
-                this.setState(
-                  {
-                    hasNewDailyReward: false
-                  }
-                );
+                this.setState({
+                  hasNewDailyReward: false,
+                });
               });
             }
           });
@@ -187,107 +188,116 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
             {tReady && t("player.cockpit.title")}
           </h1>
 
-          <Row className="col-12">
-            <LaunchFollowWidget
-              className="col-12 p-4"
-              campaign_name={campaign.name}
-              campaign_end={campaign.date_end}
-              translationDescKey="player.cockpit.campaign_desc"
-            />
+          <Row>
+            <div className="col-12">
+              <LaunchFollowWidget
+                className="py-3 px-4"
+                campaign_name={campaign.name}
+                campaign_end={campaign.date_end}
+                translationDescKey="player.cockpit.campaign_desc"
+              />
+            </div>
           </Row>
 
-          <Row className="row col-12 d-flex align-items-center justify-content-between mt-4">
-            <Link to={"/Jouer"} className={`no-hover col-8 p-0`}>
-              <div className="Cockpit__game col-12 p-4">
-                <div className="Cockpit__game__container">
-                  <div className="Cockpit__game__container__name">
-                    {tReady && t("player.cockpit.start_game")}
+          <Row className="mt-4">
+            <div className="col-12 d-flex align-items-center justify-content-between">
+              <Link to={"/Jouer"} className={`no-hover p-0`}>
+                <div className="Cockpit__game h-100">
+                  <div className="Cockpit__game__container py-4 px-4">
+                    <h1 className="Cockpit__game__container__name mt-1">
+                      {tReady && t("player.cockpit.start_game")}
+                    </h1>
+                    <div className="Cockpit__game__container__desc mb-1">
+                      {tReady && t("player.cockpit.start_game_desc")}
+                    </div>
                   </div>
-                  <div className="Cockpit__game__container__desc">
-                    {tReady && t("player.cockpit.start_game_desc")}
-                  </div>
+                  {/* <div className="Cockpit__game__icon">
+                    <img src="/images/icone/joyaux.png" alt="joyaux" />
+                  </div> */}
                 </div>
-                <div className="Cockpit__game__icon">
-                  <img src="/images/icone/joyaux.png" alt="joyaux" />
-                </div>
-              </div>
-            </Link>
+              </Link>
 
-            <div
-              className="Cockpit__exp col-3 p-4"
-              onClick={() => this._setShowModal(true)}
-            >
-              <div className="Cockpit__exp__container">
-                <div className="Cockpit__exp__container__icon">
-                  <img src="/images/icone/exp-bonus.png" alt="exp-bonus" />
-                </div>
-                <div className="Cockpit__exp__container__text">
-                  <div className="Cockpit__exp__container__text__title">
-                    +{currentBonus.value}{" "}
-                    {tReady &&
-                      t(`player.cockpit.bonus_desc_${currentBonus.type}`)}
+              <div
+                className="Cockpit__exp h-100"
+                onClick={() => this._setShowModal(true)}
+              >
+                <div className="Cockpit__exp__container py-3 px-4">
+                  <div className="Cockpit__exp__container__icon">
+                    <img
+                      src="/images/icone/exp-bonus-lueur.png"
+                      alt="exp-bonus"
+                    />
                   </div>
+                  <div className="Cockpit__exp__container__text">
+                    <div className="Cockpit__exp__container__text__title">
+                      +{currentBonus.value}{" "}
+                      {tReady &&
+                        t(`player.cockpit.bonus_desc_${currentBonus.type}`)}
+                    </div>
 
-                  <div className="Cockpit__exp__container__text__desc">
-                    {tReady && t("player.cockpit.exp_daily_bonus")}
+                    <div className="Cockpit__exp__container__text__desc">
+                      {tReady && t("player.cockpit.exp_daily_bonus")}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </Row>
 
-          <div className="row col-12 p-0 Cockpit__links mt-4">
-            <Link className="no-hover col-4" to="/Classement">
-              <div className="Cockpit__links__item col-12 p-4">
-                <div className="Cockpit__links__item__icon">
-                  <img alt="Cup" src="images/icone/cup.png" />
-                </div>
+          <Row>
+            <div className="col-12 p-0 Cockpit__links mt-4">
+              <Link className="no-hover col-4" to="/Classement">
+                <div className="Cockpit__links__item col-12 py-3 px-4">
+                  <div className="Cockpit__links__item__icon">
+                    <img alt="Cup" src="images/icone/cup.png" />
+                  </div>
 
-                <div className="Cockpit__links__item__text">
-                  <div className="Cockpit__links__item__text__content">
-                    {tReady && t("player.cockpit.ranking_title")}
-                  </div>
-                  <div className="Cockpit__links__item__text__desc">
-                    {tReady && t("player.cockpit.ranking_desc")}
+                  <div className="Cockpit__links__item__text">
+                    <div className="Cockpit__links__item__text__content">
+                      {tReady && t("player.cockpit.ranking_title")}
+                    </div>
+                    <div className="Cockpit__links__item__text__desc">
+                      {tReady && t("player.cockpit.ranking_desc")}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
 
-            <Link className="no-hover col-4" to="/Profil">
-              <div className="Cockpit__links__item col-12 p-4">
-                <div className="Cockpit__links__item__icon">
-                  <img alt="Cup" src="images/icone/monde.png" />
-                </div>
+              <Link className="no-hover col-4" to="/Profil">
+                <div className="Cockpit__links__item col-12 py-3 px-4">
+                  <div className="Cockpit__links__item__icon">
+                    <img alt="Cup" src="images/icone/monde.png" />
+                  </div>
 
-                <div className="Cockpit__links__item__text">
-                  <div className="Cockpit__links__item__text__content">
-                    {tReady && t("player.cockpit.profile_title")}
-                  </div>
-                  <div className="Cockpit__links__item__text__desc">
-                    {tReady && t("player.cockpit.profile_desc")}
+                  <div className="Cockpit__links__item__text">
+                    <div className="Cockpit__links__item__text__content">
+                      {tReady && t("player.cockpit.profile_title")}
+                    </div>
+                    <div className="Cockpit__links__item__text__desc">
+                      {tReady && t("player.cockpit.profile_desc")}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
 
-            <Link className="no-hover col-4" to="/Regles">
-              <div className="Cockpit__links__item col-12 p-4">
-                <div className="Cockpit__links__item__icon">
-                  <img alt="Cup" src="images/icone/bouclier.png" />
-                </div>
+              <Link className="no-hover col-4" to="/Regles">
+                <div className="Cockpit__links__item col-12 py-3 px-4">
+                  <div className="Cockpit__links__item__icon bouclier">
+                    <img alt="Cup" src="images/icone/bouclier.png" />
+                  </div>
 
-                <div className="Cockpit__links__item__text">
-                  <div className="Cockpit__links__item__text__content">
-                    {tReady && t("player.cockpit.rules_title")}
-                  </div>
-                  <div className="Cockpit__links__item__text__desc">
-                    {tReady && t("player.cockpit.rules_desc")}
+                  <div className="Cockpit__links__item__text">
+                    <div className="Cockpit__links__item__text__content">
+                      {tReady && t("player.cockpit.rules_title")}
+                    </div>
+                    <div className="Cockpit__links__item__text__desc">
+                      {tReady && t("player.cockpit.rules_desc")}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          </div>
+              </Link>
+            </div>
+          </Row>
 
           <Modal
             show={this.state.showModal}
@@ -389,6 +399,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
 const mapStateToProps = (state: IStore) => {
   return {
     currentUser: state.user.currentUser,
+    currentCampaign: state.user.currentCampaign,
   };
 };
 export default withTranslation()(connect(mapStateToProps)(Cockpit));

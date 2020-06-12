@@ -3,16 +3,13 @@
 
 .LaunchFollowWidget {
   position: relative;
-  height: 10rem;
-  background-image: linear-gradient(to bottom, #424bb0, #5642b0, #5742b0),
-    url("/images/overlays/overlay-purple.svg");
-  // background:
+  background: url("/images/overlays/overlay-programme.png") #424bb0;
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 15px;
 
   &__background {
-    background: url(/images/bandeau/programme-astronaute.svg);
+    background: url(/images/bandeau/programme-astronaute.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -26,6 +23,7 @@
 
   &__container {
     color: $color-white1;
+    margin-right: 25%;
     &__title {
       @include typo-title-component;
       font-size: 1.3em;
@@ -49,7 +47,7 @@
       &__timer {
         font-weight: bold;
         color: $color-white1;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
       }
     }
   }

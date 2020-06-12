@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
+import { WithTranslation, withTranslation } from "react-i18next";
 import { FaRegEye } from "react-icons/fa";
 import { forkJoin } from "rxjs";
 import styled, { keyframes } from "styled-components";
@@ -16,6 +17,8 @@ import {
 } from "src/models/Question";
 
 import "./ChoixModuleNiveau.scss";
+import IStore from "store/IStore";
+import { connect } from "react-redux";
 
 const fadeInUpBigAnimation = keyframes`${fadeInUpBig}`;
 
@@ -28,10 +31,10 @@ const FadeInUpModule = styled.div`
 `;
 
 class ChoixModuleNiveau extends Component<
-  IChoixModuleNiveauProps,
+  IChoixModuleNiveauProps & WithTranslation,
   IChoixModuleNiveauState
 > {
-  constructor(props: IChoixModuleNiveauProps) {
+  constructor(props: IChoixModuleNiveauProps & WithTranslation) {
     super(props);
     this.state = {
       listNiveau: [],
@@ -69,7 +72,7 @@ class ChoixModuleNiveau extends Component<
     return (
       <div className={"main-choix-module mb-0"}>
         <h2 className={"d-none d-md-block color-primary-light mb-2"}>
-          Mission xx :{" "}
+          &laquo; {this.props.currentCampaign?.mission_name} &raquo;{" : "}Lancement !
         </h2>
         <h2 className={"d-block d-md-none mb-2"}>Mission xx : </h2>
         <p className={"d-none d-md-block mb-2"}>
@@ -160,4 +163,9 @@ class ChoixModuleNiveau extends Component<
   }
 }
 
-export default ChoixModuleNiveau;
+const mapStateToProps = (state: IStore) => {
+  return {
+    currentCampaign: state.user.currentCampaign
+  };
+};
+export default withTranslation()(connect(mapStateToProps)(ChoixModuleNiveau));
