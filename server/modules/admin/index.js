@@ -504,6 +504,56 @@ const register = async (server, options) => {
     path: "/admin/emailing/template-lancement",
     method: "GET",
     handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      const Organisation = db.getModel("Organisation");
+
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
+      // Check organisation stats
+      const currentOrga = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
+
+      const compnayDirectory =
+        UPLOAD_PATH + "/" + currentUserByAD.id_organisation;
+
+      // create company folder if not exists
+      if (!File.checkFolderExists(compnayDirectory)) {
+        File.createDirectory(compnayDirectory);
+      }
+
+      // crate company folder for emailing templates
+      const emailTemplates =
+        UPLOAD_PATH + "/" + currentUserByAD.id_organisation + "/templates";
+
+      if (!File.checkFolderExists(emailTemplates)) {
+        File.createDirectory(emailTemplates);
+      }
+
+      /**
+       * A partir de là il faudra créer le template de mail en utilisant le logo de la boite
+       * La fonction renverra un path vers le template du mail. Il n'y a pas besoin de renvoyer l'image car tout est stocké
+       * dans le dossier public.
+       *
+       */
+
       const template = path.resolve(
         __dirname,
         "..",
@@ -511,44 +561,34 @@ const register = async (server, options) => {
         "public",
         "templates",
         "emailing",
-        "Template1.png"
+        "lancement.png"
       );
+
+      if (!currentOrga.logo) {
+        return template;
+      }
       const icon = path.resolve(
         __dirname,
         "..",
         "..",
         "public",
-        "company-assets",
-        "1",
-        "1590679975822-ci_recto.jpg"
+        currentOrga.logo
       );
 
-      let imgActive = "active/image.jpg";
-      let imgExported = "export/image1.jpg";
-
+      /**
+       * Partie tricky : il faut identifier en pixels la zone où devra se trouver le logo.
+       *  Grace à la fonction resize de jimp on peut définir une largeur / hauteur fixe donc il y a normalement pas de risque de débordement
+       */
       try {
         const image = await Jimp.read(template);
         const logo = await Jimp.read(icon);
         logo.resize(Jimp.AUTO, 50);
 
         const composite = await image.composite(logo, 375, 88);
-        await composite.quality(100).write("export/test.png");
+        await composite.quality(100).write(emailTemplates + "/lancement.png");
       } catch (e) {
         console.error(e);
       }
-      // return Jimp.read(template)
-      //   .then((tpl) => tpl.clone().write(imgActive))
-      //   .then(() => Jimp.read(imgActive))
-      //   .then((tpl) =>
-      //     Jimp.read(icon).then((logoTpl) => tpl.composite(logoTpl, 277, 88))
-      //   )
-      //   .then((tpl) => tpl.quality(100).write(imgExported))
-      //   .then((tpl) => {
-      //     console.log("exported file: " + imgExported);
-      //   })
-      //   .catch((err) => {
-      //     console.error(err);
-      //   });
     },
   });
 };
