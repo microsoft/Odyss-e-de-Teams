@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 
 import QuestionAPI from "api/Question";
 
@@ -166,7 +166,14 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
   }
 
   render() {
-    return (
+    return this.state.isLoading ? (
+      <div className={"main-encart"}>
+        <div className="p-2 d-flex align-items-center">
+          <Spinner animation="grow" variant="primary" size="sm" />
+          <p className={" ml-2 mb-0"}>Chargement...</p>
+        </div>
+      </div>
+    ) : (
       <div className={"d-flex flex-column flex-md-row"}>
         <div className={"main-quizz w-100"}>
           <h1 className={"color-white d-flex d-md-none justify-content-center"}>

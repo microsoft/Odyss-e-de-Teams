@@ -295,11 +295,24 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                   )}
                   <div className={"mt-4"}>{this._renderMecanique(item)}</div>
                   {item.astuce ? (
-                    <div className={"pl-md-3 mt-3"}>
-                      <h3 className={"color-primary-light"}>
-                        Petite astuce Teams !
-                      </h3>
-                      <p className={"mb-0"}>{item.astuce}</p>
+                    <div className={"mt-4 astuce d-flex align-items-center"}>
+                      <p className={"mb-0 illustration"}>
+                        <img
+                          src={
+                            process.env.PUBLIC_URL +
+                            "/images/question/module/astro_" +
+                            this.state.currentModule?.image
+                          }
+                          alt={`Illustration module ${this.state.currentModule?.nom}`}
+                          className={"illustration-module-done"}
+                        />
+                      </p>
+                      <div className={"ml-3"}>
+                        <h3 className={"color-primary-light"}>
+                          Petite astuce Teams !
+                        </h3>
+                        <p className={"mb-0"}>{item.astuce}</p>
+                      </div>
                     </div>
                   ) : (
                     <span></span>

@@ -103,7 +103,7 @@ class AdminDashboard extends Component {
                 <Link to="/Outillage" className="no-underline-on-hover">
                   <div className="Admin__tools mt-4">
                     <div className="Admin__tools__image">
-                      <img src="/images/menu/outillage.svg" alt="outillage" />
+                      <img src="/images/menu/outillage.png" alt="outillage" />
                     </div>
 
                     <div className="Admin__tools__content">

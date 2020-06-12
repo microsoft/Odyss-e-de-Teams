@@ -13,6 +13,7 @@ body {
     .h1,
     h1 {
         font-size: 1.5rem;
+        margin-bottom: .75rem;
         .ico-titre {
             max-height: 2rem;
             margin-right: 0.25rem;
@@ -71,23 +72,46 @@ body {
         padding: 0.25rem 0.5rem;
         border-radius: 0.75rem;
         font-weight: bold;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-out;
+        transform-origin: 0 0;
         .btn-ico {
             max-height: 1.5rem;
             margin-right: 0.25rem;
         }
     }
     .btn.btn-primary {
-        background-color: $color-primary;
+        background: $color-primary-light;
         border-color: $color-primary;
+        box-shadow:0px 0px 0 100px $color-primary inset;
+    }
+    .btn.btn-primary:hover {
+        box-shadow:0px 0px 0 0px $color-primary inset;
     }
     .btn.btn-secondary {
-        background-color: $color-black2;
+        background-color: $color-primary;
+        border-color: $color-primary-light;
+        box-shadow:0px 0px 0 100px $color-primary-light inset;
+    }
+    .btn.btn-secondary:hover {
+        box-shadow:0px 0px 0 0px $color-primary-light inset;
+    }
+    .btn.btn-dark {
+        background-color: $color-black1;
         border-color: $color-black2;
+        box-shadow:0px 0px 0 100px $color-black2 inset;
+    }
+    .btn.btn-dark:hover {
+        box-shadow:0px 0px 0 0px $color-black2 inset;
     }
     .btn.btn-light {
-        background-color: $color-white1;
+        background-color: $color-white2;
         border-color: $color-white1;
         color: $color-primary;
+        box-shadow:0px 0px 0 100px $color-white1 inset;
+    }
+    .btn.btn-light:hover {
+        box-shadow:0px 0px 0 0px $color-white1 inset;
     }
     .btn {
         &__orange-gradiant {

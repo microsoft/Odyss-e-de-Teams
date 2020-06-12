@@ -23,10 +23,9 @@
   }
 
   &__game {
-    background: url("/images/overlays/overlay-yellow.svg");
+    background: url("/images/overlays/overlay-jouer.png");
     background-size: cover;
     border-radius: 15px;
-    height: 10rem;
     display: flex;
 
     &:hover {
@@ -34,16 +33,16 @@
     }
     &__container {
       color: $color-white1;
+      margin-right: 8.5rem;
 
       &__name {
-        @include typo-title-component;
         position: relative;
-        font-size: 2.5em;
+        font-size: 2em;
       }
 
       &__desc {
         @include typo-body-component;
-        font-size: 1.2em;
+        font-size: 1.125em;
       }
     }
 
@@ -58,9 +57,10 @@
   }
 
   &__exp {
-    background: url("/images/overlays/overlay-purple.svg");
+    position: relative;
+    background: url("/images/overlays/overlay-purple.png");
     border-radius: 15px;
-    height: 10rem;
+    margin-left: 30px;
     cursor: pointer;
 
     &__container {
@@ -72,9 +72,9 @@
 
       &__icon {
         position: absolute;
-        width: 4em;
-        top: 20%;
-        left: 10%;
+        width: 5rem;
+        top: 0;
+        left: 0;
         img {
           max-width: 100%;
           max-height: 100%;
@@ -92,9 +92,6 @@
           padding-top: 0;
           margin-left: 3em;
           width: 100%;
-
-          &__value {
-          }
         }
 
         &__desc {
@@ -121,10 +118,18 @@
       padding: 0.2em;
       display: flex;
       align-items: center;
-      height: 10rem;
+      height: 9rem;
 
       &__icon {
         width: 30%;
+        img {
+          max-width: 100%;
+        }
+      }
+      &__icon.bouclier {
+        img {
+          max-width: 80%;
+        }
       }
 
       &__text {
@@ -140,6 +145,14 @@
           font-size: 1em;
         }
       }
+    }
+  }
+  &__game:hover, &__exp:hover, &__links>a:hover {
+    transform: scale(1.025);
+    transition: all .25s;
+    img {
+      transform: scale(1.2) rotate(10deg);
+      transition: all .25s;
     }
   }
 }

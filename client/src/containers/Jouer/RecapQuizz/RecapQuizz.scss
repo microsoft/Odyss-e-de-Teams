@@ -96,6 +96,26 @@
       }
     }
   }
+  .question.recap {
+    .list-group-item:hover, .conteneur-img:hover{
+      transform: none;
+      background: none;
+    }
+    .conteneur-img {
+      img {
+        border-width: 2px !important;
+      }
+    }
+  }
+
+  .astuce {
+    .illustration {
+      margin: 0 2rem;
+      img {
+        width: 10rem;
+      }
+    }
+  }
 }
 
 @include media-breakpoint-up(md) {

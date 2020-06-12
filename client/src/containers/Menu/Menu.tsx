@@ -8,7 +8,6 @@ import { IMenu, IMenuState, IMenuProps } from "../../models/Menu";
 import IStore from "../../store/IStore";
 
 import MenuAPI from "api/Menu";
-import OrganisationAPI from "api/Organisation";
 
 import "./Menu.scss";
 
@@ -23,31 +22,57 @@ class Menu extends Component<IMenuProps, IMenuState> {
 
   async componentDidMount() {
     try {
-      const orgaInfos = await OrganisationAPI.getOrganisationInfos(
-        this.props.currentUser.id_organisation
-      );
       const menu = await MenuAPI.getMenu("fr");
-
       this.setState({
         listMenu: menu.results,
-        organisationLogo: orgaInfos.logo
-          ? process.env.REACT_APP_STATIC_URL + "/" + orgaInfos.logo
+        organisationLogo: this.props.currentOrganisation?.logo
+          ? process.env.REACT_APP_STATIC_URL + "/" + this.props.currentOrganisation?.logo
           : null,
+      }, () => {
+        const activeMenu: any = document.getElementsByClassName('active');
+        if (activeMenu && activeMenu.length > 0) {
+          let newY = activeMenu[0].offsetTop;
+          this._setPositionIndicator(newY);
+        } else {
+          document.getElementById('indicator').style.display = 'none';
+        }
       });
     } catch (e) {
       console.error("Menu error", e);
     }
   }
 
-  render() {
-    const { currentRouterLink, currentUser } = this.props;
-    const { organisationLogo } = this.state;
+  private _onClick = (e: any) => {
+    document.getElementById('indicator').style.display = 'block';
+    let elem = e.target;
+    if (!elem.classList.contains('list-group-item')) {
+      elem = elem.parentElement;
+    }
+    let newY = elem.offsetTop;
 
+    this._setPositionIndicator(newY);
+  }
+
+  private _setPositionIndicator = (top: number) => {
+    const marker = document.getElementById('indicator');
+    marker.style.transform = `translateY(${top}px)`;
+  }
+
+  render() {
+    let { currentRouterLink, currentUser } = this.props;
+    const { organisationLogo } = this.state;
+    if (currentRouterLink.match(new RegExp('/',"gi")).length > 1) {
+      const tabRouterLink = currentRouterLink.split('/');
+      if (tabRouterLink.length > 1) {
+        currentRouterLink = '/' + tabRouterLink[1];
+      }
+    }
     return (
-      <div className={"d-none d-md-flex menu py-4 flex-column"}>
+      <div className={"d-none d-md-flex menu py-4 flex-column position-relative"}>
         <UserAvatar user={currentUser} />
         <div className={"d-flex flex-column justify-content-between h-100"}>
           <ListGroup defaultActiveKey={"/#" + currentRouterLink}>
+            <div id={"indicator"} className={"indicator position-absolute"}></div>
             {this.state.listMenu?.map((item: IMenu) => {
               const itemStyle = {
                 backgroundImage:
@@ -62,15 +87,16 @@ class Menu extends Component<IMenuProps, IMenuState> {
                   key={item.id_page}
                   action
                   href={item.router_link}
-                  style={itemStyle}
+                  onClick={this._onClick}
+                  className={`py-0 d-flex align-items-center menu${item.id_page}`}
                 >
-                  {item.nom}
+                  <div style={itemStyle} className={"ico-menu"}></div>
+                  <div className={"title-menu"}>{item.nom}</div>
                 </ListGroup.Item>
               );
             })}
           </ListGroup>
           <div className="menu__logo">
-            {!organisationLogo && <p className={"text-center"}>Logo client</p>}
             {organisationLogo && <img src={organisationLogo} alt="logo" />}
           </div>
         </div>
@@ -81,6 +107,7 @@ class Menu extends Component<IMenuProps, IMenuState> {
 const mapStateToProps = (state: IStore) => {
   return {
     currentUser: state.user.currentUser,
+    currentOrganisation: state.user.currentOrganisation
   };
 };
 export default connect(mapStateToProps)(Menu);

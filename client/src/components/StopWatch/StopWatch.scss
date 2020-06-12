@@ -2,6 +2,9 @@
 
 .chrono {
     @include bg-encart;
+    .illustration-chronometre {
+        max-width: 60%;
+    }
     .btn {
         border-top-left-radius: 0;
         border-top-right-radius: 0;

@@ -33,7 +33,7 @@ const Description = (props) => {
           </div>
           <div className="Description__body__elt__text">
             <Trans i18nKey="landing.description.questions">
-              200 <strong>quesstions</strong> pour vous propulser sur Microsoft Teams
+              200 <strong>questions</strong> pour vous propulser sur Microsoft Teams
             </Trans>
           </div>
         </div>

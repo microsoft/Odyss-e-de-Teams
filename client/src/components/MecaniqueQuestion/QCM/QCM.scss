@@ -18,6 +18,11 @@
       }
     }
   }
+  .list-group-item:hover {
+    transform: scale(1.01);
+    transition: all .25s;
+    background: rgba(123, 131, 235, 0.1);
+  }
   .list-group-item.active {
     background: rgba(123, 131, 235, 0.15);
     border: solid 1px $color-primary-light;
@@ -31,7 +36,11 @@
       right: 0;
     }
   }
+  .conteneur-img:hover{
+    transform: scale(1.05);
+    transition: all .25s;
+  }
   .conteneur-img.img-active {
-    border: solid 1px $color-primary-light;
+    border: solid 2px $color-primary-light;
   }
 }

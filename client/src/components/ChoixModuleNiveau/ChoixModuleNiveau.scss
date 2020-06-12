@@ -4,9 +4,9 @@
 @import "~bootstrap/scss/mixins/_breakpoints.scss";
 
 .main-choix-module {
-    background: url("/images/astronaute/astro_hello.svg") no-repeat 97% 122%;
+    background: url("/images/astronaute/astro_hello.png") no-repeat 97% 122%;
     background-size: 6rem;
-    padding-bottom: 9%;
+    padding-bottom: 11%;
     .module {
         width: 20%;
         background: $color-white1;
@@ -22,6 +22,17 @@
             font-size: .95em;
         }
     }
+    .module:hover {
+        transform: scale(1.1);
+        transition: all .25s;
+        .illustration-module {
+            animation: bounce 0.35s ease infinite alternate;
+        }
+    }
+}
+@keyframes bounce{
+    from {transform: translateY(5px);}
+    to   {transform: translateY(-15px);}
 }
 
 @include media-breakpoint-down(md) {

@@ -56,7 +56,7 @@ class Classement extends Component<{}, IClassementState> {
         );
     };
 
-    private _setViewMonde = () => {
+    /* private _setViewMonde = () => {
         this.setState(
             {
                 viewMonde: !this.state.viewMonde,
@@ -65,7 +65,7 @@ class Classement extends Component<{}, IClassementState> {
                 this._loadDataClassement();
             }
         );
-    };
+    }; */
 
     private _calculMauvaiseReponse = (item: IClassement) => {
         if (item && item.nb_reponse && item.nb_reponse > 0) {
@@ -124,16 +124,12 @@ class Classement extends Component<{}, IClassementState> {
                     Classement de la saison
                 </h1>
                 <div className={"main-encart nobg-mobile main-classement"}>
-                    <h2 className={"color-primary-light mb-3 d-none d-md-block"}>
-                        Mission : « Lancement ! »
-                    </h2>{" "}
-                    {/* todo : get current programme / global state */}
                     <div className={"d-none d-md-block mb-3"}>
                         {" "}
                         {/* btn vu dekstop */}
                         <Button
                             variant={
-                                this.state.currentView === "point" ? "primary" : "secondary"
+                                this.state.currentView === "point" ? "primary" : "dark"
                             }
                             onClick={() => this._setCurrentView("point")}
                             className={"mr-3"}
@@ -147,7 +143,7 @@ class Classement extends Component<{}, IClassementState> {
                         </Button>
                         <Button
                             variant={
-                                this.state.currentView === "xp" ? "primary" : "secondary"
+                                this.state.currentView === "xp" ? "primary" : "light"
                             }
                             onClick={() => this._setCurrentView("xp")}
                             className={"mr-3 d-inline-flex align-items-center"}
@@ -160,7 +156,7 @@ class Classement extends Component<{}, IClassementState> {
                             Classement points EXP
                         </Button>
                         {/* suppression classement monde / demande MS <Button
-                            variant={this.state.viewMonde ? "primary" : "secondary"}
+                            variant={this.state.viewMonde ? "primary" : "dark"}
                             onClick={() => this._setViewMonde()}
                             className={"mr-3 d-inline-flex align-items-center"}
                         >
@@ -178,7 +174,7 @@ class Classement extends Component<{}, IClassementState> {
                         <ButtonGroup aria-label="Filtre du classement" className={"mr-2"}>
                             <Button
                                 variant={
-                                    this.state.currentView === "point" ? "primary" : "secondary"
+                                    this.state.currentView === "point" ? "primary" : "dark"
                                 }
                                 onClick={() => this._setCurrentView("point")}
                             >
@@ -188,7 +184,7 @@ class Classement extends Component<{}, IClassementState> {
                             </Button>
                             <Button
                                 variant={
-                                    this.state.currentView === "xp" ? "primary" : "secondary"
+                                    this.state.currentView === "xp" ? "primary" : "dark"
                                 }
                                 onClick={() => this._setCurrentView("xp")}
                                 className={"mr-3"}
@@ -199,7 +195,7 @@ class Classement extends Component<{}, IClassementState> {
                         </Button>
                         </ButtonGroup>
                         {/* suppression classement monde / demande MS  <Button
-                            variant={this.state.viewMonde ? "primary" : "secondary"}
+                            variant={this.state.viewMonde ? "primary" : "dark"}
                             onClick={() => this._setViewMonde()}
                         >
                             <img

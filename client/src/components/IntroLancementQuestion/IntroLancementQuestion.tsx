@@ -54,9 +54,9 @@ class IntroLancementQuestion extends Component<
           </h4>
           <p className={"text-center mb-0"}>
             <img
-              src={process.env.PUBLIC_URL + "/images/question/chronometre.svg"}
+              src={process.env.PUBLIC_URL + "/images/question/chronometre.png"}
               alt={`Illustration Chronometre`}
-              className={"illustration-chronometre"}
+              className={"illustration-chronometre my-3"}
             />
           </p>
           <p className={"text-center content mx-auto"}>

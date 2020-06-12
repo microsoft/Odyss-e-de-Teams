@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { forkJoin } from "rxjs";
 import Cookies from "js-cookie";
 
 import "./App.scss";
@@ -15,6 +16,7 @@ import LoginContainer from "containers/Login";
 import LoadingContainer from "containers/Loading";
 
 import UserAPI from "api/User";
+import OrganisationAPI from "api/Organisation";
 import AuthService from "api/sso/auth.service";
 
 import IStore from "store/IStore";
@@ -80,7 +82,7 @@ class App extends React.Component<IAppProps, IAppState> {
   onCompleteLanding = (e: any) => {
     UserAPI.createUserByAD("fr", {
       ad: this.state.userAD,
-      id_avatar: e.avatarSelected
+      id_avatar: e.avatarSelected,
     }).then((result: any) => {
       this._loadCurrentUser();
     });
@@ -92,18 +94,36 @@ class App extends React.Component<IAppProps, IAppState> {
         expires: 7,
         path: "/",
       });
-      UserAPI.getUser("fr", "current").then((data) => {
-        if (data) {
-          const action_liste = {
-            type: "SET_CURRENT_USER",
-            value: data,
-          };
-          this.props.dispatch(action_liste);
-          this.setState({
-            logged: true,
-            is_admin: data.id_role === 2,
-            loading: false,
-          });
+
+      UserAPI.getUser("fr", "current").then((user) => {
+        if (user) {
+          forkJoin([
+            OrganisationAPI.getOrganisationInfos(user.id_organisation),
+            UserAPI.getCurrentCampaignInfo(),
+          ])
+            .toPromise()
+            .then((data) => {
+              const action_current_user = {
+                type: "SET_CURRENT_USER",
+                value: user,
+              };
+              this.props.dispatch(action_current_user);
+              const action_current_organisation = {
+                type: "SET_CURRENT_ORGANISATION",
+                value: data[0],
+              };
+              this.props.dispatch(action_current_organisation);
+              const action_current_campaign = {
+                type: "SET_CURRENT_CAMPAIGN",
+                value: data[1] ? data[1].results : null,
+              };
+              this.props.dispatch(action_current_campaign);
+              this.setState({
+                logged: true,
+                is_admin: user.id_role === 2,
+                loading: false,
+              });
+            });
         } else {
           this.setState({
             logged: false,
@@ -115,7 +135,7 @@ class App extends React.Component<IAppProps, IAppState> {
   };
 
   render() {
-    if (this.state.logged && this.props.location.pathname === '/') {
+    if (this.state.logged && this.props.location.pathname === "/") {
       return <Redirect to="/Cockpit" />;
     }
 
@@ -151,8 +171,11 @@ class App extends React.Component<IAppProps, IAppState> {
 
           if (this.state.is_admin) return <AdminContainer />;
 
-          if (!this.state.is_admin){
-            let hasGradient = this.props.location.pathname.indexOf('/Jouer') !== -1 ? false : true;
+          if (!this.state.is_admin) {
+            let hasGradient =
+              this.props.location.pathname.indexOf("/Jouer") !== -1
+                ? false
+                : true;
             return <PlayerContainer hasGradient={hasGradient} />;
           }
         }

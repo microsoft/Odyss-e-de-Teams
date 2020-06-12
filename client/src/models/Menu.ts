@@ -1,4 +1,4 @@
-import { IUser } from "./User";
+import { IUser, IOrganisation } from "./User";
 
 export interface IMenu {
   id_page: number;
@@ -17,4 +17,5 @@ export interface IMenuState {
 export interface IMenuProps {
   currentRouterLink: string;
   currentUser: IUser;
+  currentOrganisation: IOrganisation;
 }

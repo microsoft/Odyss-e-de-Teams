@@ -15,12 +15,14 @@
   }
 
   &__background-0 {
-    background: url("/images/backgrounds/landing-background0.svg") center center fixed;
+    background: url("/images/backgrounds/landing-background0.jpg") center center
+      fixed;
     background-repeat: no-repeat;
     background-size: cover;
   }
   &__background-1 {
-    background: url("/images/backgrounds/landing-background1.svg") center center fixed;
+    background: url("/images/backgrounds/landing-background1.jpg") center center
+      fixed;
     background-repeat: no-repeat;
     background-size: cover;
   }
@@ -39,5 +41,13 @@
     background-size: cover;
     background-attachment: fixed;
     background-position: center center;
+  }
+
+  #landing_step1{
+    transition: width 1s, transform 1s;
+    float: left;
+  }
+  #landing_step1.slide{
+    width: 0;
   }
 }

@@ -18,7 +18,7 @@ const PlanningWidget = (props: IPlanningWidget & WithTranslation) => {
       <div className={"Planning"}>
         <div className="Planning__container d-flex flex-row col-12 no-gutters">
           <div className="Planning__container__icon  col-4 d-flex justify-content-center">
-            <img src="/images/menu/planning.svg" alt="planning" />
+            <img src="/images/menu/planning.png" alt="planning" />
           </div>
 
           <div className="Planning__container__content col-8 d-flex flex-column py-3 justify-content-center">

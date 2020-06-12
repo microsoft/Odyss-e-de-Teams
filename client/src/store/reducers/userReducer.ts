@@ -14,13 +14,25 @@ export const userReducer: Reducer<IUserState, any> = (
                 ...state,
                 currentUser: action.value
             }
-            return nextState || state
+            return nextState || state;
+        case 'SET_CURRENT_ORGANISATION':
+            nextState = {
+                ...state,
+                currentOrganisation: action.value
+            }
+            return nextState || state;
+        case 'SET_CURRENT_CAMPAIGN':
+            nextState = {
+                ...state,
+                currentCampaign: action.value
+            }
+            return nextState || state;
         case 'LEVEL_UP':
             nextState = {
                 ...state,
                 dataLevelUp: action.value
             }
-            return nextState || state
+            return nextState || state;
         default:
             return state;
     }

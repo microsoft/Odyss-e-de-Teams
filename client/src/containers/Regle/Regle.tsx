@@ -69,12 +69,12 @@ class Regle extends Component {
                     <div className={"d-flex steps"}>
                         <FadeInStep1 className={"step step1 text-center d-flex flex-column align-items-center"}>
                             <img
-                                src={process.env.PUBLIC_URL + "/images/regle/step1_desktop.svg"}
+                                src={process.env.PUBLIC_URL + "/images/regle/step1_desktop.png"}
                                 alt="Ico Jouer"
                                 className={"d-none d-md-inline"}
                             />
                             <img
-                                src={process.env.PUBLIC_URL + "/images/regle/step1_mobile.svg"}
+                                src={process.env.PUBLIC_URL + "/images/regle/step1_mobile.png"}
                                 alt="Ico gain"
                                 className={"d-inline d-md-none"}
                             />
@@ -85,12 +85,12 @@ class Regle extends Component {
                         </FadeInStep1>
                         <FadeInStep2 className={"step step2 text-center d-flex flex-column align-items-center mx-md-4"}>
                             <img
-                                src={process.env.PUBLIC_URL + "/images/regle/step2_desktop.svg"}
+                                src={process.env.PUBLIC_URL + "/images/regle/step2_desktop.png"}
                                 alt="Ico points"
                                 className={"d-none d-md-inline"}
                             />
                             <img
-                                src={process.env.PUBLIC_URL + "/images/regle/step2_mobile.svg"}
+                                src={process.env.PUBLIC_URL + "/images/regle/step2_mobile.png"}
                                 alt="Ico gain"
                                 className={"d-inline d-md-none"}
                             />
@@ -101,12 +101,12 @@ class Regle extends Component {
                         </FadeInStep2>
                         <FadeInStep3 className={"step step3 text-center d-flex flex-column align-items-center mx-md-4"}>
                             <img
-                                src={process.env.PUBLIC_URL + "/images/regle/step3_desktop.svg"}
+                                src={process.env.PUBLIC_URL + "/images/regle/step3_desktop.png"}
                                 alt="Ico galaxie"
                                 className={"d-none d-md-inline"}
                             />
                             <img
-                                src={process.env.PUBLIC_URL + "/images/regle/step3_mobile.svg"}
+                                src={process.env.PUBLIC_URL + "/images/regle/step3_mobile.png"}
                                 alt="Ico gain"
                                 className={"d-inline d-md-none"}
                             />
@@ -119,7 +119,7 @@ class Regle extends Component {
                             <div className={"step-content"}>
                                 <p className={"num-step mx-auto mb-0"}>4</p>
                                 <img
-                                    src={process.env.PUBLIC_URL + "/images/regle/step4_mobile.svg"}
+                                    src={process.env.PUBLIC_URL + "/images/regle/step4_mobile.png"}
                                     alt="Ico gain"
                                     className={"d-inline d-md-none"}
                                 />
