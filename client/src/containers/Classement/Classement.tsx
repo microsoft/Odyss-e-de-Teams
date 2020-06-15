@@ -143,7 +143,7 @@ class Classement extends Component<{}, IClassementState> {
                         </Button>
                         <Button
                             variant={
-                                this.state.currentView === "xp" ? "primary" : "light"
+                                this.state.currentView === "xp" ? "primary" : "dark"
                             }
                             onClick={() => this._setCurrentView("xp")}
                             className={"mr-3 d-inline-flex align-items-center"}
