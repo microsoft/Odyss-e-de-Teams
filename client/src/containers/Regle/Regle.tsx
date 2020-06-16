@@ -66,7 +66,7 @@ class Regle extends Component {
                 <div className={"main-encart nobg-mobile main-regle"}>
                     <h2 className={"d-none d-md-block color-primary-light mb-2"}>Un programme d’un mois pour voyager au coeur des usages Teams</h2>
                     <p className={"d-none d-md-block mb-2"}>Répondre aux modules est le meilleur des carburants vers le succès</p>
-                    <div className={"d-flex steps"}>
+                    <div className={"d-flex steps mt-3"}>
                         <FadeInStep1 className={"step step1 text-center d-flex flex-column align-items-center"}>
                             <img
                                 src={process.env.PUBLIC_URL + "/images/regle/step1_desktop.png"}

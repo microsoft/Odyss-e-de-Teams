@@ -58,7 +58,8 @@
 
   &__exp {
     position: relative;
-    background: url("/images/overlays/overlay-purple.png");
+    background: url("/images/overlays/overlay_reward.png");
+    background-size: cover;
     border-radius: 15px;
     margin-left: 30px;
     cursor: pointer;
@@ -88,10 +89,15 @@
           @include typo-title-component;
           font-weight: bold;
           color: $color-white1;
-          font-size: 1.4em;
+          width: 12rem !important;
+          font-size: 1.2rem;
           padding-top: 0;
-          margin-left: 3em;
+          padding-left: 3.25rem;
           width: 100%;
+          line-height: 1.4rem;
+          .val {
+            font-size: 1.75rem;
+          }
         }
 
         &__desc {
@@ -123,7 +129,7 @@
       &__icon {
         width: 30%;
         img {
-          max-width: 100%;
+          max-width: 95%;
         }
       }
       &__icon.bouclier {

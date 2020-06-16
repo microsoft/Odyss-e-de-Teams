@@ -655,7 +655,7 @@ const register = async (server, options) => {
         const widthTemplate = imageTemplate.bitmap.width;
         const widthLogo = logo.bitmap.width;
 
-        const composite = await imageTemplate.composite(logo, (widthTemplate / 2 - widthLogo / 2), 40);
+        const composite = await imageTemplate.composite(logo, (widthTemplate - widthLogo - 45), 45);
         await composite.quality(100).write(emailTemplates + "/" + currentAsset.nom_fichier);
 
         return result;

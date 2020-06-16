@@ -82,35 +82,35 @@ body {
     }
     .btn.btn-primary {
         background: $color-primary-light;
-        border-color: $color-primary;
+        border: none;
         box-shadow:0px 0px 0 100px $color-primary inset;
     }
-    .btn.btn-primary:hover {
+    .btn.btn-primary:not(:disabled):hover {
         box-shadow:0px 0px 0 0px $color-primary inset;
     }
     .btn.btn-secondary {
         background-color: $color-primary;
-        border-color: $color-primary-light;
+        border: none;
         box-shadow:0px 0px 0 100px $color-primary-light inset;
     }
-    .btn.btn-secondary:hover {
+    .btn.btn-secondary:not(:disabled):hover {
         box-shadow:0px 0px 0 0px $color-primary-light inset;
     }
     .btn.btn-dark {
         background-color: $color-black1;
-        border-color: $color-black2;
+        border: none;
         box-shadow:0px 0px 0 100px $color-black2 inset;
     }
-    .btn.btn-dark:hover {
+    .btn.btn-dark:not(:disabled):hover {
         box-shadow:0px 0px 0 0px $color-black2 inset;
     }
     .btn.btn-light {
         background-color: $color-white2;
-        border-color: $color-white1;
+        border: none;
         color: $color-primary;
         box-shadow:0px 0px 0 100px $color-white1 inset;
     }
-    .btn.btn-light:hover {
+    .btn.btn-light:not(:disabled):hover {
         box-shadow:0px 0px 0 0px $color-white1 inset;
     }
     .btn {

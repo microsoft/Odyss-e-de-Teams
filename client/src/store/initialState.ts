@@ -7,7 +7,8 @@ export const initialState: IStore = {
     hasReponse: false,
     listQuestion: [],
     selectedModule: null,
-    selectedNiveau: null
+    selectedNiveau: null,
+    hasAlreadyPaused: false
   },
   user: {
     currentUser: null,

@@ -18,6 +18,9 @@
   }
 
   &__container {
+    img {
+      max-width: 70%;
+    }
     &__content {
       color: $color-white1;
 

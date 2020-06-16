@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, Spinner } from "react-bootstrap";
+import { Button, Spinner, Modal } from "react-bootstrap";
 
 import QuestionAPI from "api/Question";
 
@@ -24,6 +24,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
       isLoading: true,
       step: 1,
       hasReponse: false,
+      hasAlreadyPaused: props.dataInitQuizz.hasAlreadyPaused ? true : false,
       listQuestion:
         props.dataInitQuizz.listQuestion &&
         props.dataInitQuizz.listQuestion.length > 0
@@ -85,6 +86,12 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
             listQuestion: this.state.listQuestion,
             selectedModule: this.props.dataInitQuizz.selectedModule,
             selectedNiveau: this.props.dataInitQuizz.selectedNiveau,
+          }).then(() => {
+            const action_liste = {
+              type: "SET_PAUSE_QUIZZ",
+              value: false,
+            };
+            this.props.dispatch(action_liste);
           });
         }
       }
@@ -98,6 +105,49 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
 
   private _onPauseVideo = () => {
     this.chronoComponent.current.startTimer();
+  };
+
+  private _onStopTimer = () => {
+    if (this.state.step <= this.state.listQuestion.length) {
+      this._setShowModalPause(true);
+    }
+  };
+  private _setShowModalPause = (show: boolean) => {
+    const hasAlreadyPaused = this.state.hasAlreadyPaused;
+    const firstPaused = !hasAlreadyPaused && show;
+    this.setState(
+      {
+        showModalPause: show,
+        hasAlreadyPaused: true,
+      },
+      () => {
+        if (!show) {
+          this.chronoComponent.current.startTimer();
+        }
+        if (firstPaused) {
+          const action_liste = {
+            type: "SET_PAUSE_QUIZZ",
+            value: true,
+          };
+          this.props.dispatch(action_liste);
+        }
+      }
+    );
+  };
+
+  private _setShowModalHelp = (show: boolean) => {
+    this.setState(
+      {
+        showModalHelp: show,
+      },
+      () => {
+        if (show) {
+          this.chronoComponent.current.stopTimer();
+        } else {
+          this.chronoComponent.current.startTimer();
+        }
+      }
+    );
   };
 
   private _renderMecanique(item: IQuestion) {
@@ -174,7 +224,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
         </div>
       </div>
     ) : (
-      <div className={"d-flex flex-column flex-md-row"}>
+      <div className={"d-flex flex-column flex-md-row quizz-container"}>
         <div className={"main-quizz w-100"}>
           <h1 className={"color-white d-flex d-md-none justify-content-center"}>
             <img
@@ -275,8 +325,94 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
           </div>
         </div>
         <div className={"toolbar-right ml-0 ml-md-5"}>
-          <StopWatch ref={this.chronoComponent} />
+          <StopWatch
+            ref={this.chronoComponent}
+            onStopTimer={this._onStopTimer}
+            canStopTimer={
+              !this.state.hasAlreadyPaused &&
+              this.state.step <= this.state.listQuestion?.length
+            }
+          />
+          <Button
+            variant={"primary"}
+            onClick={() => this._setShowModalHelp(true)}
+            className={"mt-3"}
+          >
+            Note de mission
+          </Button>
         </div>
+        <Modal
+          show={this.state.showModalPause}
+          onHide={() => this._setShowModalPause(false)}
+          dialogClassName="modal-pause"
+          centered
+        >
+          <div className={"content"}>
+            <Modal.Body>
+              <h2 className={"color-primary"}>
+                Une pause pour remettre du carburant ?
+              </h2>
+              <p>Ne perds plus 1 seconde pour gagner des points !</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="primary"
+                onClick={() => this._setShowModalPause(false)}
+              >
+                Remonter à bord
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
+        <Modal
+          show={this.state.showModalHelp}
+          onHide={() => this._setShowModalHelp(false)}
+          dialogClassName="modal-help"
+          centered
+        >
+          <div className={"content"}>
+            <Modal.Body>
+              <h2 className={"color-primary"}>Houston, on a un problème !</h2>
+              <h4 className={"color-primary-light"}>
+                Comment répondre aux questions ?
+              </h4>
+              <div className={"mt-2 d-flex align-items-center justify-content-between"}>
+                <div>
+                  <p className={"p-rep p-chrono"}>
+                    30 secondes pour gagner un bonus supplémentaire
+                  </p>
+                  <p className={"p-rep p-eclair"}>
+                    Plusieurs réponses sont possibles
+                  </p>
+                  <p className={"p-rep p-coeur"}>
+                    Choisis entre A, B, C et/ou D
+                  </p>
+                  <p className={"p-rep p-flag mb-0"}>
+                    Pour confirmer, clique sur « Valider mes réponses »
+                  </p>
+                </div>
+                <div>
+                  <img
+                    src={
+                      process.env.PUBLIC_URL +
+                      "/images/astronaute/astro_hello.png"
+                    }
+                    alt={`Illustration Astronaute`}
+                    className={"ico-modal mr-5"}
+                  />
+                </div>
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="primary"
+                onClick={() => this._setShowModalHelp(false)}
+              >
+                Reçu 5 sur 5 !
+              </Button>
+            </Modal.Footer>
+          </div>
+        </Modal>
       </div>
     );
   }

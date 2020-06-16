@@ -37,9 +37,14 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
     }, 10);
   };
 
-  public stopTimer = () => {
-    this.setState({ timerOn: false });
-    clearInterval(this.timer);
+  public stopTimer = (actionClick = false) => {
+    if (this.props.canStopTimer || !actionClick) {
+      this.setState({ timerOn: false });
+      clearInterval(this.timer);
+      if (actionClick) {
+        this.props.onStopTimer();
+      }
+    }
   };
 
   public restartTimer = () => {
@@ -79,7 +84,7 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
             </Button>
           )}
           {this.state.timerOn === true && (
-            <Button variant={this.props.done ? 'dark' : 'primary'} onClick={this.stopTimer}>
+            <Button variant={this.props.done ? 'dark' : 'primary'} disabled={!this.props.canStopTimer} onClick={() => this.stopTimer(true)}>
               <span className={this.props.done ? 'd-none' : 'd-inline'}>Suspendre la mission</span>
               <span className={this.props.done ? 'd-inline' : 'd-none'}>Mission terminée</span>
             </Button>

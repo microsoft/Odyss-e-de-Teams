@@ -101,12 +101,14 @@ class AdminDashboard extends Component {
                 />
 
                 <Link to="/Outillage" className="no-underline-on-hover">
-                  <div className="Admin__tools mt-4">
-                    <div className="Admin__tools__image">
-                      <img src="/images/menu/outillage.png" alt="outillage" />
+                  <div className="Admin__tools mt-4 d-flex flex-row py-3 justify-content-center">
+                    <div className="Admin__tools__image col-3">
+                      <img src="/images/menu/outillage.png" alt="outillage" style={{
+                        maxWidth: "70%",
+                      }} />
                     </div>
 
-                    <div className="Admin__tools__content">
+                    <div className="Admin__tools__content col-9">
                       <div className="Admin__tools__content__title">
                         <Translation>{(t) => t("menu.outillage")}</Translation>
                       </div>

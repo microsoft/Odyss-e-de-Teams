@@ -10,6 +10,9 @@
 
     &__icon {
       width: 25%;
+      img {
+        max-width: 90%;
+      }
     }
 
     &__info {

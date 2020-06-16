@@ -230,12 +230,12 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
                   </div>
                   <div className="Cockpit__exp__container__text">
                     <div className="Cockpit__exp__container__text__title">
-                      +{currentBonus.value}{" "}
+                      <span className="val">+{currentBonus.value}{" "}</span>
                       {tReady &&
                         t(`player.cockpit.bonus_desc_${currentBonus.type}`)}
                     </div>
 
-                    <div className="Cockpit__exp__container__text__desc">
+                    <div className="Cockpit__exp__container__text__desc mt-2">
                       {tReady && t("player.cockpit.exp_daily_bonus")}
                     </div>
                   </div>
@@ -266,7 +266,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
               <Link className="no-hover col-4" to="/Profil">
                 <div className="Cockpit__links__item col-12 py-3 px-4">
                   <div className="Cockpit__links__item__icon">
-                    <img alt="Cup" src="images/icone/monde.png" />
+                    <img alt="Cup" src="images/menu/profil.png" />
                   </div>
 
                   <div className="Cockpit__links__item__text">
