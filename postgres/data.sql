@@ -149,10 +149,15 @@ INSERT INTO public.t_agenda (nom, description, date_agenda, actif, horodatage, h
 	UNION ALL
 	SELECT DISTINCT 'AGENDA', id_agenda, 'fr', nom, NULL::text FROM public.t_agenda;
 	
--- type assets communication
+-- assets communication
   INSERT INTO public.t_type_asset_communication (nom, actif, horodatage, horodatage_creation) VALUES 	
     ('Emailing', true, now(), now()),
     ('RS', true, now(), now());
+  INSERT INTO public.t_asset_communication (id_type_asset_communication, nom, nom_fichier, contenu1, contenu2, actif, horodatage, horodatage_creation) VALUES
+	(1, 'E-mail de Lancement', 'lancement.png', 
+		'<div style="top: 375px; position: relative; padding: 0 75px; font-size: 18pt; font-family: ''Segoe UI''; "><h1 style="text-align:center;text-align: center; font-size: 41pt; line-height: 40pt; font-weight: 200; color: #5059C9; margin-bottom: 20pt;">Utiliser Microsoft Teams, un défi lunaire ?</h1><p style="text-align: center; line-height: 20pt;">Fais décoller tes usages et découvre l’immensité des possibilités de Teams pas à pas, dans un jeu concours conçu spécialement pour toi !</p></div>', 
+		NULL,
+		true, now(), now());
 
 
 -- question
@@ -199,14 +204,6 @@ INSERT INTO public.t_agenda (nom, description, date_agenda, actif, horodatage, h
 -- Organisation semaine fixtures
 INSERT INTO public.j_organisation_semaine("id_organisation","id_semaine","debut_semaine","fin_semaine")
 	VALUES (1,1, '2020-06-09 08:08:02.296738','2020-06-14 08:08:02.296738'), (1,2, '2020-06-15 08:08:02.296738','2020-06-21 08:08:02.296738'),(1,3, '2020-06-22 08:08:02.296738', '2020-06-26 08:08:02.296738'),(1,4, '2020-06-29 08:08:02.296738', '2020-07-05 08:08:02.296738');
-
-
-	-- ajout tid SAEGUS / Pas de maitre du jeu qui active
-	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine_encours=1 WHERE id_organisation=1;
--- maitre jeu
-	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) 
-	VALUES (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
-
 
 
 -- Agenda semaine

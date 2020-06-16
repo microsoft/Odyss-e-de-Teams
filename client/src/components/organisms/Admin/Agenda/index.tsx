@@ -45,12 +45,13 @@ class AdminAgenda extends React.Component<WithTranslation, {}> {
     const res = await AdminAPI.getAgenda();
 
     let currentWeek = 0;
-
-    res.forEach((elem, index) => {
-      if (moment().isBetween(moment(elem.date_start), moment(elem.date_end))) {
-        currentWeek = index;
-      }
-    });
+    if (res) {
+      res.forEach((elem, index) => {
+        if (moment().isBetween(moment(elem.date_start), moment(elem.date_end))) {
+          currentWeek = index;
+        }
+      });
+    }
 
     this.setState({
       result: res,

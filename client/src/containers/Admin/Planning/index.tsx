@@ -29,8 +29,7 @@ class PlanningContainer extends React.Component<
     loading: true,
     campaigns: [],
     agenda: [],
-    // curTabKey: "PLANNING",
-    curTabKey: "EMAIL",
+    curTabKey: "PLANNING",
   };
 
   async componentDidMount() {
@@ -60,7 +59,7 @@ class PlanningContainer extends React.Component<
     }
   }
 
-  activateMission = async (mission) => {
+  activateMission = async (mission: any) => {
     await AdminAPI.setCurrentMission({
       id_semaine: mission.id_semaine,
     });
@@ -85,7 +84,7 @@ class PlanningContainer extends React.Component<
             <h1>{tReady && t("admin.planning.subtitle")}</h1>
           </div>
 
-          <div className="PlanningContainer__container col-12">
+          <div className="PlanningContainer__container col-12 main-encart">
             <div className="PlanningContainer__container__title">
               <h2>{tReady && t("admin.planning.board_title")}</h2>
               <p>{tReady && t("admin.planning.board_desc")}</p>
@@ -112,10 +111,6 @@ class PlanningContainer extends React.Component<
 
                 <Tab eventKey="SOCIAL" title={t("admin.planning.menu_social")}>
                   Social
-                </Tab>
-
-                <Tab eventKey="TEAMS" title={t("admin.planning.menu_teams")}>
-                  notification teams
                 </Tab>
 
                 <Tab

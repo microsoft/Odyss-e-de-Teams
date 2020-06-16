@@ -4,3 +4,4 @@ build
 .DS_Store
 server/public/company-assets
 .env
+/client/public/upload/quizz
