@@ -12,8 +12,7 @@
   }
 
   &__container {
-    background: url("/images/overlays/overlay-spacial.svg"),
-      linear-gradient($color-white3, $color-white1);
+    background: $color-white1 url("/images/overlays/overlay-spacial.svg");
     background-repeat: no-repeat;
     background-size: cover;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
@@ -51,6 +50,10 @@
           color: $color-white1;
           font-weight: bold;
           margin-right: 1em;
+        }
+        a:hover {
+          background-color: $color-primary-light !important;
+          color: $color-white1 !important;
         }
 
         .active {

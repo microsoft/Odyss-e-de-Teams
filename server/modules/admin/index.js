@@ -3,6 +3,8 @@ const { QueryTypes } = require("sequelize");
 const moment = require("moment");
 const File = require("./../../utils/File");
 const path = require("path");
+const Jimp = require("jimp");
+const ImageSize = require("image-size");
 
 // constants
 const UPLOAD_PATH = path.resolve(
@@ -12,6 +14,7 @@ const UPLOAD_PATH = path.resolve(
   "public",
   "company-assets"
 );
+const ROOT_UPLOAD_PATH = "/company-assets";
 
 const ADMIN_ROLE_ID = 2;
 
@@ -184,12 +187,12 @@ const register = async (server, options) => {
         },
       });
 
-      const compnayDirectory =
+      const companyDirectory =
         UPLOAD_PATH + "/" + currentUserByAD.id_organisation;
 
       // create company folder if not exists
-      if (!File.checkFolderExists(compnayDirectory)) {
-        File.createDirectory(compnayDirectory);
+      if (!File.checkFolderExists(companyDirectory)) {
+        File.createDirectory(companyDirectory);
       }
 
       // remove old file
@@ -210,10 +213,10 @@ const register = async (server, options) => {
       const fileName = `${new Date().getTime()}-${data.file.filename}`;
 
       const result = File.copyFile({
-        directory: compnayDirectory,
+        directory: companyDirectory,
         fileName: fileName,
-        orignalPath: data.file.path,
-        data: data,
+        originalPath: data.file.path,
+        move: true,
       });
 
       await Organisation.update(
@@ -321,7 +324,7 @@ const register = async (server, options) => {
       try {
         await Organisation.update(
           {
-            id_semaine: semaine_id,
+            id_semaine_encours: semaine_id,
           },
           {
             where: {
@@ -377,12 +380,9 @@ const register = async (server, options) => {
           `
           SELECT a.id as mission_id, TRIM(ag.nom) as mission_name, ag.description as mission_description, a.date_event as mission_date, a.done as mission_done, a.id_semaine, s.nom as semaine_name, s.description as semaine_description, os.debut_semaine as semaine_start, os.fin_semaine as semaine_end
           FROM j_organisation_agenda a
-          INNER JOIN t_semaine s 
-          ON s.id_semaine = a.id_semaine
-          INNER JOIN j_organisation_semaine os
-          ON os.id_semaine = a.id_semaine
-          INNER JOIN t_agenda ag
-          ON ag.id_agenda = a.id_agenda
+            INNER JOIN t_semaine s ON s.id_semaine = a.id_semaine
+            INNER JOIN j_organisation_semaine os ON os.id_semaine = a.id_semaine
+            INNER JOIN t_agenda ag ON ag.id_agenda = a.id_agenda
           WHERE a.id_organisation = :id_organisation
           ORDER BY a.date_event ASC
         `,
@@ -436,6 +436,9 @@ const register = async (server, options) => {
           let formatedDate = moment(elem.mission_date).format("DD-MM-YYYY");
 
           // on a l'index et la bonne date donc on ajoute à l'agenda
+          if (!result[index].agenda[formatedDate]) {
+            result[index].agenda[formatedDate] = new Array();
+          }
           result[index].agenda[formatedDate].push({
             id: elem.mission_id,
             name: elem.mission_name,
@@ -495,6 +498,169 @@ const register = async (server, options) => {
       } catch (e) {
         console.error(e);
         return false;
+      }
+    },
+  });
+
+  server.route({
+    path: "/admin/assets/get-list",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+      const params = request.query;
+
+      try {
+        const replacements = {
+          type: params.type_asset,
+        };
+        return db.sequelize.query(`
+          SELECT DISTINCT a.id_asset_communication, TRIM(a.nom) AS nom, TRIM(a.nom_fichier) AS nom_fichier, a.contenu1, a.contenu2
+          FROM public.t_asset_communication a
+          WHERE a.actif AND a.id_type_asset_communication=:type;
+        `, { replacements: replacements, type: QueryTypes.SELECT }).then(result => {
+            return result;
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
+
+  server.route({
+    path: "/admin/emailing/get-template",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      const Organisation = db.getModel("Organisation");
+      const AssetCommunication = db.getModel("AssetCommunication");
+
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
+      // Check organisation stats
+      const currentOrga = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
+
+      const companyDirectory =
+        UPLOAD_PATH + "/" + currentUserByAD.id_organisation;
+
+      // create company folder if not exists
+      if (!File.checkFolderExists(companyDirectory)) {
+        File.createDirectory(companyDirectory);
+      }
+
+      // create company folder for emailing templates
+      const emailTemplates =
+        UPLOAD_PATH + "/" + currentUserByAD.id_organisation + "/templates";
+
+      if (!File.checkFolderExists(emailTemplates)) {
+        File.createDirectory(emailTemplates);
+      }
+      const params = request.query;
+      const currentAsset = await AssetCommunication.findOne({
+        where: {
+          id_asset_communication: params.asset,
+        },
+      });
+      if (!currentAsset) {
+        return false;
+      }
+      // 
+
+      /**
+       * A partir de là il faudra créer le template de mail en utilisant le logo de la boite
+       * La fonction renverra un path vers le template du mail. Il n'y a pas besoin de renvoyer l'image car tout est stocké
+       * dans le dossier public.
+       *
+       */
+      currentAsset.nom_fichier = currentAsset.nom_fichier.trim();
+      const template = path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "public",
+        "templates",
+        "emailing",
+        currentAsset.nom_fichier
+      );
+      const imageTemplate = await Jimp.read(template);
+
+      var result = {
+        template:
+          ROOT_UPLOAD_PATH +
+          "/" +
+          currentUserByAD.id_organisation +
+          "/templates/" + currentAsset.nom_fichier,
+        width: imageTemplate.bitmap.width,
+        height: imageTemplate.bitmap.height,
+      };
+
+      if (!currentOrga.logo) {
+        File.copyFile({
+          directory: emailTemplates,
+          fileName: currentAsset.nom_fichier,
+          originalPath: template,
+        });
+        return result;
+      }
+      const icon = path.resolve(
+        __dirname,
+        "..",
+        "..",
+        "public",
+        currentOrga.logo
+      );
+
+      /**
+       * Partie tricky : il faut identifier en pixels la zone où devra se trouver le logo.
+       *  Grace à la fonction resize de jimp on peut définir une largeur / hauteur fixe donc il y a normalement pas de risque de débordement
+       */
+      try {
+        const logo = await Jimp.read(icon);
+        logo.resize(Jimp.AUTO, 50);
+
+        const widthTemplate = imageTemplate.bitmap.width;
+        const widthLogo = logo.bitmap.width;
+
+        const composite = await imageTemplate.composite(logo, (widthTemplate / 2 - widthLogo / 2), 40);
+        await composite.quality(100).write(emailTemplates + "/" + currentAsset.nom_fichier);
+
+        return result;
+      } catch (e) {
+        console.error(e);
       }
     },
   });

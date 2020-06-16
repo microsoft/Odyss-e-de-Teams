@@ -32,8 +32,10 @@ File.createFile = (args) => {
 
 File.copyFile = (args) => {
   try {
-    fs.copyFileSync(args.orignalPath, args.directory + "/" + args.fileName);
-    fs.unlinkSync(args.orignalPath);
+    fs.copyFileSync(args.originalPath, args.directory + "/" + args.fileName);
+    if (args.move) {
+      fs.unlinkSync(args.originalPath);
+    }
     return true;
   } catch (e) {
     console.error(e.stack);
