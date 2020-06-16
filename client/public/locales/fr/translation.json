@@ -75,6 +75,13 @@
       "item_pending": "Action à mener",
       "item_done": "Action effectuée",
       "week": "Semaine"
+    },
+    "emailing": {
+      "title": "Emailings",
+      "desc": "Commandant, vous pouvez sélectionner un template d'email dans la liste proposée, le personnaliser puis cliquer sur le bouton «Copier dans le cache» pour pouvoir directement coller son contenu dans votre email prêt à l'envoi",
+      "button_cancel": "Réinitialiser",
+      "button_save": "Copier dans le cache",
+      "email_launch": "Email de lancement"
     }
   },
   "outillage": {

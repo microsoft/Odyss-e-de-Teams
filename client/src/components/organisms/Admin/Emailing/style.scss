@@ -1,0 +1,55 @@
+@import "common/sass/_variables";
+
+$btn-tags: "button, button:active, button:hover, button:visited";
+$btn-tags-hover: "button:active, button:hover";
+
+.Emailing {
+  &__header {
+    &__title {
+      font-weight: bold;
+      color: $color-primary;
+    }
+  }
+
+  &__body {
+    &__selector {
+      display: flex;
+
+      .dropdown-toggle {
+        @include box-shadow-app;
+        background-color: $color-white1;
+        color: $color-primary;
+        border: none;
+        border-radius: 15px;
+
+        &:after {
+          margin-left: 1em !important;
+          vertical-align: 0em;
+          content: "∨";
+          border: 0;
+          border-left: 1px solid;
+          padding-left: 0.3em;
+          font-size: 1.2em;
+        }
+      }
+
+      .btn,
+      .btn:hover {
+        background-color: $color-white1 !important;
+        color: $color-primary !important;
+      }
+
+      #{$btn-tags} {
+        background-color: initial !important;
+        color: initial !important;
+        outline: none !important;
+        @include box-shadow-app;
+      }
+    }
+  }
+}
+
+.mce-content-body {
+  height: 30rem;
+  overflow: auto;
+}

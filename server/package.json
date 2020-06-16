@@ -12,6 +12,7 @@
     "@hapi/inert": "^6.0.1",
     "blipp": "^4.0.1",
     "hapi-sequelizejs": "^4.0.0",
+    "jimp": "^0.13.0",
     "moment": "^2.26.0",
     "pg": "^8.1.0",
     "pg-hstore": "^2.3.3",
