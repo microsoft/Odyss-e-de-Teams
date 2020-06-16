@@ -5,14 +5,15 @@
 
 
 .steps {
-    background: url("/images/regle/fil_dekstop.png") no-repeat left 6.5rem;
-    background-size: 85%;
-    padding-left: 15%;
+    background: url(/images/regle/fil_dekstop.png) no-repeat left center;
+    background-size: 100%;
+    padding-left: 7rem;
     .step {
         position: relative;
         font-size: 0.9em;
+        margin-top: 0;
         img {
-            width: 6rem;
+            height: 5.25rem;
         }
         .num-step {
             background-color: $color-primary-light;
@@ -26,21 +27,12 @@
             line-height: 0.5rem;
         }
     }
-    .step2 {
-        margin-top: 4.5em;
-    }
-    .step3 {
-        margin-top: 1.25em;
-        img {
-            width: 6.5rem;
-        }
-    }
     .step4 {
-        background: url(/images/regle/step4_desktop.png) no-repeat 4rem -0.5rem;
-        background-size: 13rem;
-        margin-top: -3.25rem;
-        padding-top: 11rem;
-        padding-right: .5rem;
+        background: url(/images/regle/step4_desktop.png) no-repeat 6rem 1.5rem;
+        background-size: 11.5rem;
+        margin-top: -5.5rem;
+        padding-top: 10.75rem;
+        padding-right: 2.5rem;
     }
 }
 

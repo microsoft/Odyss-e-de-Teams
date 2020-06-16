@@ -1,27 +1,77 @@
-.main-quizz {
+.quizz-container {
+  .main-quizz {
     .titre {
-        img {
-            max-height: 2.25rem;
-        }
+      img {
+        max-height: 2.25rem;
+      }
     }
     .question {
-        position: relative;
-        z-index: 5;
-        height: 0;
-        transition: opacity .5s ease-out;
-        opacity: 0;
+      position: relative;
+      z-index: 5;
+      height: 0;
+      transition: opacity 0.5s ease-out;
+      opacity: 0;
     }
     .question.active {
-        z-index: 10;
-        height: auto;
-        opacity: 1;
+      z-index: 10;
+      height: auto;
+      opacity: 1;
     }
     .outro {
-        .illustration-module-done {
-            width: 9rem;
-        }
+      .illustration-module-done {
+        width: 9rem;
+      }
     }
-}
-.toolbar-right {
+  }
+  .toolbar-right {
     width: 12rem;
+    .btn {
+        font-size: .9rem;
+        width: 100%;
+    }
+  }
+}
+body {
+  .modal-dialog.modal-pause {
+      height: 90vh;
+    .modal-content {
+      padding: 0;
+      height: 100%;
+      .content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 1rem;
+        background: url("/images/overlays/overlay_modal_pause.png") no-repeat;
+        background-size: cover;
+        background-position: bottom center;
+      }
+    }
+  }
+  .modal-dialog.modal-help {
+      .p-rep  {
+        padding-left: 2rem;
+        line-height: 1.5rem;
+      }
+      .p-chrono {
+          background: url("/images/question/chronometre.png") no-repeat left center;
+          background-size: contain;
+      }
+      .p-eclair {
+          background: url("/images/icone/exp-bonus.png") no-repeat left center;
+          background-size: contain;
+      }
+      .p-coeur {
+        background: url("/images/icone/coeur.png") no-repeat left center;
+        background-size: contain;
+        line-height: 1.25rem;
+      }
+      .p-flag {
+        background: url("/images/icone/flag.png") no-repeat left center;
+        background-size: contain;
+      }
+      .ico-modal {
+        height: 10rem;
+      }
+  }
 }

@@ -22,6 +22,12 @@ export const questionReducer: Reducer<IQuizzState, any> = (
                 selectedNiveau: action.value.niveau
             }
             return nextState || state
+        case 'SET_PAUSE_QUIZZ':
+            nextState = {
+                ...state,
+                hasAlreadyPaused: action.value,
+            }
+            return nextState || state
         default:
             return state;
     }

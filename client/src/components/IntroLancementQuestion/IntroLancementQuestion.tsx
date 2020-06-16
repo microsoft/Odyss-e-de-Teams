@@ -41,9 +41,9 @@ class IntroLancementQuestion extends Component<
             />
             <div className={"ml-2"}>
               <h2 className={"color-primary-light mb-1"}>
-                {this.props.selectedModule?.nom} {" "}
+                {this.props.selectedModule?.nom}{" "}
                 <strong className={"color-primary"}>
-                  -{this.props.selectedNiveau?.nom}
+                  - {this.props.selectedNiveau?.nom}
                 </strong>
               </h2>
               <p className={"mb-0"}>Derniers préparatifs avant le décollage</p>
@@ -62,7 +62,8 @@ class IntroLancementQuestion extends Component<
           <p className={"text-center content mx-auto"}>
             Explorateur.trice, le chronomètre va te permettre de gagner{" "}
             <strong className={"color-primary-light"}>
-              5 points d’XP supplémentaires si tu réponds en dessous d'une minute
+              5 points d’XP supplémentaires si tu réponds en dessous d'une
+              minute
             </strong>{" "}
             à chaque bonnes réponses.
           </p>

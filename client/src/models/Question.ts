@@ -83,6 +83,9 @@ export interface IQuizzState {
   isLoading: boolean;
   step: number;
   hasReponse: boolean;
+  showModalPause?: boolean;
+  hasAlreadyPaused?: boolean;
+  showModalHelp?: boolean;
   selectedModule?: IModule;
   selectedNiveau?: INiveau;
   listQuestion?: IQuestion[];
@@ -111,6 +114,8 @@ export interface IRecapQuizzState {
 export interface IStopWatchProps {
   done?: boolean;
   initTimer?: number;
+  onStopTimer?: any;
+  canStopTimer?: boolean;
 }
 
 export interface IStopWatchState {
