@@ -46,27 +46,10 @@ $btn-tags-hover: "button:active, button:hover";
         @include box-shadow-app;
       }
     }
-
-    &__editor2 {
-    }
   }
 }
 
-.Emailing__body__editor2 {
-  height: 200px;
-  width: 200px;
-  background-image: url("http://localhost:8080/static-server/company-assets/1/test.png");
-  // background-image: url("/images/overlays/overlay-blue.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.Emailing__body__editor {
-  background-image: url("http://localhost:8080/static-server/company-assets/1/test.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
 .mce-content-body {
-  height: 150em; // to adapt to content
+  height: 30rem;
+  overflow: auto;
 }

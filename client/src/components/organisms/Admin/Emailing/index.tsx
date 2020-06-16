@@ -1,30 +1,108 @@
 import React from "react";
-
-import domtoimage from "dom-to-image";
-
 import { withTranslation, WithTranslation } from "react-i18next";
-
 import { Dropdown, Button } from "react-bootstrap";
+import domtoimage from "dom-to-image";
 import { Editor } from "@tinymce/tinymce-react";
 
-import "./style.scss";
+import AdminAPI from "api/Admin";
 
-class AdminEmailing extends React.Component<WithTranslation, {}> {
-  componentDidMount() {
-    setTimeout(() => {
-      let node = document.getElementsByClassName("mce-content-body ")[0];
-      // @ts-ignore
-      node.style.backgroundImage =
-        "url('http://localhost:8080/static-server/company-assets/1/test.png')";
-      // @ts-ignore
-      node.style.backgroundSize = "cover";
-      // @ts-ignore
-      node.style.backgroundRepeat = "no-repeat";
-    }, 1000);
+import "./style.scss";
+import Admin from "api/Admin";
+
+interface IAsset {
+  id_asset_communication: number;
+  nom: string;
+  nom_fichier: string;
+  contenu1: string;
+  contenu2: string;
+}
+interface ITemplate extends IAsset {
+  template?: string;
+  width?: number;
+  height?: number;
+}
+interface IAdminEmailingState {
+  currentTemplate: ITemplate;
+  listAssets: IAsset[];
+}
+
+class AdminEmailing extends React.Component<
+  WithTranslation,
+  IAdminEmailingState
+> {
+  constructor(props: WithTranslation) {
+    super(props);
+    this.state = {
+      currentTemplate: null,
+      listAssets: [],
+    };
   }
+  componentDidMount() {
+    this._loadAssets();
+  }
+  
+  private _loadAssets = () => {
+    Admin.getListAsset(1).then((result: IAsset[]) => {
+      this.setState(
+        {
+          listAssets: result,
+          currentTemplate: result ? result[0] : null,
+        },
+        () => {
+          if (this.state.currentTemplate) {
+            this._loadTemplate();
+          }
+        }
+      );
+    });
+  };
+
+  private _loadTemplate = () => {
+    AdminAPI.getTemplate(
+      this.state.currentTemplate.id_asset_communication
+    ).then((data) => {
+      let currentTemplate = this.state.currentTemplate;
+      currentTemplate.template = data.template;
+      currentTemplate.width = data.width;
+      currentTemplate.height = data.height;
+      this.setState({
+        currentTemplate: currentTemplate,
+      }, () => {
+        setTimeout(() => {
+          this._handleEditorInit();
+        }, 500);
+      });
+    });
+  };
+
+  private _handleEditorInit = () => {
+    let node: any = document.getElementById("bodyContent");
+    if (node && this.state.currentTemplate && this.state.currentTemplate.template) {
+      console.log(this.state.currentTemplate);
+      node.style.backgroundImage =
+        "url('" + process.env.REACT_APP_STATIC_URL +
+        this.state.currentTemplate.template +
+        "')";
+      node.style.backgroundSize = "cover";
+      node.style.backgroundRepeat = "no-repeat";
+      node.style.width = this.state.currentTemplate.width + "px";
+      node.style.height = this.state.currentTemplate.height + "px";
+    }
+  };
+
+  private _onChangeAsset = (item: IAsset) => {
+    this.setState(
+      {
+        currentTemplate: item,
+      },
+      () => {
+        this._loadTemplate();
+      }
+    );
+  };
 
   copyClipBoard = async (e) => {
-    let node = document.getElementsByClassName("mce-content-body ")[0];
+    let node = document.getElementById("bodyContent");
 
     domtoimage
       .toBlob(node)
@@ -62,32 +140,45 @@ class AdminEmailing extends React.Component<WithTranslation, {}> {
 
         <div className="Emailing__body">
           <div className="Emailing__body__selector">
-            <Dropdown>
+            <Dropdown className="d-inline-block mb-3">
               <Dropdown.Toggle variant="success" id="dropdown-basic">
-                {tReady && t("admin.emailing.email_launch")}
+                {this.state.currentTemplate?.nom}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1"></Dropdown.Item>
+                {this.state.listAssets?.map((item: IAsset) => {
+                  return (
+                    <Dropdown.Item
+                      key={item.id_asset_communication}
+                      onClick={() => this._onChangeAsset(item)}
+                    >
+                      {item.nom}
+                    </Dropdown.Item>
+                  );
+                })}
               </Dropdown.Menu>
             </Dropdown>
           </div>
 
           <div className="Emailing__body__content">
             <Editor
-              initialValue="<p>This is the initial content of the editor</p>"
+              value={`
+                <div id="bodyContent">
+                  ${this.state.currentTemplate?.contenu1 ? this.state.currentTemplate?.contenu1 : ''}
+                  ${this.state.currentTemplate?.contenu2 ? this.state.currentTemplate?.contenu2 : ''}
+                </div>`}
               init={{
                 height: 500,
-                menubar: true,
+                menubar: false,
                 plugins: [
-                  "advlist autolink lists link image charmap print preview anchor",
-                  "searchreplace visualblocks code fullscreen",
-                  "insertdatetime media table paste code help wordcount",
+                  "lists link print preview",
+                  "searchreplace fullscreen",
+                  "insertdatetime paste",
                 ],
                 toolbar:
-                  "undo redo | formatselect | bold italic backcolor | \
+                  "undo redo | bold italic backcolor | \
              alignleft aligncenter alignright alignjustify | \
-             bullist numlist outdent indent | removeformat | help",
+             bullist numlist outdent indent",
                 body_class: "Emailing__body__editor",
                 id: "text_editor",
                 inline: true,
@@ -96,7 +187,7 @@ class AdminEmailing extends React.Component<WithTranslation, {}> {
           </div>
         </div>
 
-        <div className="Emailing__actions">
+        <div className="Emailing__actions text-right mt-3">
           <Button onClick={this.copyClipBoard}>Copier dans le cache</Button>
         </div>
       </div>

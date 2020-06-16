@@ -27,6 +27,7 @@ class Admin extends API {
     return super.fetchPOST(this.resource + "/set-current-mission", data);
   }
 
+  /**** agenda  ****/
   getAgenda(): Promise<any> {
     return super.fetchGET(this.resource + "/current-agenda");
   }
@@ -34,6 +35,21 @@ class Admin extends API {
   setAgendaItemStatus(data): Promise<any> {
     return super.fetchPOST(this.resource + "/set-agenda-done", data);
   }
+  /**** fin agenda  ****/
+
+  /**** assets comm  ****/
+  getListAsset(type_asset: number): Promise<any> {
+    return super.fetchGET(this.resource + "/assets/get-list", {
+      type_asset: type_asset,
+    });
+  }
+
+  getTemplate(asset: number): Promise<any> {
+    return super.fetchGET(this.resource + "/emailing/get-template", {
+      asset: asset
+    });
+  }
+  /**** fin assets comm  ****/
 }
 
 export default new Admin();
