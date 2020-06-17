@@ -5,6 +5,7 @@
 
 .main-classement {
     .table {
+        color: inherit;
         .avatar {
             width: 2.5rem;
             img {
@@ -64,6 +65,9 @@
 }
 
 @include media-breakpoint-down(md) {
+    .btn-group {
+        width: 100%;
+    }
     .table {
         thead {
             display: none;

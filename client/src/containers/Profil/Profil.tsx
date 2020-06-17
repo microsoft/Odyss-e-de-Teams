@@ -84,7 +84,17 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
   render() {
     return (
       <div>
-        <h1 className={"color-primary"}>Mon profil de jeu</h1>
+        <h1 className={"color-primary d-none d-md-block"}>
+          Mon profil de jeu
+        </h1>
+        <h1 className={"color-white d-flex d-md-none justify-content-center"}>
+            <img
+                src={process.env.PUBLIC_URL + "/images/icone/planete.png"}
+                alt="Ico Profil"
+                className={"ico-titre"}
+            />
+             Mon profil de jeu
+        </h1>
         <Row>
           <Col xs={12} md={6} className={"main-col1"}>
             <Container fluid>
@@ -137,7 +147,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                 </Col>
               </Row>
               <Row>
-                <Col className={"main-encart encart-stats mb-0"}>
+                <Col className={"main-encart encart-stats mb-md-0"}>
                   <h2 className={"color-primary-light mb-3"}>
                     Mes statistiques d'exploration
                   </h2>
@@ -172,7 +182,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                     </Col>
                   </Row>
                   <Row>
-                    <Col>
+                    <Col className={"col-6 col-md-4"}>
                       <p className={"h1 mb-0 pt-0 color-primary"}>
                         {this.state.classementXP ? this.state.classementXP : 0}
                         <sup>
@@ -184,7 +194,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                       </p>
                       <p>Classement actuel EXP</p>
                     </Col>
-                    <Col>
+                    <Col className={"col-6 col-md-4"}>
                       <p className={"h1 mb-0 pt-0 color-primary"}>
                         {this.state.classementPoint
                           ? this.state.classementPoint
@@ -205,7 +215,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
             </Container>
           </Col>
           <Col xs={12} md={6}>
-            <div className={"main-encart mb-0 main-col2"}>
+            <div className={"main-encart mb-md-0 main-col2"}>
               <h2 className={"color-primary-light d-none d-md-block mb-2"}>
                 Ma collection de récompenses d'honneur
               </h2>
