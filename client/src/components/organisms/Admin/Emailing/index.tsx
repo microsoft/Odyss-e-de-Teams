@@ -78,7 +78,6 @@ class AdminEmailing extends React.Component<
   private _handleEditorInit = () => {
     let node: any = document.getElementById("bodyContent");
     if (node && this.state.currentTemplate && this.state.currentTemplate.template) {
-      console.log(this.state.currentTemplate);
       node.style.backgroundImage =
         "url('" + process.env.REACT_APP_STATIC_URL +
         this.state.currentTemplate.template +

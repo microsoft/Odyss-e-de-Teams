@@ -29,6 +29,27 @@ class IntroLancementQuestion extends Component<
   render() {
     return (
       <FadeInIntro>
+        <div className={"d-flock d-md-none mb-3"}>
+          <div className={"d-flex titre align-items-center"}>
+            <img
+              src={
+                process.env.PUBLIC_URL +
+                "/images/question/module/" +
+                this.props.selectedModule?.image
+              }
+              alt={`Illustration module ${this.props.selectedModule?.nom}`}
+            />
+            <div className={"ml-2"}>
+              <h2 className={"color-white1"}>
+                {this.props.selectedModule?.nom}{" "}
+                <strong className={"color-white1"}>
+                  - {this.props.selectedNiveau?.nom}
+                </strong>
+              </h2>
+            </div>
+          </div>
+          <h1 className={"text-center mt-3"}>Avant de commencer</h1>
+        </div>
         <div className={"main-intro m-0 px-4 py-4 px-md-0 pt-md-0 pb-md-2"}>
           <div className={"d-none d-md-flex mb-2 titre align-items-center"}>
             <img
@@ -68,19 +89,18 @@ class IntroLancementQuestion extends Component<
             à chaque bonnes réponses.
           </p>
           <p className={"text-center content mx-auto"}>
-            Mais rassure-toi ! Au delà de ce temps, il ne te fera pas perdre de
-            points !
-          </p>
-          <p className={"text-right"}>
-            <Button
-              variant="primary"
-              className={"d-inline-block"}
-              onClick={() => this._onClick()}
-            >
-              Commençons l'exploration
-            </Button>
+            Mais rassure-toi ! Au delà de ce temps, tu ne perdras aucun points !
           </p>
         </div>
+        <p className={"text-center mt-3 d-block d-md-none"}>
+          <Button
+            variant="primary"
+            className={"d-inline-block"}
+            onClick={() => this._onClick()}
+          >
+            Commençons l'exploration
+          </Button>
+        </p>
       </FadeInIntro>
     );
   }

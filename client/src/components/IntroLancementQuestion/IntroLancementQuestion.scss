@@ -3,12 +3,12 @@
 @import "~bootstrap/scss/_variables.scss";
 @import "~bootstrap/scss/mixins/_breakpoints.scss";
 
-.main-intro {
-  .titre {
-      img {
-        max-height: 2.25rem;
-      }
+.titre {
+  img {
+    max-height: 2.25rem;
   }
+}
+.main-intro {
   .illustration-chronometre {
     width: 15%;
   }
@@ -23,6 +23,7 @@
 @include media-breakpoint-down(md) {
   .main-intro {
     @include bg-encart;
+    color: initial;
     .illustration-chronometre {
       width: 50%;
     }

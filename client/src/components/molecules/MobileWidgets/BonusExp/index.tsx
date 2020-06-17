@@ -14,7 +14,7 @@ const BonusEXP = (props: IBonusEXP & WithTranslation) => {
 
   return (
     <div className={`BonusEXP ${className || ""}`}>
-      <div className="BonusEXP__container col-12 row p-0 m-0">
+      <div className="BonusEXP__container col-12 row py-2 m-0">
         <div className="BonusEXP__container__img col-4">
           <img
             src="/images/rewards/exp-bonus.png"
@@ -30,7 +30,8 @@ const BonusEXP = (props: IBonusEXP & WithTranslation) => {
 
         <div className="BonusEXP__container__content col-8">
           <div className="BonusEXP__container__content__bonus">
-            + {bonus} {tReady && t(`player.cockpit.bonus.${bonusDesc}`)}
+            <span className="val">+{bonus}</span>
+            {tReady && t(`player.cockpit.bonus.${bonusDesc}`)}
           </div>
 
           <div className="BonusEXP__container__content__text">

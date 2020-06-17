@@ -140,9 +140,9 @@ class Player extends React.Component<
       );
     else
       return (
-        <MobileLayout>
+        <MobileLayout currentRouterLink={this.props.location.pathname}>
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/Cockpit">
               <Cockpit isMobile={isMobile} />
             </Route>
             <Route exact path="/Jouer">

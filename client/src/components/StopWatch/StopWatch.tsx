@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
+import { FaPause, FaStop, FaPlay } from "react-icons/fa";
 
 import { IStopWatchProps, IStopWatchState } from "src/models/Question";
 
@@ -30,6 +31,7 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
       timerTime: this.state.timerTime,
       timerStart: Date.now() - this.state.timerTime,
     });
+    this.props.onStartTimer();
     this.timer = setInterval(() => {
       this.setState({
         timerTime: Date.now() - this.state.timerStart,
@@ -41,9 +43,7 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
     if (this.props.canStopTimer || !actionClick) {
       this.setState({ timerOn: false });
       clearInterval(this.timer);
-      if (actionClick) {
-        this.props.onStopTimer();
-      }
+      this.props.onStopTimer(actionClick);
     }
   };
 
@@ -67,7 +67,7 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
     let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
     return (
       <div className={"chrono"}>
-        <p className={"text-center mb-0"}>
+        <p className={"text-center mb-0 d-none d-md-block"}>
           <img
             src={process.env.PUBLIC_URL + "/images/question/chronometre.png"}
             alt={`Illustration Chronometre`}
@@ -75,18 +75,43 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
           />
         </p>
         <div className="stopwatch">
-          <h3 className={"text-center"}>
+          <h3 className={"text-center d-none d-md-block"}>
             {minutes} : {seconds} : {centiseconds}
           </h3>
           {this.state.timerOn === false && this.state.timerTime > 0 && (
             <Button variant="primary" onClick={this.startTimer}>
-              Reprendre la mission
+              <span className={"d-none d-md-inline"}>Reprendre la mission</span>
+              <span className={"d-inline d-md-none"}>
+                <FaPlay />
+              </span>
             </Button>
           )}
           {this.state.timerOn === true && (
-            <Button variant={this.props.done ? 'dark' : 'primary'} disabled={!this.props.canStopTimer} onClick={() => this.stopTimer(true)}>
-              <span className={this.props.done ? 'd-none' : 'd-inline'}>Suspendre la mission</span>
-              <span className={this.props.done ? 'd-inline' : 'd-none'}>Mission terminée</span>
+            <Button
+              variant={this.props.done ? "dark" : "primary"}
+              disabled={!this.props.canStopTimer}
+              onClick={() => this.stopTimer(true)}
+            >
+              <span
+                className={this.props.done ? "d-none" : "d-none d-md-inline"}
+              >
+                Suspendre la mission
+              </span>
+              <span
+                className={this.props.done ? "d-none" : "d-inline d-md-none"}
+              >
+                <FaPause />
+              </span>
+              <span
+                className={this.props.done ? "d-none d-md-inline" : "d-none"}
+              >
+                Mission terminée
+              </span>
+              <span
+                className={this.props.done ? "d-inline d-md-none" : "d-none"}
+              >
+                <FaStop />
+              </span>
             </Button>
           )}
           {/* {this.state.timerOn === false && this.state.timerTime === 0 && (

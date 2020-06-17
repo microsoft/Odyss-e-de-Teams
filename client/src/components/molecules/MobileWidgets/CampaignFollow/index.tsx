@@ -31,7 +31,7 @@ const CampaignFollowMobile = (props: ICampaignFollow & WithTranslation) => {
           </Trans>
         </div>
 
-        <div className="CampaignFollow__container__timer pt-4">
+        <div className="CampaignFollow__container__timer pt-5">
           <span className="LaunchFollowWidget__container__timeleft__label">
             {tReady && t("admin.campaign_time_left")}{" "}
           </span>{" "}

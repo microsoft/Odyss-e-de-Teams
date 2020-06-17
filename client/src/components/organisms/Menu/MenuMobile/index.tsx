@@ -1,30 +1,91 @@
 import React, { useState } from "react";
 
 import "./style.scss";
+import { IMenuProps, IMenuState, IMenu } from "models/Menu";
 
-const MenuMobile = () => {
-  const [displayMenu, setDisplayMenu] = useState(false);
+import MenuAPI from "api/Menu";
+import { ListGroup } from "react-bootstrap";
 
-  return (
-    <div
-      className={`MenuMobile col-12 p-0 ${
-        displayMenu ? "MenuMobile__expand" : ""
-      }`}
-    >
+class MenuMobile extends React.Component<IMenuProps, IMenuState> {
+  constructor(props: IMenuProps) {
+    super(props);
+    this.state = {
+      listMenu: [],
+      organisationLogo: null,
+    };
+  }
+  async componentDidMount() {
+    try {
+      const menu = await MenuAPI.getMenu("fr");
+      this.setState(
+        {
+          listMenu: menu.results,
+          organisationLogo: null,
+          displayMenu: false
+        }
+      );
+    } catch (e) {
+      console.error("Menu error", e);
+    }
+  }
+
+  private _setDisplayMenu = () => {
+    this.setState({
+      displayMenu: !this.state.displayMenu
+    })
+  }
+
+  render() {
+    const { currentRouterLink } = this.props;
+
+    return (
       <div
-        className="MenuMobile__header"
-        onClick={() => setDisplayMenu(!displayMenu)}
+        className={`MenuMobile col-12 p-0 ${
+          this.state.displayMenu ? "MenuMobile__expand" : ""
+        }`}
       >
-        <div className="MenuMobile__header__img">
-          <img src="/images/logo/logo_centre_violet.png" alt="logo" />
+        <div
+          className="MenuMobile__header"
+          onClick={() => this._setDisplayMenu()}
+        >
+          <div className="MenuMobile__header__img">
+            <img src="/images/logo/logo_centre_violet.png" alt="logo" />
+          </div>
+
+          <div className="MenuMobile__header__seperator"></div>
         </div>
 
-        <div className="MenuMobile__header__seperator"></div>
+        {this.state.displayMenu && (
+          <div className="MenuMobile__items px-4">
+            <ListGroup defaultActiveKey={"/#" + currentRouterLink}>
+            {this.state.listMenu?.map((item: IMenu) => {
+              const itemStyle = {
+                backgroundImage:
+                  "url('" +
+                  process.env.PUBLIC_URL +
+                  "/images/menu/" +
+                  item.picto +
+                  "')",
+              };
+              return (
+                <ListGroup.Item
+                  key={item.id_page}
+                  action
+                  href={item.router_link}
+                  className={`py-2 d-flex align-items-center menu${item.id_page}`}
+                  onClick={() => this._setDisplayMenu()}
+                >
+                  <div style={itemStyle} className={"ico-menu"}></div>
+                  <div className={"title-menu"}>{item.nom}</div>
+                </ListGroup.Item>
+              );
+            })}
+          </ListGroup>
+          </div>
+        )}
       </div>
-
-      {displayMenu && <div className="MenuMobile__items">Show Menu</div>}
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default MenuMobile;

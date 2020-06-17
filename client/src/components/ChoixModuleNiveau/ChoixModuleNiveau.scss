@@ -40,6 +40,12 @@
     .module {
         width: 100%;
         margin-bottom: 1rem;
+        .illustration-module {
+            max-width: 20%;
+        }
+    }
+    .module:hover {
+        transform: unset;
     }
   }
 }
