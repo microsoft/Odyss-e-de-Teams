@@ -384,7 +384,7 @@ const register = async (server, options) => {
             INNER JOIN j_organisation_semaine os ON os.id_semaine = a.id_semaine
             INNER JOIN t_agenda ag ON ag.id_agenda = a.id_agenda
           WHERE a.id_organisation = :id_organisation AND os.id_organisation = :id_organisation
-          ORDER BY a.date_event ASC
+          ORDER BY a.date_event ASC, mission_id
         `,
           {
             replacements: replacements,
