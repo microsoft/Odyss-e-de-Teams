@@ -20,10 +20,8 @@ const Welcome = (props) => {
           : t("landing.welcome.body")}
       </h3>
       <Button
-        variant="light"
-        className={`d-inline-block py-3 py-md-2 mt-4 mt-md-2 ${
-          isMobile ? "btn__orange-gradiant" : ""
-          }`}
+        variant="primary"
+        className={`d-inline-block py-3 py-md-2 mt-4 mt-md-2`}
         onClick={props.onClickNext}>
         {t("landing.welcome.buttonText")}
       </Button>

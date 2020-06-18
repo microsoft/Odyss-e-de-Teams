@@ -80,12 +80,18 @@ body {
             margin-right: 0.25rem;
         }
     }
-    .btn.btn-primary {
+    .btn.btn-primary:not(.bleu) {
+        @include orange-gradiant;
+    }
+    .btn.btn-primary:not(.bleu):not(:disabled):hover {
+        @include orange-gradiant-hover;
+    }
+    .btn.btn-primary.bleu {
         background: $color-primary-light;
         border: none;
         box-shadow:0px 0px 0 100px $color-primary inset;
     }
-    .btn.btn-primary:not(:disabled):hover {
+    .btn.btn-primary.bleu:not(:disabled):hover {
         box-shadow:0px 0px 0 0px $color-primary inset;
     }
     .btn.btn-secondary {
@@ -112,11 +118,6 @@ body {
     }
     .btn.btn-light:not(:disabled):hover {
         box-shadow:0px 0px 0 0px $color-white1 inset;
-    }
-    .btn {
-        &__orange-gradiant {
-            @include orange-gradiant;
-        }
     }
     .pointer {
         cursor: pointer;
