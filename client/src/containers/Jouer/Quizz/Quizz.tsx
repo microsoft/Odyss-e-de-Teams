@@ -76,10 +76,14 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
       questionTime -= this.state.listQuestion[i].temps_reponse;
     }
     currentQuestion.temps_reponse = questionTime;
+    if (this.state.isPaused) {
+      this.chronoComponent.current.startTimer();
+    }
     this.setState(
       {
         step: ++curStep,
         hasReponse: false,
+        isPaused: false,
       },
       () => {
         if (this.state.step > this.state.listQuestion.length) {
@@ -335,7 +339,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
                     className={"btn-submit"}
                     href={`/#/Jouer/RecapQuizz/${this.props.dataInitQuizz?.selectedModule?.id_module}/${this.props.dataInitQuizz.selectedNiveau?.id_niveau}`}
                   >
-                    Résultats de l’exploration
+                    Voir les résultats
                   </Button>
                 </p>
               </div>
@@ -357,7 +361,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
             onClick={() => this._setShowModalHelp(true)}
             className={"mt-md-3"}
           >
-            <span className={"d-none d-md-inline"}>Reprendre la mission</span>
+            <span className={"d-none d-md-inline"}>Note de mission</span>
             <span className={"d-inline d-md-none"}>
               <FaQuestion />
             </span>
@@ -405,16 +409,16 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
               >
                 <div className={"mt-2 mt-md-0"}>
                   <p className={"p-rep p-chrono"}>
-                    30 secondes pour gagner un bonus supplémentaire
+                    <strong>1 minute</strong> pour gagner un bonus supplémentaire
                   </p>
                   <p className={"p-rep p-eclair"}>
-                    Plusieurs réponses sont possibles
+                    <strong>Plusieurs réponses sont possibles</strong>
                   </p>
                   <p className={"p-rep p-coeur"}>
-                    Choisis entre A, B, C et/ou D
+                    Choisis entre <strong>A, B, C et/ou D</strong>
                   </p>
                   <p className={"p-rep p-flag mb-0"}>
-                    Pour confirmer, clique sur « Valider mes réponses »
+                    Clique sur <strong>« Valider mes réponses »</strong>
                   </p>
                 </div>
                 <div className={"d-none d-md-block"}>

@@ -80,7 +80,7 @@ class ChoixModuleNiveau extends Component<
           galactique à travers les usages collaboratifs de Teams
         </p>
         <h4 className={"mt-2 mt-md-3 mb-2"}>
-          Sélectionne un module et sa difficulté puis prépare-toi au décollage !
+        Sélectionne un module et un niveau puis prépare-toi au décollage ! Pour cumuler un maximum de points et augmenter tes chances de gagner, tu es invité(e) à compléter tous les modules proposés !
         </h4>
         <FadeInUpModule>
           <div className={"d-flex flex-column flex-md-row mt-4"}>
@@ -144,10 +144,10 @@ class ChoixModuleNiveau extends Component<
                           <Button
                             variant={"primary"}
                             key={itemNiv.id_niveau}
-                            className={`w-100 mt-2 niveau niveau${itemNiv.id_niveau}`}
+                            className={`w-100 mt-2 bleu niveau niveau${itemNiv.id_niveau}`}
                             onClick={() => this._onSelect(item, itemNiv)}
                           >
-                            {itemNiv.nom}
+                            Niveau {itemNiv.nom}
                           </Button>
                         );
                       })}

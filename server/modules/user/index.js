@@ -3,6 +3,7 @@ const { QueryTypes } = require("sequelize");
 const LevelUpUtils = require("./../../utils/LevelUp");
 const RewardUtils = require("./../../utils/Reward");
 const GainPointUtils = require("./../../utils/GainPoint");
+const ClassementUtils = require("./../../utils/Classement");
 
 const dailyRewards = require("./daily_rewards.json");
 
@@ -66,7 +67,7 @@ const register = async (server, options) => {
                       GROUP BY 1
                       ORDER BY 1
                     ) s)
-                SELECT DISTINCT a.*, CASE WHEN c.id_medaille IS NOT NULL THEN c.nom ELSE b.nom END AS nom_avatar, CASE WHEN c.id_medaille IS NOT NULL THEN '/images/medaille/' || c.image ELSE '/images/avatar/' || b.image END AS image_avatar,
+                SELECT DISTINCT a.*, '/images/avatar/' || b.image AS image_avatar_origine, CASE WHEN c.id_medaille IS NOT NULL THEN c.nom ELSE b.nom END AS nom_avatar, CASE WHEN c.id_medaille IS NOT NULL THEN '/images/medaille/' || c.image ELSE '/images/avatar/' || b.image END AS image_avatar,
                       ( SELECT days_logged FROM logged_count)::integer
                 FROM w0 a
                     LEFT JOIN w_avatar b ON a.id_avatar=b.id_avatar
@@ -304,7 +305,8 @@ const register = async (server, options) => {
       };
 
       return db.sequelize
-        .query(`
+        .query(
+          `
           select s.nom as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end 
           from t_semaine s 
             inner join j_organisation_semaine ts on ts.id_semaine = s.id_semaine AND id_organisation =:id_organisation
@@ -551,6 +553,7 @@ const register = async (server, options) => {
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
       const HistoMedaille = db.getModel("HMedaille");
+      const Organisation = db.getModel("Organisation");
 
       if (!request.state.oid_ad) {
         return false;
@@ -563,6 +566,11 @@ const register = async (server, options) => {
       if (!currentUserByAD) {
         return false;
       }
+      const currentOrganisation = await Organisation.findOne({
+        where: {
+          id_organisation: currentUserByAD.id_organisation,
+        },
+      });
 
       let listIdMedalValid = [],
         listIdMedalDejaObtenu = [];
@@ -583,7 +591,6 @@ const register = async (server, options) => {
       listIdMedalDejaObtenu = resultMedalUser["ids"] || [];
 
       //medal nb reponse valid par module
-
       const resultNbResponseParModule = await db.sequelize.query(
         `
         WITH w0 AS(
@@ -729,6 +736,40 @@ const register = async (server, options) => {
       );
       if (resultVideaste.nb >= 5) {
         listIdMedalValid.push(13);
+      }
+
+      //medal classement / top 20 ou top 100 en semaine 4
+      if (currentOrganisation.id_semaine_encours === 4) {
+        const main_query_classement_xp = ClassementUtils.GetMainQuery({}, 'nb_xp');
+        const resultClassementXP = await db.sequelize.query(main_query_classement_xp,
+          {
+            replacements: {
+              lang: lang,
+              organisation: currentOrganisation.id_organisation
+            },
+            type: QueryTypes.SELECT,
+          }
+        );
+        const dataClassementXP = resultClassementXP.filter(c => c.id_user === currentUserByAD.id_user)[0];
+        
+        const main_query_classement_point = ClassementUtils.GetMainQuery({}, 'nb_point');
+        const resultClassementPoint = await db.sequelize.query(main_query_classement_point,
+          {
+            replacements: {
+              lang: lang,
+              organisation: currentOrganisation.id_organisation
+            },
+            type: QueryTypes.SELECT,
+          }
+        );
+        const dataClassementPoint = resultClassementPoint.filter(c => c.id_user === currentUserByAD.id_user)[0];
+        
+        if ((dataClassementXP && dataClassementXP.rang <= 100) || (dataClassementPoint && dataClassementPoint.rang <= 100)) {
+          listIdMedalValid.push(4);
+        }
+        if ((dataClassementXP && dataClassementXP.rang <= 20) || (dataClassementPoint && dataClassementPoint.rang <= 20)) {
+          listIdMedalValid.push(5);
+        }
       }
 
       //medal collectionneur / toutes les medailles obtenues

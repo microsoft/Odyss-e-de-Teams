@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import "./style.scss";
 
 const Description = (props) => {
-  const { t, isMobile } = props;
+  const { t } = props;
 
   return (
     <div className="Description d-flex h-100 flex-column justify-content-center px-5 px-md-0 mx-auto">
@@ -60,10 +60,8 @@ const Description = (props) => {
       </div>
       <div className="Description__button">
         <Button
-          variant="light"
-          className={`d-inline-block py-3 py-md-2 mt-4 mt-md-2 ${
-            isMobile ? "btn__orange-gradiant" : ""
-            }`}
+          variant="primary"
+          className={`d-inline-block py-3 py-md-2 mt-4 mt-md-2`}
           onClick={props.onClickNext}>
           {t("landing.description.buttonText")}
         </Button>

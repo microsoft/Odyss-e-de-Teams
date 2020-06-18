@@ -82,7 +82,7 @@ const Avatars = (props) => {
 
           <div className="Avatars__actions mt-2">
             <Button
-              variant="light"
+              variant="primary"
               onClick={onClickNext}
               className={"d-none d-md-block"}
               disabled={avatarSelected === false}
@@ -90,9 +90,9 @@ const Avatars = (props) => {
               {t("landing.Avatars.buttonText")}
             </Button>
             <Button
-              variant="light"
+              variant="primary"
               onClick={onClickNext}
-              className={"d-block d-md-none btn__orange-gradiant"}
+              className={"d-block d-md-none"}
               disabled={avatarSelected === false}
             >
               {t("landing.Avatars.buttonText")}

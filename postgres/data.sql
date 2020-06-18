@@ -60,8 +60,8 @@
 	VALUES ('Explorateur novice', 'Atteindre le niveau 5', 'explorateur_novice.png', false, true, now(), now()),
 	('Explorateur', 'Atteindre le niveau 10', 'explorateur.png', false, true, now(), now()),
 	('Explorateur galactique', 'Atteindre le niveau 15', 'explorateur_galactique.png', true, true, now(), now()),
-	('Challenger', 'Atteindre le top 100 d''un classement', 'challenger.png', false, true, now(), now()),
-	('Pour la gloire !', 'Atteindre le top 20 d''un classement', 'pour_la_gloire.png', true, true, now(), now()),
+	('Challenger', 'Atteindre le top 100 d''un classement (déblocable en semaine 4)', 'challenger.png', false, true, now(), now()),
+	('Pour la gloire !', 'Atteindre le top 20 d''un classement (déblocable en semaine 4)', 'pour_la_gloire.png', true, true, now(), now()),
 	('Naissance d''un astre', 'Répondre correctement à 20 questions', 'naissance_astre.png', false, true, now(), now()),
 	('Chasseur d''usages Teams', 'Répondre correctement à 50 questions', 'chasseur_usage_teams.png', false, true, now(), now()),
 	('Commandant des usages', 'Répondre correctement à 150 questions', 'commandant_usages_teams.png', true, true, now(), now()),
@@ -85,9 +85,9 @@
 
 -- niveau
 INSERT INTO public.t_niveau(nom, cle_fichier, ordre, actif, horodatage, horodatage_creation)
-	VALUES ('Version basique', 'Deb', 1, true, now(), now()),
-	('Version améliorée', 'Inter', 2, true, now(), now()),
-	('Version ultime', 'Avance', 3, true, now(), now());
+	VALUES ('Débutant', 'Deb', 1, true, now(), now()),
+	('Intermédiaire', 'Inter', 2, true, now(), now()),
+	('Avancé', 'Avance', 3, true, now(), now());
 	
 -- navigation
 INSERT INTO public.t_page (nom, router_link, horodatage, actif, ordre, is_menu, picto) VALUES
