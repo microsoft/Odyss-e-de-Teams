@@ -383,7 +383,7 @@ const register = async (server, options) => {
             INNER JOIN t_semaine s ON s.id_semaine = a.id_semaine
             INNER JOIN j_organisation_semaine os ON os.id_semaine = a.id_semaine
             INNER JOIN t_agenda ag ON ag.id_agenda = a.id_agenda
-          WHERE a.id_organisation = :id_organisation
+          WHERE a.id_organisation = :id_organisation AND os.id_organisation = :id_organisation
           ORDER BY a.date_event ASC
         `,
           {
@@ -534,7 +534,7 @@ const register = async (server, options) => {
           FROM public.t_asset_communication a
           WHERE a.actif AND a.id_type_asset_communication=:type;
         `, { replacements: replacements, type: QueryTypes.SELECT }).then(result => {
-            return result;
+          return result;
         });
       } catch (e) {
         console.error(e);
