@@ -18,8 +18,15 @@ $color-pink: #cc496f;
 Gradiants 
 ****/
 @mixin orange-gradiant() {
-  background: linear-gradient(to right, #ffc623 -29%, #ff8322 176%);
+  background: linear-gradient(to bottom, #ffc623 -29%, #ff8322 176%);
   color: $color-white1 !important;
+  border: none;
+  :hover {
+    background: linear-gradient(to bottom, #ff8322 -29%, #ffc623 176%);
+  }
+}
+@mixin orange-gradiant-hover() {
+  background: linear-gradient(to bottom, #ff8322 -29%, #ffc623 176%);
 }
 
 /****

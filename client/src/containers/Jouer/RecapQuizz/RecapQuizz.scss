@@ -133,3 +133,47 @@
     }
   }
 }
+@include media-breakpoint-down(md) {
+  body {
+    .main-recap-quizz {
+      .main-entete {
+        background: url("/images/overlays/overlay-yellow.png") no-repeat !important;
+        background-size: cover !important;
+        color: initial;
+        margin-bottom: 0;
+        .color-primary-light {
+          color: $color-white1;
+        }
+        .span-result, .total-xp, .total-point {
+          font-size: 1.5rem;
+        }
+        .total-xp, .total-point {
+          padding-left: 2rem;
+        }
+      }
+      .question {
+        color: initial;
+        @include bg-encart;
+        padding: 1.25rem 1.5rem;
+        margin-top: .5rem;
+        .intitule {
+          h5 {
+            font-size: 1.25rem;
+          }
+        }
+      }
+      .astuce {
+        h3 {
+          display: flex;
+          align-items: center;
+          img {
+            max-width: 20%;
+          }
+        }
+      }
+    }
+    .toolbar-right {
+      display: none;
+    }
+  }
+}

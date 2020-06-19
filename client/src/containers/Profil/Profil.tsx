@@ -32,11 +32,18 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
   }
 
   private _loadDataProfil = () => {
-    UserAPI.checkNewMedal().then(() => {
+    UserAPI.checkNewMedal().then((dataMedal) => {
+      if (dataMedal && dataMedal.length > 0) {
+        const action_medal = {
+          type: "NEW_MEDAL",
+          value: dataMedal,
+        };
+        this.props.dispatch(action_medal);
+      }
       forkJoin([
         UserAPI.getMedaille("fr"),
-        ClassementAPI.getClassement("fr", "xp", 0, 1),
-        ClassementAPI.getClassement("fr", "point", 0, 1),
+        ClassementAPI.getClassement("fr", "xp", { user: 1 }),
+        ClassementAPI.getClassement("fr", "point", { user: 1 }),
         UserAPI.checkLevelUp(),
       ])
         .toPromise()
@@ -84,7 +91,15 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
   render() {
     return (
       <div>
-        <h1 className={"color-primary"}>Mon profil de jeu</h1>
+        <h1 className={"color-primary d-none d-md-block"}>Mon profil de jeu</h1>
+        <h1 className={"color-white d-flex d-md-none justify-content-center"}>
+          <img
+            src={process.env.PUBLIC_URL + "/images/icone/planete.png"}
+            alt="Ico Profil"
+            className={"ico-titre"}
+          />
+          Mon profil de jeu
+        </h1>
         <Row>
           <Col xs={12} md={6} className={"main-col1"}>
             <Container fluid>
@@ -137,40 +152,10 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                 </Col>
               </Row>
               <Row>
-                <Col className={"main-encart encart-stats mb-0"}>
+                <Col className={"main-encart encart-stats mb-md-0"}>
                   <h2 className={"color-primary-light mb-3"}>
                     Mes statistiques d'exploration
                   </h2>
-                  <Row>
-                    <Col>
-                      <p className={"h1 mb-0 pt-0 color-primary"}>
-                        {this.props.currentUser?.nb_questionnaire_complete}
-                      </p>
-                      <p>Questionnaires complétés</p>
-                    </Col>
-                    <Col>
-                      <p className={"h1 mb-0 pt-0 color-primary"}>
-                        {this.props.currentUser?.nb_reponse > 0 ? (
-                          <span>
-                            {(
-                              (100 * this.props.currentUser?.nb_reponse_ok) /
-                              this.props.currentUser?.nb_reponse
-                            ).toFixed(2)}
-                          </span>
-                        ) : (
-                          <span>0</span>
-                        )}
-                        <sup>%</sup>
-                      </p>
-                      <p>Bonnes réponses</p>
-                    </Col>
-                    <Col>
-                      <p className={"h1 mb-0 pt-0 color-primary"}>
-                        {this.props.currentUser?.nb_reponse_consecutive_top}
-                      </p>
-                      <p>Bonnes réponses consécutives</p>
-                    </Col>
-                  </Row>
                   <Row>
                     <Col>
                       <p className={"h1 mb-0 pt-0 color-primary"}>
@@ -198,6 +183,36 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                       </p>
                       <p>Classement actuel points</p>
                     </Col>
+                    <Col>
+                      <p className={"h1 mb-0 pt-0 color-primary"}>
+                        {this.props.currentUser?.nb_reponse > 0 ? (
+                          <span>
+                            {(
+                              (100 * this.props.currentUser?.nb_reponse_ok) /
+                              this.props.currentUser?.nb_reponse
+                            ).toFixed(2)}
+                          </span>
+                        ) : (
+                          <span>0</span>
+                        )}
+                        <sup>%</sup>
+                      </p>
+                      <p>Bonnes réponses</p>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className={"col-6 col-md-4"}>
+                      <p className={"h1 mb-0 pt-0 color-primary"}>
+                        {this.props.currentUser?.nb_questionnaire_complete}
+                      </p>
+                      <p>Questionnaires complétés</p>
+                    </Col>
+                    <Col className={"col-6 col-md-4"}>
+                      <p className={"h1 mb-0 pt-0 color-primary"}>
+                        {this.props.currentUser?.nb_reponse_consecutive_top}
+                      </p>
+                      <p>Bonnes réponses consécutives</p>
+                    </Col>
                     <Col></Col>
                   </Row>
                 </Col>
@@ -205,21 +220,16 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
             </Container>
           </Col>
           <Col xs={12} md={6}>
-            <div className={"main-encart mb-0 main-col2"}>
-              <h2 className={"color-primary-light d-none d-md-block mb-2"}>
-                Ma collection de récompenses d'honneur
-              </h2>
-              <h2 className={"color-primary-light d-block d-md-none mb-2"}>
+            <div className={"main-encart mb-md-0 main-col2"}>
+              <h2 className={"color-primary-light mb-2"}>
                 Ma collection de médailles
               </h2>
               <div className={"d-none d-md-block"}>
-                Au cours de ton voyage, tu pourras choisir jusqu’à 3 médailles
-                parmi celles que tu auras obtenues pour les exhiber partout sur
-                ton tableau de board. Il te sera également possible d’en choisir
-                une comme image d’Avatar, de quoi faire pâlir de jalousie la
-                communauté d’Explorateurs !
+                Au cours de ton voyage, tu pourras sélectionner 3 médailles
+                favorites parmi ta collection ci-dessous, à exhiber sur ton
+                profil. Tu pourras également remplacer ton avatar actuel par une
+                nouvelle médaille !
               </div>
-              <h3 className={"d-none d-md-block mt-2"}>Liste des médailles</h3>
               <p className={"color-primary mt-3 mb-1"}>
                 Médailles communes{" "}
                 {this.state.listMedaille?.filter((m) => !m.legendaire).length}
@@ -257,8 +267,8 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
               <UserAvatar user={this.props.currentUser} />
             </div>
             <p className={"text-center"}>
-              Clique sur la médaille que tu souhaites mettre à la place de ton
-              avatar.
+              Pour remplacer ton avatar par une médaille de ta collection,
+              sélectionne la médaille de ton choix.
             </p>
             {this.state.listMedaille?.map((item: IMedaille) => {
               return (
@@ -277,6 +287,14 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                 />
               );
             })}
+            <img
+              className={`medaille avatar pointer ${
+                (!this.state.selectedMedailleAvatar && !this.props.currentUser?.id_medaille_avatar) || (this.state.hasUpdatedMedailleAvatar && !this.state.selectedMedailleAvatar) ? "selected" : ""
+              }`}
+              onClick={() => this._selectMedailleAvatar(null)}
+              src={process.env.PUBLIC_URL + this.props.currentUser?.image_avatar_origine} 
+              alt="Avatar"
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button

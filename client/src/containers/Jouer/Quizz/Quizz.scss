@@ -1,3 +1,7 @@
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
 .quizz-container {
   .main-quizz {
     .titre {
@@ -16,6 +20,22 @@
       z-index: 10;
       height: auto;
       opacity: 1;
+      .btn {
+        overflow: hidden;
+        .time-loader {
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          border-radius: 0.75rem;
+          background: rgba(0,0,0,0.1);
+          animation: progress-time-loader 60s linear 1;
+        }
+        .time-loader.paused {
+          animation-play-state: paused;
+        }
+      }
     }
     .outro {
       .illustration-module-done {
@@ -24,16 +44,18 @@
     }
   }
   .toolbar-right {
+    position: relative;
+    z-index: 10;
     width: 12rem;
     .btn {
-        font-size: .9rem;
-        width: 100%;
+      font-size: 0.9rem;
+      width: 100%;
     }
   }
 }
 body {
   .modal-dialog.modal-pause {
-      height: 90vh;
+    height: 90vh;
     .modal-content {
       padding: 0;
       height: 100%;
@@ -49,29 +71,86 @@ body {
     }
   }
   .modal-dialog.modal-help {
-      .p-rep  {
-        padding-left: 2rem;
-        line-height: 1.5rem;
-      }
-      .p-chrono {
-          background: url("/images/question/chronometre.png") no-repeat left center;
-          background-size: contain;
-      }
-      .p-eclair {
-          background: url("/images/icone/exp-bonus.png") no-repeat left center;
-          background-size: contain;
-      }
-      .p-coeur {
-        background: url("/images/icone/coeur.png") no-repeat left center;
-        background-size: contain;
-        line-height: 1.25rem;
-      }
-      .p-flag {
-        background: url("/images/icone/flag.png") no-repeat left center;
-        background-size: contain;
-      }
-      .ico-modal {
-        height: 10rem;
-      }
+    .p-rep {
+      padding-left: 2rem;
+      line-height: 1.5rem;
+    }
+    .p-chrono {
+      background: url("/images/question/chronometre.png") no-repeat left center;
+      background-size: contain;
+    }
+    .p-eclair {
+      background: url("/images/icone/exp-bonus.png") no-repeat left center;
+      background-size: contain;
+    }
+    .p-coeur {
+      background: url("/images/icone/coeur.png") no-repeat left center;
+      background-size: contain;
+      line-height: 1.25rem;
+    }
+    .p-flag {
+      background: url("/images/icone/flag.png") no-repeat left center;
+      background-size: contain;
+    }
+    .ico-modal {
+      height: 10rem;
+    }
   }
+}
+@include media-breakpoint-down(md) {
+  .quizz-container {
+    .main-quizz {
+      overflow: hidden;
+      .btn-submit {
+        width: 100%;
+      }
+    }
+    .toolbar-right {
+      width: 100%;
+      justify-content: space-between;
+      .chrono {
+        margin-left: 40%;
+      }
+      .btn {
+        width: 3.5rem !important;
+        height: 3.5rem;
+      }
+    }
+  }
+  
+  .modal-dialog.modal-pause {
+    .modal-footer {
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+  .modal-dialog.modal-help {
+    .modal-content {
+      padding: 0;
+      .content {
+        padding: 1rem;
+        background: url("/images/astronaute/astro_hello.png") no-repeat 97% 130%;
+        background-size: 6rem;
+        .p-rep {
+          padding-left: 3rem !important;
+          background-size: 10% !important;
+          height: 2.5rem;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+    .modal-footer {
+      justify-content: flex-start;
+      .btn {
+        width: 70%;
+      }
+    }
+  }
+}
+
+@keyframes progress-time-loader {
+  from {transform: translateX(-100%);}
+  to   {transform: translateY(0);}
 }

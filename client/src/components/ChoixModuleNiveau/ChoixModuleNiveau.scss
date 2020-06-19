@@ -19,7 +19,7 @@
             margin: .5rem 0;
         }
         .niveau {
-            font-size: .95em;
+            font-size: .9em;
         }
     }
     .module:hover {
@@ -40,6 +40,12 @@
     .module {
         width: 100%;
         margin-bottom: 1rem;
+        .illustration-module {
+            max-width: 20%;
+        }
+    }
+    .module:hover {
+        transform: unset;
     }
   }
 }

@@ -3,18 +3,21 @@
 @import "~bootstrap/scss/_variables.scss";
 @import "~bootstrap/scss/mixins/_breakpoints.scss";
 
-.main-intro {
-  .titre {
-      img {
-        max-height: 2.25rem;
-      }
+.titre {
+  img {
+    max-height: 2.25rem;
   }
+}
+.main-intro {
   .illustration-chronometre {
     width: 15%;
   }
   .content {
     width: 75%;
   }
+}
+.btn-next {
+  text-align: right;
   .btn {
     width: fit-content;
   }
@@ -23,12 +26,17 @@
 @include media-breakpoint-down(md) {
   .main-intro {
     @include bg-encart;
+    color: initial;
     .illustration-chronometre {
       width: 50%;
     }
     .content {
       width: 100%;
     }
+  }
+  .btn-next {
+    text-align: center;
+    margin-top: 1rem;
     .btn {
       width: 100%;
     }

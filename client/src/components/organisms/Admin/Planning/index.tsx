@@ -26,7 +26,7 @@ const Planning = (props: IPlanning & WithTranslation) => {
       <div className="PlanningComponent__title">
         {tReady &&
           `${t("admin.planning.title")} ${t("admin.planning.title_week")} ${
-            activeMissionIndex + 1
+          activeMissionIndex + 1
           } : « ${missions[activeMissionIndex].nom}	! »`}
       </div>
 

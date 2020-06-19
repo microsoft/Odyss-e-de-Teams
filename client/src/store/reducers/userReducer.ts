@@ -33,6 +33,12 @@ export const userReducer: Reducer<IUserState, any> = (
                 dataLevelUp: action.value
             }
             return nextState || state;
+        case 'NEW_MEDAL':
+            nextState = {
+                ...state,
+                listNewMedal: action.value
+            }
+            return nextState || state;
         default:
             return state;
     }
