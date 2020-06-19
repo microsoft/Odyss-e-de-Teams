@@ -1,5 +1,14 @@
 @import "common/sass/_variables";
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .PlanningConfig {
   background: white;
   position: absolute;
@@ -8,6 +17,14 @@
   width: 100%;
   height: 100%;
   padding: 1em;
+  animation-name: fadeIn;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  transition: opacity 0.3s;
+
+  &--closing {
+    opacity: 0;
+  }
 
   &__title {
     font-size: 2em;
