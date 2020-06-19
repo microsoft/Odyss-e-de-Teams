@@ -76,23 +76,6 @@ class QCMChoixMultiple extends Component<IQCMProps, IMecaniqueQuestionState> {
                         : ""
                     }`}
                   >
-                    {isRecap ? (
-                      <span></span>
-                    ) : (
-                      <Form.Check
-                        checked={
-                          this.state.selectedReponseIds?.indexOf(
-                            item.id_reponse
-                          ) !== -1
-                        }
-                        type={"checkbox"}
-                        id={`cb-reponse-${item.id_reponse}`}
-                        aria-label={`Check réponse`}
-                        className={"position-absolute check-img"}
-                        onClick={() => this._onSelect(item)}
-                        onChange={() => {}}
-                      />
-                    )}
                     <img
                       src={`${process.env.PUBLIC_URL}/upload/quizz${item.asset}`}
                       alt={item.nom}
@@ -116,6 +99,23 @@ class QCMChoixMultiple extends Component<IQCMProps, IMecaniqueQuestionState> {
                       }`}
                       onClick={() => this._onSelect(item)}
                     />
+                    {isRecap ? (
+                      <span></span>
+                    ) : (
+                      <Form.Check
+                        checked={
+                          this.state.selectedReponseIds?.indexOf(
+                            item.id_reponse
+                          ) !== -1
+                        }
+                        type={"checkbox"}
+                        id={`cb-reponse-${item.id_reponse}`}
+                        aria-label={`Check réponse`}
+                        className={"position-relative check-img text-center mt-2 w-100 p-0"}
+                        onClick={() => this._onSelect(item)}
+                        onChange={() => {}}
+                      />
+                    )}
                   </div>
                 </Col>
               );
