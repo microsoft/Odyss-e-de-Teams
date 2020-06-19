@@ -46,8 +46,20 @@ class Admin extends API {
 
   getTemplate(asset: number): Promise<any> {
     return super.fetchGET(this.resource + "/emailing/get-template", {
-      asset: asset
+      asset: asset,
     });
+  }
+
+  getThemes(): Promise<any> {
+    return super.fetchGET(this.resource + "/themes");
+  }
+
+  activateThemes(themes: number[]): Promise<boolean> {
+    return super.fetchDELETE(this.resource + "/themes", themes);
+  }
+
+  deactivateThemes(themes: number[]): Promise<boolean> {
+    return super.fetchPOST(this.resource + "/themes", themes);
   }
   /**** fin assets comm  ****/
 }

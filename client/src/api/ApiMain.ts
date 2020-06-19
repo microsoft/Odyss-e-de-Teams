@@ -27,6 +27,19 @@ class API {
   }
 
   protected fetchPOST(url: string, body: any, params: any = null) {
+    return this.fetchWithBody(url, body, params, "post");
+  }
+
+  protected fetchDELETE(url: string, body: any, params: any = null) {
+    return this.fetchWithBody(url, body, params, "delete");
+  }
+
+  private fetchWithBody(
+    url: string,
+    body: any,
+    params: any = null,
+    method: string
+  ) {
     let urlParams = "";
     if (params) {
       Object.keys(params).forEach((e) => {
@@ -44,7 +57,7 @@ class API {
       (params ? urlParams : "");
 
     return fetch(urlAPI, {
-      method: "post",
+      method: method,
       credentials: "include",
       body: JSON.stringify(body),
       headers: {
