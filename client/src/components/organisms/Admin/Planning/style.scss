@@ -2,6 +2,7 @@
 
 .PlanningComponent {
   padding: 1em;
+  position: relative;
   &__title {
     font-size: 2em;
     color: $color-primary;

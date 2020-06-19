@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import MissionItem from "components/molecules/Admin/MissionItem";
 
 import "./style.scss";
+import PlanningConfig from "./fragments/PlanningConfig";
 
 interface IPlanning {
   missions: any;
@@ -62,6 +63,7 @@ const Planning = (props: IPlanning & WithTranslation) => {
           {tReady && t("utils.button.save")}
         </Button>
       </div>
+      <PlanningConfig />
     </div>
   );
 };
