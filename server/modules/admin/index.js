@@ -529,9 +529,12 @@ const register = async (server, options) => {
         const replacements = {
           type: params.type_asset,
         };
-        return db.sequelize.query(`
-          SELECT DISTINCT a.id_asset_communication, TRIM(a.nom) AS nom, TRIM(a.nom_fichier) AS nom_fichier, a.contenu1, a.contenu2
+        return db.sequelize
+          .query(
+            `
+          SELECT DISTINCT a.id_asset_communication, TRIM(a.nom) AS nom, TRIM(a.nom_fichier) AS nom_fichier, a.contenu1, a.contenu2, a.id_social_asset_communication, TRIM(sac.nom) as nom_social
           FROM public.t_asset_communication a
+          LEFT JOIN public.t_social_asset_communication sac ON sac.id_social_asset_communication = a.id_social_asset_communication
           WHERE a.actif AND a.id_type_asset_communication=:type;
         `, { replacements: replacements, type: QueryTypes.SELECT }).then(result => {
           return result;
@@ -598,7 +601,7 @@ const register = async (server, options) => {
       if (!currentAsset) {
         return false;
       }
-      // 
+      //
 
       /**
        * A partir de là il faudra créer le template de mail en utilisant le logo de la boite
@@ -623,7 +626,8 @@ const register = async (server, options) => {
           ROOT_UPLOAD_PATH +
           "/" +
           currentUserByAD.id_organisation +
-          "/templates/" + currentAsset.nom_fichier,
+          "/templates/" +
+          currentAsset.nom_fichier,
         width: imageTemplate.bitmap.width,
         height: imageTemplate.bitmap.height,
       };
@@ -655,8 +659,14 @@ const register = async (server, options) => {
         const widthTemplate = imageTemplate.bitmap.width;
         const widthLogo = logo.bitmap.width;
 
-        const composite = await imageTemplate.composite(logo, (widthTemplate - widthLogo - 45), 45);
-        await composite.quality(100).write(emailTemplates + "/" + currentAsset.nom_fichier);
+        const composite = await imageTemplate.composite(
+          logo,
+          widthTemplate - widthLogo - 45,
+          45
+        );
+        await composite
+          .quality(100)
+          .write(emailTemplates + "/" + currentAsset.nom_fichier);
 
         return result;
       } catch (e) {

@@ -327,6 +327,7 @@ CREATE TABLE public.t_asset_communication
 (
   id_asset_communication integer NOT NULL DEFAULT nextval('public.seq_t_asset_communication'::regclass),
   id_type_asset_communication integer,
+  id_social_asset_communication integer,
   nom character(80),
   nom_fichier character(80),
   contenu1 text,
@@ -383,6 +384,35 @@ ALTER TABLE public.t_type_asset_communication CLUSTER ON idx_type_asset_communic
 
 CREATE INDEX idx_actif_t_type_asset_communication
   ON public.t_type_asset_communication
+  USING btree
+  (actif);
+
+  ----- social_asset_communication 
+CREATE SEQUENCE public.seq_t_social_asset_communication;
+GRANT ALL ON TABLE public.seq_t_social_asset_communication TO odyssee_teams_appli;
+
+CREATE TABLE public.t_social_asset_communication
+(
+  id_social_asset_communication integer NOT NULL DEFAULT nextval('public.seq_t_social_asset_communication'::regclass),
+  nom character(80),
+  actif boolean,
+  horodatage timestamp without time zone,
+  horodatage_creation timestamp without time zone,
+  CONSTRAINT pk_t_social_asset_communication PRIMARY KEY (id_social_asset_communication)
+)
+WITH (
+  OIDS=FALSE
+);
+GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_social_asset_communication TO odyssee_teams_appli;
+
+CREATE UNIQUE INDEX idx_social_asset_communication_pkey
+  ON public.t_social_asset_communication
+  USING btree
+  (id_social_asset_communication);
+ALTER TABLE public.t_social_asset_communication CLUSTER ON idx_social_asset_communication_pkey;
+
+CREATE INDEX idx_actif_t_social_asset_communication
+  ON public.t_social_asset_communication
   USING btree
   (actif);
 
