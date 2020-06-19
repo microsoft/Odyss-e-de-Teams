@@ -11,9 +11,9 @@ class Classement extends API {
     return super.fetchGET(this.resource, {
       language: lang,
       mode: mode,
-      monde: option.monde,
-      user: option.user,
-      limit: option.limit
+      monde: option?.monde,
+      user: option?.user,
+      limit: option?.limit
     });
   }
 }
