@@ -4,8 +4,6 @@ import { Dropdown, Button } from "react-bootstrap";
 import domtoimage from "dom-to-image";
 import { Editor } from "@tinymce/tinymce-react";
 
-import AdminAPI from "api/Admin";
-
 import "./style.scss";
 import Admin from "api/Admin";
 
@@ -40,7 +38,7 @@ class AdminEmailing extends React.Component<
   componentDidMount() {
     this._loadAssets();
   }
-  
+
   private _loadAssets = () => {
     Admin.getListAsset(1).then((result: IAsset[]) => {
       this.setState(
@@ -58,29 +56,37 @@ class AdminEmailing extends React.Component<
   };
 
   private _loadTemplate = () => {
-    AdminAPI.getTemplate(
-      this.state.currentTemplate.id_asset_communication
-    ).then((data) => {
-      let currentTemplate = this.state.currentTemplate;
-      currentTemplate.template = data.template;
-      currentTemplate.width = data.width;
-      currentTemplate.height = data.height;
-      this.setState({
-        currentTemplate: currentTemplate,
-      }, () => {
-        setTimeout(() => {
-          this._handleEditorInit();
-        }, 500);
-      });
-    });
+    Admin.getTemplate(this.state.currentTemplate.id_asset_communication).then(
+      (data) => {
+        let currentTemplate = this.state.currentTemplate;
+        currentTemplate.template = data.template;
+        currentTemplate.width = data.width;
+        currentTemplate.height = data.height;
+        this.setState(
+          {
+            currentTemplate: currentTemplate,
+          },
+          () => {
+            setTimeout(() => {
+              this._handleEditorInit();
+            }, 500);
+          }
+        );
+      }
+    );
   };
 
   private _handleEditorInit = () => {
     let node: any = document.getElementById("bodyContent");
-    if (node && this.state.currentTemplate && this.state.currentTemplate.template) {
+    if (
+      node &&
+      this.state.currentTemplate &&
+      this.state.currentTemplate.template
+    ) {
       console.log(this.state.currentTemplate);
       node.style.backgroundImage =
-        "url('" + process.env.REACT_APP_STATIC_URL +
+        "url('" +
+        process.env.REACT_APP_STATIC_URL +
         this.state.currentTemplate.template +
         "')";
       node.style.backgroundSize = "cover";
@@ -164,8 +170,16 @@ class AdminEmailing extends React.Component<
             <Editor
               value={`
                 <div id="bodyContent">
-                  ${this.state.currentTemplate?.contenu1 ? this.state.currentTemplate?.contenu1 : ''}
-                  ${this.state.currentTemplate?.contenu2 ? this.state.currentTemplate?.contenu2 : ''}
+                  ${
+                    this.state.currentTemplate?.contenu1
+                      ? this.state.currentTemplate?.contenu1
+                      : ""
+                  }
+                  ${
+                    this.state.currentTemplate?.contenu2
+                      ? this.state.currentTemplate?.contenu2
+                      : ""
+                  }
                 </div>`}
               init={{
                 height: 500,
