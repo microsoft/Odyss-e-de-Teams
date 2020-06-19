@@ -3,15 +3,15 @@
     "welcome": {
       "text": "Bienvenue dans",
       "body": "Partez à la conquête du travail en équipe \n avec Microsoft Teams",
-      "buttonText": "Partir en exploration maintenant",
-      "body-mobile": "Le jeu concours interactif pour explorer la galexie des usages collaboratifs"
+      "buttonText": "Partir en exploration",
+      "body-mobile": "Le jeu concours interactif pour explorer la galaxie des usages collaboratifs"
     },
     "description": {
       "medals": "25 <1>médailles</1> à collectionner pour exhiber votre talent d'explorateur de la collaboration !",
       "questions": "200 <1>questions </1> pour vous propulser sur Microsoft Teams",
       "reward": "Une <1> récompense d'honneur </1> pour le meilleur explorateur",
-      "gifts": "Des cadeaux et goodies pour les meilleurs explorateurs",
-      "buttonText": "Configuration de mon vaisseau"
+      "gifts": "Des cadeaux et goodies pour les meilleurs explorateurs.trices",
+      "buttonText": "Configurer mon vaisseau"
     },
     "CGU": {
       "title": "Avant de pouvoir accéder à ton vaisseau et ses fonctionnalités, prend connaissance des conditions RGPD suivantes :",
@@ -23,17 +23,17 @@
       "subtitle": "Il te reste une étape à réaliser avant de t'embarquer dans cette grande exploration :",
       "subtitle-mobile": "Avant de commencer, il te faut choisir ton vaisseau de départ",
       "body": {
-        "title": "Choisis ton vaisseau de départ",
+        "title": "Choisis ton vaisseau",
         "description": "Le choix du vaisseau ne relève que de la personnalisation esthétique de l'avatar de départ. Chaque explorateur pourra modifier son avatar au cours de son voyage grâce aux médailles d'honneur collectées",
         "selectAvatar": "Sélectionner"
       },
-      "buttonText": "Configuration terminée"
+      "buttonText": "Terminer la configuration"
     }
   },
   "admin": {
     "title": "Bienvenue à bord, Commandant !",
     "outillage_desc": "Configuration et paramètres",
-    "planning_desc": "Communication aux Explorateurs, événements galactiques",
+    "planning_desc": "Suivi des actions à mener, éléments de communication, paramétrage des questions",
     "classement_title": "Classements",
     "classement_desc": "Classements et statistiques",
     "classement_general": "Classement général",
@@ -46,7 +46,7 @@
     "campaign_time_left": "Temps restant :",
     "outillage": {
       "subtitle": "Salle des machines",
-      "subtitle_desc": "Configurez le logo de votre organisation qui apparaîtra sur le Cockpit de chaque Explorateur de votre organisation.",
+      "subtitle_desc": ": Ajoutez le logo de votre organisation qui apparaîtra dans l’interface des Explorateurs.",
       "current_logo_title": "Logo actuellement déployé",
       "current_logo_desc": "Commandant, il est recommandé d’importer un logo sur fond blanc pour assurer sa lisibilité.",
       "logoChangeButtonLabel": "Charger un logo",
@@ -54,7 +54,7 @@
     },
     "planning": {
       "subtitle": "Planning du commandant",
-      "board_title": "Tableau de board",
+      "board_title": "Tour de contrôle",
       "board_desc": "Commandant, vous avez un certain nombre d'actions à mener chaque jour pour assurer la pérennité du voyage des Explorateurs !",
       "menu_planning": "Planning",
       "menu_email": "Emailings",
@@ -68,7 +68,7 @@
       "mission_label": "Mission : ",
       "title": "Programme et missions - ",
       "title_week": "Semaine ",
-      "description": "Commandant, dans cette section vous pouvez activer et désactiver chaque semaine les packages de missions qui sont ou seront à déployer sur les interfaces des Explorateurs de votre organisation."
+      "description": "Commandant, dans cette section vous aurez à activer la mission de la semaine et sélectionner les modules de questions associées."
     },
     "agenda": {
       "title": "Planning - Programme de missions",
@@ -78,7 +78,7 @@
     },
     "emailing": {
       "title": "Emailings",
-      "desc": "Commandant, vous pouvez sélectionner un template d'email dans la liste proposée, le personnaliser puis cliquer sur le bouton «Copier dans le cache» pour pouvoir directement coller son contenu dans votre email prêt à l'envoi",
+      "desc": "Commandant, vous pouvez sélectionner un modèle d’email dans la liste proposée. Vous pouvez le personnaliser, cliquez ensuite sur le bouton « Copier dans le cache » et collez le contenu dans un nouvel email",
       "button_cancel": "Réinitialiser",
       "button_save": "Copier dans le cache",
       "email_launch": "Email de lancement"
@@ -105,7 +105,7 @@
       "title": "Bienvenue à bord de ton vaisseau !",
       "campaign_desc": "Tentez de remporter des lots et des goodies en répondant chaque semaine aux nouvelles questions ! Cumulez des points de jeu et des points d’expérience pour vous démarquer des autres Explorateurs !​",
       "start_game": "Lancer le jeu !",
-      "start_game_desc": "Chaque semaine, une nouvelle mission pour progresser dans ton expédition galactique sur Teams et obtenir des récompenses d'honneur",
+      "start_game_desc": "Chaque semaine, poursuivez votre expédition galactique sur Teams avec une nouvelle mission et de nouvelles récompenses à gagner.",
       "bonus_desc_PTS": "Points bonus !",
       "bonus_desc_EXP": "Points d'expérience !",
       "bonus_desc_MEDAL": "Médaille !",
@@ -113,7 +113,7 @@
       "ranking_title": "Classements",
       "ranking_desc": "Classements génénal et par points d'EXP",
       "profile_title": "Profil",
-      "profile_desc": "Niveau, statistiques et médailles",
+      "profile_desc": "Niveaux, statistiques et médailles",
       "rules_title": "Règles",
       "rules_desc": "Règles du jeu et récompenses",
       "mobile_mission_title": "Mission : ",
@@ -136,6 +136,11 @@
         "pts_mobile": "PTS",
         "medal_mobile": "Médaille"
       }
+    },
+    "modal_weekend": {
+      "title": "En dehors de l'orbite",
+      "desc": "Ton vaisseau est actuellement à l'arrêt pour le weekend, c'est en effet l'heure de recharger les batteries !",
+      "desc_lundi": "Retrouve ton cockpit et la suite de ton voyage dès lundi !"
     }
   },
   "modal": {

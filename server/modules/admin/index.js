@@ -383,8 +383,8 @@ const register = async (server, options) => {
             INNER JOIN t_semaine s ON s.id_semaine = a.id_semaine
             INNER JOIN j_organisation_semaine os ON os.id_semaine = a.id_semaine
             INNER JOIN t_agenda ag ON ag.id_agenda = a.id_agenda
-          WHERE a.id_organisation = :id_organisation
-          ORDER BY a.date_event ASC
+          WHERE a.id_organisation = :id_organisation AND os.id_organisation = :id_organisation
+          ORDER BY a.date_event ASC, mission_id
         `,
           {
             replacements: replacements,
@@ -536,12 +536,9 @@ const register = async (server, options) => {
           FROM public.t_asset_communication a
           LEFT JOIN public.t_social_asset_communication sac ON sac.id_social_asset_communication = a.id_social_asset_communication
           WHERE a.actif AND a.id_type_asset_communication=:type;
-        `,
-            { replacements: replacements, type: QueryTypes.SELECT }
-          )
-          .then((result) => {
-            return result;
-          });
+        `, { replacements: replacements, type: QueryTypes.SELECT }).then(result => {
+          return result;
+        });
       } catch (e) {
         console.error(e);
       }

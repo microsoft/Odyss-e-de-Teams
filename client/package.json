@@ -18,6 +18,8 @@
     "adal-angular": "^1.0.17",
     "bootstrap": "^4.5.0",
     "dom-to-image": "^2.6.0",
+    "gulp": "^4.0.2",
+    "gulp-zip": "^5.0.1",
     "i18next": "^19.4.4",
     "i18next-http-backend": "^1.0.11",
     "js-cookie": "^2.2.1",

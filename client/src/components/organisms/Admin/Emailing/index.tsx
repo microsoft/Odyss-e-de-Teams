@@ -1,11 +1,16 @@
 import React from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
 import { Dropdown, Button } from "react-bootstrap";
+import { forkJoin } from "rxjs";
 import domtoimage from "dom-to-image";
 import { Editor } from "@tinymce/tinymce-react";
 
+import AdminAPI from "api/Admin";
+import ClassementAPI from "api/Classement";
+
+import { IClassement } from "models/Classement";
+
 import "./style.scss";
-import Admin from "api/Admin";
 
 interface IAsset {
   id_asset_communication: number;
@@ -22,6 +27,8 @@ interface ITemplate extends IAsset {
 interface IAdminEmailingState {
   currentTemplate: ITemplate;
   listAssets: IAsset[];
+  listUserClassementPoint: IClassement[];
+  listUserClassementXp: IClassement[];
 }
 
 class AdminEmailing extends React.Component<
@@ -33,6 +40,8 @@ class AdminEmailing extends React.Component<
     this.state = {
       currentTemplate: null,
       listAssets: [],
+      listUserClassementPoint: [],
+      listUserClassementXp: [],
     };
   }
   componentDidMount() {
@@ -40,40 +49,48 @@ class AdminEmailing extends React.Component<
   }
 
   private _loadAssets = () => {
-    Admin.getListAsset(1).then((result: IAsset[]) => {
-      this.setState(
-        {
-          listAssets: result,
-          currentTemplate: result ? result[0] : null,
-        },
-        () => {
-          if (this.state.currentTemplate) {
-            this._loadTemplate();
+    forkJoin([
+      AdminAPI.getListAsset(1),
+      ClassementAPI.getClassement("fr", "xp", { limit: 10 }),
+      ClassementAPI.getClassement("fr", "point", { limit: 10 }),
+    ])
+      .toPromise()
+      .then((result: any) => {
+        this.setState(
+          {
+            listAssets: result[0],
+            currentTemplate: result[0] ? result[0][0] : null,
+            listUserClassementPoint: result[1] ? result[1] : [],
+            listUserClassementXp: result[2] ? result[2] : [],
+          },
+          () => {
+            if (this.state.currentTemplate) {
+              this._loadTemplate();
+            }
           }
-        }
-      );
-    });
+        );
+      });
   };
 
   private _loadTemplate = () => {
-    Admin.getTemplate(this.state.currentTemplate.id_asset_communication).then(
-      (data) => {
-        let currentTemplate = this.state.currentTemplate;
-        currentTemplate.template = data.template;
-        currentTemplate.width = data.width;
-        currentTemplate.height = data.height;
-        this.setState(
-          {
-            currentTemplate: currentTemplate,
-          },
-          () => {
-            setTimeout(() => {
-              this._handleEditorInit();
-            }, 500);
-          }
-        );
-      }
-    );
+    AdminAPI.getTemplate(
+      this.state.currentTemplate.id_asset_communication
+    ).then((data) => {
+      let currentTemplate = this.state.currentTemplate;
+      currentTemplate.template = data.template;
+      currentTemplate.width = data.width;
+      currentTemplate.height = data.height;
+      this.setState(
+        {
+          currentTemplate: currentTemplate,
+        },
+        () => {
+          setTimeout(() => {
+            this._handleEditorInit();
+          }, 500);
+        }
+      );
+    });
   };
 
   private _handleEditorInit = () => {
@@ -128,6 +145,54 @@ class AdminEmailing extends React.Component<
       });
   };
 
+  private _renderClassement = (type: string) => {
+    let items: IClassement[] = [];
+    let clePoint: string = "",
+      top: number = 0;
+    switch (type) {
+      case "xp":
+        items = this.state.listUserClassementXp;
+        clePoint = "nb_xp";
+        top = 1290;
+        break;
+      case "pts":
+        items = this.state.listUserClassementPoint;
+        clePoint = "nb_point";
+        top = 955;
+        break;
+    }
+    let styleFirst = ` style="font-weight: bold; color:#f1b446;"`;
+    let styleSecond = ` style="font-weight: bold; color:#818181;"`;
+    let styleThird = ` style="font-weight: bold; color:#a85150;"`;
+    let content: string = "";
+    content += `
+      <div style="top: ${top}px; height: 410px; position: relative; padding: 0 100px; font-size: 18pt; line-height: 22pt; font-family: 'Segoe UI'; ">
+      <table style="width:100%; border:none" border="0"><thead style="background: #7b83eb; color: #fff;"><tr>`;
+    content +=
+      '<th style="padding:10px">#</th><th style="padding:10px">Explorateur.trice</th><th style="padding:10px">Points</th></tr></thead>';
+    content += "<tbody>";
+    let styleTr: string;
+    items?.forEach((item: IClassement) => {
+      styleTr = "";
+      if (item.rang === 1) {
+        styleTr = styleFirst;
+      }
+      if (item.rang === 2) {
+        styleTr = styleSecond;
+      }
+      if (item.rang === 3) {
+        styleTr = styleThird;
+      }
+      content += "<tr"+styleTr+">";
+      content += `<td style="padding:10px">${item.rang}</td>`;
+      content += `<td style="padding:10px">${item.nom}</td>`;
+      content += `<td style="padding:10px">${item[clePoint]}</td>`;
+      content += "</tr>";
+    });
+    content += "</tbody></table></div>";
+    return content;
+  };
+
   render() {
     const { tReady, t } = this.props;
 
@@ -177,6 +242,16 @@ class AdminEmailing extends React.Component<
                   ${
                     this.state.currentTemplate?.contenu2
                       ? this.state.currentTemplate?.contenu2
+                      : ""
+                  }
+                  ${
+                    this.state.currentTemplate?.id_asset_communication === 5
+                      ? this._renderClassement("pts")
+                      : ""
+                  }
+                  ${
+                    this.state.currentTemplate?.id_asset_communication === 5
+                      ? this._renderClassement("xp")
                       : ""
                   }
                 </div>`}

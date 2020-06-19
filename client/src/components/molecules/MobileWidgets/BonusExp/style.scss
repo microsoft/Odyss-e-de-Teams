@@ -39,6 +39,9 @@
         @include typo-title-component;
         font-weight: bold;
         color: $color-white1;
+        .val {
+          font-size: 2.75rem;
+        }
       }
 
       &__text {
