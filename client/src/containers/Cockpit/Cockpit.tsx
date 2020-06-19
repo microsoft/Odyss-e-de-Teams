@@ -175,11 +175,6 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
     const { t, tReady, isMobile } = this.props;
     const { loading, campaign, currentBonus } = this.state;
 
-    let bonusDescription = null;
-    if (this.state.currentBonus.type === "EXP") {
-      bonusDescription = "EXP";
-    }
-
     if (loading) return <> Loading ... </>;
     else if (!isMobile)
       return (
@@ -325,13 +320,13 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
     else
       return (
         <div className="Cockpit pb-4">
-          <h1 className="color-primary Cockpit__title mt-4 col-12">
+          <h1 className="color-primary Cockpit__title mb-4 col-12">
             {tReady && t("player.cockpit.title")}
           </h1>
 
-          <div onClick={() => this._setShowModal(true)}>
+          <div onClick={() => this._setShowModal(true)} className={"mt-1"}>
             <BonusEXPMobile
-              className="col-12 mt-4"
+              className="col-12 mt-5"
               bonus={this.state.currentBonus.value}
               bonusDesc={`${this.state.currentBonus.type.toLowerCase()}_mobile`}
             />
@@ -343,7 +338,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
           />
 
           <Link to="/Jouer" className="no-hover">
-            <GameLauncherMobile className="col-12 mt-4" />
+            <GameLauncherMobile className="col-12 mt-5" />
           </Link>
 
           <Link to="/Classement" className="no-hover">
@@ -356,7 +351,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
           </Link>
           <Link to="/Profil" className="no-hover">
             <LinksMobile
-              className="col-12 mt-4"
+              className="col-12 mt-4 profil"
               iconPath="/images/icone/monde.png"
               i18nTitleKey="player.cockpit.profile_title"
               i18nDescriptionKey="player.cockpit.profile_desc"
@@ -364,7 +359,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
           </Link>
           <Link to="/Regles" className="no-hover">
             <LinksMobile
-              className="col-12 mt-4 fixheight-mobile"
+              className="col-12 mt-4 fixheight-mobile regle"
               iconPath="/images/icone/bouclier.png"
               i18nTitleKey="player.cockpit.rules_title"
               i18nDescriptionKey="player.cockpit.rules_desc"

@@ -16,7 +16,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $color-black1;
-  background: url("/images/backgrounds/fond_principal_decore.jpg") no-repeat top left;
   background-size: 100%;
   background-attachment: fixed;
 
@@ -38,6 +37,22 @@ body {
       rgba(244, 244, 255, 1) 0%,
       rgba(218, 216, 240, 1) 100%
     );
+  }
+  .main-container.overlay-purple {
+    background: url("/images/overlays/overlay-purple.png") no-repeat;
+    background-size: cover;
+    color: $color-white1;
+    .main-encart:not(.nobg-mobile) {
+      color: initial;
+    }
+  }
+  .main-container.overlay-mauve {
+    background: url("/images/overlays/overlay-mauve.png") no-repeat;
+    background-size: cover;
+    color: $color-white1;
+    .main-encart:not(.nobg-mobile) {
+      color: initial;
+    }
   }
 
   /*** modal ***/
@@ -124,6 +139,8 @@ body {
 
 @include media-breakpoint-down(md) {
   body {
+    background: url("/images/overlays/overlay-purple.png") no-repeat top left;
+    background-size: cover;
     .nobg-mobile {
       background: none !important;
       box-shadow: none !important;
@@ -133,6 +150,7 @@ body {
 
 @include media-breakpoint-up(md) {
   body {
+    background: url("/images/backgrounds/fond_principal_decore.jpg") no-repeat top left;
     font-size: 0.85rem !important;
     line-height: 1.35;
     .modal-dialog {

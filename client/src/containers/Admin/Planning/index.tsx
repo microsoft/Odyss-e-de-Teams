@@ -11,6 +11,7 @@ import { getFullMonth } from "utils/dates";
 import AdminPlanning from "components/organisms/Admin/Planning";
 import AdminAgenda from "components/organisms/Admin/Agenda";
 import AdminEmailing from "components/organisms/Admin/Emailing";
+import AdminSocial from "components/organisms/Admin/Social";
 
 import "./style.scss";
 
@@ -24,7 +25,7 @@ interface IPlanningContainerState {
 class PlanningContainer extends React.Component<
   WithTranslation,
   IPlanningContainerState
-> {
+  > {
   state = {
     loading: true,
     campaigns: [],
@@ -110,7 +111,9 @@ class PlanningContainer extends React.Component<
                 </Tab>
 
                 <Tab eventKey="SOCIAL" title={t("admin.planning.menu_social")}>
-                  Social
+                  <AdminSocial
+                    missions={campaigns}
+                  />
                 </Tab>
 
                 <Tab

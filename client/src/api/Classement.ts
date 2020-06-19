@@ -6,15 +6,19 @@ class Classement extends API {
   getClassement(
     lang: string,
     mode: string,
-    monde: number = 0,
-    user: number = 0
+    option: any = null
   ): Promise<any> {
     return super.fetchGET(this.resource, {
       language: lang,
       mode: mode,
-      monde: monde,
-      user: user,
+      monde: option?.monde,
+      user: option?.user,
+      limit: option?.limit
     });
+  }
+
+  getIndicateur(): Promise<any> {
+    return super.fetchGET(this.resource + '/indicateur');
   }
 }
 

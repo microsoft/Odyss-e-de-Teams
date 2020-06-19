@@ -19,6 +19,7 @@ module.exports = function (sequelize, DataTypes) {
         nb_reponse_consecutive_top: DataTypes.INTEGER,
         nb_reponse_consecutive_en_cours: DataTypes.INTEGER,
         nb_questionnaire_complete: DataTypes.INTEGER,
+        id_semaine_encours_inscription: DataTypes.INTEGER,
         actif: DataTypes.BOOLEAN,
         horodatage_connexion: DataTypes.DATE,
         updatedAt: {

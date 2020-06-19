@@ -7,7 +7,7 @@
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   padding-bottom: 0.5em;
-  height: 7em;
+  height: 7rem;
   overflow: hidden;
   transition: all 0.3s ease;
   box-shadow: 0 3px 6px 0 rgba(67, 5, 139, 0.16);
@@ -32,7 +32,7 @@
     &__seperator {
       margin-left: 40%;
       margin-right: 40%;
-      margin-top: 1em;
+      margin-top: 1rem;
       width: 20%;
       height: 0.3em;
       background-color: $color-primary-light;
@@ -42,6 +42,48 @@
   }
 
   &__items {
-    margin-top: 2em;
+    margin-top: 2rem;
+    .list-group {
+      .list-group-item {
+        border: none;
+        border-radius: 2rem;
+        background: none;
+        font-size: 1.75rem;
+        padding-left: 25%;
+        .ico-menu {
+          display: inline-block;
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: 80%;
+          width: 2rem;
+          height: 1.8rem;
+          padding: 0.1rem 0;
+          transition: all 0.5s;
+        }
+        .title-menu {
+          padding-left: .75rem;
+        }
+      }
+      .list-group-item.active,
+      .list-group-item:hover {
+        color: $color-primary;
+        font-weight: bold;
+        background-color: rgba(203, 134, 247, .5);
+        .ico-menu {
+          transform: scale(1.25) rotate(10deg);
+        }
+      }
+      .list-group-item.menu1 {
+        .ico-menu {
+          background-size: contain;
+        }
+      }
+      .list-group-item.menu1.active,
+      .list-group-item.menu1:hover {
+        .ico-menu {
+          transform: scale(1.6) rotate(10deg);
+        }
+      }
+    }
   }
 }

@@ -29,6 +29,27 @@ class IntroLancementQuestion extends Component<
   render() {
     return (
       <FadeInIntro>
+        <div className={"d-flock d-md-none mb-3"}>
+          <div className={"d-flex titre align-items-center"}>
+            <img
+              src={
+                process.env.PUBLIC_URL +
+                "/images/question/module/" +
+                this.props.selectedModule?.image
+              }
+              alt={`Illustration module ${this.props.selectedModule?.nom}`}
+            />
+            <div className={"ml-2"}>
+              <h2 className={"color-white1"}>
+                {this.props.selectedModule?.nom}{" "}
+                <strong className={"color-white1"}>
+                  - {this.props.selectedNiveau?.nom}
+                </strong>
+              </h2>
+            </div>
+          </div>
+          <h1 className={"text-center mt-3"}>Avant de commencer</h1>
+        </div>
         <div className={"main-intro m-0 px-4 py-4 px-md-0 pt-md-0 pb-md-2"}>
           <div className={"d-none d-md-flex mb-2 titre align-items-center"}>
             <img
@@ -56,31 +77,38 @@ class IntroLancementQuestion extends Component<
             <img
               src={process.env.PUBLIC_URL + "/images/question/chronometre.png"}
               alt={`Illustration Chronometre`}
-              className={"illustration-chronometre my-3"}
+              className={"illustration-chronometre my-3 d-none d-md-inline"}
+            />
+            <img
+              src={
+                process.env.PUBLIC_URL +
+                "/images/question/chronometre_mobile.png"
+              }
+              alt={`Illustration Chronometre`}
+              className={"illustration-chronometre my-3 d-inline d-md-none"}
             />
           </p>
           <p className={"text-center content mx-auto"}>
-            Explorateur.trice, le chronomètre va te permettre de gagner{" "}
+            Explorateur.trice, le chronomètre va te permettre de gagner
             <strong className={"color-primary-light"}>
-              5 points d’XP supplémentaires si tu réponds en dessous d'une
-              minute
-            </strong>{" "}
-            à chaque bonnes réponses.
+              des points d’EXP supplémentaires si tu donnes une réponse correcte
+              en moins d'une minute
+            </strong>
+            .
           </p>
           <p className={"text-center content mx-auto"}>
-            Mais rassure-toi ! Au delà de ce temps, il ne te fera pas perdre de
-            points !
-          </p>
-          <p className={"text-right"}>
-            <Button
-              variant="primary"
-              className={"d-inline-block"}
-              onClick={() => this._onClick()}
-            >
-              Commençons l'exploration
-            </Button>
+            Mais rassure-toi, au-delà de ce temps, tu ne perdras aucun point!
           </p>
         </div>
+        <p className={"btn-next pb-md-4"}>
+          <Button
+            variant="primary"
+            className={"d-inline-block"}
+            onClick={() => this._onClick()}
+          >
+            Commencer l'exploration
+          </Button>
+        </p>
       </FadeInIntro>
     );
   }

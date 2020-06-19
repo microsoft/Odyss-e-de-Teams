@@ -14,7 +14,8 @@ export const initialState: IStore = {
     currentUser: null,
     currentOrganisation: null,
     currentCampaign: null,
-    dataLevelUp: null
+    dataLevelUp: null,
+    listNewMedal: null
   },
 };
 

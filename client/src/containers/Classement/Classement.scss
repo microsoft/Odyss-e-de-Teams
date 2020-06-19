@@ -4,97 +4,116 @@
 @import "~bootstrap/scss/mixins/_breakpoints.scss";
 
 .main-classement {
-    .table {
-        .avatar {
-            width: 2.5rem;
-            img {
-                max-height: 2rem;
-                max-width: 2rem;
-            }
-        }
-        thead {
-            th {
-                background: $color-primary-light;
-                color: #fff;
-                border: none;
-                padding: .75rem .5rem;
-                vertical-align: middle;
-            }
-            th:first-child {
-                border-radius: 1rem 0 0 0;
-            }
-            th:last-child {
-                border-radius: 0 1rem 0 0;
-            }
-            th.th-nom {
-                width: 30%;
-            }
-        }
-        tfoot {
-            td {
-                background: $color-yellow;
-                color: #fff;
-                border: none;
-                font-weight: bold;
-            }
-        }
-        tbody {
-            tr.rang1,
-            tr.rang2,
-            tr.rang3 {
-                font-weight: bold;
-            }
-            tr.rang1 {
-                td {
-                    color: $color-yellow;
-                }
-            }
-            tr.rang2 {
-                td {
-                    color: #818181;
-                }
-            }
-            tr.rang3 {
-                td {
-                    color: #a85150;
-                }
-            }
-        }
+  .table {
+    color: inherit;
+    .avatar {
+      width: 2.5rem;
+      img {
+        max-height: 2rem;
+        max-width: 2rem;
+      }
     }
+    thead {
+      th {
+        background: $color-primary-light;
+        color: #fff;
+        border: none;
+        padding: 0.75rem 0.5rem;
+        vertical-align: middle;
+      }
+      th:first-child {
+        border-radius: 1rem 0 0 0;
+      }
+      th:last-child {
+        border-radius: 0 1rem 0 0;
+      }
+      th.th-nom {
+        width: 30%;
+      }
+    }
+    tfoot {
+      td {
+        background: $color-yellow;
+        color: #fff;
+        border: none;
+        font-weight: bold;
+      }
+    }
+    tbody {
+      tr.rang1,
+      tr.rang2,
+      tr.rang3 {
+        font-weight: bold;
+      }
+      tr.rang1:not(.active) {
+        td {
+          color: $color-yellow;
+        }
+      }
+      tr.rang2:not(.active) {
+        td {
+          color: #818181;
+        }
+      }
+      tr.rang3:not(.active) {
+        td {
+          color: #a85150;
+        }
+      }
+      tr.active {
+        td {
+          background: $color-yellow;
+          color: #fff;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  .indicateur {
+    .indicateur-item {
+      background: $color-primary-light;
+      color: $color-white1;
+      border-radius: .75rem;
+      width: 20%;
+    }
+  }
 }
 
 @include media-breakpoint-down(md) {
-    .table {
-        thead {
-            display: none;
-        }
-        .no-mobile {
-            display: none;
-        }
-        tbody {
-            td {
-                border-top: solid 1px $color-white1;
-            }
-            tr.rang1,
-            tr.rang2,
-            tr.rang3 {
-                display: none
-            }
-        }
+  .btn-group {
+    width: 100%;
+  }
+  .table {
+    thead {
+      display: none;
     }
-    .podium {
-        margin: 2rem auto 1.5rem;
-        .podium-user {
-            position: relative;
-            img {
-                max-height: 5rem;
-            }
-        }
-        .top2 {
-            margin-top: 2.25rem;
-        }
-        .top3 {
-            margin-top: 2.5rem;
-        }
+    .no-mobile {
+      display: none;
     }
+    tbody {
+      td {
+        border-top: solid 1px $color-white1;
+      }
+      tr.rang1,
+      tr.rang2,
+      tr.rang3 {
+        display: none;
+      }
+    }
+  }
+  .podium {
+    margin: 2rem auto 1.5rem;
+    .podium-user {
+      position: relative;
+      img {
+        max-height: 5rem;
+      }
+    }
+    .top2 {
+      margin-top: 2.25rem;
+    }
+    .top3 {
+      margin-top: 2.5rem;
+    }
+  }
 }

@@ -2,6 +2,7 @@ node_modules
 build
 .vscode/settings.json
 .DS_Store
-server/public/company-assets
+server/public/company-assets/*
 .env
 /client/public/upload
+/client/manifest

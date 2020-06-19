@@ -1,12 +1,17 @@
 @import "../../common/sass/variables";
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
 
-.chrono {
-    @include bg-encart;
-    .illustration-chronometre {
-        max-width: 60%;
-    }
-    .btn {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
+@include media-breakpoint-up(md) {
+    .chrono {
+        @include bg-encart;
+        .illustration-chronometre {
+            max-width: 60%;
+        }
+        .btn {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
     }
 }
