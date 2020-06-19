@@ -674,6 +674,145 @@ const register = async (server, options) => {
       }
     },
   });
+
+  server.route({
+    path: "/admin/themes",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
+      try {
+        const replacements = {
+          id_organisation: currentUserByAD.id_organisation,
+        };
+        return db.sequelize
+          .query(
+            `
+            SELECT t.id_thematique, TRIM(t.nom) AS nom , 
+            jt ISNULL as activated 
+            FROM public.t_thematique t
+            LEFT JOIN public.j_thematique_organisation_disabled jt
+            ON jt.id_thematique = t.id_thematique and jt.id_organisation=:id_organisation
+        `,
+            { replacements: replacements, type: QueryTypes.SELECT }
+          )
+          .then((result) => {
+            return result;
+          });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
+
+  server.route({
+    path: "/admin/themes",
+    method: "DELETE",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
+      const themesToRemove = request.payload;
+
+      try {
+        const replacements = {
+          id_organisation: currentUserByAD.id_organisation,
+          themes: themesToRemove,
+        };
+        return db.sequelize
+          .query(
+            `
+            DELETE FROM public.j_thematique_organisation_disabled 
+            WHERE id_organisation=:id_organisation AND id_thematique IN(:themes);
+        `,
+            { replacements: replacements, type: QueryTypes.DELETE }
+          )
+          .then((result) => {
+            return result;
+          });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
+
+  server.route({
+    path: "/admin/themes",
+    method: "POST",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+      const themesToBeAdded = request.payload;
+      const id_organisation = currentUserByAD.id_organisation;
+
+      try {
+        const replacements = themesToBeAdded.map((id) => [
+          id_organisation,
+          id,
+          new Date(),
+        ]);
+        return db.sequelize
+          .query(
+            `
+            INSERT INTO public.j_thematique_organisation_disabled (id_organisation, id_thematique, horodatage) 
+            VALUES ${Array(themesToBeAdded.length).fill("(?)").join(",")};
+        `,
+            { replacements: replacements, type: QueryTypes.INSERT }
+          )
+          .then((result) => {
+            return result;
+          });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
 };
 
 exports.plugin = {

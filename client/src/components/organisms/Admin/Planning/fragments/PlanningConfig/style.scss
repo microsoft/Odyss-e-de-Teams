@@ -1,0 +1,75 @@
+@import "common/sass/_variables";
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.PlanningConfig {
+  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+  animation-name: fadeIn;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  transition: opacity 0.3s;
+
+  &--closing {
+    opacity: 0;
+  }
+
+  &__title {
+    font-size: 2em;
+    color: $color-primary;
+    font-weight: bold;
+  }
+
+  &__subtitle {
+    color: $color-black1;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  &__item {
+    background-color: $color-primary-light;
+    border-radius: 5px;
+    height: 3.5rem;
+    color: $color-white1;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+
+    transition: background-color 0.3s;
+
+    &--disabled {
+      background-color: transparent;
+      color: $color-primary-light;
+      -webkit-box-shadow: 0px 0px 64px 0px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 0px 0px 64px 0px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px 0px 64px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    input {
+      cursor: pointer;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 1em;
+  }
+}

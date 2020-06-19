@@ -2,9 +2,11 @@ import React, { useState } from "react";
 
 import { withTranslation, WithTranslation } from "react-i18next";
 import { Button } from "react-bootstrap";
+import { FaTools } from "react-icons/fa";
 import MissionItem from "components/molecules/Admin/MissionItem";
 
 import "./style.scss";
+import PlanningConfig from "./fragments/PlanningConfig";
 
 interface IPlanning {
   missions: any;
@@ -17,6 +19,7 @@ const Planning = (props: IPlanning & WithTranslation) => {
   const activeMissionIndex = missions.findIndex((m) => m.actif === true);
 
   const [curMission, setCurMission] = useState(activeMissionIndex);
+  const [config, setConfig] = useState(false);
 
   return (
     <div className="PlanningComponent">
@@ -47,6 +50,9 @@ const Planning = (props: IPlanning & WithTranslation) => {
       </div>
 
       <div className="PlanningComponent__buttons">
+        <Button variant="secondary" onClick={() => setConfig(true)}>
+          <FaTools />
+        </Button>
         <Button
           variant="secondary"
           className="m-1"
@@ -62,6 +68,13 @@ const Planning = (props: IPlanning & WithTranslation) => {
           {tReady && t("utils.button.save")}
         </Button>
       </div>
+      {config && (
+        <PlanningConfig
+          close={() => {
+            setConfig(false);
+          }}
+        />
+      )}
     </div>
   );
 };
