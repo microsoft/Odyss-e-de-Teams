@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import { Button } from "react-bootstrap";
 import styled, { keyframes } from "styled-components";
 //@ts-ignore
-import { fadeIn } from "react-animations";
+import { fadeIn, fadeInUpBig } from "react-animations";
 
 import "./Regle.scss";
 
 const fadeInAnimation = keyframes`${fadeIn}`;
+const fadeInUpBigAnimation = keyframes`${fadeInUpBig}`;
 
 const FadeInStep1 = styled.div`
   opacity: 0;
@@ -36,13 +38,13 @@ const FadeInStep4 = styled.div`
   animation-fill-mode: forwards;
 `;
 
-/* const FadeInUpCartouche = styled.div`
+const FadeInUpCartouche = styled.div`
   opacity: 0;
   animation-duration: 0.25s;
   animation-delay: 0.25s;
   animation-name: ${fadeInUpBigAnimation};
   animation-fill-mode: forwards;
-`; */
+`;
 
 class Regle extends Component {
   render() {
@@ -150,6 +152,18 @@ class Regle extends Component {
               </div>
             </FadeInStep4>
           </div>
+            <FadeInUpCartouche>
+              <p className={"btn-download mt-2 pb-md-3"}>
+                <Button as="a"
+                  variant="primary"
+                  className={"d-inline-block"}
+                  href={`${process.env.PUBLIC_URL}/download/Odyssee-Teams_Reglement.pdf`}
+                  target="_blank"
+                >
+                  Télécharger les règles du jeu
+                </Button>
+              </p>
+            </FadeInUpCartouche>
           {/* suppression demande client
            <FadeInUpCartouche>
             <Container fluid className={"d-none d-md-block mt-4"}>
