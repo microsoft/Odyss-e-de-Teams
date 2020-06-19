@@ -1,0 +1,51 @@
+﻿{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.7",
+  "version": "1.0",
+  "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
+  "packageName": "com.odysseeteams",
+  "developer": {
+    "name": "Saegus ",
+    "websiteUrl": "https://saegus.com/",
+    "privacyUrl": "https://privacy.microsoft.com/fr-fr/privacystatement",
+    "termsOfUseUrl": "https://docs.microsoft.com/fr-fr/legal/termsofuse"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "L'Odyssée de Teams",
+    "full": "L'Odyssée de Teams - Un voyage à travers les usages"
+  },
+  "description": {
+    "short": "L'Odyssée de Teams - Un voyage à travers les usages",
+    "full": "Le jeu concours interactif pour explorer la galaxie des usages collaboratifs."
+  },
+  "accentColor": "#ffffff",
+  "staticTabs": [
+    {
+      "entityId": "jeu",
+      "name": "Le jeu",
+      "contentUrl": "https://0751890982fe.ngrok.io/?inTeamsSSO=true/",
+      "websiteUrl": "https://0751890982fe.ngrok.io",
+      "scopes": [
+        "personal"
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "0751890982fe.ngrok.io",
+    "46fd0305a1a0.ngrok.io",
+    "login.microsoftonline.com",
+    "odyssee-de-teams.azurewebsites.net"
+  ],
+  "webApplicationInfo": {
+    "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
+    "resource": "api://0751890982fe.ngrok.io/5830a2dd-c958-47bd-b6e8-676341fc5faf"
+  }
+}
