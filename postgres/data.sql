@@ -172,7 +172,7 @@ INSERT INTO public.t_agenda (nom, description, date_agenda, actif, horodatage, h
 		true, now(), now()),
 	(1, 'E-mail annonce des gagnants', 'gagnant.png', 
 		'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Explorateurs, exploratrices !</h1><p style="text-align: center;">Le grand jour est arrivé ! Votre commandant.e de bord vous dévoile aujourd’hui le grand classement final des astronautes les plus ambitieux et les récompenses qu’ils ont méritées.</p></div>', 
-		'<div style="top: 785px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Les gagnants par classement</h1><p style="text-align: center;">Le programme « à la conquête du travail en équipe avec Microsoft Teams » est terminé ! </p></div>', 
+		'<div style="top: 785px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Les gagnants par classement</h1><p style="text-align: left;">Le programme « à la conquête du travail en équipe avec Microsoft Teams » est terminé !</p><br/><p>Nous félicitons tous les joueurs et toutes les joueuses qui se sont prêté.e.s au jeu. Votre implication a permis de rendre le travail en équipe plus fluide et efficace !</p></div>', 
 		true, now(), now());
 
 

@@ -64,9 +64,8 @@ class TeamsAuthService {
   getUser() {
     return new Promise((resolve, reject) => {
       this.authContext.getUser((error, user) => {
-        console.log(user);
         if (!error) {
-          resolve(user.profile);
+          resolve(user);
         } else {
           reject(error);
         }

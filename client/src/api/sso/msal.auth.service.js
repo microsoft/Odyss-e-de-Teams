@@ -7,7 +7,7 @@ class MsalAuthService {
         this.applicationConfig = {
             auth: {
                 clientId: '5830a2dd-c958-47bd-b6e8-676341fc5faf',
-                redirectUri: `${window.location.origin}/callback/v2`
+                redirectUri: `${window.location.origin}/`
             },
             cache: {
                 cacheLocation: "localStorage",

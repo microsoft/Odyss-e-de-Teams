@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import styled, { keyframes } from "styled-components";
 //@ts-ignore
-import { fadeIn, fadeInUpBig } from "react-animations";
+import { fadeIn } from "react-animations";
 
 import "./Regle.scss";
 
 const fadeInAnimation = keyframes`${fadeIn}`;
-const fadeInUpBigAnimation = keyframes`${fadeInUpBig}`;
 
 const FadeInStep1 = styled.div`
   opacity: 0;
@@ -38,13 +36,13 @@ const FadeInStep4 = styled.div`
   animation-fill-mode: forwards;
 `;
 
-const FadeInUpCartouche = styled.div`
+/* const FadeInUpCartouche = styled.div`
   opacity: 0;
   animation-duration: 0.25s;
   animation-delay: 0.25s;
   animation-name: ${fadeInUpBigAnimation};
   animation-fill-mode: forwards;
-`;
+`; */
 
 class Regle extends Component {
   render() {
@@ -66,7 +64,7 @@ class Regle extends Component {
           <h2 className={"d-none d-md-block color-primary-light mb-2"}>
             Un programme d’un mois pour voyager au coeur des usages Teams
           </h2>
-          <div className={"d-flex steps mt-3"}>
+          <div className={"d-flex steps mt-3 mt-md-5"}>
             <FadeInStep1
               className={
                 "step step1 text-center d-flex flex-column align-items-center"
@@ -147,13 +145,13 @@ class Regle extends Component {
                 />
                 <p className={"text-center mt-2 mb-0"}>
                   En plus des connaissances et de la gloire, remporte des
-                  cadeaux et des goodies comme le{" "}
-                  <strong>Microsoft Surface Headphones</strong>.
+                  cadeaux et des goodies.
                 </p>
               </div>
             </FadeInStep4>
           </div>
-          <FadeInUpCartouche>
+          {/* suppression demande client
+           <FadeInUpCartouche>
             <Container fluid className={"d-none d-md-block mt-4"}>
               <Row>
                 <Col md={4}>
@@ -191,7 +189,7 @@ class Regle extends Component {
                 </Col>
               </Row>
             </Container>
-          </FadeInUpCartouche>
+          </FadeInUpCartouche> */}
         </div>
       </div>
     );

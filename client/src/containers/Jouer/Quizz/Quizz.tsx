@@ -213,7 +213,10 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
       case 5: // Remettre dans l'ordre
         return (
           <div>
-            <p>Cliquez sur les listes pour mettre les étapes dans l’ordre !</p>
+            <p>
+              Cliquez sur les listes de numéros à droite pour remettre les
+              étapes dans le bon ordre !
+            </p>
             <RemettreOrdre question={item} onSelect={this._onSelect} />
           </div>
         );
@@ -409,7 +412,8 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
               >
                 <div className={"mt-2 mt-md-0"}>
                   <p className={"p-rep p-chrono"}>
-                    <strong>1 minute</strong> pour gagner un bonus supplémentaire
+                    <strong>1 minute</strong> pour gagner un bonus
+                    supplémentaire
                   </p>
                   <p className={"p-rep p-eclair"}>
                     <strong>Plusieurs réponses sont possibles</strong>

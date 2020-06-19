@@ -302,8 +302,8 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                     </p>
                   ) : (
                     <p className={"p-result pl-md-3 mt-3"}>
-                      Malheureusement, tu n’as pas sélectionné la bonne réponse
-                      ! Regarde la réponse ci-dessous
+                      Malheureusement, tu n’as pas sélectionné la bonne réponse!
+                      Regarde le corrigé ci-dessous
                     </p>
                   )}
                   <div className={"mt-4"}>{this._renderMecanique(item)}</div>
