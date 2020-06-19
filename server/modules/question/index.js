@@ -30,18 +30,20 @@ const register = async (server, options) => {
         limit: 3,
         lang: lang,
         user: currentUserByAD.id_user,
+        organisation: currentUserByAD.id_organisation
       };
       let main_query = `
             WITH w0 AS(
               WITH w0_0 AS(
-                SELECT DISTINCT a.id_question
+                SELECT DISTINCT a.id_question, a.id_thematique
                 FROM public.t_question a
                 WHERE a.actif AND a.id_module=:module AND a.id_niveau=:niveau
               )
               SELECT DISTINCT a.id_question
               FROM w0_0 a
                 LEFT JOIN public.h_reponse_user b ON a.id_question=b.id_question AND b.id_user=:user
-              WHERE b.id_reponse_user IS NULL
+                LEFT JOIN public.j_thematique_organisation_disabled c ON a.id_thematique=c.id_thematique AND c.id_organisation=:organisation
+              WHERE b.id_reponse_user IS NULL AND c.id_thematique IS NULL
             )
             SELECT DISTINCT a.id_question, a.id_module, a.id_thematique, a.id_niveau, a.id_mecanique, TRIM(c.nom) AS nom, a.asset 
             FROM public.t_question a 
