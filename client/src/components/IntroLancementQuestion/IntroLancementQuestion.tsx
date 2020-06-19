@@ -89,7 +89,7 @@ class IntroLancementQuestion extends Component<
             />
           </p>
           <p className={"text-center content mx-auto"}>
-            Explorateur.trice, le chronomètre va te permettre de gagner
+            Explorateur.trice, le chronomètre va te permettre de gagner{" "}
             <strong className={"color-primary-light"}>
               des points d’EXP supplémentaires si tu donnes une réponse correcte
               en moins d'une minute

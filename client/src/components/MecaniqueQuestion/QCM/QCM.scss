@@ -32,8 +32,9 @@
 .conteneur-reponse-img {
   .conteneur-img {
     .check-img {
-      top: 0;
-      right: 0;
+      input {
+        margin: 0;
+      }
     }
   }
   .conteneur-img:hover{
