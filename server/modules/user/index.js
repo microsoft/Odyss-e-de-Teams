@@ -157,6 +157,7 @@ const register = async (server, options) => {
         id_avatar: body.id_avatar,
         nom: body.ad.name,
         actif: true,
+        id_semaine_encours_inscription: (!isMaitreJeu && currentOrganisation["id_semaine_encours"] ? currentOrganisation["id_semaine_encours"] : null)
       });
       return currentUserByAD;
     },

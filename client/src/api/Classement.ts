@@ -16,6 +16,10 @@ class Classement extends API {
       limit: option?.limit
     });
   }
+
+  getIndicateur(): Promise<any> {
+    return super.fetchGET(this.resource + '/indicateur');
+  }
 }
 
 export default new Classement();

@@ -69,6 +69,14 @@
       }
     }
   }
+  .indicateur {
+    .indicateur-item {
+      background: $color-primary-light;
+      color: $color-white1;
+      border-radius: .75rem;
+      width: 20%;
+    }
+  }
 }
 
 @include media-breakpoint-down(md) {
