@@ -115,7 +115,7 @@ const PlanningConfig = memo((props: WithTranslation & IPlanningConfigProps) => {
           variant="secondary"
           className="m-1"
           onClick={cancelHandler}
-          disabled={saving}
+          disabled={saving || closing}
         >
           {tReady && t("utils.button.cancel")}
         </Button>
@@ -123,7 +123,7 @@ const PlanningConfig = memo((props: WithTranslation & IPlanningConfigProps) => {
           variant="primary"
           className="m-1"
           onClick={saveHandler}
-          disabled={saving}
+          disabled={saving || closing}
         >
           {tReady && saving ? t("utils.button.saving") : t("utils.button.save")}
         </Button>
