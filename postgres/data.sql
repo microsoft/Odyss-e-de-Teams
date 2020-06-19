@@ -60,8 +60,8 @@
 	VALUES ('Explorateur novice', 'Atteindre le niveau 5', 'explorateur_novice.png', false, true, now(), now()),
 	('Explorateur', 'Atteindre le niveau 10', 'explorateur.png', false, true, now(), now()),
 	('Explorateur galactique', 'Atteindre le niveau 15', 'explorateur_galactique.png', true, true, now(), now()),
-	('Challenger', 'Atteindre le top 100 d''un classement', 'challenger.png', false, true, now(), now()),
-	('Pour la gloire !', 'Atteindre le top 20 d''un classement', 'pour_la_gloire.png', true, true, now(), now()),
+	('Challenger', 'Atteindre le top 100 d''un classement (déblocable en semaine 4)', 'challenger.png', false, true, now(), now()),
+	('Pour la gloire !', 'Atteindre le top 20 d''un classement (déblocable en semaine 4)', 'pour_la_gloire.png', true, true, now(), now()),
 	('Naissance d''un astre', 'Répondre correctement à 20 questions', 'naissance_astre.png', false, true, now(), now()),
 	('Chasseur d''usages Teams', 'Répondre correctement à 50 questions', 'chasseur_usage_teams.png', false, true, now(), now()),
 	('Commandant des usages', 'Répondre correctement à 150 questions', 'commandant_usages_teams.png', true, true, now(), now()),
@@ -78,16 +78,16 @@
 	('Vengeur spatio-temporel', 'Répondre correctement à 5 questions du module « Communiquer efficacement »', 'vengeur_spatio_temporel.png', false, true, now(), now()),
 	('Maître de la communication', 'Répondre correctement à 30 questions du module « Communiquer efficacement »', 'maitre_communication.png', true, true, now(), now()),
 	('Concentration gravitationnelle', 'Répondre correctement à 5 questions du module « Optimiser les réunions »', 'concentration_gravitationnelle.png', false, true, now(), now()),
-	('Le magnétiseur gravitationnel', 'Répondre correctement à 30 questions du module « Optimiser les réunions »', 'magnetiseur_gravitationnel.png', true, true, now(), now()),
+	('Maître de la réunion', 'Répondre correctement à 30 questions du module « Optimiser les réunions »', 'magnetiseur_gravitationnel.png', true, true, now(), now()),
 	('La météore de Pégase', 'Répondre correctement à 5 questions du module « Mieux travailler en mobilité »', 'meteore_pegase.png', false, true, now(), now()),
 	('Maître de la mobilité', 'Répondre correctement à 30 questions du module « Mieux travailler en mobilité »', 'maitre_mobilite.png', true, true, now(), now()),
 	('Le collectionneur de l''infini', 'Obtenir toutes les médailles communes et légendaires', 'collectionneur_infini.png', false, true, now(), now());
 
 -- niveau
 INSERT INTO public.t_niveau(nom, cle_fichier, ordre, actif, horodatage, horodatage_creation)
-	VALUES ('Version basique', 'Deb', 1, true, now(), now()),
-	('Version améliorée', 'Inter', 2, true, now(), now()),
-	('Version ultime', 'Avance', 3, true, now(), now());
+	VALUES ('Débutant', 'Deb', 1, true, now(), now()),
+	('Intermédiaire', 'Inter', 2, true, now(), now()),
+	('Avancé', 'Avance', 3, true, now(), now());
 	
 -- navigation
 INSERT INTO public.t_page (nom, router_link, horodatage, actif, ordre, is_menu, picto) VALUES
@@ -178,7 +178,7 @@ INSERT INTO public.t_agenda (nom, description, date_agenda, actif, horodatage, h
 		true, now(), now()),
 	(1, null, 'E-mail annonce des gagnants', 'gagnant.png', 
 		'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Explorateurs, exploratrices !</h1><p style="text-align: center;">Le grand jour est arrivé ! Votre commandant.e de bord vous dévoile aujourd’hui le grand classement final des astronautes les plus ambitieux et les récompenses qu’ils ont méritées.</p></div>', 
-		'<div style="top: 785px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Les gagnants par classement</h1><p style="text-align: center;">Le programme « à la conquête du travail en équipe avec Microsoft Teams » est terminé ! </p></div>', 
+		'<div style="top: 785px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Les gagnants par classement</h1><p style="text-align: left;">Le programme « à la conquête du travail en équipe avec Microsoft Teams » est terminé !</p><br/><p>Nous félicitons tous les joueurs et toutes les joueuses qui se sont prêté.e.s au jeu. Votre implication a permis de rendre le travail en équipe plus fluide et efficace !</p></div>', 
 		true, now(), now()),
 	(2, 1, 'Bannière Yammer', 'Tuile_Yammer.png', 
 		null, 

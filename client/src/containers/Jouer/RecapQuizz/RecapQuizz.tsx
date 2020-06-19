@@ -45,6 +45,7 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
         id_niveau: params.niveauId,
       }),
       UserAPI.checkLevelUp(),
+      UserAPI.checkNewMedal(),
     ])
       .toPromise()
       .then((data) => {
@@ -72,6 +73,13 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
             nbPointTotal: nbPointTotal,
           },
           () => {
+            if (data[4] && data[4].length > 0) {
+              const action_medal = {
+                type: "NEW_MEDAL",
+                value: data[4],
+              };
+              this.props.dispatch(action_medal);
+            }
             if (data[3] && data[3].hasLevelUp) {
               UserAPI.getUser("fr", "current").then((user) => {
                 const action_liste_user = {
@@ -187,9 +195,9 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                     </p>
                   </div>
                 </div>
-                <h4 className={"mb-0 d-block d-md-none color-white1"}>
+                <h3 className={"mb-0 d-block d-md-none color-white1"}>
                   Résultat de ton exploration
-                </h4>
+                </h3>
                 <div className={"mt-4"}>
                   <h5
                     className={
@@ -201,7 +209,7 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                     </span>
                     <span
                       className={
-                        "color-primary-light h4 mb-0 ml-md-2 d-block d-md-inline-block"
+                        "color-primary-light h4 mb-0 ml-md-2 d-block d-md-inline-block span-result"
                       }
                     >
                       {this.state.listQuestion
@@ -220,7 +228,7 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                     </span>
                     <span
                       className={
-                        "color-primary-light h4 mb-0 ml-md-2 d-block d-md-inline-block"
+                        "color-primary-light h4 mb-0 ml-md-2 d-block d-md-inline-block span-result"
                       }
                     >
                       {minuteTotal}min et {secondeTotal}sec
@@ -238,8 +246,8 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
               <div className={"pl-md-1"}>
                 <h5 className={"d-none d-md-block"}>Tes récompenses :</h5>
                 <div className={"color-primary-light"}>
-                  <h5 className={"d-block d-md-none color-white1 mt-2"}>
-                    Points d’expérience remportés
+                  <h5 className={"d-block d-md-none color-black1 mt-2"}>
+                    Points d’EXP remportés
                   </h5>
                   <h2 className={"total-xp mb-0"}>
                     + {this.state.nbXpTotal} EXP
@@ -247,14 +255,14 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                   <p className={"mb-4 d-none d-md-block"}>
                     <small>Points d’expérience remportés</small>
                   </p>
-                  <h5 className={"d-block d-md-none color-white1 mt-2"}>
-                    Points de classement remportés
+                  <h5 className={"d-block d-md-none color-black1 mt-2"}>
+                    Points de jeu remportés
                   </h5>
                   <h2 className={"total-point mb-0"}>
                     + {this.state.nbPointTotal} Points
                   </h2>
                   <p className={"mb-0 d-none d-md-block"}>
-                    <small>Points de classement remportés</small>
+                    <small>Points de jeu remportés</small>
                   </p>
                 </div>
               </div>
@@ -265,9 +273,9 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
               Récapitulatif des réponses
             </h2>
             <p>
-              Tu trouveras ci-dessous toutes les réponses aux questions que tu
-              as rencontré pendant ton exploration. Lis-les attentivement car il
-              se peut que des secrets et astuces sur Teams y soient cachés.
+              Tu trouveras ci-dessous les réponses aux questions de ce module.
+              Lis-les attentivement car il se peut que des astuces y soient
+              cachées.
             </p>
             {this.state.listQuestion?.map((item: IQuestion, i: number) => {
               return (
@@ -277,9 +285,14 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                     item.valid ? " valid" : " invalid"
                   }`}
                 >
-                  <div className={"mt-4 intitule"}>
+                  <div className={"mt-md-4 intitule"}>
+                    <h4
+                      className={"mb-3 d-block d-md-none color-primary-light"}
+                    >
+                      Question {i + 1}/{this.state.listQuestion?.length}
+                    </h4>
                     <h5>{item.nom}</h5>
-                    <p className={"mb-0"}>
+                    <p className={"mb-0 d-none d-md-block"}>
                       Question {i + 1}/{this.state.listQuestion?.length}
                     </p>
                   </div>
@@ -289,13 +302,13 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                     </p>
                   ) : (
                     <p className={"p-result pl-md-3 mt-3"}>
-                      Malheureusement, tu n’as pas sélectionné la bonne réponse
-                      ! Regarde la réponse ci-dessous
+                      Malheureusement, tu n’as pas sélectionné la bonne réponse!
+                      Regarde le corrigé ci-dessous
                     </p>
                   )}
                   <div className={"mt-4"}>{this._renderMecanique(item)}</div>
                   {item.astuce ? (
-                    <div className={"mt-4 astuce d-flex align-items-center"}>
+                    <div className={"mt-4 astuce d-md-flex align-items-center"}>
                       <p className={"mb-0 illustration"}>
                         <img
                           src={
@@ -304,11 +317,22 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                             this.state.currentModule?.image
                           }
                           alt={`Illustration module ${this.state.currentModule?.nom}`}
-                          className={"illustration-module-done"}
+                          className={
+                            "illustration-module-done d-none d-md-inline"
+                          }
                         />
                       </p>
                       <div className={"ml-3"}>
                         <h3 className={"color-primary-light"}>
+                          <img
+                            src={
+                              process.env.PUBLIC_URL +
+                              "/images/question/module/astro_" +
+                              this.state.currentModule?.image
+                            }
+                            alt={`Illustration module ${this.state.currentModule?.nom}`}
+                            className={"ico-titre d-inline d-md-none mr-2"}
+                          />
                           Petite astuce Teams !
                         </h3>
                         <p className={"mb-0"}>{item.astuce}</p>
@@ -320,7 +344,7 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                 </div>
               );
             })}
-            <p className={"text-right mt-5"}>
+            <p className={"text-right mt-5 d-flex d-md-block"}>
               <Button
                 variant="primary"
                 className={"d-inline-block mr-3"}

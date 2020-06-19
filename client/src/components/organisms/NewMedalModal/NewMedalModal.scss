@@ -1,0 +1,26 @@
+
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+.modal-new-medal {
+  .NewMedalModal {
+    .medaille {
+      max-width: 50%;
+    }
+    .p-sep {
+      width: 25%;
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  body {
+    .modal-dialog.modal-new-medal1 {
+      max-width: 400px;
+    }
+    .modal-dialog.modal-new-medal2 {
+      max-width: 500px;
+    }
+  }
+}

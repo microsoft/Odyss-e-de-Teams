@@ -48,7 +48,7 @@ const Avatars = (props) => {
   );
 
   return (
-    <div className="Avatars d-flex h-100 flex-column justify-content-start px-5 py-4">
+    <div className="Avatars d-flex h-100 flex-column justify-content-center px-5 py-4">
       {isMobile && (
         <div className="Avatars__logo">
           <img src="/images/logo/logo_gauche_blanc.png" alt="logo" />
@@ -76,13 +76,13 @@ const Avatars = (props) => {
             </>
           )}
 
-          <div className="Avatars__body__list d-flex justify-space-between">
+          <div className="Avatars__body__list d-flex justify-content-center">
             {avatarsRender}
           </div>
 
           <div className="Avatars__actions mt-2">
             <Button
-              variant="light"
+              variant="primary"
               onClick={onClickNext}
               className={"d-none d-md-block"}
               disabled={avatarSelected === false}
@@ -90,9 +90,9 @@ const Avatars = (props) => {
               {t("landing.Avatars.buttonText")}
             </Button>
             <Button
-              variant="light"
+              variant="primary"
               onClick={onClickNext}
-              className={"d-block d-md-none btn__orange-gradiant"}
+              className={"d-block d-md-none"}
               disabled={avatarSelected === false}
             >
               {t("landing.Avatars.buttonText")}

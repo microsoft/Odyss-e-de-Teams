@@ -74,13 +74,13 @@ class ChoixModuleNiveau extends Component<
         <h2 className={"d-none d-md-block color-primary-light mb-2"}>
           &laquo; {this.props.currentCampaign?.mission_name} &raquo;{" : "}Lancement !
         </h2>
-        <h2 className={"d-block d-md-none mb-2"}>Mission xx : </h2>
+        <h2 className={"d-block d-md-none mb-2"}>Mission : &laquo; {this.props.currentCampaign?.mission_name} &raquo;</h2>
         <p className={"d-none d-md-block mb-2"}>
           Ta première mission est arrivée : ici commence ton exploration
           galactique à travers les usages collaboratifs de Teams
         </p>
-        <h4 className={"mt-md-3 mb-2"}>
-          Sélectionne un module et sa difficulté puis prépare-toi au décollage !
+        <h4 className={"mt-2 mt-md-3 mb-2"}>
+        Sélectionne un module et un niveau puis prépare-toi au décollage ! Pour cumuler un maximum de points et augmenter tes chances de gagner, tu es invité(e) à compléter tous les modules proposés !
         </h4>
         <FadeInUpModule>
           <div className={"d-flex flex-column flex-md-row mt-4"}>
@@ -113,7 +113,7 @@ class ChoixModuleNiveau extends Component<
                     >
                       {item.nom}
                     </h4>
-                    <div className={"d-flex flex-column align-items-end"}>
+                    <div className={"d-flex flex-column align-items-end px-4 px-md-0"}>
                       {this.state.listNiveau?.map((itemNiv: INiveau) => {
                         const alreadyComplete =
                           this.state.listHistoQuestionnaireComplete.filter(
@@ -144,10 +144,10 @@ class ChoixModuleNiveau extends Component<
                           <Button
                             variant={"primary"}
                             key={itemNiv.id_niveau}
-                            className={`w-100 mt-2 niveau niveau${itemNiv.id_niveau}`}
+                            className={`w-100 mt-2 bleu niveau niveau${itemNiv.id_niveau}`}
                             onClick={() => this._onSelect(item, itemNiv)}
                           >
-                            {itemNiv.nom}
+                            Niveau {itemNiv.nom}
                           </Button>
                         );
                       })}

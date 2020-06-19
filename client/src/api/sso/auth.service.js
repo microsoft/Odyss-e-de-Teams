@@ -6,23 +6,16 @@ class AuthService {
   constructor() {
     const url = new URL(window.location);
     const params = new URLSearchParams(url.search);
+    console.log(params);
 
     if (params.get("useTest")) {
       this.authService = new MockAuthService();
-    } /* else if (params.get("inTeams")) {
-      this.authService = new TeamsAuthService();
-    } */ else if (params.get("inTeamsSSO")) {
+    }
+    else if (params.get("inTeamsSSO")) {
       this.authService = new SSOAuthService();
     } else {
       this.authService = new MsalAuthService();
-    } /* else if (
-      params.get("useV2") ||
-      url.pathname.indexOf("/callback/v2") !== -1
-    ) {
-      this.authService = new MsalAuthService();
-    } else {
-      this.authService = new AdalAuthService();
-    } */
+    }
   }
 
   isCallback() {

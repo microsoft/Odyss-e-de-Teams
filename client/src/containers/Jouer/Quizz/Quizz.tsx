@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Spinner, Modal } from "react-bootstrap";
+import { FaQuestion } from "react-icons/fa";
 
 import QuestionAPI from "api/Question";
 
@@ -24,6 +25,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
       isLoading: true,
       step: 1,
       hasReponse: false,
+      isPaused: false,
       hasAlreadyPaused: props.dataInitQuizz.hasAlreadyPaused ? true : false,
       listQuestion:
         props.dataInitQuizz.listQuestion &&
@@ -74,10 +76,14 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
       questionTime -= this.state.listQuestion[i].temps_reponse;
     }
     currentQuestion.temps_reponse = questionTime;
+    if (this.state.isPaused) {
+      this.chronoComponent.current.startTimer();
+    }
     this.setState(
       {
         step: ++curStep,
         hasReponse: false,
+        isPaused: false,
       },
       () => {
         if (this.state.step > this.state.listQuestion.length) {
@@ -107,10 +113,23 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
     this.chronoComponent.current.startTimer();
   };
 
-  private _onStopTimer = () => {
-    if (this.state.step <= this.state.listQuestion.length) {
-      this._setShowModalPause(true);
-    }
+  private _onStartTimer = () => {
+    this.setState({
+      isPaused: false,
+    });
+  };
+
+  private _onStopTimer = (actionClick = false) => {
+    this.setState(
+      {
+        isPaused: true,
+      },
+      () => {
+        if (actionClick && this.state.step <= this.state.listQuestion.length) {
+          this._setShowModalPause(true);
+        }
+      }
+    );
   };
   private _setShowModalPause = (show: boolean) => {
     const hasAlreadyPaused = this.state.hasAlreadyPaused;
@@ -194,7 +213,10 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
       case 5: // Remettre dans l'ordre
         return (
           <div>
-            <p>Cliquez sur les listes pour mettre les étapes dans l’ordre !</p>
+            <p>
+              Cliquez sur les listes de numéros à droite pour remettre les
+              étapes dans le bon ordre !
+            </p>
             <RemettreOrdre question={item} onSelect={this._onSelect} />
           </div>
         );
@@ -281,8 +303,14 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
                         variant="primary"
                         disabled={!this.state.hasReponse}
                         onClick={() => this._saveReponse(item, i)}
+                        className={"btn-submit position-relative"}
                       >
                         Valider ma réponse
+                        <span
+                          className={`time-loader${
+                            this.state.isPaused ? " paused" : ""
+                          }`}
+                        ></span>
                       </Button>
                     </p>
                   </div>
@@ -304,30 +332,28 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
                 <h2 className={"color-primary-light mb-3 text-center"}>
                   Module terminé !
                 </h2>
-                <p className={"mb-0"}>Félicitations Explorateur.trice,</p>
-                <p className={"mb-0"}>
-                  Tu viens de terminer le module Manager une équipe en Mode
-                  basique
-                </p>
+                <p>Félicitations Explorateur.trice !</p>
                 <p className={"mb-0"}>
                   Tu vas maintenant accéder à ton score et aux réponses !
                 </p>
                 <p className={"text-right mb-0 mt-4"}>
                   <Button
                     variant={"primary"}
+                    className={"btn-submit"}
                     href={`/#/Jouer/RecapQuizz/${this.props.dataInitQuizz?.selectedModule?.id_module}/${this.props.dataInitQuizz.selectedNiveau?.id_niveau}`}
                   >
-                    Résultats de l’exploration
+                    Voir les résultats
                   </Button>
                 </p>
               </div>
             )}
           </div>
         </div>
-        <div className={"toolbar-right ml-0 ml-md-5"}>
+        <div className={"toolbar-right ml-0 ml-md-5 d-flex d-md-block"}>
           <StopWatch
             ref={this.chronoComponent}
             onStopTimer={this._onStopTimer}
+            onStartTimer={this._onStartTimer}
             canStopTimer={
               !this.state.hasAlreadyPaused &&
               this.state.step <= this.state.listQuestion?.length
@@ -336,9 +362,12 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
           <Button
             variant={"primary"}
             onClick={() => this._setShowModalHelp(true)}
-            className={"mt-3"}
+            className={"mt-md-3"}
           >
-            Note de mission
+            <span className={"d-none d-md-inline"}>Note de mission</span>
+            <span className={"d-inline d-md-none"}>
+              <FaQuestion />
+            </span>
           </Button>
         </div>
         <Modal
@@ -376,22 +405,27 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
               <h4 className={"color-primary-light"}>
                 Comment répondre aux questions ?
               </h4>
-              <div className={"mt-2 d-flex align-items-center justify-content-between"}>
-                <div>
+              <div
+                className={
+                  "mt-2 d-flex align-items-center justify-content-between"
+                }
+              >
+                <div className={"mt-2 mt-md-0"}>
                   <p className={"p-rep p-chrono"}>
-                    30 secondes pour gagner un bonus supplémentaire
+                    <strong>1 minute</strong> pour gagner un bonus
+                    supplémentaire
                   </p>
                   <p className={"p-rep p-eclair"}>
-                    Plusieurs réponses sont possibles
+                    <strong>Plusieurs réponses sont possibles</strong>
                   </p>
                   <p className={"p-rep p-coeur"}>
-                    Choisis entre A, B, C et/ou D
+                    Choisis entre <strong>A, B, C et/ou D</strong>
                   </p>
                   <p className={"p-rep p-flag mb-0"}>
-                    Pour confirmer, clique sur « Valider mes réponses »
+                    Clique sur <strong>« Valider mes réponses »</strong>
                   </p>
                 </div>
-                <div>
+                <div className={"d-none d-md-block"}>
                   <img
                     src={
                       process.env.PUBLIC_URL +

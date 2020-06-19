@@ -12,6 +12,7 @@
         position: relative;
         font-size: 0.9em;
         margin-top: 0;
+        height: 12rem;
         img {
             height: 5.25rem;
         }
@@ -28,11 +29,11 @@
         }
     }
     .step4 {
-        background: url(/images/regle/step4_desktop.png) no-repeat 6rem 1.5rem;
+        background: url(/images/regle/step4_desktop.png) no-repeat 3rem 1.5rem;
         background-size: 11.5rem;
         margin-top: -5.5rem;
         padding-top: 10.75rem;
-        padding-right: 2.5rem;
+        padding-right: 2rem;
     }
 }
 
@@ -75,6 +76,7 @@
             padding-top: 7rem;
             img {
                 width: 80%;
+                height: auto;
             }
         }
     }

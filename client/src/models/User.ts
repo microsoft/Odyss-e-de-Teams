@@ -18,6 +18,7 @@ export interface IUser {
   niveau: number;
   nom_avatar: string;
   image_avatar: string;
+  image_avatar_origine: string;
 }
 
 export interface IOrganisation {
@@ -44,6 +45,7 @@ export interface ILevelUp {
 export interface IUserState {
   currentUser?: IUser;
   dataLevelUp?: ILevelUp;
+  listNewMedal?: IMedaille[];
   currentOrganisation?: IOrganisation;
   currentCampaign?: any;
 }

@@ -52,16 +52,18 @@ class Jouer extends Component<IJouerProps, IJouerState> {
     }
     return (
       <div className={"main-encart nobg-mobile pb-0 mb-0"}>
-        <h1 className={"color-white d-flex d-md-none justify-content-center"}>
-          <img
-            src={process.env.PUBLIC_URL + "/images/icone/fusee.png"}
-            alt="Ico Jouer"
-            className={"ico-titre"}
-          />
-          Lancement du jeu
-        </h1>
         {this.state.step === 1 && (
-          <ChoixModuleNiveau onSelect={this._selectModuleNiveau} />
+          <>
+            <h1 className={"color-white d-flex d-md-none justify-content-center"}>
+              <img
+                src={process.env.PUBLIC_URL + "/images/icone/fusee.png"}
+                alt="Ico Jouer"
+                className={"ico-titre"}
+              />
+              Lancement du jeu
+            </h1>
+            <ChoixModuleNiveau onSelect={this._selectModuleNiveau} />
+          </>
         )}
         {this.state.step === 2 && (
           <IntroLancementQuestion
