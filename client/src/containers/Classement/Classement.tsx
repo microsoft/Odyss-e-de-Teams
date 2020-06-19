@@ -1,15 +1,21 @@
 import React, { Component } from "react";
-import { forkJoin } from "rxjs";
 import { Button, Table, ButtonGroup } from "react-bootstrap";
+import { connect } from "react-redux";
+import { forkJoin } from "rxjs";
 
 import ClassementAPI from "api/Classement";
 
-import { IClassementState, IClassement } from "../../models/Classement";
+import {
+  IClassementProps,
+  IClassementState,
+  IClassement,
+} from "../../models/Classement";
 
 import "./Classement.scss";
+import IStore from "store/IStore";
 
-class Classement extends Component<{}, IClassementState> {
-  constructor(props: any) {
+class Classement extends Component<IClassementProps, IClassementState> {
+  constructor(props: IClassementProps) {
     super(props);
     this.state = {
       listUser: [],
@@ -23,21 +29,36 @@ class Classement extends Component<{}, IClassementState> {
   }
 
   private _loadDataClassement = () => {
-    forkJoin([
+    let tabBatch = [
       ClassementAPI.getClassement("fr", this.state.currentView, {
         monde: this.state.viewMonde ? 1 : 0,
         limit: 100,
       }),
-      ClassementAPI.getClassement("fr", this.state.currentView, {
-        monde: this.state.viewMonde ? 1 : 0,
-        user: 1,
-      }),
-    ])
+    ];
+    let isAdmin: boolean = false;
+    switch (this.props.currentUser.id_role) {
+      case 2: //admin
+        isAdmin = true;
+        tabBatch.push(
+          ClassementAPI.getIndicateur()
+        );
+        break;
+      default:
+        tabBatch.push(
+          ClassementAPI.getClassement("fr", this.state.currentView, {
+            monde: this.state.viewMonde ? 1 : 0,
+            user: 1,
+          })
+        );
+        break;
+    }
+    forkJoin(tabBatch)
       .toPromise()
       .then((data) => {
         this.setState({
           listUser: data[0] ? data[0] : [],
-          classementCurrentUser: data[1],
+          classementCurrentUser: !isAdmin ? data[1] : null,
+          listIndicateur: isAdmin ? data[1] : null,
         });
       });
   };
@@ -121,6 +142,35 @@ class Classement extends Component<{}, IClassementState> {
           Classement de la saison
         </h1>
         <div className={"main-encart nobg-mobile main-classement"}>
+          {
+            this.props.currentUser?.id_role === 2 && (
+              <div className={"indicateur"}>
+                <div className={"d-flex flex-column flex-md-row"}>
+                  <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 mr-2"}>
+                    <p className={"h1 mb-2"}>{this.state.listIndicateur?.nbJoueur}</p>
+                    <p className={"mb-0 text-center"}>Joueur(s) dans l'organisation</p>
+                  </div>
+                  <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 mx-2"}>
+                    <p className={"h1 mb-2"}>{this.state.listIndicateur?.nbJoueurSemaine}</p>
+                    <p className={"mb-0 text-center"}>Nouveau(x) joueur(s) cette semaine</p>
+                  </div>
+                  <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 mx-2"}>
+                    <p className={"h1 mb-2"}>{this.state.listIndicateur?.pcReponseOk}<sup>%</sup></p>
+                    <p className={"mb-0 text-center"}>Bonne(s) réponse(s) au total</p>
+                  </div>
+                  <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 mx-2"}>
+                    <p className={"h1 mb-2"}>{this.state.listIndicateur?.nbJoueurNiv15}</p>
+                    <p className={"mb-0 text-center"}>Joueur(s) ont atteint le niveau 15</p>
+                  </div>
+                  <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 ml-2"}>
+                    <p className={"h1 mb-2"}>{this.state.listIndicateur?.nbModuleCompletSemaine}</p>
+                    <p className={"mb-0 text-center"}>Module(s) complété(s) cette semaine</p>
+                  </div>
+                </div>
+                <p className="p-sep w-100"></p>
+              </div>
+            )
+          }
           <div className={"d-none d-md-block mb-3"}>
             {" "}
             {/* btn vu dekstop */}
@@ -274,58 +324,61 @@ class Classement extends Component<{}, IClassementState> {
                 );
               })}
             </tbody>
-            {this.state.listUser
-              ?.map((u) => u.id_user)
-              .indexOf(this.state.classementCurrentUser?.id_user) === -1 && (
-              <tfoot>
-                <tr>
-                  <td>{this.state.classementCurrentUser?.rang}</td>
-                  <td>
-                    <div className={"d-flex"}>
-                      {this.state.classementCurrentUser?.image_avatar ? (
-                        <p className={"avatar mb-0 pb-0"}>
-                          <img
-                            src={
-                              process.env.PUBLIC_URL +
-                              this.state.classementCurrentUser?.image_avatar
-                            }
-                            alt="Avatar"
-                          />
+            {this.state.classementCurrentUser &&
+              this.state.listUser
+                ?.map((u) => u.id_user)
+                .indexOf(this.state.classementCurrentUser?.id_user) === -1 && (
+                <tfoot>
+                  <tr>
+                    <td>{this.state.classementCurrentUser?.rang}</td>
+                    <td>
+                      <div className={"d-flex"}>
+                        {this.state.classementCurrentUser?.image_avatar ? (
+                          <p className={"avatar mb-0 pb-0"}>
+                            <img
+                              src={
+                                process.env.PUBLIC_URL +
+                                this.state.classementCurrentUser?.image_avatar
+                              }
+                              alt="Avatar"
+                            />
+                          </p>
+                        ) : (
+                          <span className={"d-none"}></span>
+                        )}
+                        <p className={"mb-0 pb-0"}>
+                          {this.state.classementCurrentUser?.nom}
                         </p>
-                      ) : (
-                        <span className={"d-none"}></span>
+                      </div>
+                    </td>
+                    <td>
+                      {this._renderPoint(this.state.classementCurrentUser)}
+                    </td>
+                    <td className={"no-mobile"}>
+                      {this.state.classementCurrentUser?.nb_reponse_ok
+                        ? this.state.classementCurrentUser?.nb_reponse_ok
+                        : 0}
+                    </td>
+                    <td className={"no-mobile"}>
+                      {this._calculMauvaiseReponse(
+                        this.state.classementCurrentUser
                       )}
-                      <p className={"mb-0 pb-0"}>
-                        {this.state.classementCurrentUser?.nom}
-                      </p>
-                    </div>
-                  </td>
-                  <td>{this._renderPoint(this.state.classementCurrentUser)}</td>
-                  <td className={"no-mobile"}>
-                    {this.state.classementCurrentUser?.nb_reponse_ok
-                      ? this.state.classementCurrentUser?.nb_reponse_ok
-                      : 0}
-                  </td>
-                  <td className={"no-mobile"}>
-                    {this._calculMauvaiseReponse(
-                      this.state.classementCurrentUser
-                    )}
-                  </td>
-                  <td className={"no-mobile"}>
-                    {
-                      this.state.classementCurrentUser
-                        ?.nb_questionnaire_complete
-                    }
-                  </td>
-                  <td className={"no-mobile"}>
-                    {this.state.classementCurrentUser?.niveau}
-                  </td>
-                  <td className={"no-mobile"}>
-                    {this.state.classementCurrentUser?.nb_medaille}
-                  </td>
-                </tr>
-              </tfoot>
-            )}
+                    </td>
+                    <td className={"no-mobile"}>
+                      {
+                        this.state.classementCurrentUser
+                          ?.nb_questionnaire_complete
+                      }
+                    </td>
+                    <td className={"no-mobile"}>
+                      {this.state.classementCurrentUser?.niveau}
+                    </td>
+                    <td className={"no-mobile"}>
+                      {this.state.classementCurrentUser?.nb_medaille}
+                    </td>
+                  </tr>
+                </tfoot>
+              )}
           </Table>
         </div>
       </div>
@@ -333,4 +386,9 @@ class Classement extends Component<{}, IClassementState> {
   }
 }
 
-export default Classement;
+const mapStateToProps = (state: IStore) => {
+  return {
+    currentUser: state.user.currentUser,
+  };
+};
+export default connect(mapStateToProps)(Classement);

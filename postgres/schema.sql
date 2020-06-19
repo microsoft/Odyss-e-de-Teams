@@ -104,6 +104,7 @@ CREATE TABLE public.t_user
   nb_reponse_consecutive_top integer DEFAULT 0,
   nb_reponse_consecutive_en_cours integer DEFAULT 0,
   nb_questionnaire_complete integer DEFAULT 0,
+  id_semaine_encours_inscription integer,
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
@@ -150,6 +151,11 @@ CREATE INDEX idx_oid_ad_t_user
   ON public.t_user
   USING btree
   (oid_ad);
+  
+CREATE INDEX idx_id_semaine_encours_inscription_t_user
+  ON public.t_user
+  USING btree
+  (id_semaine_encours_inscription);
 
  ----- avatar 
 CREATE SEQUENCE public.seq_t_avatar;
