@@ -173,7 +173,8 @@
     "button": {
       "reset": "Réinitialiser",
       "save": "Sauvegarder les modifications",
-      "cancel": "Annuler"
+      "cancel": "Annuler",
+      "saving": "Enregistrement"
     }
   }
 }

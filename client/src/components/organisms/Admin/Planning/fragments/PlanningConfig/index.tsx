@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState, useRef } from "react";
 
 import "./style.scss";
 import { withTranslation, WithTranslation } from "react-i18next";
@@ -6,14 +6,76 @@ import { Button } from "react-bootstrap";
 
 import useThemes from "./hooks/useThemes";
 
-const PlanningConfig = memo((props: WithTranslation) => {
+export type IPlanningConfigProps = {
+  close: Function;
+};
+
+function whichTransitionEvent() {
+  var t;
+  var el = document.createElement("fakeelement");
+  var transitions = {
+    WebkitTransition: "webkitTransitionEnd",
+    MozTransition: "transitionend",
+    MSTransition: "msTransitionEnd",
+    OTransition: "oTransitionEnd",
+    transition: "transitionEnd",
+  };
+
+  for (t in transitions) {
+    if (el.style[t] !== undefined) {
+      return transitions[t];
+    }
+  }
+}
+
+const PlanningConfig = memo((props: WithTranslation & IPlanningConfigProps) => {
   // STATE
   const { items, toggle, reset, save } = useThemes();
 
-  const { t, tReady } = props;
+  const { t, tReady, close } = props;
+  const [saving, setSaving] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const configRef = useRef(null);
+
+  const closeConfig = () => {
+    const event = whichTransitionEvent();
+
+    if (!event) {
+      close();
+      return;
+    }
+
+    setClosing(true);
+    const closeComponent = () => {
+      configRef.current.removeEventListener(event, closeComponent);
+      close();
+    };
+    configRef.current.addEventListener(event, closeComponent);
+  };
+
+  const cancelHandler = () => {
+    reset();
+    closeConfig();
+  };
+
+  const saveHandler = async () => {
+    setSaving(true);
+    const response = await save();
+    setSaving(false);
+    if (response) {
+      closeConfig();
+    } else {
+      console.error("error when submitting");
+    }
+  };
 
   return (
-    <div className="PlanningConfig">
+    <div
+      className={["PlanningConfig", closing && "PlanningConfig--closing"]
+        .filter((x) => x)
+        .join(" ")}
+      ref={configRef}
+    >
       <div className="PlanningConfig__title">
         {tReady && `${t("admin.planning.config.title")}`}
       </div>
@@ -49,11 +111,21 @@ const PlanningConfig = memo((props: WithTranslation) => {
       </div>
 
       <div className="PlanningConfig__buttons">
-        <Button variant="secondary" className="m-1" onClick={reset}>
+        <Button
+          variant="secondary"
+          className="m-1"
+          onClick={cancelHandler}
+          disabled={saving}
+        >
           {tReady && t("utils.button.cancel")}
         </Button>
-        <Button variant="primary" className="m-1" onClick={save}>
-          {tReady && t("utils.button.save")}
+        <Button
+          variant="primary"
+          className="m-1"
+          onClick={saveHandler}
+          disabled={saving}
+        >
+          {tReady && saving ? t("utils.button.saving") : t("utils.button.save")}
         </Button>
       </div>
     </div>
