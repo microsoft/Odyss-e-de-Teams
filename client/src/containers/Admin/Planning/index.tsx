@@ -36,7 +36,6 @@ class PlanningContainer extends React.Component<
   async componentDidMount() {
     try {
       const missions = await AdminAPI.getAllCampaigns();
-      const agenda = await AdminAPI.getAgenda();
 
       missions.availableMissions.forEach((mission) => {
         let startDate = new Date(mission.debut_semaine);
@@ -112,7 +111,6 @@ class PlanningContainer extends React.Component<
 
                 <Tab eventKey="SOCIAL" title={t("admin.planning.menu_social")}>
                   <AdminSocial
-                    missions={campaigns}
                   />
                 </Tab>
 

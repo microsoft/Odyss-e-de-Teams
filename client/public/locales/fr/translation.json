@@ -42,11 +42,12 @@
     "explorers_desc": "Explorateurs ont rejoint le voyage depuis le lancement",
     "campaign_pending0": "La mission",
     "campaign_pending": "est en cours !",
+    "campaign_pending_nomission": "Pas de mission en cours !",
     "campaign_week_goal": "Les explorateurs disposent d'une semaine pour effectuer la nouvelle mission",
     "campaign_time_left": "Temps restant :",
     "outillage": {
       "subtitle": "Salle des machines",
-      "subtitle_desc": ": Ajoutez le logo de votre organisation qui apparaîtra dans l’interface des Explorateurs.",
+      "subtitle_desc": "Ajoutez le logo de votre organisation qui apparaîtra dans l’interface des Explorateurs.",
       "current_logo_title": "Logo actuellement déployé",
       "current_logo_desc": "Commandant, il est recommandé d’importer un logo sur fond blanc pour assurer sa lisibilité.",
       "logoChangeButtonLabel": "Charger un logo",

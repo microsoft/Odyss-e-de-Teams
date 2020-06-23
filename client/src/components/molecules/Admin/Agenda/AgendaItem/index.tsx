@@ -15,46 +15,51 @@ export interface IAgendaItem {
   onItemClick: any;
 }
 
-const AgendaItem = (props: IAgendaItem & WithTranslation) => {
-  const {
-    id,
-    date,
-    name,
-    desc,
-    done,
-    onItemClick,
-    className,
-    tReady,
-    t,
-  } = props;
+class AgendaItem extends React.Component<
+IAgendaItem & WithTranslation,
+  {}
+> {
 
-  const [itemDone, setItemDone] = useState(done);
+  render() {
+    const {
+      id,
+      date,
+      name,
+      desc,
+      done,
+      onItemClick,
+      className,
+      tReady,
+      t,
+    } = this.props;
+  
+    return (
+      <div
+        className={`AgendaItem ${done ? "AgendaItem__done" : ""} ${
+          className || ""
+        }`}
+      >
+        <div className="AgendaItem__date">{date}</div>
+        <div className="AgendaItem__name">{name}</div>
 
-  return (
-    <div
-      className={`AgendaItem ${itemDone ? "AgendaItem__done" : ""} ${
-        className || ""
-      }`}
-    >
-      <div className="AgendaItem__date">{date}</div>
-      <div className="AgendaItem__name">{name}</div>
-
-      <div className="AgendaItem__desc">{desc}</div>
-      <div className="AgendaItem__actions">
-        <Button
-          onClick={() => {
-            setItemDone(!itemDone);
-            onItemClick({ id: id, status: !itemDone });
-          }}
-        >
-          {tReady &&
-            (itemDone
-              ? t("admin.agenda.item_done")
-              : t("admin.agenda.item_pending"))}
-        </Button>
+        <div className="AgendaItem__desc">{desc}</div>
+        <div className="AgendaItem__actions">
+          <Button
+            onClick={() => {
+              onItemClick({ id: id, status: !done });
+            }}
+            className="bleu"
+            variant={!done ? 'primary' : 'light'}
+          >
+            {tReady &&
+              (done
+                ? t("admin.agenda.item_done")
+                : t("admin.agenda.item_pending"))}
+          </Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+              }
 };
 
 export default withTranslation()(AgendaItem);

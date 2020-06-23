@@ -117,6 +117,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
       this.setState(
         {
           campaign: {
+            has_campaign: this.props.currentCampaign? true : false,
             name: this.props.currentCampaign?.mission_name,
             date_end: this.props.currentCampaign?.mission_end.replace("T", " "),
           },
@@ -187,8 +188,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
             <div className="col-12">
               <LaunchFollowWidget
                 className="py-3 px-4"
-                campaign_name={campaign.name}
-                campaign_end={campaign.date_end}
+                campaign={campaign}
                 translationDescKey="player.cockpit.campaign_desc"
               />
             </div>

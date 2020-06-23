@@ -16,7 +16,6 @@ import { getFullMonth } from "utils/dates";
 class AdminAgenda extends React.Component<WithTranslation, {}> {
   state = {
     result: [],
-
     currentWeek: 0,
     loading: true,
   };
@@ -28,8 +27,8 @@ class AdminAgenda extends React.Component<WithTranslation, {}> {
   };
 
   goNextWeek = () => {
+    console.log('next');
     let nextValue = ++this.state.currentWeek;
-
     if (nextValue > this.state.result.length - 1) nextValue--;
 
     this.setState({
@@ -44,7 +43,7 @@ class AdminAgenda extends React.Component<WithTranslation, {}> {
   async fetchData() {
     const res = await AdminAPI.getAgenda();
 
-    let currentWeek = 0;
+    let currentWeek = this.state.currentWeek ? this.state.currentWeek : 0;
     if (res) {
       res.forEach((elem, index) => {
         if (moment().isBetween(moment(elem.date_start), moment(elem.date_end))) {
@@ -86,7 +85,7 @@ class AdminAgenda extends React.Component<WithTranslation, {}> {
         };
       });
 
-      const curWeekAgenda = this.state.result[this.state.currentWeek].agenda;
+      const curWeekAgenda = this.state.result[this.state.currentWeek]?.agenda;
       return (
         <div className="AdminAgenda">
           <div className="AdminAgenda__header">
@@ -107,14 +106,17 @@ class AdminAgenda extends React.Component<WithTranslation, {}> {
           </div>
 
           <div className="AdminAgenda__body">
-            {Object.keys(curWeekAgenda).map((dayAgenda, index) => (
-              <AgendaDay
-                className="AdminAgenda__body__item p-0"
-                key={`agenda-${index}`}
-                items={curWeekAgenda[dayAgenda]}
-                day={dayAgenda}
-                onAgendaItemClick={this.onAgendaItemClick}
-              />
+            {
+              curWeekAgenda && (
+                Object.keys(curWeekAgenda).map((dayAgenda, index) => (
+                  <AgendaDay
+                    className="AdminAgenda__body__item p-0"
+                    key={`agenda-${index}`}
+                    items={curWeekAgenda[dayAgenda]}
+                    day={dayAgenda}
+                    onAgendaItemClick={this.onAgendaItemClick}
+                  />
+                )
             ))}
           </div>
         </div>

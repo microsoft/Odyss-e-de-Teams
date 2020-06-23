@@ -28,6 +28,7 @@ interface IAdminState {
   campaign: {
     name: string;
     date_end: string;
+    has_campaign: boolean;
   };
   userRankingsPoints: IUser[];
   userRankingsExp: IUser[];
@@ -49,20 +50,21 @@ class AdminDashboard extends Component {
     try {
       const exploresCounts = await AdminAPI.getExplorersCount();
       const campainInfo = await AdminAPI.getCurrentCampaignInfo();
-      let userRankingsPoints = await ClassementAPI.getClassement("fr", "point");
-      let userRankingsXP = await ClassementAPI.getClassement("fr", "xp");
-
+      let userRankingsPoints = await ClassementAPI.getClassement("fr", "point", { limit: 3 });
+      let userRankingsXP = await ClassementAPI.getClassement("fr", "xp", { limit: 3 });
+      console.log(campainInfo.results);
       this.setState({
         explorers_count: Number(exploresCounts.results.cnt_user),
         campaign: {
-          name: campainInfo.results.mission_name,
-          date_end: new Date(
-            campainInfo.results.mission_end.replace(" ", "T")
-          ).toString(),
+          has_campaign: campainInfo.results? true : false,
+          name: campainInfo.results ? campainInfo.results.mission_name : null,
+          date_end: (campainInfo.results && campainInfo.results.mission_end ? campainInfo.results.mission_end : null),
         },
         userRankingsExp: userRankingsXP,
         userRankingsPoints: userRankingsPoints,
         loading: false,
+      }, () => {
+        console.log(this.state);
       });
     } catch (e) {
       console.error(e);
@@ -84,8 +86,7 @@ class AdminDashboard extends Component {
             <Explorer count={explorers_count} className="col-4 py-2" />
 
             <CampaignFollow
-              campaign_name={this.state.campaign.name}
-              campaign_end={this.state.campaign.date_end}
+              campaign={this.state.campaign}
               className="col-7 offset-1 py-4"
               translationDescKey="admin.campaign_week_goal"
             />
@@ -101,14 +102,14 @@ class AdminDashboard extends Component {
                 />
 
                 <Link to="/Outillage" className="no-underline-on-hover">
-                  <div className="Admin__tools mt-4 d-flex flex-row py-3 justify-content-center">
-                    <div className="Admin__tools__image col-3">
+                  <div className="Admin__tools mt-4 d-flex py-3 justify-content-center">
+                    <div className="Admin__tools__image d-flex justify-content-center align-items-center flex-column">
                       <img src="/images/menu/outillage.png" alt="outillage" style={{
-                        maxWidth: "70%",
+                        width: "70%",
                       }} />
                     </div>
 
-                    <div className="Admin__tools__content col-9">
+                    <div className="Admin__tools__content">
                       <div className="Admin__tools__content__title">
                         <Translation>{(t) => t("menu.outillage")}</Translation>
                       </div>

@@ -10,6 +10,7 @@ module.exports = function (sequelize, DataTypes) {
       nom: DataTypes.STRING,
       description: DataTypes.STRING,
       ordre: DataTypes.NUMBER,
+      can_play: DataTypes.BOOLEAN,
       updatedAt: {
         type: DataTypes.DATE,
         field: "horodatage",

@@ -7,13 +7,9 @@ import { Dropdown, Button } from "react-bootstrap";
 import useDropDown from "./hooks/useDropDown";
 import copyDom from "./hooks/copyDom";
 
-export type AdminSocialProps = {
-  missions: any;
-};
 
-const AdminSocial = memo((props: WithTranslation & AdminSocialProps) => {
-  const { t, tReady, missions } = props;
-  const activeMissionIndex = missions.findIndex((m) => m.actif === true);
+const AdminSocial = memo((props: WithTranslation) => {
+  const { t, tReady } = props;
 
   // GET STATE
   const { items, selected, bannerPath, changeSelection } = useDropDown();
@@ -26,9 +22,8 @@ const AdminSocial = memo((props: WithTranslation & AdminSocialProps) => {
       <div className="Social__header">
         <h1 className="Social__header__title">
           {tReady &&
-            `${t("admin.social.title")} - ${t("admin.planning.title_week")} ${
-              activeMissionIndex + 1
-            } : « ${missions[activeMissionIndex].nom}	! »`}
+            t("admin.social.title")
+          }
         </h1>
         <p className="Social__header__desc">
           {tReady && t("admin.social.description")}

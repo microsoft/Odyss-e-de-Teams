@@ -224,9 +224,11 @@ GRANT ALL ON TABLE public.seq_t_agenda TO odyssee_teams_appli;
 CREATE TABLE public.t_agenda
 (
   id_agenda integer NOT NULL DEFAULT nextval('public.seq_t_agenda'::regclass),
-  nom character(80),
+  nom character(120),
 	description text,
-  date_agenda timestamp,
+  id_semaine int,
+  num_jour smallint,
+  heure time,
   actif boolean,
   horodatage timestamp without time zone default CURRENT_TIMESTAMP,
   horodatage_creation timestamp without time zone default CURRENT_TIMESTAMP,
@@ -243,10 +245,10 @@ CREATE UNIQUE INDEX idx_agenda_pkey
   (id_agenda);
 ALTER TABLE public.t_agenda CLUSTER ON idx_agenda_pkey;
 
-CREATE INDEX idx_date_agenda_t_agenda
+CREATE INDEX idx_id_semaine_t_agenda
   ON public.t_agenda
   USING btree
-  (date_agenda);
+  (id_semaine);
 
 CREATE INDEX idx_actif_t_agenda
   ON public.t_agenda
@@ -295,6 +297,7 @@ CREATE TABLE public.t_semaine
   nom character(80),
   description text,
   ordre integer,
+  can_play boolean,
   horodatage timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
   horodatage_creation timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT pk_t_semaine PRIMARY KEY (id_semaine)
@@ -1075,7 +1078,6 @@ CREATE TABLE "public"."j_organisation_semaine" (
     "id" integer NOT NULL DEFAULT nextval('public.seq_j_organisation_semaine'::regclass),
     "id_organisation" integer,
     "id_semaine" integer ,
-    "actif" boolean,
     "debut_semaine" timestamp DEFAULT CURRENT_TIMESTAMP,
     "fin_semaine" timestamp DEFAULT CURRENT_TIMESTAMP + INTERVAL '7 DAY',
     PRIMARY KEY ("id"),
@@ -1422,16 +1424,106 @@ END;
 $BODY$;
 
 
+-- FUNCTION: public.f_set_date_semaine(int, date)
+
+-- DROP FUNCTION public.f_set_date_semaine(int, date);
+
+CREATE OR REPLACE FUNCTION public.f_set_date_semaine(
+	idorganisation int,
+	debut date,
+	OUT statut character,
+	OUT message text)
+    RETURNS record
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+
+--********************************************************************************************************
+--* fonction qui va calculer les date de debut et fin de semaine et les evenements agenda en fonction du debut du programme
+--* la fonction retourne :
+--* 	- le statut d execution de la fonction OK ou KO
+--* 	- un message d information sur le statut
+--***********************************************************************************************************************************
+DECLARE
+	-- variables liees au statut de la fonction
+	i 			int; -- compteur d'ajout semaine
+	j 			int; -- compteur d'ajout agenda
+	
+	-- variables de curseur
+	curs1			refcursor;
+	curs2			refcursor;
+	a_id_semaine 	int;
+	a_id_agenda 	int;
+	a_num_jour 		int;	
+	a_heure			time;
+	a_debut_semaine	timestamp;
+	a_fin_semaine 	timestamp;
+	a_event 		timestamp;
+BEGIN
+-- INIT variables
+	message := '';
+	statut := 'OK';
+
+-- traitement
+--***************************************************************************************
+	i := 0;
+	j := 0;
+	
+  DELETE FROM public.j_organisation_semaine WHERE id_organisation=idorganisation;
+
+	OPEN curs1 FOR SELECT id_semaine FROM public.t_semaine ORDER BY ordre;
+	LOOP
+    	FETCH curs1 INTO a_id_semaine;
+      	EXIT WHEN NOT FOUND;
+		
+		a_debut_semaine := debut + ((7 * i)::text ||  ' days')::interval;
+		a_fin_semaine := ((a_debut_semaine + '4 days'::interval)::date || ' 23:59:59');
+		
+		INSERT INTO public.j_organisation_semaine(id_organisation, id_semaine, debut_semaine, fin_semaine)
+		VALUES (idorganisation, a_id_semaine, a_debut_semaine, a_fin_semaine);
+		
+		i = i + 1;
+   	END LOOP;
+   	CLOSE curs1;
+	
+  DELETE FROM public.j_organisation_agenda WHERE id_organisation=idorganisation;
+  
+	OPEN curs2 FOR 
+		SELECT DISTINCT a.id_agenda, a.num_jour, a.heure, b.debut_semaine
+		FROM public.t_agenda a
+			INNER JOIN j_organisation_semaine b ON a.id_semaine = b.id_semaine;
+	LOOP
+    	FETCH curs2 INTO a_id_agenda, a_num_jour, a_heure, a_debut_semaine;
+      	EXIT WHEN NOT FOUND;
+		
+		a_event := (a_debut_semaine + ((a_num_jour - 1)::text ||  ' days')::interval)::date::text || ' ' || a_heure::text;
+		
+		INSERT INTO public.j_organisation_agenda(id_organisation, id_agenda, date_event) 
+			VALUES (idorganisation, a_id_agenda, a_event);
+
+		j = j + 1;
+   	END LOOP;
+  
+   	CLOSE curs2;
+   
+	IF statut = 'OK' THEN
+		message := message || ' | ' || i::varchar(12) || ' semaine(s) ajoutée(s)'  || ' | ' || j::varchar(12) || ' agenda(s) ajoutée(s)';
+	END IF;
+END;
+$BODY$;
+
+
 -- Table jointure agenda/organisation
 CREATE TABLE "public"."j_organisation_agenda" (
     "id" serial,
     "id_organisation" integer,
-    "id_semaine" integer,
     "id_agenda" integer,
 		"date_event" timestamp DEFAULT CURRENT_TIMESTAMP,
     "done" boolean DEFAULT FALSE,
     FOREIGN KEY ("id_organisation") REFERENCES "public"."t_organisation"("id_organisation"),
-    FOREIGN KEY ("id_semaine") REFERENCES "public"."t_semaine"("id_semaine"),
     FOREIGN KEY ("id_agenda") REFERENCES "public"."t_agenda"("id_agenda")
 );
 	GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE ON TABLE public.j_organisation_agenda TO odyssee_teams_appli;

@@ -25,9 +25,8 @@ const Planning = (props: IPlanning & WithTranslation) => {
     <div className="PlanningComponent">
       <div className="PlanningComponent__title">
         {tReady &&
-          `${t("admin.planning.title")} ${t("admin.planning.title_week")} ${
-          activeMissionIndex + 1
-          } : « ${missions[activeMissionIndex].nom}	! »`}
+          t("admin.planning.title")
+        }
       </div>
 
       <div className="PlanningComponent__subtitle">
@@ -44,28 +43,15 @@ const Planning = (props: IPlanning & WithTranslation) => {
             mission_title={mission.nom}
             mission_description={mission.description}
             className="col-3 m-1"
-            onMissionClick={() => setCurMission(index)}
+            onMissionClick={() => { setCurMission(index); onMissionActivate(missions[index]) } }
           />
         ))}
       </div>
 
       <div className="PlanningComponent__buttons">
         <Button variant="secondary" onClick={() => setConfig(true)}>
+          Paramétrage{" "}
           <FaTools />
-        </Button>
-        <Button
-          variant="secondary"
-          className="m-1"
-          onClick={() => setCurMission(activeMissionIndex)}
-        >
-          {tReady && t("utils.button.reset")}
-        </Button>
-        <Button
-          variant="primary"
-          className="m-1"
-          onClick={() => onMissionActivate(missions[curMission])}
-        >
-          {tReady && t("utils.button.save")}
         </Button>
       </div>
       {config && (

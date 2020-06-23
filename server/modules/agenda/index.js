@@ -34,7 +34,7 @@ const register = async (server, options) => {
                     FROM public.h_agenda_done
                     WHERE id_organisation=:organisation
                 )
-                SELECT DISTINCT a.id_agenda, TRIM(b.nom) AS nom, a.date_agenda, CASE WHEN c.id_agenda_done IS NOT NULL THEN true ELSE false END AS done 
+                SELECT DISTINCT a.id_agenda, TRIM(b.nom) AS nom, CASE WHEN c.id_agenda_done IS NOT NULL THEN true ELSE false END AS done 
                 FROM public.t_agenda a
                     INNER JOIN public.t_libelle_i18n b ON a.id_agenda=b.id_table AND TRIM(b.code)='AGENDA' AND TRIM(b.lang)=:lang
                     LEFT JOIN wdone c ON a.id_agenda=c.id_agenda 
