@@ -31,6 +31,7 @@ const AgendaWeekSwitcher = (props: IAgendaWeekSwitcher & WithTranslation) => {
         <Button
           onClick={props.onClickPreviousWeek}
           disabled={!previousAvailable}
+          className="bleu"
         >
           {" "}
           &lt;{" "}
@@ -39,11 +40,15 @@ const AgendaWeekSwitcher = (props: IAgendaWeekSwitcher & WithTranslation) => {
 
       <div className="AgendaWeekSwitcher__current">
         {tReady && t("admin.agenda.week")} {currentWeek + 1}{" "}
-        {semaines[currentWeek].name}
+        {semaines[currentWeek]?.name}
       </div>
 
       <div className="AgendaWeekSwitcher__next">
-        <Button onClick={props.onClickNextWeek} disabled={!nextAvailable}>
+        <Button
+          onClick={props.onClickNextWeek}
+          disabled={!nextAvailable}
+          className="bleu"
+        >
           {" "}
           &gt;{" "}
         </Button>

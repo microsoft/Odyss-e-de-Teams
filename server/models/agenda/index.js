@@ -9,7 +9,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       nom: DataTypes.INTEGER,
       description: DataTypes.TEXT,
-      date_agenda: DataTypes.DATE,
       updatedAt: {
         type: DataTypes.DATE,
         field: "horodatage",

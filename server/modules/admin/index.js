@@ -50,7 +50,7 @@ const register = async (server, options) => {
 
       return db.sequelize
         .query(
-          "SELECT COUNT(id_user) as cnt_user FROM t_user WHERE id_organisation =:id_organisation",
+          "SELECT COUNT(id_user) as cnt_user FROM t_user WHERE id_organisation =:id_organisation AND id_role=1",
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -94,7 +94,10 @@ const register = async (server, options) => {
 
       return db.sequelize
         .query(
-          "select s.nom as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end from t_semaine s inner join j_organisation_semaine ts  on ts.id_semaine = s.id_semaine where id_organisation =:id_organisation",
+          `SELECT TRIM(s.nom) as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end 
+          FROM t_semaine s 
+            INNER JOIN j_organisation_semaine ts on ts.id_semaine = s.id_semaine 
+            INNER JOIN t_organisation c ON ts.id_organisation=c.id_organisation AND s.id_semaine=c.id_semaine_encours AND c.id_organisation=:id_organisation`,
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -262,7 +265,12 @@ const register = async (server, options) => {
         return false;
       }
 
-      let availableMissions = await Semaine.findAll({ raw: true });
+      let availableMissions = await Semaine.findAll({
+        where: {
+          can_play: true,
+        },
+        raw: true,
+      });
 
       const currentOrga = await Organisation.findOne({
         where: {
@@ -378,12 +386,11 @@ const register = async (server, options) => {
         };
         const organisationAgenda = await db.sequelize.query(
           `
-          SELECT a.id as mission_id, TRIM(ag.nom) as mission_name, ag.description as mission_description, a.date_event as mission_date, a.done as mission_done, a.id_semaine, s.nom as semaine_name, s.description as semaine_description, os.debut_semaine as semaine_start, os.fin_semaine as semaine_end
+          SELECT a.id as mission_id, TRIM(b.nom) as mission_name, b.description as mission_description, a.date_event as mission_date, a.done as mission_done, b.id_semaine, c.nom as semaine_name, c.description as semaine_description, d.debut_semaine as semaine_start, d.fin_semaine as semaine_end
           FROM j_organisation_agenda a
-            INNER JOIN t_semaine s ON s.id_semaine = a.id_semaine
-            INNER JOIN j_organisation_semaine os ON os.id_semaine = a.id_semaine
-            INNER JOIN t_agenda ag ON ag.id_agenda = a.id_agenda
-          WHERE a.id_organisation = :id_organisation AND os.id_organisation = :id_organisation
+            INNER JOIN t_agenda b ON a.id_agenda = b.id_agenda AND a.id_organisation=:id_organisation
+            INNER JOIN t_semaine c ON b.id_semaine = c.id_semaine
+            INNER JOIN j_organisation_semaine d ON d.id_semaine = c.id_semaine AND a.id_organisation=d.id_organisation
           ORDER BY a.date_event ASC, mission_id
         `,
           {
@@ -536,9 +543,12 @@ const register = async (server, options) => {
           FROM public.t_asset_communication a
           LEFT JOIN public.t_social_asset_communication sac ON sac.id_social_asset_communication = a.id_social_asset_communication
           WHERE a.actif AND a.id_type_asset_communication=:type;
-        `, { replacements: replacements, type: QueryTypes.SELECT }).then(result => {
-          return result;
-        });
+        `,
+            { replacements: replacements, type: QueryTypes.SELECT }
+          )
+          .then((result) => {
+            return result;
+          });
       } catch (e) {
         console.error(e);
       }

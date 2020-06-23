@@ -17,16 +17,16 @@ const PlanningWidget = (props: IPlanningWidget & WithTranslation) => {
     <Link to={redirectLink} className={`${className} no-hover`}>
       <div className={"Planning"}>
         <div className="Planning__container d-flex flex-row py-3 col-12 no-gutters">
-          <div className="Planning__container__icon  col-3 d-flex justify-content-center">
+          <div className="Planning__container__icon col-3 d-flex justify-content-center align-items-center flex-column">
             <img src="/images/menu/planning.png" alt="planning" />
           </div>
 
-          <div className="Planning__container__content col-9 d-flex flex-column py-3 justify-content-center">
+          <div className="Planning__container__content col-9 d-flex flex-column pl-0 py-3 justify-content-center">
             <div className="Planning__container__content__title">
               {t("menu.planning")}
-              <div className="Planning__container__content__title__notif">
+              {/* <div className="Planning__container__content__title__notif">
                 {notificationsCount}
-              </div>
+              </div> */}
             </div>
             <div className="Planning__container__content__description">
               {t("admin.planning_desc")}
