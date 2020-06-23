@@ -234,7 +234,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                 Médailles communes{" "}
                 {this.state.listMedaille?.filter((m) => !m.legendaire).length}
               </p>
-              <div className={"d-flex flex-wrap"}>
+              <div>
                 {this.state.listMedaille
                   ?.filter((m) => !m.legendaire)
                   .map((item: IMedaille) => {
@@ -245,7 +245,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                 Médailles légendaires{" "}
                 {this.state.listMedaille?.filter((m) => m.legendaire).length}
               </p>
-              <div className={"d-flex flex-wrap"}>
+              <div>
                 {this.state.listMedaille
                   ?.filter((m) => m.legendaire)
                   .map((item: IMedaille) => {

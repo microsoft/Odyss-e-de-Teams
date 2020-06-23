@@ -38,7 +38,7 @@
     "classement_desc": "Classements et statistiques",
     "classement_general": "Classement général",
     "classement_points": "Points",
-    "classement_xp": "Classement XP",
+    "classement_xp": "Classement EXP",
     "explorers_desc": "Explorateurs ont rejoint le voyage depuis le lancement",
     "campaign_pending0": "La mission",
     "campaign_pending": "est en cours !",
@@ -67,7 +67,7 @@
       "mission_active": "Mission activée",
       "mission_pending": "Mission en attente",
       "mission_label": "Mission : ",
-      "title": "Programme et missions - ",
+      "title": "Programme et missions",
       "title_week": "Semaine ",
       "description": "Commandant, dans cette section vous aurez à activer la mission de la semaine et sélectionner les modules de questions associées.",
       "config": {

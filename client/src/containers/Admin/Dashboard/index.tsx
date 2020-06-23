@@ -52,7 +52,6 @@ class AdminDashboard extends Component {
       const campainInfo = await AdminAPI.getCurrentCampaignInfo();
       let userRankingsPoints = await ClassementAPI.getClassement("fr", "point", { limit: 3 });
       let userRankingsXP = await ClassementAPI.getClassement("fr", "xp", { limit: 3 });
-      console.log(campainInfo.results);
       this.setState({
         explorers_count: Number(exploresCounts.results.cnt_user),
         campaign: {
@@ -63,8 +62,6 @@ class AdminDashboard extends Component {
         userRankingsExp: userRankingsXP,
         userRankingsPoints: userRankingsPoints,
         loading: false,
-      }, () => {
-        console.log(this.state);
       });
     } catch (e) {
       console.error(e);

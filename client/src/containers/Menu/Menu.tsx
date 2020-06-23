@@ -71,7 +71,7 @@ class Menu extends Component<IMenuProps, IMenuState> {
       <div className={"d-none d-md-flex menu py-4 flex-column position-relative"}>
         <UserAvatar user={currentUser} />
         <div className={"d-flex flex-column justify-content-between h-100"}>
-          <ListGroup defaultActiveKey={"/#" + currentRouterLink}>
+          <ListGroup defaultActiveKey={"#" + currentRouterLink}>
             <div id={"indicator"} className={"indicator position-absolute"}></div>
             {this.state.listMenu?.map((item: IMenu) => {
               const itemStyle = {

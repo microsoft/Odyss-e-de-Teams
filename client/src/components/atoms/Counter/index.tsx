@@ -27,14 +27,18 @@ class Countdown extends Component<ICountdownProps, ICountdownState> {
   componentDidMount() {
     this.interval = setInterval(() => {
       const { timeTillDate } = this.props;
-      const then = moment(new Date(timeTillDate));
-      const now = moment();
-      const countdown = moment(Number(then) - Number(now));
-      const days = countdown.format("D");
-      const hours = countdown.format("HH");
-      const minutes = countdown.format("mm");
-      const seconds = countdown.format("ss");
-
+      
+      const then = moment.utc(timeTillDate);
+      const now = moment.utc();
+      //const countdown = moment(Number(then) - Number(now));
+      const countdown = then.diff(now);
+      const duration = moment.duration(countdown);
+      
+      const days = duration.get('days').toString();
+      const hours = (duration.get('hours') < 10 ? '0' : '') + duration.get('hours').toString();
+      const minutes = (duration.get('hours') < 10 ? '0' : '') + duration.get('hours').toString();
+      const seconds = (duration.get('seconds') < 10 ? '0' : '') + duration.get('seconds').toString();
+      
       this.setState({ days, hours, minutes, seconds });
     }, 1000);
   }

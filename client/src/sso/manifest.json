@@ -22,13 +22,12 @@
     "short": "L'Odyssée de Teams - Un voyage à travers les usages",
     "full": "Le jeu concours interactif pour explorer la galaxie des usages collaboratifs."
   },
-  "accentColor": "#ffffff",
+  "accentColor": "#424bb0",
   "staticTabs": [
     {
       "entityId": "jeu",
       "name": "Le jeu",
-      "contentUrl": "https://0751890982fe.ngrok.io/?inTeamsSSO=true/",
-      "websiteUrl": "https://0751890982fe.ngrok.io",
+      "contentUrl": "https://odyssee-de-teams.saegus.com/?inTeamsSSO=true/",
       "scopes": [
         "personal"
       ]
@@ -39,13 +38,10 @@
     "messageTeamMembers"
   ],
   "validDomains": [
-    "0751890982fe.ngrok.io",
-    "46fd0305a1a0.ngrok.io",
-    "login.microsoftonline.com",
-    "odyssee-de-teams.azurewebsites.net"
+    "odyssee-de-teams.saegus.com"
   ],
   "webApplicationInfo": {
     "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
-    "resource": "api://0751890982fe.ngrok.io/5830a2dd-c958-47bd-b6e8-676341fc5faf"
+    "resource": "api://odyssee-de-teams.saegus.com/5830a2dd-c958-47bd-b6e8-676341fc5faf"
   }
 }

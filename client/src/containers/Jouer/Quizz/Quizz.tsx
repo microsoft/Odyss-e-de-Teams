@@ -340,7 +340,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
                   <Button
                     variant={"primary"}
                     className={"btn-submit"}
-                    href={`/#/Jouer/RecapQuizz/${this.props.dataInitQuizz?.selectedModule?.id_module}/${this.props.dataInitQuizz.selectedNiveau?.id_niveau}`}
+                    href={`#/Jouer/RecapQuizz/${this.props.dataInitQuizz?.selectedModule?.id_module}/${this.props.dataInitQuizz.selectedNiveau?.id_niveau}`}
                   >
                     Voir les résultats
                   </Button>
