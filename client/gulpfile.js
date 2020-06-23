@@ -9,7 +9,7 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('generate-manifest', function (done) {
-  gulp.src(['src/static/images/contoso*', 'src/sso/manifest.json'])
+  gulp.src(['public/images/teams/*', 'src/sso/manifest.json'])
     .pipe(zip('odyssee_teams.zip'))
     .pipe(gulp.dest('manifest'), done);
   done();

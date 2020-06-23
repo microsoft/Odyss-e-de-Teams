@@ -34,7 +34,9 @@
     margin-top: 1em;
 
     &__title {
-      font-size: 0.8em;
+      display: inline-block;
+      font-size: .85em;
+      margin-bottom: .5rem;
     }
 
     &__separator {
@@ -63,12 +65,12 @@
         &__user {
           font-weight: bold;
           text-align: center;
-          font-size: 0.6em;
+          font-size: 0.75em;
         }
 
         &__score {
           text-align: center;
-          font-size: 0.6em;
+          font-size: 0.75em;
           opacity: 0.8;
         }
       }

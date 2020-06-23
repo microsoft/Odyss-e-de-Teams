@@ -108,7 +108,7 @@ class ChoixModuleNiveau extends Component<
                     </p>
                     <h4
                       className={
-                        "d-flex align-items-center justify-content-center text-center color-primary-light h-100 mb-2"
+                        "d-flex align-items-center justify-content-center text-center color-primary-light mb-2"
                       }
                     >
                       {item.nom}
@@ -135,7 +135,7 @@ class ChoixModuleNiveau extends Component<
                             <Button
                               variant={"dark"}
                               className={`niveau mt-2 px-2 niveau${itemNiv.id_niveau}`}
-                              href={`/#/Jouer/RecapQuizz/${item.id_module}/${itemNiv.id_niveau}`}
+                              href={`#/Jouer/RecapQuizz/${item.id_module}/${itemNiv.id_niveau}`}
                             >
                               <FaRegEye />
                             </Button>

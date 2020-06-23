@@ -22,7 +22,6 @@ const LaunchFollowWidget = (
     t,
     tReady,
   } = props;
-  console.log(campaign);
   return (
     <div className={`LaunchFollowWidget ${className}`}>
       <div className="LaunchFollowWidget__background"></div>

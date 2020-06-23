@@ -27,7 +27,6 @@ class AdminAgenda extends React.Component<WithTranslation, {}> {
   };
 
   goNextWeek = () => {
-    console.log('next');
     let nextValue = ++this.state.currentWeek;
     if (nextValue > this.state.result.length - 1) nextValue--;
 

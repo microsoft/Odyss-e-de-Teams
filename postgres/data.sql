@@ -93,13 +93,13 @@ INSERT INTO public.t_niveau(nom, cle_fichier, ordre, actif, horodatage, horodata
 	
 -- navigation
 INSERT INTO public.t_page (nom, router_link, horodatage, actif, ordre, is_menu, picto) VALUES
-	('Cockpit', '/#/Cockpit', now(), true, 10, true, 'cockpit.png'),
-	('Jouer', '/#/Jouer', now(), true, 20, true, 'jouer.png'),
-	('Planning', '/#/Planning', now(), true, 20, true, 'planning.png'),
-	('Classement', '/#/Classement', now(), true, 30, true, 'classement.png'),
-	('Outillage', '/#/Outillage', now(), true, 40, true, 'outillage.png'),
-	('Mon Profil', '/#/Profil', now(), true, 40, true, 'profil.png'),
-	('Règles', '/#/Regles', now(), true, 50, true, 'regle.png');
+	('Cockpit', '#/Cockpit', now(), true, 10, true, 'cockpit.png'),
+	('Jouer', '#/Jouer', now(), true, 20, true, 'jouer.png'),
+	('Planning', '#/Planning', now(), true, 20, true, 'planning.png'),
+	('Classements', '#/Classement', now(), true, 30, true, 'classement.png'),
+	('Outillage', '#/Outillage', now(), true, 40, true, 'outillage.png'),
+	('Mon Profil', '#/Profil', now(), true, 40, true, 'profil.png'),
+	('Règles', '#/Regles', now(), true, 50, true, 'regle.png');
 
 INSERT INTO public.j_role_page (id_role, id_page) VALUES (1, 1), (1, 2), (1, 4), (1, 6), (1, 7), (2, 1), (2, 3), (2, 4), (2, 5);
 
@@ -244,7 +244,7 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 		(15, 5530, ARRAY['{ "type": "EXP", "value": 550 }', '{ "type": "MEDAL", "value": 3 }', '{ "type": "PTS", "value": 50 }']::json[], true, now(), now());
 
 -- user temp dev
-	/* INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
+	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
 	VALUES (1, 1, 1, 'Catherine Kefhi', 5, 100, 255, 15, 12, 5, 5, 5, true, now(), now(), now());
 	
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
@@ -256,15 +256,11 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	VALUES (2, 1, 4, 'Emile Feuille', 9, 164, 333, 55, 50, 13, 12, 11, true, now(), now(), now());
 
 	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, actif, horodatage, horodatage_creation, horodatage_connexion)
-	VALUES (1, 2, 6, 'Eddy Scylla', true, now(), now(), now()); */
+	VALUES (1, 2, 6, 'Eddy Scylla', true, now(), now(), now());
 
 -- ajout tid SAEGUS et MS / Pas de maitre du jeu qui active
 	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine_encours=1 WHERE id_organisation=1;
 	UPDATE public.t_organisation SET tid_ad='72f988bf-86f1-41af-91ab-2d7cd011db47' WHERE id_organisation=2;
-
--- maitre jeu
-	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) 
-	VALUES (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
 
 -- Organisation semaine / agenda
 	SELECT f_set_date_semaine(1, '2020-06-29'::date);

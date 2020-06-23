@@ -6,13 +6,16 @@ class AuthService {
   constructor() {
     const url = new URL(window.location);
     const params = new URLSearchParams(url.search);
-    console.log(params);
+    const inTeamsStorage = +localStorage.getItem("inTeams") || 0;
 
     if (params.get("useTest")) {
       this.authService = new MockAuthService();
     }
-    else if (params.get("inTeamsSSO")) {
+    else if (params.get("inTeamsSSO") || inTeamsStorage === 1) {
       this.authService = new SSOAuthService();
+      if (inTeamsStorage === 0) {
+        localStorage.setItem("inTeams", 1);
+      }
     } else {
       this.authService = new MsalAuthService();
     }

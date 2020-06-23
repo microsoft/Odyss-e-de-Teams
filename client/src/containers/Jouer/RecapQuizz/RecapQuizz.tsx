@@ -348,14 +348,14 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
               <Button
                 variant="primary"
                 className={"d-inline-block mr-3"}
-                href={"/#/Jouer"}
+                href={"#/Jouer"}
               >
                 Lancer un autre module !
               </Button>
               <Button
                 variant="primary"
                 className={"d-inline-block"}
-                href={"/#/Cockpit"}
+                href={"#/Cockpit"}
               >
                 Retour au cockpit
               </Button>

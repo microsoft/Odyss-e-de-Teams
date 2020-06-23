@@ -27,6 +27,8 @@ manifest.register.plugins.push(Inert);
 const startServer = async function () {
   try {
     const server = await Glue.compose(manifest, options);
+    
+    
     server.route({
       method: "GET",
       path: "/{path*}",
@@ -50,6 +52,7 @@ const startServer = async function () {
         },
       },
     });
+    
     await server.start();
     console.log("hapi days!");
   } catch (err) {

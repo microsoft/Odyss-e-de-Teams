@@ -74,7 +74,7 @@ const Rankings = (props: IRankingProps & WithTranslation) => {
                 {index + 1}. {user.nom}
               </div>
               <div className="Rankings__body__exp__item__score">
-                {user.nb_xp} XP
+                {user.nb_xp} EXP
               </div>
             </div>
           ))}

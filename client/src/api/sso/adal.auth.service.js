@@ -4,7 +4,6 @@ import AuthenticationContext from "adal-angular/lib/adal";
 // an AAD account. This leverages the AAD v1 endpoint.
 class AdalAuthService {
   constructor() {
-    console.log('adal', window.location.origin);
     const scopes = encodeURIComponent(
       "email openid profile offline_access User.Read"
     );
@@ -65,7 +64,6 @@ class AdalAuthService {
   getUser() {
     return new Promise((resolve, reject) => {
       this.authContext.getUser((error, user) => {
-        console.log(user);
         if (!error) {
           resolve(user.profile);
         } else {

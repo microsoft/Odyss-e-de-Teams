@@ -29,13 +29,12 @@ class App extends React.Component<IAppProps, IAppState> {
       logged: false,
       loading: true,
       is_admin: false,
-      //  inTeams: !!params.get("inTeams") || !!params.get("inTeamsSSO"),
     };
   }
 
   componentDidMount() {
     AuthService.getToken()
-      .then((token) => {
+      .then(() => {
         return AuthService.getUser().then((user) => {
           this.setState(
             {
