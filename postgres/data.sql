@@ -40,7 +40,8 @@
 	('Suez', false, now(), now()),
 	('Total', false, now(), now()),
 	('VINCI AUTOROUTES', false, now(), now()),
-	('VINCI CONSTRUCTION', false, now(), now());
+	('VINCI CONSTRUCTION', false, now(), now()),
+	('APRR', false, now(), now());
 
 -- role
   INSERT INTO public.t_role (nom, actif, horodatage, horodatage_creation) VALUES 	
@@ -180,33 +181,40 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	INSERT INTO public.t_social_asset_communication (nom, actif, horodatage, horodatage_creation) VALUES 	
 		('Linkedin', true, now(), now());
   
-	  INSERT INTO public.t_asset_communication (id_type_asset_communication, id_social_asset_communication, nom, nom_fichier, contenu1, contenu2, actif, horodatage, horodatage_creation) VALUES
-	(1, null, 'E-mail de promotion', 'promotion.png', 
-		'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Utiliser Microsoft Teams, un défi lunaire ?</h1><p style="text-align: center;">Fais décoller tes usages et découvre l’immensité des possibilités de Teams pas à pas, dans un jeu concours conçu spécialement pour toi !</p></div>', 
-		'<div style="top: 1325px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt font-family: ''Segoe UI''; "><h2 style="text-align:center; font-size: 26pt; line-height: 28pt; font-weight: 200; color: #5059C9;"><strong>J-7</strong> avant le lancement,<br/>Surveille ta boîte mail !</h2></div>',
+	  INSERT INTO public.t_asset_communication (id_type_asset_communication, id_social_asset_communication, nom, nom_fichier, contenu, actif, horodatage, horodatage_creation) VALUES
+	(1, null, 'E-mail de promotion', 'promotion.png',
+		ARRAY[
+			'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Utiliser Microsoft Teams, un défi lunaire ?</h1><p style="text-align: center;">Fais décoller tes usages et découvre l’immensité des possibilités de Teams pas à pas, dans un jeu concours conçu spécialement pour toi !</p></div>', 
+			'<div style="top: 1325px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt font-family: ''Segoe UI''; "><h2 style="text-align:center; font-size: 26pt; line-height: 28pt; font-weight: 200; color: #5059C9;"><strong>J-7</strong> avant le lancement,<br/>Surveille ta boîte mail !</h2></div>'
+		],
 		true, now(), now()),
 	(1, null, 'E-mail de lancement', 'lancement.png', 
-		'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;"><br/><br/>Exploratrices, explorateurs,</h1><p style="text-align: center;">Il est temps de se lancer ! Dans le cadre de la mise en place de Teams auprès de ses équipes, nous vous invitons à en adopter les usages en vous amusant dès aujourd’hui !</p></div>', 
-		NULL,
+		ARRAY[
+			'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;"><br/><br/>Exploratrices, explorateurs,</h1><p style="text-align: center;">Il est temps de se lancer ! Dans le cadre de la mise en place de Teams auprès de ses équipes, nous vous invitons à en adopter les usages en vous amusant dès aujourd’hui !</p></div>'
+		],
 		true, now(), now()),
 	(1, null, 'E-mail de fin de mission', 'fin_mission.png', 
-		'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Les défis de la semaine<br/>n’attendent que toi !</h1><p style="text-align: center;">Ça se corse ! Que tu aies 100% de bonnes réponses ou que tu n’aies encore jamais osé jouer, lance-toi et découvre ce qui t’attend dans de nouvelles parties de L’Odyssée de Teams !</p></div>', 
-		NULL,
+		ARRAY[
+			'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Les défis de la semaine<br/>n’attendent que toi !</h1><p style="text-align: center;">Ça se corse ! Que tu aies 100% de bonnes réponses ou que tu n’aies encore jamais osé jouer, lance-toi et découvre ce qui t’attend dans de nouvelles parties de L’Odyssée de Teams !</p></div>'
+		],
 		true, now(), now()),
 	(1, null, 'E-mail de fin de programme', 'fin_programme.png', 
-		'<div style="top: 385px; position: relative; padding: 0 100px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Le programme des 4 missions<br/>est à présent terminé !</h1><p style="text-align: center;">Le programme est terminé ! Nous félicitons tous les joueurs et toutes les joueuses qui se sont prêté.e.s au jeu. Votre implication a permis de rendre le travail en équipe plus fluide et efficace !</p></div>', 
-		'<div style="top: 685px; position: relative; padding: 0 75px; font-size: 14pt; line-height: 18pt; font-family: ''Segoe UI''; "><h1 style="font-size: 20pt; line-height: 22pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">À tous les explorateurs et exploratrices</h1><p style="width: 320pt; text-align: justify; font-size: 15pt; line-height: 19pt;">Nous souhaitons vous remercier d’avoir participé à cette grande aventure et espérons vivement qu’elle vous aura permis d’en apprendre plus sur les usages collaboratifs concrets de Microsoft Teams !</p><p style="width: 358pt; text-align: justify; font-size: 15pt; line-height: 19pt;">Nous vous donnons rendez-vous prochainement pour une nouvelle aventure avec L’Odyssée de Teams !</p></div>', 
+		ARRAY[
+			'<div style="top: 385px; position: relative; padding: 0 100px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Le programme des 4 missions<br/>est à présent terminé !</h1><p style="text-align: center;">Le programme est terminé ! Nous félicitons tous les joueurs et toutes les joueuses qui se sont prêté.e.s au jeu. Votre implication a permis de rendre le travail en équipe plus fluide et efficace !</p></div>', 
+			'<div style="top: 475px; position: relative; padding: 0 75px; margin-left: 150pt; font-size: 14pt; line-height: 18pt; font-family: ''Segoe UI'';"><h2 style="font-size: 17pt; line-height: 18pt; font-weight: 400; color: #fff; margin-bottom: 12pt;">Vous faites parti d''un TOP ?</h2><p style="color: #fff; text-align: justify; font-size: 13pt; line-height: 16pt;">Si vous faites partie du TOP 20 du classement JEU ou du TOP 3 du classement EXP, contactez sans plus attendre votre Commandant de bord à l’adresse suivante : MAIL@MAIL</p></div>',
+			'<div style="top: 595px; position: relative; padding: 0 75px; font-size: 14pt; line-height: 18pt; font-family: ''Segoe UI'';"><h1 style="font-size: 20pt; line-height: 22pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">À tous les explorateurs et exploratrices</h1><p style="width: 320pt; text-align: justify; font-size: 15pt; line-height: 19pt;">Nous souhaitons vous remercier d’avoir participé à cette grande aventure et espérons vivement qu’elle vous aura permis d’en apprendre plus sur les usages collaboratifs de Microsoft Teams ! N’hésitez pas à partager vos connaissances à vos équipes ! </p></div>'
+		], 
 		true, now(), now()),
 	(1, null, 'E-mail annonce des gagnants', 'gagnant.png', 
-		'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Explorateurs, exploratrices !</h1><p style="text-align: center;">Le grand jour est arrivé ! Votre commandant.e de bord vous dévoile aujourd’hui le grand classement final des astronautes les plus ambitieux et les récompenses qu’ils ont méritées.</p></div>', 
-		'<div style="top: 785px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Les gagnants par classement</h1><p style="text-align: left;">Le programme « à la conquête du travail en équipe avec Microsoft Teams » est terminé !</p><br/><p>Nous félicitons tous les joueurs et toutes les joueuses qui se sont prêté.e.s au jeu. Votre implication a permis de rendre le travail en équipe plus fluide et efficace !</p></div>', 
+		ARRAY[
+			'<div style="top: 395px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Explorateurs, exploratrices !</h1><p style="text-align: center;">Le grand jour est arrivé ! Votre Commandant de bord vous dévoile aujourd’hui le classement final des astronautes les plus ambitieux.</p></div>', 
+			'<div style="top: 795px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Les gagnants par classement</h1><p style="text-align: left;">L’Odyssée de Teams est maintenant terminée ! Nous félicitons tous les joueurs et joueuses qui se sont prêté.e.s au jeu. Nous espérons que votre implication a permis de rendre le travail en équipe plus fluide et efficace.</p><p style="text-align: left;">Découvrez maintenant si vous faites partie des grands gagnants du jeu et contactez votre Commandant pour découvrir votre récompense.</p></div>'
+		], 
 		true, now(), now()),
 	(2, 1, 'Bannière Yammer', 'Tuile_Yammer.png', 
 		null, 
-		null, 
 		true, now(), now()),
 	(2, 2, 'Bannière Test Linkedin', 'Tuile_02.png', 
-		null, 
 		null, 
 		true, now(), now());
 
@@ -265,3 +273,5 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 -- Organisation semaine / agenda
 	SELECT f_set_date_semaine(1, '2020-06-29'::date);
 	
+	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */

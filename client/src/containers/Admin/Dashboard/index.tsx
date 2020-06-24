@@ -50,14 +50,23 @@ class AdminDashboard extends Component {
     try {
       const exploresCounts = await AdminAPI.getExplorersCount();
       const campainInfo = await AdminAPI.getCurrentCampaignInfo();
-      let userRankingsPoints = await ClassementAPI.getClassement("fr", "point", { limit: 3 });
-      let userRankingsXP = await ClassementAPI.getClassement("fr", "xp", { limit: 3 });
+      let userRankingsPoints = await ClassementAPI.getClassement(
+        "fr",
+        "point",
+        { limit: 3 }
+      );
+      let userRankingsXP = await ClassementAPI.getClassement("fr", "xp", {
+        limit: 3,
+      });
       this.setState({
         explorers_count: Number(exploresCounts.results.cnt_user),
         campaign: {
-          has_campaign: campainInfo.results? true : false,
+          has_campaign: campainInfo.results ? true : false,
           name: campainInfo.results ? campainInfo.results.mission_name : null,
-          date_end: (campainInfo.results && campainInfo.results.mission_end ? campainInfo.results.mission_end : null),
+          date_end:
+            campainInfo.results && campainInfo.results.mission_end
+              ? campainInfo.results.mission_end
+              : null,
         },
         userRankingsExp: userRankingsXP,
         userRankingsPoints: userRankingsPoints,
@@ -101,9 +110,13 @@ class AdminDashboard extends Component {
                 <Link to="/Outillage" className="no-underline-on-hover">
                   <div className="Admin__tools mt-4 d-flex py-3 justify-content-center">
                     <div className="Admin__tools__image d-flex justify-content-center align-items-center flex-column">
-                      <img src="/images/menu/outillage.png" alt="outillage" style={{
-                        width: "70%",
-                      }} />
+                      <img
+                        src="/images/menu/outillage.png"
+                        alt="outillage"
+                        style={{
+                          width: "70%",
+                        }}
+                      />
                     </div>
 
                     <div className="Admin__tools__content">
@@ -120,11 +133,13 @@ class AdminDashboard extends Component {
                 </Link>
               </div>
               <div className="Admin__sub__block__right">
-                <Rankings
-                  expRanks={this.state.userRankingsExp}
-                  ptsRanks={this.state.userRankingsPoints}
-                  className={"col-12 col-12 pl-4 pr-4 pt-4 pb-3"}
-                />
+                <Link to="/Classement" className="no-underline-on-hover color-black1">
+                  <Rankings
+                    expRanks={this.state.userRankingsExp}
+                    ptsRanks={this.state.userRankingsPoints}
+                    className={"col-12 col-12 pl-4 pr-4 pt-4 pb-3"}
+                  />
+                </Link>
               </div>
             </div>
           </div>

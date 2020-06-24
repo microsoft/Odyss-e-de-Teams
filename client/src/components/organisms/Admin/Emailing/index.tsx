@@ -9,16 +9,10 @@ import AdminAPI from "api/Admin";
 import ClassementAPI from "api/Classement";
 
 import { IClassement } from "models/Classement";
+import { IAsset } from "../Social/hooks/useDropDown";
 
 import "./style.scss";
 
-interface IAsset {
-  id_asset_communication: number;
-  nom: string;
-  nom_fichier: string;
-  contenu1: string;
-  contenu2: string;
-}
 interface ITemplate extends IAsset {
   template?: string;
   width?: number;
@@ -51,7 +45,7 @@ class AdminEmailing extends React.Component<
   private _loadAssets = () => {
     forkJoin([
       AdminAPI.getListAsset(1),
-      ClassementAPI.getClassement("fr", "xp", { limit: 10 }),
+      ClassementAPI.getClassement("fr", "xp", { limit: 3 }),
       ClassementAPI.getClassement("fr", "point", { limit: 10 }),
     ])
       .toPromise()
@@ -60,8 +54,8 @@ class AdminEmailing extends React.Component<
           {
             listAssets: result[0],
             currentTemplate: result[0] ? result[0][0] : null,
-            listUserClassementPoint: result[1] ? result[1] : [],
-            listUserClassementXp: result[2] ? result[2] : [],
+            listUserClassementXp: result[1] ? result[1] : [],
+            listUserClassementPoint: result[2] ? result[2] : [],
           },
           () => {
             if (this.state.currentTemplate) {
@@ -126,23 +120,49 @@ class AdminEmailing extends React.Component<
   copyClipBoard = async (e) => {
     let node = document.getElementById("bodyContent");
 
-    domtoimage
-      .toBlob(node)
-      .then(function (dataUrl) {
-        try {
+    try {
+      domtoimage
+        .toBlob(node)
+        .then(function (dataUrl) {
           // @ts-ignore
           navigator.clipboard.write([
             new ClipboardItem({
               "image/png": dataUrl,
             }),
           ]);
-        } catch (error) {
-          console.error(error);
-        }
-      })
-      .catch(function (error) {
-        console.error("oops, something went wrong!", error);
-      });
+        })
+        .catch(function (error) {
+          domtoimage
+            .toPng(node)
+            .then(function (dataUrl) {
+              var img = document.createElement("img");
+              img.src = dataUrl;
+              document.getElementById("cache-clipboard").appendChild(img);
+
+              var r = document.createRange();
+              r.setStartBefore(img);
+              r.setEndAfter(img);
+              r.selectNode(img);
+              var sel = window.getSelection();
+              sel.removeAllRanges();
+              sel.addRange(r);
+              document.execCommand("copy");
+              window.setTimeout(() => {
+                document
+                  .getElementById("data-content")
+                  .removeChild(document.getElementById("cache-clipboard"));
+                var cache = document.createElement("div");
+                cache.id = "cache-clipboard";
+                document.getElementById("data-content").appendChild(cache);
+              }, 100);
+            })
+            .catch(function (error) {
+              console.error("oops, something went wrong!", error);
+            });
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   private _renderClassement = (type: string) => {
@@ -153,12 +173,12 @@ class AdminEmailing extends React.Component<
       case "xp":
         items = this.state.listUserClassementXp;
         clePoint = "nb_xp";
-        top = 1290;
+        top = 1285;
         break;
       case "pts":
         items = this.state.listUserClassementPoint;
         clePoint = "nb_point";
-        top = 955;
+        top = 950;
         break;
     }
     let styleFirst = ` style="font-weight: bold; color:#f1b446;"`;
@@ -183,7 +203,7 @@ class AdminEmailing extends React.Component<
       if (item.rang === 3) {
         styleTr = styleThird;
       }
-      content += "<tr"+styleTr+">";
+      content += "<tr" + styleTr + ">";
       content += `<td style="padding:10px">${item.rang}</td>`;
       content += `<td style="padding:10px">${item.nom}</td>`;
       content += `<td style="padding:10px">${item[clePoint]}</td>`;
@@ -230,18 +250,26 @@ class AdminEmailing extends React.Component<
             </Dropdown>
           </div>
 
-          <div className="Emailing__body__content">
+          <div className="Emailing__body__content" id="data-content">
             <Editor
               value={`
                 <div id="bodyContent">
                   ${
-                    this.state.currentTemplate?.contenu1
-                      ? this.state.currentTemplate?.contenu1
+                    this.state.currentTemplate?.contenu &&
+                    this.state.currentTemplate?.contenu[0]
+                      ? this.state.currentTemplate?.contenu[0]
                       : ""
                   }
                   ${
-                    this.state.currentTemplate?.contenu2
-                      ? this.state.currentTemplate?.contenu2
+                    this.state.currentTemplate?.contenu &&
+                    this.state.currentTemplate?.contenu[1]
+                      ? this.state.currentTemplate?.contenu[1]
+                      : ""
+                  }
+                  ${
+                    this.state.currentTemplate?.contenu &&
+                    this.state.currentTemplate?.contenu[2]
+                      ? this.state.currentTemplate?.contenu[2]
                       : ""
                   }
                   ${
@@ -272,6 +300,7 @@ class AdminEmailing extends React.Component<
                 inline: true,
               }}
             />
+            <div id="cache-clipboard"></div>
           </div>
         </div>
 

@@ -7,8 +7,7 @@ export interface IAsset {
   nom_social: string;
   nom: string;
   nom_fichier: string;
-  contenu1: string;
-  contenu2: string;
+  contenu: string[];
 }
 
 export interface IUseDropDownOutput {

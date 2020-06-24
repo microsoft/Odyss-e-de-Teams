@@ -51,8 +51,9 @@ const AdminSocial = memo((props: WithTranslation) => {
           </Dropdown>
         </div>
 
-        <div className="Social__body__content" ref={domRef}>
+        <div className="Social__body__content" ref={domRef} id="data-content">
           {bannerPath && <img src={bannerPath} alt="banner" />}
+            <div id="cache-clipboard"></div>
         </div>
       </div>
       <div className="text-right mt-3">
