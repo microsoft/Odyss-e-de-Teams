@@ -539,7 +539,7 @@ const register = async (server, options) => {
         return db.sequelize
           .query(
             `
-          SELECT DISTINCT a.id_asset_communication, TRIM(a.nom) AS nom, TRIM(a.nom_fichier) AS nom_fichier, a.contenu1, a.contenu2, a.id_social_asset_communication, TRIM(sac.nom) as nom_social
+          SELECT DISTINCT a.id_asset_communication, TRIM(a.nom) AS nom, TRIM(a.nom_fichier) AS nom_fichier, a.contenu, a.id_social_asset_communication, TRIM(sac.nom) as nom_social
           FROM public.t_asset_communication a
           LEFT JOIN public.t_social_asset_communication sac ON sac.id_social_asset_communication = a.id_social_asset_communication
           WHERE a.actif AND a.id_type_asset_communication=:type;

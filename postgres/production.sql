@@ -7,8 +7,10 @@
 	SELECT f_set_date_semaine(26, '2020-06-29'::date);
 
 -- APRR
-/* 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
-        (26, 'arnaud.morel@aprr.fr', true, now(), now()),
-	    (26, 'herve.durand@aprr.fr', true, now(), now()); */
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (34, 'arnaud.morel@aprr.fr', true, now(), now()),
+	    (34, 'herve.durand@aprr.fr', true, now(), now());
+		
+	SELECT f_set_date_semaine(34, '2020-07-06'::date);
 
 

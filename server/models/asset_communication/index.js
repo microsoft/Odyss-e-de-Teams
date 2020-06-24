@@ -7,8 +7,7 @@ module.exports = function (sequelize, DataTypes) {
         },
         nom: DataTypes.STRING,
         nom_fichier: DataTypes.STRING,
-        contenu1: DataTypes.STRING,
-        contenu2: DataTypes.STRING,
+        contenu: DataTypes.ARRAY(DataTypes.STRING),
         actif: DataTypes.BOOLEAN,
         updatedAt: {
             type: DataTypes.DATE,

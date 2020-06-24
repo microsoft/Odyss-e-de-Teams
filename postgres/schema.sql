@@ -333,8 +333,7 @@ CREATE TABLE public.t_asset_communication
   id_social_asset_communication integer,
   nom character(80),
   nom_fichier character(80),
-  contenu1 text,
-  contenu2 text,
+  contenu text[],
   actif boolean,
   horodatage timestamp without time zone,
   horodatage_creation timestamp without time zone,
@@ -1490,7 +1489,7 @@ BEGIN
    	CLOSE curs1;
 	
   DELETE FROM public.j_organisation_agenda WHERE id_organisation=idorganisation;
-  
+
 	OPEN curs2 FOR 
 		SELECT DISTINCT a.id_agenda, a.num_jour, a.heure, b.debut_semaine
 		FROM public.t_agenda a
