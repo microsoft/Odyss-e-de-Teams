@@ -108,10 +108,10 @@ const register = async (server, options) => {
       let currentOrganisation;
       const currentMaitreJeu = await db.sequelize.query(
         `
-        SELECT DISTINCT a.id_organisation FROM public.t_maitre_jeu a WHERE actif AND mail=:mail;`,
+        SELECT DISTINCT a.id_organisation FROM public.t_maitre_jeu a WHERE actif AND LOWER(mail)=:mail;`,
         {
           replacements: {
-            mail: body.ad.userName,
+            mail: (body.ad.userName ? body.ad.userName.toLowerCase() : null),
           },
           type: QueryTypes.SELECT,
           plain: true,
