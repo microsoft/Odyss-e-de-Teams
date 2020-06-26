@@ -1,5 +1,5 @@
 import { RouteComponentProps } from "react-router-dom";
-import { IUser } from "./User";
+import { IUser, IOrganisation } from "./User";
 
 export interface IQuestion {
   id_question: number;
@@ -50,6 +50,7 @@ export interface IHistoQuestionnaireComplete {
 
 export interface IJouerProps {
   dispatch?: any;
+  currentOrganisation: IOrganisation;
 }
 
 export interface IJouerState {

@@ -13,6 +13,7 @@ import {
 } from "src/models/Question";
 
 import "./Jouer.scss";
+import IStore from "store/IStore";
 
 class Jouer extends Component<IJouerProps, IJouerState> {
   constructor(props: IJouerProps) {
@@ -47,34 +48,65 @@ class Jouer extends Component<IJouerProps, IJouerState> {
   };
 
   render() {
-    if (this.state.step === 3) {
-      return <Redirect to="/Jouer/Quizz" />;
-    }
-    return (
-      <div className={"main-encart nobg-mobile pb-0 mb-0"}>
-        {this.state.step === 1 && (
-          <>
-            <h1 className={"color-white d-flex d-md-none justify-content-center"}>
+    {
+      if (this.props.currentOrganisation.id_semaine_encours > 0) {
+        if (this.state.step === 3) {
+          return <Redirect to="/Jouer/Quizz" />;
+        }
+        return (
+          <div className={"main-encart nobg-mobile pb-0 mb-0"}>
+            {this.state.step === 1 && (
+              <>
+                <h1
+                  className={
+                    "color-white d-flex d-md-none justify-content-center"
+                  }
+                >
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/icone/fusee.png"}
+                    alt="Ico Jouer"
+                    className={"ico-titre"}
+                  />
+                  Lancement du jeu
+                </h1>
+                <ChoixModuleNiveau onSelect={this._selectModuleNiveau} />
+              </>
+            )}
+            {this.state.step === 2 && (
+              <IntroLancementQuestion
+                onValid={this._start}
+                selectedModule={this.state.selectedModule}
+                selectedNiveau={this.state.selectedNiveau}
+              />
+            )}
+          </div>
+        );
+      } else {
+        return (
+          <div className={"main-encart nobg-mobile"}>
+            <h1
+              className={"color-white d-flex d-md-none justify-content-center"}
+            >
               <img
                 src={process.env.PUBLIC_URL + "/images/icone/fusee.png"}
                 alt="Ico Jouer"
                 className={"ico-titre"}
               />
-              Lancement du jeu
+              Pas de mission activée !
             </h1>
-            <ChoixModuleNiveau onSelect={this._selectModuleNiveau} />
-          </>
-        )}
-        {this.state.step === 2 && (
-          <IntroLancementQuestion
-            onValid={this._start}
-            selectedModule={this.state.selectedModule}
-            selectedNiveau={this.state.selectedNiveau}
-          />
-        )}
-      </div>
-    );
+            <h2 className={"d-none d-md-block color-primary-light mb-2"}>
+              Pas de mission activée !
+            </h2>
+              <p className={"mb-0"}>Tous les vaisseaux sont pour le moment réquisitionnés, reconnecte toi après le &laquo; GO &raquo; (par mail ou réseau social) du commandant.</p>
+          </div>
+        );
+      }
+    }
   }
 }
-
-export default connect()(Jouer);
+const mapStateToProps = (state: IStore) => {
+  return {
+    currentOrganisation: state.user.currentOrganisation,
+  };
+};
+export default connect(mapStateToProps)(Jouer);
