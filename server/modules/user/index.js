@@ -130,7 +130,7 @@ const register = async (server, options) => {
         }
         try {
           await Organisation.update(
-            { tid_ad: body.ad.idToken.tid },
+            { tid_ad: body.ad.idToken.tid, actif: true },
             {
               where: {
                 id_organisation: currentOrganisation["id_organisation"],
