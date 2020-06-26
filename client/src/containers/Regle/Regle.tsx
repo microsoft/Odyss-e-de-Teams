@@ -153,7 +153,7 @@ class Regle extends Component {
             </FadeInStep4>
           </div>
             <FadeInUpCartouche>
-              <p className={"btn-download mt-2 pb-md-3"}>
+              <p className={"btn-download mt-2 pb-md-2"}>
                 <Button as="a"
                   variant="primary"
                   className={"d-inline-block"}
@@ -205,6 +205,9 @@ class Regle extends Component {
             </Container>
           </FadeInUpCartouche> */}
         </div>
+        <p className={"powered mt-md-2 pb-md-2 color-black2"}>
+          <small><em>Created by <a href="http://saegus.com/" target="_blank" className={"color-black2"}>Saegus</a></em></small>
+        </p>
       </div>
     );
   }

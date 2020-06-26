@@ -50,6 +50,9 @@
     width: fit-content;
   }
 }
+.powered {
+  text-align: right;
+}
 
 @include media-breakpoint-down(md) {
   .steps {
@@ -81,6 +84,7 @@
       width: 100%;
       background: none;
       padding-top: 7rem;
+      height: 30rem;
       img {
         width: 80%;
         height: auto;
@@ -92,6 +96,13 @@
     margin-top: 1rem;
     .btn {
       width: 100%;
+    }
+  }
+  .powered {
+    text-align: center;
+    color: $color-white1 !important;
+    a {
+      color: $color-white1 !important;
     }
   }
 }
