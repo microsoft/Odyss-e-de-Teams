@@ -823,6 +823,60 @@ const register = async (server, options) => {
       }
     },
   });
+  /**
+   * @summary Route "hack" qui permet de faire switcher le role d'un user
+   */
+  server.route({
+    path: "/admin/switch-role",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_organisation !== 1) {
+        return false;
+      }
+      let id_role;
+      switch (currentUserByAD.id_role) {
+        case 1:
+          id_role = 2;
+          break;
+        case 2:
+        default:
+          id_role = 1;
+          break;
+      }
+
+      try {
+        const replacements = {
+          user: currentUserByAD.id_user,
+          role: id_role,
+        };
+        await db.sequelize.query(
+          `
+            UPDATE public.t_user SET id_role=:role WHERE id_user=:user;
+        `,
+          { replacements: replacements, type: QueryTypes.INSERT }
+        );
+        return {
+          new_role: (id_role === 2 ? 'admin' : 'joueur')
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
 };
 
 exports.plugin = {

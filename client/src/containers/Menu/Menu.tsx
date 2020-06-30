@@ -29,13 +29,15 @@ class Menu extends Component<IMenuProps, IMenuState> {
           ? process.env.REACT_APP_STATIC_URL + "/" + this.props.currentOrganisation?.logo
           : null,
       }, () => {
-        const activeMenu: any = document.getElementsByClassName('active');
-        if (activeMenu && activeMenu.length > 0) {
-          let newY = activeMenu[0].offsetTop;
-          this._setPositionIndicator(newY);
-        } else {
-          document.getElementById('indicator').style.display = 'none';
-        }
+        setTimeout(() => {
+          const activeMenu: any = document.getElementsByClassName('active');
+          if (activeMenu && activeMenu.length > 0) {
+            let newY = activeMenu[0].offsetTop;
+            this._setPositionIndicator(newY);
+          } else {
+            document.getElementById('indicator').style.display = 'none';
+          }
+        }, 500);
       });
     } catch (e) {
       console.error("Menu error", e);
