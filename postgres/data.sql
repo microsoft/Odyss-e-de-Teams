@@ -271,7 +271,7 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	UPDATE public.t_organisation SET tid_ad='72f988bf-86f1-41af-91ab-2d7cd011db47' WHERE id_organisation=2;
 
 -- Organisation semaine / agenda
-	SELECT f_set_date_semaine(1, '2020-06-29'::date);
+	SELECT f_set_date_semaine(1, '2020-07-06'::date);
 	
 	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
         (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */

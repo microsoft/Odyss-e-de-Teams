@@ -155,7 +155,7 @@ const register = async (server, options) => {
         oid_ad: body.ad.idToken.oid,
         id_role: isMaitreJeu ? 2 : 1,
         id_avatar: body.id_avatar,
-        nom: body.ad.name,
+        nom: Buffer.from(body.ad.name, 'utf-8'),
         actif: true,
         id_semaine_encours_inscription: (!isMaitreJeu && currentOrganisation["id_semaine_encours"] ? currentOrganisation["id_semaine_encours"] : null)
       });

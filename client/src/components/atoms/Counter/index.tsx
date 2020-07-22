@@ -33,6 +33,12 @@ class Countdown extends Component<ICountdownProps, ICountdownState> {
       //const countdown = moment(Number(then) - Number(now));
       const countdown = then.diff(now);
       const duration = moment.duration(countdown);
+
+      if (duration.as('milliseconds') < 0) {
+        this.setState({ days: '0', hours: null, minutes: null, seconds: null });
+        clearInterval(this.interval);
+        return;
+      }
       
       const days = duration.get('days').toString();
       const hours = (duration.get('hours') < 10 ? '0' : '') + duration.get('hours').toString();
@@ -55,7 +61,13 @@ class Countdown extends Component<ICountdownProps, ICountdownState> {
 
     return (
       <div className={className}>
-        {days}j {hours}:{minutes}:{seconds}
+        {
+          (days > 0 && hours) ? (
+            <>{days}j {hours}:{minutes}:{seconds}</>
+          ) : (
+            <>Bientôt terminé !</>
+          )
+        }
       </div>
     );
   }

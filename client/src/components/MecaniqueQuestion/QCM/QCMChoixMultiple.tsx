@@ -156,7 +156,6 @@ class QCMChoixMultiple extends Component<IQCMProps, IMecaniqueQuestionState> {
                   type={"checkbox"}
                   id={`cb-reponse-${item.id_reponse}`}
                   aria-label={`Check réponse`}
-                  onClick={() => this._onSelect(item)}
                   onChange={() => {}}
                 />
               )}
