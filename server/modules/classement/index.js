@@ -38,8 +38,9 @@ const register = async (server, options) => {
       }
 
       let main_query = ClassementUtils.GetMainQuery(params, order_query);
+      main_query = "SELECT * FROM (" + main_query + ")s0 ORDER BY rang";
       if (params.limit) {
-        main_query += " LIMIT :limit";
+        main_query = "SELECT * FROM (" + main_query + ")s1 LIMIT :limit";
         replacements["limit"] = +params.limit;
       }
 

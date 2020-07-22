@@ -382,7 +382,7 @@ const register = async (server, options) => {
 
       try {
         const replacements = {
-          id_organisation: 1,
+          id_organisation: currentUserByAD.id_organisation,
         };
         const organisationAgenda = await db.sequelize.query(
           `

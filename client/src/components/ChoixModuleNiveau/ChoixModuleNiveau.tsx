@@ -123,32 +123,36 @@ class ChoixModuleNiveau extends Component<
                           ).length > 0;
                         return alreadyComplete ? (
                           <div
-                            className={"d-flex w-100"}
+                            className={"d-flex w-100 mt-2 "}
                             key={"done" + itemNiv.id_niveau}
                           >
                             <Button
                               variant={"dark"}
-                              className={`w-100 mt-2 mr-2 niveau niveau${itemNiv.id_niveau}`}
+                              className={`w-100 mr-2 niveau niveau${itemNiv.id_niveau}`}
                             >
                               Terminé !
                             </Button>
                             <Button
                               variant={"dark"}
-                              className={`niveau mt-2 px-2 niveau${itemNiv.id_niveau}`}
+                              className={`niveau px-2 niveau${itemNiv.id_niveau}`}
                               href={`#/Jouer/RecapQuizz/${item.id_module}/${itemNiv.id_niveau}`}
                             >
                               <FaRegEye />
                             </Button>
                           </div>
                         ) : (
-                          <Button
-                            variant={"primary"}
-                            key={itemNiv.id_niveau}
-                            className={`w-100 mt-2 bleu niveau niveau${itemNiv.id_niveau}`}
-                            onClick={() => this._onSelect(item, itemNiv)}
+                          <div
+                            className={"d-flex w-100 mt-2 "}
+                            key={"todo" + itemNiv.id_niveau}
                           >
-                            Niveau {itemNiv.nom}
-                          </Button>
+                            <Button
+                              variant={"primary"}
+                              className={`w-100 bleu niveau niveau${itemNiv.id_niveau}`}
+                              onClick={() => this._onSelect(item, itemNiv)}
+                            >
+                              Niveau {itemNiv.nom}
+                            </Button>
+                          </div>
                         );
                       })}
                     </div>
