@@ -844,7 +844,7 @@ const register = async (server, options) => {
         },
       });
 
-      if (!currentUserByAD || currentUserByAD.id_organisation !== 1) {
+      if (!currentUserByAD || !(currentUserByAD.id_organisation === 1 || currentUserByAD.id_organisation === 2)) {
         return false;
       }
       let id_role;

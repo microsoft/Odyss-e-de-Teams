@@ -386,27 +386,30 @@ const register = async (server, options) => {
           dailyRewards[Number(nbDaysOfConnexion[0].length) - 1];
 
         // on ajoute le score (points, exp, medaille) par rapport au type de gain journalier
-        if (currentRewards.type === "PTS") {
-          await HistoGainPoints.create({
-            id_user: user_id,
-            nb_point: currentRewards.value,
-          });
-        } else if (currentRewards.type == "EXP") {
-          await HistoGainXP.create({
-            id_user: user_id,
-            nb_point: currentRewards.value,
-          });
-        } else if (currentRewards.type == "MEDAL") {
-          const medaille = await MedailleModel.findOne({
-            where: {
-              nom: currentRewards.value,
-            },
-          });
-          await HistoMedaille.create({
-            id_user: user_id,
-            id_medaille: medaille.id_medaille,
-          });
+        if (currentRewards) {
+          if (currentRewards.type === "PTS") {
+            await HistoGainPoints.create({
+              id_user: user_id,
+              nb_point: currentRewards.value,
+            });
+          } else if (currentRewards.type == "EXP") {
+            await HistoGainXP.create({
+              id_user: user_id,
+              nb_point: currentRewards.value,
+            });
+          } else if (currentRewards.type == "MEDAL") {
+            const medaille = await MedailleModel.findOne({
+              where: {
+                nom: currentRewards.value,
+              },
+            });
+            await HistoMedaille.create({
+              id_user: user_id,
+              id_medaille: medaille.id_medaille,
+            });
+          }
         }
+        
         await GainPointUtils.UpdatePointUser(db, currentUserByAD);
       }
       return { hasNewDailyReward: hasNewDailyReward };
