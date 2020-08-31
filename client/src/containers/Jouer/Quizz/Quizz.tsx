@@ -223,7 +223,7 @@ class Quizz extends Component<IQuizzProps, IQuizzState> {
       case 6: // QCM avec pictos réponses - Choix unique
         return (
           <div>
-            <p>Trouvez l’intrus !</p>
+            <p>Sélectionnez la bonne vignette.</p>
             <QCM question={item} onSelect={this._onSelect} />
           </div>
         );
