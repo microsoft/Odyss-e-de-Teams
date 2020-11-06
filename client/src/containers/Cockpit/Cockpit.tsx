@@ -71,48 +71,53 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
         rewards.push(elem);
       });
 
-      if (rewardsInfo.current.type === "PTS") {
-        rewardsInfo.current.iconPath = "/images/icone/pts-bonus.png";
-
-        rewardsInfo.current.text = "player.cockpit.bonus.pts";
-      } else if (rewardsInfo.current.type === "EXP") {
-        rewardsInfo.current.iconPath = "/images/icone/exp-bonus.png";
-
-        rewardsInfo.current.text = "player.cockpit.bonus.exp";
-      } else {
-        rewardsInfo.current.iconPath =
-          "/images/medaille/" + rewardsInfo.current.img;
-        rewardsInfo.current.value = 1;
-
-        rewardsInfo.current.text = "player.cockpit.bonus.medal";
-      }
-      rewardsInfo.current.current = true;
-      rewardsInfo.current.done = false;
-
-      rewards.push(rewardsInfo.current);
-
-      //after
-      rewardsInfo.after.forEach((elem) => {
-        elem.done = false;
-        elem.current = false;
-
-        if (elem.type === "PTS") {
-          elem.iconPath = "/images/icone/pts-bonus.png";
-
-          elem.text = "player.cockpit.bonus.pts";
-        } else if (elem.type === "EXP") {
-          elem.iconPath = "/images/icone/exp-bonus.png";
-
-          elem.text = "player.cockpit.bonus.exp";
+      if (rewardsInfo.current) {
+        if (rewardsInfo.current.type === "PTS") {
+          rewardsInfo.current.iconPath = "/images/icone/pts-bonus.png";
+  
+          rewardsInfo.current.text = "player.cockpit.bonus.pts";
+        } else if (rewardsInfo.current.type === "EXP") {
+          rewardsInfo.current.iconPath = "/images/icone/exp-bonus.png";
+  
+          rewardsInfo.current.text = "player.cockpit.bonus.exp";
         } else {
-          elem.iconPath = "/images/medaille/" + elem.img;
-          elem.value = 1;
-
-          elem.text = "player.cockpit.bonus.medal";
+          rewardsInfo.current.iconPath =
+            "/images/medaille/" + rewardsInfo.current.img;
+          rewardsInfo.current.value = 1;
+  
+          rewardsInfo.current.text = "player.cockpit.bonus.medal";
         }
+        rewardsInfo.current.current = true;
+        rewardsInfo.current.done = false;
+        
+        rewards.push(rewardsInfo.current);
+      }
 
-        rewards.push(elem);
-      });
+
+      if (rewardsInfo.after) {
+        //after
+        rewardsInfo.after.forEach((elem) => {
+          elem.done = false;
+          elem.current = false;
+
+          if (elem.type === "PTS") {
+            elem.iconPath = "/images/icone/pts-bonus.png";
+
+            elem.text = "player.cockpit.bonus.pts";
+          } else if (elem.type === "EXP") {
+            elem.iconPath = "/images/icone/exp-bonus.png";
+
+            elem.text = "player.cockpit.bonus.exp";
+          } else {
+            elem.iconPath = "/images/medaille/" + elem.img;
+            elem.value = 1;
+
+            elem.text = "player.cockpit.bonus.medal";
+          }
+
+          rewards.push(elem);
+        });
+      }
 
       this.setState(
         {
@@ -122,9 +127,9 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
             date_end: this.props.currentCampaign?.mission_end.replace("T", " "),
           },
           currentBonus: {
-            day: rewardsInfo.current.day,
-            type: rewardsInfo.current.type,
-            value: rewardsInfo.current.value,
+            day: rewardsInfo.current?.day,
+            type: rewardsInfo.current?.type,
+            value: rewardsInfo.current?.value,
           },
           allRewards: rewards,
           loading: false,

@@ -204,10 +204,10 @@ class Regle extends Component {
               </Row>
             </Container>
           </FadeInUpCartouche> */}
-        </div>
+        </div>{/* 
         <p className={"powered mt-md-2 pb-md-2 color-black2"}>
           <small><em>Created by <a href="http://saegus.com/" target="_blank" className={"color-black2"}>Saegus</a></em></small>
-        </p>
+        </p> */}
       </div>
     );
   }
