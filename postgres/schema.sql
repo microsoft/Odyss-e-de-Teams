@@ -1493,7 +1493,7 @@ BEGIN
 	OPEN curs2 FOR 
 		SELECT DISTINCT a.id_agenda, a.num_jour, a.heure, b.debut_semaine
 		FROM public.t_agenda a
-			INNER JOIN j_organisation_semaine b ON a.id_semaine = b.id_semaine;
+			INNER JOIN j_organisation_semaine b ON a.id_semaine = b.id_semaine AND b.id_organisation=idorganisation;
 	LOOP
     	FETCH curs2 INTO a_id_agenda, a_num_jour, a_heure, a_debut_semaine;
       	EXIT WHEN NOT FOUND;

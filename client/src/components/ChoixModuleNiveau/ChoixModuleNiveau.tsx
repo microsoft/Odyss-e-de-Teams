@@ -72,7 +72,7 @@ class ChoixModuleNiveau extends Component<
     return (
       <div className={"main-choix-module mb-0"}>
         <h2 className={"d-none d-md-block color-primary-light mb-2"}>
-          &laquo; {this.props.currentCampaign?.mission_name} &raquo;{" : "}Lancement !
+          &laquo; {this.props.currentCampaign?.mission_name} &raquo;
         </h2>
         <h2 className={"d-block d-md-none mb-2"}>Mission : &laquo; {this.props.currentCampaign?.mission_name} &raquo;</h2>
         <p className={"d-none d-md-block mb-2"}>

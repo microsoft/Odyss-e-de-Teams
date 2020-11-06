@@ -16,7 +16,8 @@
     "moment": "^2.26.0",
     "pg": "^8.1.0",
     "pg-hstore": "^2.3.3",
-    "pptxgenjs": "^3.1.1",
-    "sequelize": "^5.21.8"
+    "sequelize": "^5.21.8",
+    "encoding": "^0.1.13",
+    "jschardet": "^2.2.1"
   }
 }

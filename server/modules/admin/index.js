@@ -4,7 +4,6 @@ const moment = require("moment");
 const File = require("./../../utils/File");
 const path = require("path");
 const Jimp = require("jimp");
-const ImageSize = require("image-size");
 
 // constants
 const UPLOAD_PATH = path.resolve(

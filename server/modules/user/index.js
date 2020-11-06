@@ -1,5 +1,6 @@
 "use strict";
 const { QueryTypes } = require("sequelize");
+const encoding = require("encoding");
 const LevelUpUtils = require("./../../utils/LevelUp");
 const RewardUtils = require("./../../utils/Reward");
 const GainPointUtils = require("./../../utils/GainPoint");
@@ -32,8 +33,8 @@ const register = async (server, options) => {
       const params = request.query;
       let and_query = "";
       let replacements = {
-          lang: lang,
-        },
+        lang: lang,
+      },
         oneResult = false;
       if (params.mode && params.mode === "current") {
         replacements["user"] = currentUserByAD.id_user;
@@ -45,8 +46,8 @@ const register = async (server, options) => {
           `
                 WITH w0 AS(
                     SELECT DISTINCT a.* FROM public.t_user a WHERE actif ` +
-            and_query +
-            `
+          and_query +
+          `
                 ), w_avatar AS(
                     SELECT DISTINCT a.id_avatar, TRIM(b.nom) AS nom, a.image
                     FROM public.t_avatar a
@@ -150,15 +151,118 @@ const register = async (server, options) => {
           return false;
         }
       }
+      let nomUser = encoding.convert(body.ad.name, "latin1", "UTF-8");
       currentUserByAD = await User.create({
         id_organisation: currentOrganisation["id_organisation"],
         oid_ad: body.ad.idToken.oid,
         id_role: isMaitreJeu ? 2 : 1,
         id_avatar: body.id_avatar,
-        nom: Buffer.from(body.ad.name, 'utf-8'),
+        nom: nomUser.toString(),
         actif: true,
         id_semaine_encours_inscription: (!isMaitreJeu && currentOrganisation["id_semaine_encours"] ? currentOrganisation["id_semaine_encours"] : null)
       });
+
+      // debug encoding
+      /* await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 1, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: body.ad.name
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 2, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, "UTF-8", fromEncoding).toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 3, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, fromEncoding, "UTF-8").toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 4, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, fromEncoding, "latin1").toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 5, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, fromEncoding, "latin15").toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 6, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, "UTF-8", "latin1").toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 7, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, "UTF-8", "latin15").toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 8, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, "latin1", "UTF-8").toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 9, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, "latin15", "UTF-8").toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 10, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, "UTF-8", "Windows-1252").toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      );
+      await db.sequelize.query(
+        `INSERT INTO public.t_debug_encoding (id_user, typ, nom) VALUES(:id_user, 11, :name);`, {
+          replacements: {
+            id_user: currentUserByAD.id_user,
+            name: encoding.convert(body.ad.name, "Windows-1252", "UTF-8").toString()
+          },
+          type: QueryTypes.INSERT,
+        }
+      ); */
+
       return currentUserByAD;
     },
   });
@@ -409,7 +513,7 @@ const register = async (server, options) => {
             });
           }
         }
-        
+
         await GainPointUtils.UpdatePointUser(db, currentUserByAD);
       }
       return { hasNewDailyReward: hasNewDailyReward };
@@ -755,7 +859,7 @@ const register = async (server, options) => {
           }
         );
         const dataClassementXP = resultClassementXP.filter(c => c.id_user === currentUserByAD.id_user)[0];
-        
+
         const main_query_classement_point = ClassementUtils.GetMainQuery({}, 'nb_point');
         const resultClassementPoint = await db.sequelize.query(main_query_classement_point,
           {
@@ -767,7 +871,7 @@ const register = async (server, options) => {
           }
         );
         const dataClassementPoint = resultClassementPoint.filter(c => c.id_user === currentUserByAD.id_user)[0];
-        
+
         if ((dataClassementXP && dataClassementXP.rang <= 100) || (dataClassementPoint && dataClassementPoint.rang <= 100)) {
           listIdMedalValid.push(4);
         }
@@ -793,7 +897,7 @@ const register = async (server, options) => {
       );
       const listIdMedalUser = [...listIdMedalDejaObtenu, ...listIdMedalValid];
       if (listIdMedalUser.length === resultTotalMedaille.nb - 1) {
-        listIdMedalValid.push(13);
+        listIdMedalValid.push(25);
       }
       let listIdNewMedal = [];
       for (let i = 0; i < listIdMedalValid.length; i++) {
