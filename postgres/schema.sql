@@ -1526,3 +1526,75 @@ CREATE TABLE "public"."j_organisation_agenda" (
     FOREIGN KEY ("id_agenda") REFERENCES "public"."t_agenda"("id_agenda")
 );
 	GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE ON TABLE public.j_organisation_agenda TO odyssee_teams_appli;
+
+-- RGPD / Fonction de suppression des data user
+
+-- FUNCTION: public.f_delete_user_organisation(integer, boolean)
+
+-- DROP FUNCTION public.f_delete_user_organisation(integer, boolean);
+
+CREATE OR REPLACE FUNCTION public.f_delete_user_organisation(
+	idorganisation integer,
+	raz_organisation boolean,
+	OUT statut character,
+	OUT message text)
+    RETURNS record
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    
+AS $BODY$
+
+--********************************************************************************************************
+--* fonction qui va supprimer tous les utilisateur d une organisation et raz l organisation 
+--* la fonction retourne :
+--* 	- le statut d execution de la fonction OK ou KO
+--* 	- un message d information sur le statut
+--***********************************************************************************************************************************
+DECLARE
+	-- variables liees au statut de la fonction
+	i 			int; -- compteur de suppression
+	main_query 	text;
+	
+	-- variables de curseur
+	curs1			refcursor;
+BEGIN
+-- INIT variables
+	message := '';
+	statut := 'OK';
+
+-- traitement
+--***************************************************************************************
+	i := 0;
+	main_query := 'WITH w0 AS (
+		SELECT DISTINCT id_user FROM public.t_user WHERE id_organisation=' || idorganisation || '
+	)';
+	EXECUTE main_query ||'SELECT COUNT(*) FROM w0;' INTO i;
+	
+  	EXECUTE main_query ||'DELETE FROM public.h_gain_medaille WHERE id_user IN (SELECT DISTINCT id_user FROM w0)';
+	EXECUTE main_query ||'DELETE FROM public.h_gain_point WHERE id_user IN (SELECT DISTINCT id_user FROM w0)';
+	EXECUTE main_query ||'DELETE FROM public.h_gain_xp WHERE id_user IN (SELECT DISTINCT id_user FROM w0)';
+	EXECUTE main_query ||'DELETE FROM public.h_niveau_user WHERE id_user IN (SELECT DISTINCT id_user FROM w0)';
+	EXECUTE main_query ||'DELETE FROM public.h_questionnaire_complete WHERE id_user IN (SELECT DISTINCT id_user FROM w0)';
+	EXECUTE main_query ||'DELETE FROM public.h_reponse_user WHERE id_user IN (SELECT DISTINCT id_user FROM w0)';
+	EXECUTE main_query ||'DELETE FROM public.h_user_login WHERE id_user IN (SELECT DISTINCT id_user FROM w0)';
+	
+	DELETE FROM public.t_user WHERE id_organisation=idorganisation;
+	DELETE FROM public.j_organisation_semaine WHERE id_organisation=idorganisation;
+	DELETE FROM public.j_organisation_agenda WHERE id_organisation=idorganisation;
+
+	UPDATE public.t_organisation SET id_semaine_encours=NULL WHERE id_organisation=idorganisation;
+
+	IF raz_organisation = true THEN
+		RAISE NOTICE 'raz orga';
+		UPDATE public.t_organisation SET tid_ad=NULL, actif=false WHERE id_organisation=idorganisation;
+		DELETE FROM public.j_thematique_organisation_disabled WHERE id_organisation=idorganisation;
+		DELETE FROM public.t_maitre_jeu WHERE id_organisation=idorganisation;
+	END IF;
+	
+	IF statut = 'OK' THEN
+		message := message || ' | ' || i::varchar(12) || ' utilisateur(s) supprimé(s)';
+	END IF;
+END;
+$BODY$;
