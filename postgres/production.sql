@@ -15,7 +15,6 @@
 
 -- Colas
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
-        (8, 'emahamd@colas.com', true, now(), now()),
 	    (8, 'zhye@colas.com', true, now(), now());
 		
 	SELECT f_set_date_semaine(8, '2020-09-21'::date);
@@ -88,7 +87,7 @@
         (41, 'admino365hbh-ext@vinci.onmicrosoft.com', true, now(), now());
 		
 
-	SELECT f_set_date_semaine(41, '2020-11-16'::date);
+	SELECT f_set_date_semaine(41, '2020-11-30'::date);
 
 -- Vinci - Pre production
 	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 
@@ -121,9 +120,20 @@
         (27, 'baptiste.da-silva@sonepar.com', true, now(), now()),
         (27, 'mickael.huguenin@sonepar.com', true, now(), now());
 		
-	SELECT f_set_date_semaine(27, '2020-11-09'::date);
+	SELECT f_set_date_semaine(27, '2020-11-23'::date);
 
 
+-- BPCE Staging
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 
+        ('BPCE Staging (annulé - remplacé par Natixis Staging)', false, now(), now());
+	SELECT f_set_date_semaine(44, '2020-11-23'::date);
+
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (44, 'picasse@groupebpcestaging.onmicrosoft.com', true, now(), now());
+		
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (39, 'picasse@groupebpcestaging.onmicrosoft.com', true, now(), now());
+		
 ------ debug encoding
 
 CREATE TABLE public.t_debug_encoding
