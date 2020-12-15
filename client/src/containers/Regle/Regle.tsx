@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import styled, { keyframes } from "styled-components";
+import { withTranslation, WithTranslation } from "react-i18next";
 //@ts-ignore
 import { fadeIn, fadeInUpBig } from "react-animations";
 
@@ -46,12 +47,13 @@ const FadeInUpCartouche = styled.div`
   animation-fill-mode: forwards;
 `;
 
-class Regle extends Component {
+class Regle extends Component<WithTranslation> {
   render() {
+    const { t, tReady } = this.props;
     return (
       <div>
         <h1 className={"color-primary d-none d-md-block"}>
-          Notes d’exploration et récompenses
+          {tReady && t("rules.exploration_notes")}
         </h1>
         <h1 className={"color-white d-flex d-md-none justify-content-center"}>
           <img
@@ -59,12 +61,12 @@ class Regle extends Component {
             alt="Ico Regles"
             className={"ico-titre"}
           />
-          Règles du jeu
+          {tReady && t("rules.game_rules")}
         </h1>
 
         <div className={"main-encart nobg-mobile main-regle"}>
           <h2 className={"d-none d-md-block color-primary-light mb-2"}>
-            Un programme d’un mois pour voyager au coeur des usages Teams
+            {tReady && t("rules.subtitle")}
           </h2>
           <div className={"d-flex steps mt-3 mt-md-5"}>
             <FadeInStep1
@@ -85,7 +87,7 @@ class Regle extends Component {
               <div className={"step-content"}>
                 <p className={"num-step mx-md-auto mb-0"}>1</p>
                 <p className={"text-center mt-2 mb-0"}>
-                  Réponds aux 3 niveaux de questions toutes les semaines
+                  {tReady && t("rules.rules_1")}
                 </p>
               </div>
             </FadeInStep1>
@@ -107,8 +109,7 @@ class Regle extends Component {
               <div className={"step-content"}>
                 <p className={"num-step mx-md-auto mb-0"}>2</p>
                 <p className={"text-center mt-2 mb-0"}>
-                  Obtiens des points de jeu, des points d’EXP, des médailles et
-                  d’autres récompenses
+                  {tReady && t("rules.rules_2")}
                 </p>
               </div>
             </FadeInStep2>
@@ -130,8 +131,8 @@ class Regle extends Component {
               <div className={"step-content"}>
                 <p className={"num-step mx-md-auto mb-0"}>3</p>
                 <p className={"text-center mt-2 mb-0"}>
-                  Renforce ton vaisseau et améliore tes classements en
-                  parcourant les 5 modules de questions
+                  {tReady && t("rules.rules_3")}
+
                 </p>
               </div>
             </FadeInStep3>
@@ -146,24 +147,23 @@ class Regle extends Component {
                   className={"d-inline d-md-none"}
                 />
                 <p className={"text-center mt-2 mb-0"}>
-                  En plus des connaissances et de la gloire, remporte des
-                  cadeaux et des goodies.
+                  {tReady && t("rules.rules_4")}
                 </p>
               </div>
             </FadeInStep4>
           </div>
-            <FadeInUpCartouche>
-              <p className={"btn-download mt-2 pb-md-2"}>
-                <Button as="a"
-                  variant="primary"
-                  className={"d-inline-block"}
-                  href={`${process.env.PUBLIC_URL}/download/Odyssee-Teams_Reglement.pdf`}
-                  target="_blank"
-                >
-                  Télécharger les règles du jeu
+          <FadeInUpCartouche>
+            <p className={"btn-download mt-2 pb-md-2"}>
+              <Button as="a"
+                variant="primary"
+                className={"d-inline-block"}
+                href={`${process.env.PUBLIC_URL}/download/Odyssee-Teams_Reglement.pdf`}
+                target="_blank"
+              >
+                {tReady && t("rules.download_rules")}
                 </Button>
-              </p>
-            </FadeInUpCartouche>
+            </p>
+          </FadeInUpCartouche>
           {/* suppression demande client
            <FadeInUpCartouche>
             <Container fluid className={"d-none d-md-block mt-4"}>
@@ -213,4 +213,4 @@ class Regle extends Component {
   }
 }
 
-export default Regle;
+export default withTranslation()(Regle);
