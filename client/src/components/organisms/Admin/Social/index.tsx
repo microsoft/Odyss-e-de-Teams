@@ -57,7 +57,7 @@ const AdminSocial = memo((props: WithTranslation) => {
         </div>
       </div>
       <div className="text-right mt-3">
-        <Button onClick={copyDom(domRef)}>Copier dans le cache</Button>
+        <Button onClick={copyDom(domRef)}>{tReady && t("utils.cache_copy")}</Button>
       </div>
     </div>
   );

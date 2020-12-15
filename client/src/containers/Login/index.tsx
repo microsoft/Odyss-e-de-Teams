@@ -1,15 +1,17 @@
 import React from "react";
 import { Container, Button } from "react-bootstrap";
 
+import { WithTranslation, withTranslation } from "react-i18next";
+
 import "./Login.scss";
 
 interface ILoginProps {
   onLogin: any;
 }
 
-class Login extends React.Component<ILoginProps, {}> {
+class Login extends React.Component<ILoginProps & WithTranslation, {}> {
   render() {
-    const { onLogin } = this.props;
+    const { onLogin, t, tReady } = this.props;
 
     return (
       <Container
@@ -35,7 +37,7 @@ class Login extends React.Component<ILoginProps, {}> {
                   process.env.PUBLIC_URL + "/images/logo/microsoft.png"
                 }
               />
-              <span className="label">Se connecter</span>
+              <span className="label">{tReady && t("utils.login")}</span>
             </Button>
           </div>
         </div>
@@ -44,4 +46,4 @@ class Login extends React.Component<ILoginProps, {}> {
   }
 }
 
-export default Login;
+export default withTranslation()(Login);

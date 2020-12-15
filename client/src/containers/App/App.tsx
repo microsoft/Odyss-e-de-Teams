@@ -5,6 +5,8 @@ import { Redirect } from "react-router-dom";
 import { forkJoin } from "rxjs";
 import Cookies from "js-cookie";
 
+import { withTranslation, WithTranslation } from "react-i18next";
+
 import "./App.scss";
 
 // containers
@@ -22,8 +24,8 @@ import AuthService from "api/sso/auth.service";
 import IStore from "store/IStore";
 import { IAppProps, IAppState } from "models/App";
 
-class App extends React.Component<IAppProps, IAppState> {
-  constructor(props: IAppProps) {
+class App extends React.Component<IAppProps & WithTranslation, IAppState> {
+  constructor(props: IAppProps & WithTranslation) {
     super(props);
     this.state = {
       logged: false,
@@ -134,6 +136,10 @@ class App extends React.Component<IAppProps, IAppState> {
   };
 
   render() {
+    const {
+      t,
+      tReady
+    } = this.props;
     if (this.state.logged && this.props.location.pathname === "/") {
       return <Redirect to="/Cockpit" />;
     }
@@ -152,8 +158,8 @@ class App extends React.Component<IAppProps, IAppState> {
                 {JSON.stringify(this.state.error)}
               </div>
             ) : (
-              <p>Erreur non spécifiée</p>
-            )}
+                <p>{tReady && t("modal.utils.error_unknown")}</p>
+              )}
           </div>
         );
       } else {
@@ -187,4 +193,4 @@ const AppRouter = withRouter(App);
 const mapStateToProps = (state: IStore) => {
   return {};
 };
-export default connect(mapStateToProps)(AppRouter);
+export default withTranslation()(connect(mapStateToProps)(AppRouter));
