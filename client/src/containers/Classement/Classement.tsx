@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { forkJoin } from "rxjs";
 
 import { WithTranslation, withTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
 
 import ClassementAPI from "api/Classement";
 
@@ -32,7 +33,7 @@ class Classement extends Component<IClassementProps & WithTranslation, IClasseme
 
   private _loadDataClassement = () => {
     let tabBatch = [
-      ClassementAPI.getClassement("fr", this.state.currentView, {
+      ClassementAPI.getClassement(i18n.language, this.state.currentView, {
         monde: this.state.viewMonde ? 1 : 0,
         limit: 100,
       }),
@@ -47,7 +48,7 @@ class Classement extends Component<IClassementProps & WithTranslation, IClasseme
         break;
       default:
         tabBatch.push(
-          ClassementAPI.getClassement("fr", this.state.currentView, {
+          ClassementAPI.getClassement(i18n.language, this.state.currentView, {
             monde: this.state.viewMonde ? 1 : 0,
             user: 1,
           })

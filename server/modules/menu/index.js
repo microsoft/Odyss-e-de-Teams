@@ -16,8 +16,8 @@ const register = async (server, options) => {
             });
             const id_user = currentUserByAD.id_user;
             const id_role = currentUserByAD.id_role;
-            const lang = 'fr';
             const params = request.query;
+            const lang = params.language;
             let mainReplacements = { 'user': (+id_user).toString(), 'role': (+id_role).toString(), 'lang': lang };
             const resultMain = await db.sequelize.query("SELECT main_query FROM public.f_v_menu_user(:user, :role, :lang, NULL)", { replacements: mainReplacements, type: QueryTypes.SELECT, plain: true });
             let main_query = resultMain['main_query'];

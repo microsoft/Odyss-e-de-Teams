@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { Translation } from "react-i18next";
+import i18n from '../../../config/i18n';
 
 // atoms
 import Title from "components/atoms/Title";
@@ -51,11 +52,11 @@ class AdminDashboard extends Component {
       const exploresCounts = await AdminAPI.getExplorersCount();
       const campainInfo = await AdminAPI.getCurrentCampaignInfo();
       let userRankingsPoints = await ClassementAPI.getClassement(
-        "fr",
+        i18n.language,
         "point",
         { limit: 3 }
       );
-      let userRankingsXP = await ClassementAPI.getClassement("fr", "xp", {
+      let userRankingsXP = await ClassementAPI.getClassement(i18n.language, "xp", {
         limit: 3,
       });
       this.setState({

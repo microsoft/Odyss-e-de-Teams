@@ -9,7 +9,7 @@ const ClassementUtils = require("./../../utils/Classement");
 const dailyRewards = require("./daily_rewards.json");
 
 const baseUrl = "/user";
-let lang = "fr";
+let lang = "en";
 
 const register = async (server, options) => {
   server.route({
@@ -33,7 +33,7 @@ const register = async (server, options) => {
       const params = request.query;
       let and_query = "";
       let replacements = {
-        lang: lang,
+        lang: params.language,
       },
         oneResult = false;
       if (params.mode && params.mode === "current") {
@@ -278,8 +278,9 @@ const register = async (server, options) => {
           oid_ad: request.state.oid_ad,
         },
       });
+      const params = request.query;
       const id_user = currentUserByAD.id_user;
-      let replacements = { lang: lang, user: id_user };
+      let replacements = { lang: params.language, user: id_user };
 
       return db.sequelize
         .query(

@@ -1,6 +1,5 @@
 "use strict";
 const baseUrl = "/organisation";
-let lang = "fr";
 
 const register = async (server, options) => {
   server.route({

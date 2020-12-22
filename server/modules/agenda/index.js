@@ -1,13 +1,13 @@
 "use strict";
 const { QueryTypes } = require("sequelize");
 const baseUrl = "/agenda";
-let lang = "fr";
 
 const register = async (server, options) => {
   server.route({
     path: baseUrl,
     method: "GET",
     handler: async function (request, h) {
+      console.log(reques)
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
       if (!request.state.oid_ad) {
@@ -102,7 +102,8 @@ const register = async (server, options) => {
         },
       });
       const id_user = currentUserByAD.id_user;
-      let replacements = { lang: lang, user: id_user };
+      const params = request.query;
+      let replacements = { lang: params.language, user: id_user };
 
       return db.sequelize
         .query(
