@@ -314,7 +314,7 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
                           className={"btn-submit position-relative"}
                         >
                           {tReady && t("quizz.valid_answer")}
-                        <span
+                          <span
                             className={`time-loader${this.state.isPaused ? " paused" : ""
                               }`}
                           ></span>
@@ -337,12 +337,12 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
                       />
                     </p>
                     <h2 className={"color-primary-light mb-3 text-center"}>
-                    {tReady && t("quizz.module_ended")}
-                </h2>
+                      {tReady && t("quizz.module_ended")}
+                    </h2>
                     <p> {tReady && t("quizz.congrat")}</p>
                     <p className={"mb-0"}>
-                    {tReady && t("quizz.get_score")}
-                </p>
+                      {tReady && t("quizz.get_score")}
+                    </p>
                     <p className={"text-right mb-0 mt-4"}>
                       <Button
                         variant={"primary"}
@@ -350,7 +350,7 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
                         href={`#/Jouer/RecapQuizz/${this.props.dataInitQuizz?.selectedModule?.id_module}/${this.props.dataInitQuizz.selectedNiveau?.id_niveau}`}
                       >
                         {tReady && t("quizz.see_results")}
-                  </Button>
+                      </Button>
                     </p>
                   </div>
                 )}
@@ -358,7 +358,7 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
           </div>
           <div className={"toolbar-right ml-0 ml-md-5 d-flex d-md-block"}>
             <StopWatch
-              ref={this.chronoComponent}
+             /*  ref={this.chronoComponent} */
               onStopTimer={this._onStopTimer}
               onStartTimer={this._onStartTimer}
               canStopTimer={
@@ -384,20 +384,20 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
             centered
           >
             <div className={"content"}>
-              <Body>
+              <Modal.Body>
                 <h2 className={"color-primary"}>
-                {tReady && t("quizz.break")}
-              </h2>
+                  {tReady && t("quizz.break")}
+                </h2>
                 <p>{tReady && t("quizz.lose_a_sec")}</p>
-              </Body>
-              <Footer>
+              </Modal.Body>
+              <Modal.Footer>
                 <Button
                   variant="primary"
                   onClick={() => this._setShowModalPause(false)}
                 >
                   {tReady && t("quizz.back_to_game")}
-              </Button>
-              </Footer>
+                </Button>
+              </Modal.Footer>
             </div>
           </Modal>
           <Modal
@@ -407,11 +407,11 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
             centered
           >
             <div className={"content"}>
-              <Body>
+              <Modal.Body>
                 <h2 className={"color-primary"}>{tReady && t("quizz.problem")}</h2>
                 <h4 className={"color-primary-light"}>
-                {tReady && t("quizz.how_answer")}
-              </h4>
+                  {tReady && t("quizz.how_answer")}
+                </h4>
                 <div
                   className={
                     "mt-2 d-flex align-items-center justify-content-between"
@@ -419,17 +419,17 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
                 >
                   <div className={"mt-2 mt-md-0"}>
                     <p className={"p-rep p-chrono"}>
-                      <strong>{tReady && t("quizz.minute")}</strong> 
+                      <strong>{tReady && t("quizz.minute")}</strong>
                       {tReady && t("quizz.to_win_more")}
-                  </p>
+                    </p>
                     <p className={"p-rep p-eclair"}>
                       <strong>{tReady && t("quizz.mutiple_answer")}</strong>
                     </p>
                     <p className={"p-rep p-coeur"}>
-                    {tReady && t("quizz.chose")} <strong>A, B, C {tReady && t("quizz.and_or")} D</strong>
+                      {tReady && t("quizz.chose")} <strong>A, B, C {tReady && t("quizz.and_or")} D</strong>
                     </p>
                     <p className={"p-rep p-flag mb-0"}>
-                    {tReady && t("quizz.click_on")} <strong>{tReady && t("quizz.valid_answers")}</strong>
+                      {tReady && t("quizz.click_on")} <strong>{tReady && t("quizz.valid_answers")}</strong>
                     </p>
                   </div>
                   <div className={"d-none d-md-block"}>
@@ -443,15 +443,15 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
                     />
                   </div>
                 </div>
-              </Body>
-              <Footer>
+              </Modal.Body>
+              <Modal.Footer>
                 <Button
                   variant="primary"
                   onClick={() => this._setShowModalHelp(false)}
                 >
                   {tReady && t("quizz.received")}
-              </Button>
-              </Footer>
+                </Button>
+              </Modal.Footer>
             </div>
           </Modal>
         </div>
