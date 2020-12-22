@@ -3,6 +3,7 @@ import { forkJoin } from "rxjs";
 import { connect } from "react-redux";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import { withTranslation, WithTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
 
 import UserAPI from "api/User";
 import ClassementAPI from "api/Classement";
@@ -41,9 +42,9 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
         this.props.dispatch(action_medal);
       }
       forkJoin([
-        UserAPI.getMedaille("fr"),
-        ClassementAPI.getClassement("fr", "xp", { user: 1 }),
-        ClassementAPI.getClassement("fr", "point", { user: 1 }),
+        UserAPI.getMedaille(i18n.language),
+        ClassementAPI.getClassement(i18n.language, "xp", { user: 1 }),
+        ClassementAPI.getClassement(i18n.language, "point", { user: 1 }),
         UserAPI.checkLevelUp(),
       ])
         .toPromise()
@@ -82,7 +83,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
   };
 
   private _loadCurrentUser = () => {
-    UserAPI.getUser("fr", "current").then((data) => {
+    UserAPI.getUser(i18n.language, "current").then((data) => {
       const action_liste = { type: "SET_CURRENT_USER", value: data };
       this.props.dispatch(action_liste);
     });

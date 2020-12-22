@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { WithTranslation, withTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
 import { connect } from "react-redux";
 import { Row, Modal, Button } from "react-bootstrap";
 
@@ -74,22 +75,22 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
       if (rewardsInfo.current) {
         if (rewardsInfo.current.type === "PTS") {
           rewardsInfo.current.iconPath = "/images/icone/pts-bonus.png";
-  
+
           rewardsInfo.current.text = "player.cockpit.bonus.pts";
         } else if (rewardsInfo.current.type === "EXP") {
           rewardsInfo.current.iconPath = "/images/icone/exp-bonus.png";
-  
+
           rewardsInfo.current.text = "player.cockpit.bonus.exp";
         } else {
           rewardsInfo.current.iconPath =
             "/images/medaille/" + rewardsInfo.current.img;
           rewardsInfo.current.value = 1;
-  
+
           rewardsInfo.current.text = "player.cockpit.bonus.medal";
         }
         rewardsInfo.current.current = true;
         rewardsInfo.current.done = false;
-        
+
         rewards.push(rewardsInfo.current);
       }
 
@@ -122,7 +123,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
       this.setState(
         {
           campaign: {
-            has_campaign: this.props.currentCampaign? true : false,
+            has_campaign: this.props.currentCampaign ? true : false,
             name: this.props.currentCampaign?.mission_name,
             date_end: this.props.currentCampaign?.mission_end.replace("T", " "),
           },
@@ -155,7 +156,7 @@ class Cockpit extends Component<WithTranslation & ICockpit, {}> {
         if (!show && this.state.hasNewDailyReward) {
           UserAPI.checkLevelUp().then((dataLevelUp: ILevelUp) => {
             if (dataLevelUp && dataLevelUp.hasLevelUp) {
-              UserAPI.getUser("fr", "current").then((user) => {
+              UserAPI.getUser(i18n.language, "current").then((user) => {
                 const action_liste_user = {
                   type: "SET_CURRENT_USER",
                   value: user,

@@ -17,7 +17,7 @@ class MenuMobile extends React.Component<IMenuProps, IMenuState> {
   }
   async componentDidMount() {
     try {
-      const menu = await MenuAPI.getMenu("fr");
+      const menu = await MenuAPI.getMenu(i18n.language);
       this.setState(
         {
           listMenu: menu.results,

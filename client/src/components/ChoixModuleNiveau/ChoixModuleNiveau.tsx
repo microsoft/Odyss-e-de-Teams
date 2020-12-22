@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import { WithTranslation, withTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
 import { FaRegEye } from "react-icons/fa";
 import { forkJoin } from "rxjs";
 import styled, { keyframes } from "styled-components";
@@ -48,8 +49,8 @@ class ChoixModuleNiveau extends Component<
 
   private _loadDataLancementJeu = () => {
     forkJoin([
-      QuestionAPI.getModule("fr"),
-      QuestionAPI.getNiveau("fr"),
+      QuestionAPI.getModule(i18n.language),
+      QuestionAPI.getNiveau(i18n.language),
       QuestionAPI.getHistoQuestionnaireComplete(),
     ])
       .toPromise()

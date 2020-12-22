@@ -3,7 +3,6 @@ const { QueryTypes } = require("sequelize");
 const baseUrl = "/classement";
 const ClassementUtils = require("./../../utils/Classement");
 const ADMIN_ROLE_ID = 2;
-let lang = "fr";
 
 const register = async (server, options) => {
   server.route({
@@ -21,7 +20,7 @@ const register = async (server, options) => {
       const id_organisation = currentUserByAD.id_organisation;
       const id_user = currentUserByAD.id_user;
       const params = request.query;
-      let replacements = { lang: lang },
+      let replacements = { lang: params.language },
         order_query = "";
       switch (params.mode) {
         case "point":

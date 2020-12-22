@@ -4,6 +4,7 @@ import { Button, Spinner, Modal } from "react-bootstrap";
 import { FaQuestion } from "react-icons/fa";
 
 import { WithTranslation, withTranslation } from "react-i18next";
+import i18n from '../../../config/i18n';
 
 import QuestionAPI from "api/Question";
 
@@ -42,7 +43,7 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
   }
 
   private _loadQuizz = () => {
-    QuestionAPI.getQuizz("fr", {
+    QuestionAPI.getQuizz(i18n.language, {
       id_module: this.props.dataInitQuizz.selectedModule.id_module,
       id_niveau: this.props.dataInitQuizz.selectedNiveau.id_niveau,
     }).then((data: any) => {

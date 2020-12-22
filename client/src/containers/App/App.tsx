@@ -6,6 +6,7 @@ import { forkJoin } from "rxjs";
 import Cookies from "js-cookie";
 
 import { withTranslation, WithTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
 
 import "./App.scss";
 
@@ -81,7 +82,7 @@ class App extends React.Component<IAppProps & WithTranslation, IAppState> {
   };
 
   onCompleteLanding = (e: any) => {
-    UserAPI.createUserByAD("fr", {
+    UserAPI.createUserByAD(i18n.language, {
       ad: this.state.userAD,
       id_avatar: e.avatarSelected,
     }).then((result: any) => {
@@ -96,7 +97,7 @@ class App extends React.Component<IAppProps & WithTranslation, IAppState> {
         path: "/",
       });
 
-      UserAPI.getUser("fr", "current").then((user) => {
+      UserAPI.getUser(i18n.language, "current").then((user) => {
         if (user) {
           forkJoin([
             OrganisationAPI.getOrganisationInfos(user.id_organisation),

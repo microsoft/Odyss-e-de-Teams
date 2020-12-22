@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { forkJoin } from "rxjs";
 
 import { WithTranslation, withTranslation } from "react-i18next";
+import i18n from '../../../config/i18n';
 
 import QuestionAPI from "api/Question";
 import UserAPI from "api/User";
@@ -40,9 +41,9 @@ class RecapQuizz extends Component<IRecapQuizzProps & WithTranslation, IRecapQui
     }: any = this.props;
 
     forkJoin([
-      QuestionAPI.getModule("fr", params.moduleId),
-      QuestionAPI.getNiveau("fr", params.niveauId),
-      QuestionAPI.getRecapQuizz("fr", {
+      QuestionAPI.getModule(i18n.language, params.moduleId),
+      QuestionAPI.getNiveau(i18n.language, params.niveauId),
+      QuestionAPI.getRecapQuizz(i18n.language, {
         id_module: params.moduleId,
         id_niveau: params.niveauId,
       }),
@@ -83,7 +84,7 @@ class RecapQuizz extends Component<IRecapQuizzProps & WithTranslation, IRecapQui
               this.props.dispatch(action_medal);
             }
             if (data[3] && data[3].hasLevelUp) {
-              UserAPI.getUser("fr", "current").then((user) => {
+              UserAPI.getUser(i18n.language, "current").then((user) => {
                 const action_liste_user = {
                   type: "SET_CURRENT_USER",
                   value: user,

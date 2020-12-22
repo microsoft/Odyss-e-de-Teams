@@ -160,15 +160,155 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
 	SELECT DISTINCT 'AVATAR', id_avatar, 'fr', nom, description FROM public.t_avatar
 	UNION ALL
+	SELECT 'AVATAR', 1, 'en', 'Apollo20', 'Bold and robust'
+	UNION ALL
+	SELECT 'AVATAR', 2, 'en', 'Discovery Two', 'Strong and imposing'
+	UNION ALL
+	SELECT 'AVATAR', 3, 'en', 'Odysseus', 'Attentive and thoughtful'
+	UNION ALL
+	SELECT 'AVATAR', 4, 'en', 'USS Teams', 'Multitask'
+	UNION ALL
+	SELECT 'AVATAR', 5, 'en', 'Haddock 17', 'Fearless and prudent'
+	UNION ALL
+	SELECT 'AVATAR', 6, 'en', 'Llewsor 47', 'Dynamic and curious'
+	UNION ALL
 	SELECT DISTINCT 'MEDAILLE', id_medaille, 'fr', nom, description FROM public.t_medaille
+	UNION ALL
+	SELECT 'MEDAILLE', 1, 'en', 'Novice Explorer', 'Reach the level 5'
+	UNION ALL
+	SELECT 'MEDAILLE', 2, 'en', 'Explorer', 'Reach the level 10'
+	UNION ALL
+	SELECT 'MEDAILLE', 3, 'en', 'Galactic Explorer', 'Reach the level 15'
+	UNION ALL
+	SELECT 'MEDAILLE', 4, 'en', 'Challenger', 'Reach the top 100 of the GAME or EXP ranking'
+	UNION ALL
+	SELECT 'MEDAILLE', 5, 'en', 'For the glory !', 'Reach the top 20 of the GAME or EXP ranking'
+	UNION ALL
+	SELECT 'MEDAILLE', 6, 'en', 'Born to be a star', 'Answer correctly 20 questions'
+	UNION ALL
+	SELECT 'MEDAILLE', 7, 'en', 'Teams uses Hunter', 'Answer correctly 50 questions'
+	UNION ALL
+	SELECT 'MEDAILLE', 8, 'en', 'Admiral of Teams uses', 'Answer correctly 150 questions'
+	UNION ALL
+	SELECT 'MEDAILLE', 9, 'en', 'First contact', 'Log in 5 days in a row'
+	UNION ALL
+	SELECT 'MEDAILLE', 10, 'en', 'Subspace Emissary', 'Log in 10 days in a row'
+	UNION ALL
+	SELECT 'MEDAILLE', 11, 'en', 'Intergalactic Ambassador', 'Log in 15 days in a row'
+	UNION ALL
+	SELECT 'MEDAILLE', 12, 'en', 'I am the Rocketeer', 'Answer 20 questions in less than 30 seconds'
+	UNION ALL
+	SELECT 'MEDAILLE', 13, 'en', 'Film-lover of the stars', 'Launch 5 videos via the differents quizz'
+	UNION ALL
+	SELECT 'MEDAILLE', 14, 'en', 'Never twice without thrice', 'Answer the 3rd question correctly 15 times in a module'
+	UNION ALL
+	SELECT 'MEDAILLE', 15, 'en', 'Interstellar Intendant', 'Answer correctly 5 questions of the «Teamwork & collaboration» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 16, 'en', 'Collaboration Master', 'Answer correctly 30 questions of the «Teamwork & collaboration» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 17, 'en', 'Are you the Fastest Player ?', 'Answer correctly 5 questions of the «Project Management» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 18, 'en', 'Project Management Master', 'Answer correctly 30 questions of the «Project Management» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 19, 'en', 'Space-time avenger', 'Answer correctly 5 questions of the «Effective communication» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 20, 'en', 'Communication Master', 'Answer correctly 30 questions of the «Effective communication» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 21, 'en', 'Gravitational concentration', 'Answer correctly 5 questions of the «Efficient meetings» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 22, 'en', 'Meeting Master', 'Answer correctly 30 questions of the «Efficient meetings» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 23, 'en', 'Pegasus Meteor', 'Answer correctly 5 questions of the «Mobile work» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 24, 'en', 'Mobile Work Master', 'Answer correctly 30 questions of the «Mobile work» module'
+	UNION ALL
+	SELECT 'MEDAILLE', 25, 'en', 'The Infinity Collector', 'Obtain all common and legendary badges'
 	UNION ALL
 	SELECT DISTINCT 'NIVEAU', id_niveau, 'fr', nom, NULL::text FROM public.t_niveau
 	UNION ALL
+	SELECT 'NIVEAU', 1, 'en', 'Beginner', NULL
+	UNION ALL
+	SELECT 'NIVEAU', 2, 'en', 'Intermediate', NULL
+	UNION ALL
+	SELECT 'NIVEAU', 3, 'en', 'Advanced', NULL
+	UNION ALL
 	SELECT DISTINCT 'MODULE', id_module, 'fr', nom, NULL::text FROM public.t_module
+	UNION ALL
+	SELECT 'MODULE', 1, 'en', 'Effective communication', NULL
+	UNION ALL
+	SELECT 'MODULE', 2, 'en', 'Project Management', NULL
+	UNION ALL
+	SELECT 'MODULE', 3, 'en', 'Efficient meetings', NULL
+	UNION ALL
+	SELECT 'MODULE', 4, 'en', 'Teamwork & collaboration', NULL
+	UNION ALL
+	SELECT 'MODULE', 5, 'en', 'Mobile work', NULL
 	UNION ALL
 	SELECT DISTINCT 'PAGE', id_page, 'fr', nom, NULL::text FROM public.t_page
 	UNION ALL
-	SELECT DISTINCT 'AGENDA', id_agenda, 'fr', nom, NULL::text FROM public.t_agenda;
+	SELECT 'PAGE', 1, 'en', 'Cockpit', NULL
+	UNION ALL
+	SELECT 'PAGE', 2, 'en', 'Play', NULL
+	UNION ALL
+	SELECT 'PAGE', 3, 'en', 'Schedule', NULL
+	UNION ALL
+	SELECT 'PAGE', 4, 'en', 'Leaderboards', NULL
+	UNION ALL
+	SELECT 'PAGE', 5, 'en', 'Tools', NULL
+	UNION ALL
+	SELECT 'PAGE', 6, 'en', 'My profile', NULL
+	UNION ALL
+	SELECT 'PAGE', 7, 'en', 'Rules', NULL
+	UNION ALL
+	SELECT DISTINCT 'AGENDA', id_agenda, 'fr', nom, NULL::text FROM public.t_agenda
+	UNION ALL
+	SELECT 'AGENDA', 1, 'en', 'Activate the mission :"Launch"', 'Explorers interfaces'
+	UNION ALL
+	SELECT 'AGENDA', 2, 'en', 'Communication: Send the "Launch" emailing', 'Organization emailing'
+	UNION ALL
+	SELECT 'AGENDA', 3, 'en', 'Social network notification', 'Week 1 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 4, 'en', 'Communication: Send the "Mission in progress" emailing', 'Organization emailing'
+	UNION ALL
+	SELECT 'AGENDA', 5, 'en', 'Social network notification', 'Week 1 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 6, 'en', 'Social network notification', 'Week 1 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 7, 'en', 'Activate the mission :"Stabilization"', 'Explorers interfaces'
+	UNION ALL
+	SELECT 'AGENDA', 8, 'en', 'Social network notification', 'Week 2 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 9, 'en', 'Communication: Send the "Mission in progress" emailing', 'Organization emailing'
+	UNION ALL
+	SELECT 'AGENDA', 10, 'en', 'Social network notification', 'Week 2 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 11, 'en', 'Social network notification', 'Week 2 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 12, 'en', 'Activate the mission :"Progress"', 'Explorers interfaces'
+	UNION ALL
+	SELECT 'AGENDA', 13, 'en', 'Social network notification', 'Week 3 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 14, 'en', 'Communication: Send the "Mission in progress" emailing', 'Organization emailing'
+	UNION ALL
+	SELECT 'AGENDA', 15, 'en', 'Social network notification', 'Week 3 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 16, 'en', 'Social network notification', 'Week 3 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 17, 'en', 'Activate the mission :"Landing"', 'Explorers interfaces'
+	UNION ALL
+	SELECT 'AGENDA', 18, 'en', 'Communication: Send the "End of season" emailing', 'Organization emailing'
+	UNION ALL
+	SELECT 'AGENDA', 19, 'en', 'Social network notification', 'Week 4 mission in progress'
+	UNION ALL
+	SELECT 'AGENDA', 20, 'en', 'Communication: Send the "Mission in progress" emailing', 'Organization emailing'
+	UNION ALL
+	SELECT 'AGENDA', 21, 'en', 'Social network notification', 'Week 4 mission in progress and end of season'
+	UNION ALL
+	SELECT 'AGENDA', 22, 'en', 'Social network notification', 'Week 4 mission in progress and end of season'
+	UNION ALL
+	SELECT 'AGENDA', 23, 'en', 'Communication: Send the "Big_announcement" emailing', 'Organization emailing'
+	UNION ALL
+	SELECT 'AGENDA', 24, 'en', 'Social network notification', 'Program completed. Invitation to check the emailing "Big announcement" with the results and the winners';
 	
 -- assets communication
 	INSERT INTO public.t_type_asset_communication (nom, actif, horodatage, horodatage_creation) VALUES 	
@@ -222,6 +362,10 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	SELECT public.i_process_backlog_question();
 
 	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
+	SELECT DISTINCT 'QUESTION', b.id_question, 'en', a.question_en, a.bonne_pratique_en 
+    FROM public.i_question a
+        INNER JOIN public.t_question b ON TRIM(a.code_module)=TRIM(b.cle_fichier)
+	UNION ALL
 	SELECT DISTINCT 'QUESTION', id_question, 'fr', nom, commentaire FROM public.t_question
 	UNION ALL
 	SELECT DISTINCT 'REPONSE', id_reponse, 'fr', nom, NULL::text FROM public.t_reponse
