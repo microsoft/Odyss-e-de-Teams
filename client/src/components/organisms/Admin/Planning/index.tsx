@@ -24,9 +24,7 @@ const Planning = (props: IPlanning & WithTranslation) => {
   return (
     <div className="PlanningComponent">
       <div className="PlanningComponent__title">
-        {tReady &&
-          t("admin.planning.title")
-        }
+        {tReady &&t("admin.planning.title")}
       </div>
 
       <div className="PlanningComponent__subtitle">
@@ -50,7 +48,7 @@ const Planning = (props: IPlanning & WithTranslation) => {
 
       <div className="PlanningComponent__buttons">
         <Button variant="secondary" onClick={() => setConfig(true)}>
-          Paramétrage{" "}
+        {tReady &&t("admin.planning.setting")}{" "}
           <FaTools />
         </Button>
       </div>

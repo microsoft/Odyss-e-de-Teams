@@ -33,7 +33,7 @@ class NewMedalModal extends React.Component<NewMedalModalProps, {}> {
         <Modal.Body>
           <div className={`NewMedalModal`}>
             <h2 className={"color-primary text-center mb-4"}>
-              Nouvelle(s) médaille(s) obtenue(s) !
+            {tReady && t("modal.new_medal.new_medals")}
             </h2>
             <Row>
               {listNewMedal?.map((item: IMedaille, i: number) => {
@@ -57,7 +57,7 @@ class NewMedalModal extends React.Component<NewMedalModalProps, {}> {
               })}
             </Row>
             <p className={"p-sep"}></p>
-            <div className={"profil text-center color-black2"}>Retrouve l'ensemble de tes médailles dans ton profil !</div>
+            <div className={"profil text-center color-black2"}>{tReady && t("modal.new_medal.find_medals")}</div>
           </div>
         </Modal.Body>
         <Modal.Footer>
