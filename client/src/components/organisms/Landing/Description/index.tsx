@@ -1,6 +1,7 @@
 import React from "react";
 import { withTranslation, Trans } from "react-i18next";
 import { Button } from "react-bootstrap";
+import i18n from '../../../../config/i18n';
 
 import "./style.scss";
 
@@ -10,7 +11,7 @@ const Description = (props) => {
   return (
     <div className="Description d-flex h-100 flex-column justify-content-center px-5 px-md-0 mx-auto">
       <div className="Description__logo mt-4 mb-5">
-        <img src="/images/logo/logo_gauche_blanc.png" alt="logo" />
+        <img src={"/images/logo/" + i18n.language + "/logo_gauche_blanc.png"} alt="logo" className={"teams_logo"}/>
       </div>
       <div className="Description__body mb-4 mt-3">
         <div className="Description__body__elt">
@@ -54,7 +55,8 @@ const Description = (props) => {
             <img src="images/rewards/chest-10x.png" alt="chest-10x" />
           </div>
           <div className="Description__body__elt__text">
-            {t("landing.description.gifts")}
+            <strong>{t("landing.description.gifts_1")}</strong>
+            {t("landing.description.gifts_2")}
           </div>
         </div>
       </div>
