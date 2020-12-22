@@ -305,7 +305,7 @@ class AdminEmailing extends React.Component<
         </div>
 
         <div className="Emailing__actions text-right mt-3">
-          <Button onClick={this.copyClipBoard}>Copier dans le cache</Button>
+          <Button onClick={this.copyClipBoard}>{tReady && t("utils.cache_copy")}</Button>
         </div>
       </div>
     );

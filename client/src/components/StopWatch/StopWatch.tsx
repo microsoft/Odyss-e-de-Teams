@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import { FaPause, FaStop, FaPlay } from "react-icons/fa";
 
+import { withTranslation, WithTranslation } from "react-i18next";
+
 import { IStopWatchProps, IStopWatchState } from "src/models/Question";
 
 import "./StopWatch.scss";
 
-class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
+class StopWatch extends Component<IStopWatchProps & WithTranslation, IStopWatchState> {
   timer: number;
-  constructor(props: IStopWatchProps) {
+  constructor(props: IStopWatchProps & WithTranslation) {
     super(props);
     this.state = {
       timerOn: props.done ? true : false,
@@ -62,6 +64,7 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
 
   render() {
     const { timerTime } = this.state;
+    const { tReady, t } = this.props;
     let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
     let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
     let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
@@ -80,7 +83,7 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
           </h3>
           {this.state.timerOn === false && this.state.timerTime > 0 && (
             <Button variant="primary" onClick={this.startTimer}>
-              <span className={"d-none d-md-inline"}>Reprendre la mission</span>
+              <span className={"d-none d-md-inline"}>{tReady && t("stop_watch.resume")}</span>
               <span className={"d-inline d-md-none"}>
                 <FaPlay />
               </span>
@@ -95,7 +98,7 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
               <span
                 className={this.props.done ? "d-none" : "d-none d-md-inline"}
               >
-                Suspendre la mission
+                {tReady && t("stop_watch.stop_mission")}
               </span>
               <span
                 className={this.props.done ? "d-none" : "d-inline d-md-none"}
@@ -105,7 +108,7 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
               <span
                 className={this.props.done ? "d-none d-md-inline" : "d-none"}
               >
-                Mission terminée
+                {tReady && t("stop_watch.mission_ended")}
               </span>
               <span
                 className={this.props.done ? "d-inline d-md-none" : "d-none"}
@@ -132,4 +135,4 @@ class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
   }
 }
 
-export default StopWatch;
+export default withTranslation()(StopWatch);

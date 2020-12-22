@@ -3,6 +3,8 @@ import { Button, Table, ButtonGroup } from "react-bootstrap";
 import { connect } from "react-redux";
 import { forkJoin } from "rxjs";
 
+import { WithTranslation, withTranslation } from "react-i18next";
+
 import ClassementAPI from "api/Classement";
 
 import {
@@ -14,8 +16,8 @@ import {
 import "./Classement.scss";
 import IStore from "store/IStore";
 
-class Classement extends Component<IClassementProps, IClassementState> {
-  constructor(props: IClassementProps) {
+class Classement extends Component<IClassementProps & WithTranslation, IClassementState> {
+  constructor(props: IClassementProps & WithTranslation) {
     super(props);
     this.state = {
       listUser: [],
@@ -116,6 +118,10 @@ class Classement extends Component<IClassementProps, IClassementState> {
   }
 
   render() {
+    const {
+      t,
+      tReady
+    } = this.props;
     const userTop1 =
       this.state.listUser?.filter((u) => u.rang === 1).length > 0
         ? this.state.listUser?.filter((u) => u.rang === 1)[0]
@@ -131,7 +137,7 @@ class Classement extends Component<IClassementProps, IClassementState> {
     return (
       <div>
         <h1 className={"color-primary d-none d-md-block"}>
-          Classements du programme en cours
+        {tReady && t("ranking.program_ranking")}
         </h1>
         <h1 className={"color-white d-flex d-md-none justify-content-center"}>
           <img
@@ -139,7 +145,7 @@ class Classement extends Component<IClassementProps, IClassementState> {
             alt="Ico Classement Général"
             className={"ico-titre"}
           />
-          Classement de la saison
+          {tReady && t("ranking.season_ranking")}
         </h1>
         <div className={"main-encart nobg-mobile main-classement"}>
           {
@@ -148,23 +154,23 @@ class Classement extends Component<IClassementProps, IClassementState> {
                 <div className={"d-flex flex-column flex-md-row"}>
                   <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 mr-2"}>
                     <p className={"h1 mb-2"}>{this.state.listIndicateur?.nbJoueur}</p>
-                    <p className={"mb-0 text-center"}>Joueur(s) dans l'organisation</p>
+                    <p className={"mb-0 text-center"}>{tReady && t("ranking.player_in")}</p>
                   </div>
                   <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 mx-2"}>
                     <p className={"h1 mb-2"}>{this.state.listIndicateur?.nbJoueurSemaine}</p>
-                    <p className={"mb-0 text-center"}>Nouveau(x) joueur(s) cette semaine</p>
+                    <p className={"mb-0 text-center"}>{tReady && t("ranking.new_players")}</p>
                   </div>
                   <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 mx-2"}>
                     <p className={"h1 mb-2"}>{this.state.listIndicateur?.pcReponseOk}<sup>%</sup></p>
-                    <p className={"mb-0 text-center"}>Bonne(s) réponse(s) au total</p>
+                    <p className={"mb-0 text-center"}>{tReady && t("ranking.total_good_answers")}</p>
                   </div>
                   <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 mx-2"}>
                     <p className={"h1 mb-2"}>{this.state.listIndicateur?.nbJoueurNiv15}</p>
-                    <p className={"mb-0 text-center"}>Joueur(s) ont atteint le niveau 15</p>
+                    <p className={"mb-0 text-center"}>{tReady && t("ranking.playes_lvl_15")}</p>
                   </div>
                   <div className={"d-flex flex-column align-items-center justify-content-center indicateur-item p-2 pt-3 ml-2"}>
                     <p className={"h1 mb-2"}>{this.state.listIndicateur?.nbModuleCompletSemaine}</p>
-                    <p className={"mb-0 text-center"}>Module(s) complété(s) cette semaine</p>
+                    <p className={"mb-0 text-center"}>{tReady && t("ranking.modules_completed")}</p>
                   </div>
                 </div>
                 <p className="p-sep w-100"></p>
@@ -184,7 +190,7 @@ class Classement extends Component<IClassementProps, IClassementState> {
                 alt="Ico Classement Général"
                 className={"btn-ico"}
               />
-              Classement général
+              {tReady && t("ranking.global_ranking")}
             </Button>
             <Button
               variant={this.state.currentView === "xp" ? "primary" : "dark"}
@@ -196,7 +202,7 @@ class Classement extends Component<IClassementProps, IClassementState> {
                 alt="Ico Classement EXP"
                 className={"btn-ico"}
               />
-              Classement points EXP
+              {tReady && t("ranking.exp_ranking")}
             </Button>
             {/* suppression classement monde / demande MS <Button
                             variant={this.state.viewMonde ? "primary" : "dark"}
@@ -221,16 +227,16 @@ class Classement extends Component<IClassementProps, IClassementState> {
                 }
                 onClick={() => this._setCurrentView("point")}
               >
-                Classement
+                {tReady && t("ranking.ranking")}
                 <br />
-                Jeu
+                {tReady && t("ranking.game")}
               </Button>
               <Button
                 variant={this.state.currentView === "xp" ? "primary" : "dark"}
                 onClick={() => this._setCurrentView("xp")}
                 className={"mr-3"}
               >
-                Classement
+                {tReady && t("ranking.ranking")}
                 <br />
                 EXP
               </Button>
@@ -269,13 +275,13 @@ class Classement extends Component<IClassementProps, IClassementState> {
             <thead>
               <tr>
                 <th>#</th>
-                <th className={"th-nom"}>Explorateur.trice</th>
-                <th>Points classement</th>
-                <th>Bonnes réponses</th>
-                <th>Mauvaises réponses</th>
-                <th>Questionnaires complétés</th>
-                <th>Niveau</th>
-                <th>Médailles</th>
+                <th className={"th-nom"}>{tReady && t("utils.explorer")}</th>
+                <th>{tReady && t("ranking.ranking_points")}</th>
+                <th>{tReady && t("utils.good_answers")}</th>
+                <th>{tReady && t("ranking.bad_answers")}</th>
+                <th>{tReady && t("utils.questioner_complete")}</th>
+                <th>{tReady && t("utils.level")}</th>
+                <th>{tReady && t("ranking.medals")}</th>
               </tr>
             </thead>
             <tbody>
@@ -391,4 +397,4 @@ const mapStateToProps = (state: IStore) => {
     currentUser: state.user.currentUser,
   };
 };
-export default connect(mapStateToProps)(Classement);
+export default withTranslation()(connect(mapStateToProps)(Classement));

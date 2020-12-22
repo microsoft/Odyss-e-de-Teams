@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 import { forkJoin } from "rxjs";
 
+import { WithTranslation, withTranslation } from "react-i18next";
+
 import QuestionAPI from "api/Question";
 import UserAPI from "api/User";
 
@@ -19,8 +21,8 @@ import {
 
 import "./RecapQuizz.scss";
 
-class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
-  constructor(props: IRecapQuizzProps) {
+class RecapQuizz extends Component<IRecapQuizzProps & WithTranslation, IRecapQuizzState> {
+  constructor(props: IRecapQuizzProps & WithTranslation) {
     super(props);
     this.state = {
       isLoading: true,
@@ -146,6 +148,10 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
   }
 
   render() {
+    const {
+      t,
+      tReady
+    } = this.props;
     let secondeTotal = (
       "0" +
       (Math.floor(this.state.tempsTotal / 1000) % 60)
@@ -191,12 +197,12 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                       </strong>
                     </h2>
                     <p className={"mb-0 d-none d-md-block"}>
-                      Résultat de ton exploration
+                      {tReady && t("recap_quizz.exploration_result")}
                     </p>
                   </div>
                 </div>
                 <h3 className={"mb-0 d-block d-md-none color-white1"}>
-                  Résultat de ton exploration
+                  {tReady && t("recap_quizz.exploration_result")}
                 </h3>
                 <div className={"mt-4"}>
                   <h5
@@ -205,7 +211,7 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                     }
                   >
                     <span className={"d-block d-md-inline-block"}>
-                      Score obtenu :{" "}
+                      {tReady && t("recap_quizz.score")}{" "}
                     </span>
                     <span
                       className={
@@ -215,7 +221,7 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                       {this.state.listQuestion
                         ? this.state.listQuestion.filter((q) => q.valid).length
                         : 0}
-                      /{this.state.listQuestion?.length} bonnes réponses !
+                      /{this.state.listQuestion?.length}{tReady && t("recap_quizz.good_answers")}
                     </span>
                   </h5>
                   <h5
@@ -224,14 +230,14 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                     }
                   >
                     <span className={"d-block d-md-inline-block"}>
-                      Temps de l'exploration :{" "}
+                      {tReady && t("recap_quizz.exploration_time")}{" "}
                     </span>
                     <span
                       className={
                         "color-primary-light h4 mb-0 ml-md-2 d-block d-md-inline-block span-result"
                       }
                     >
-                      {minuteTotal}min et {secondeTotal}sec
+                      {minuteTotal}{tReady && t("recap_quizz.min_and")} {secondeTotal}sec
                     </span>
                   </h5>
                 </div>
@@ -244,25 +250,25 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                 <p></p>
               </div>
               <div className={"pl-md-1"}>
-                <h5 className={"d-none d-md-block"}>Tes récompenses :</h5>
+                <h5 className={"d-none d-md-block"}>{tReady && t("recap_quizz.rewards")}</h5>
                 <div className={"color-primary-light"}>
                   <h5 className={"d-block d-md-none color-black1 mt-2"}>
-                    Points d’EXP remportés
+                    {tReady && t("recap_quizz.exp_earned")}
                   </h5>
                   <h2 className={"total-xp mb-0"}>
                     + {this.state.nbXpTotal} EXP
                   </h2>
                   <p className={"mb-4 d-none d-md-block"}>
-                    <small>Points d’expérience remportés</small>
+                    <small>{tReady && t("recap_quizz.exp_earned")}</small>
                   </p>
                   <h5 className={"d-block d-md-none color-black1 mt-2"}>
-                    Points de jeu remportés
+                    {tReady && t("recap_quizz.points_game")}
                   </h5>
                   <h2 className={"total-point mb-0"}>
                     + {this.state.nbPointTotal} Points
                   </h2>
                   <p className={"mb-0 d-none d-md-block"}>
-                    <small>Points de jeu remportés</small>
+                    <small>{tReady && t("recap_quizz.points_game")}</small>
                   </p>
                 </div>
               </div>
@@ -270,20 +276,17 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
           </div>
           <div className={"main-encart nobg-mobile"}>
             <h2 className={"color-primary-light mb-1 d-none d-md-block"}>
-              Récapitulatif des réponses
+              {tReady && t("recap_quizz.answer_recap")}
             </h2>
             <p>
-              Tu trouveras ci-dessous les réponses aux questions de ce module.
-              Lis-les attentivement car il se peut que des astuces y soient
-              cachées.
+              {tReady && t("recap_quizz.answer_below")}
             </p>
             {this.state.listQuestion?.map((item: IQuestion, i: number) => {
               return (
                 <div
                   key={item.id_question}
-                  className={`recap question${
-                    item.valid ? " valid" : " invalid"
-                  }`}
+                  className={`recap question${item.valid ? " valid" : " invalid"
+                    }`}
                 >
                   <div className={"mt-md-4 intitule"}>
                     <h4
@@ -298,14 +301,13 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                   </div>
                   {item.valid ? (
                     <p className={"p-result pl-md-3 mt-3"}>
-                      Tu as sélectionné la bonne réponse, bravo !
+                      {tReady && t("recap_quizz.good_answer")}
                     </p>
                   ) : (
-                    <p className={"p-result pl-md-3 mt-3"}>
-                      Malheureusement, tu n’as pas sélectionné la bonne réponse!
-                      Regarde le corrigé ci-dessous
-                    </p>
-                  )}
+                      <p className={"p-result pl-md-3 mt-3"}>
+                        {tReady && t("recap_quizz.bad_answer")}
+                      </p>
+                    )}
                   <div className={"mt-4"}>{this._renderMecanique(item)}</div>
                   {item.astuce ? (
                     <div className={"mt-4 astuce d-md-flex align-items-center"}>
@@ -333,14 +335,14 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                             alt={`Illustration module ${this.state.currentModule?.nom}`}
                             className={"ico-titre d-inline d-md-none mr-2"}
                           />
-                          Petite astuce Teams !
+                          {tReady && t("recap_quizz.tip")}
                         </h3>
                         <p className={"mb-0"}>{item.astuce}</p>
                       </div>
                     </div>
                   ) : (
-                    <span></span>
-                  )}
+                      <span></span>
+                    )}
                 </div>
               );
             })}
@@ -350,14 +352,14 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
                 className={"d-inline-block mr-3"}
                 href={"#/Jouer"}
               >
-                Lancer un autre module !
+                {tReady && t("recap_quizz.new_module")}
               </Button>
               <Button
                 variant="primary"
                 className={"d-inline-block"}
                 href={"#/Cockpit"}
               >
-                Retour au cockpit
+                {tReady && t("recap_quizz.back")}
               </Button>
             </p>
           </div>
@@ -366,12 +368,12 @@ class RecapQuizz extends Component<IRecapQuizzProps, IRecapQuizzState> {
           {this.state.isLoading ? (
             <span></span>
           ) : (
-            <StopWatch done={true} initTimer={this.state.tempsTotal} />
-          )}
+              <StopWatch done={true} initTimer={this.state.tempsTotal} />
+            )}
         </div>
       </div>
     );
   }
 }
 
-export default connect()(RecapQuizz);
+export default withTranslation()(connect()(RecapQuizz));
