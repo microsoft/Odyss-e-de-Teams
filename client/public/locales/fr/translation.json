@@ -10,7 +10,8 @@
       "medals": "25 <1>médailles</1> à collectionner pour exhiber votre talent d'explorateur de la collaboration !",
       "questions": "200 <1>questions </1> pour vous propulser sur Microsoft Teams",
       "reward": "Une <1> récompense d'honneur </1> pour le meilleur explorateur",
-      "gifts": "Des cadeaux et goodies pour les meilleurs explorateurs.trices",
+      "gifts_1": "Des cadeaux et goodies",
+      "gifts_2": "pour les meilleurs explorateurs.trices",
       "buttonText": "Configurer mon vaisseau"
     },
     "CGU": {
