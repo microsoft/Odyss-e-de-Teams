@@ -20,7 +20,7 @@ class Login extends React.Component<ILoginProps, {}> {
           <div className="App-login-image-container">
             <img
               src={
-                process.env.PUBLIC_URL + "/images/logo/logo_centre_violet.png"
+                process.env.PUBLIC_URL + "/images/logo/fr/logo_centre_violet.png"
               }
               alt={"Logo"}
               className={"logo"}

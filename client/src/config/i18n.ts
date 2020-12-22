@@ -6,7 +6,8 @@ i18n
   .use(Backend) // Load locales in public folder
   .use(initReactI18next)
   .init( {
-    fallbackLng: 'fr',
+    fallbackLng: 'en',
+    lng: "en",
     debug: true,
   })
 

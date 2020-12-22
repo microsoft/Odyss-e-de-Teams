@@ -7,7 +7,7 @@ import { IStopWatchProps, IStopWatchState } from "src/models/Question";
 import "./StopWatch.scss";
 
 class StopWatch extends Component<IStopWatchProps, IStopWatchState> {
-  timer: number;
+  timer: any;
   constructor(props: IStopWatchProps) {
     super(props);
     this.state = {
