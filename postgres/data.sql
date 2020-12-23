@@ -364,23 +364,13 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
 	SELECT DISTINCT 'QUESTION', b.id_question, 'en', a.question_en, a.bonne_pratique_en 
     FROM public.i_question a
-        INNER JOIN public.t_question b ON TRIM(a.code_module)=TRIM(b.cle_fichier)
-	UNION ALL
-	/* TODO: inserer les vraies réponse en anglais quans on les aura */
-	SELECT DISTINCT 'REPONSE', id_reponse, 'en', nom, NULL::text FROM public.t_reponse
-	UNION ALL
-	SELECT DISTINCT 'THEMATIQUE', id_thematique, 'en', nom, NULL::text FROM public.t_thematique
+        INNER JOIN public.t_question b ON TRIM(a.code_question)=TRIM(b.cle_fichier)
 	UNION ALL
 	SELECT DISTINCT 'QUESTION', id_question, 'fr', nom, commentaire FROM public.t_question
 	UNION ALL
 	SELECT DISTINCT 'REPONSE', id_reponse, 'fr', nom, NULL::text FROM public.t_reponse
 	UNION ALL
 	SELECT DISTINCT 'THEMATIQUE', id_thematique, 'fr', nom, NULL::text FROM public.t_thematique;
-
-	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
-	SELECT DISTINCT 'QUESTION', b.id_question, 'en', a.question_en, a.bonne_pratique_en 
-	FROM public.i_question a
-		INNER JOIN public.t_question b ON TRIM(a.code_module)=TRIM(b.cle_fichier);
 
 -- bareme point reponse
 	INSERT INTO public.t_bareme_reponse (id_niveau, reponse_valid_xp, reponse_valid_point, last_reponse_valid_xp, last_reponse_valid_point, bonus_video_xp, bonus_video_point, bonus_temps_xp, bonus_temps_point, actif, horodatage, horodatage_creation) VALUES 
