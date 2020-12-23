@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import i18n from '../../../../config/i18n';
 
 import "./style.scss";
 import { IMenuProps, IMenuState, IMenu } from "models/Menu";
@@ -16,7 +17,7 @@ class MenuMobile extends React.Component<IMenuProps, IMenuState> {
   }
   async componentDidMount() {
     try {
-      const menu = await MenuAPI.getMenu("fr");
+      const menu = await MenuAPI.getMenu(i18n.language);
       this.setState(
         {
           listMenu: menu.results,
@@ -49,7 +50,7 @@ class MenuMobile extends React.Component<IMenuProps, IMenuState> {
           onClick={() => this._setDisplayMenu()}
         >
           <div className="MenuMobile__header__img">
-            <img src="/images/logo/logo_centre_violet.png" alt="logo" />
+            <img src={"/images/logo/" + i18n.language + "/logo_centre_violet.png"} alt="logo" className={"teams_logo"}/>
           </div>
 
           <div className="MenuMobile__header__seperator"></div>

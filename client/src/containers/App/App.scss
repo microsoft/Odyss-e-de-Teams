@@ -10,14 +10,17 @@ body,
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $color-black1;
   background-size: 100%;
   background-attachment: fixed;
+
+  .teams_logo {
+    max-width: 442px;
+  }
 
   .main-container {
     .main-content {
@@ -32,11 +35,7 @@ body {
   }
   .main-container.gradient {
     background: rgb(244, 244, 255);
-    background: linear-gradient(
-      180deg,
-      rgba(244, 244, 255, 1) 0%,
-      rgba(218, 216, 240, 1) 100%
-    );
+    background: linear-gradient(180deg, rgba(244, 244, 255, 1) 0%, rgba(218, 216, 240, 1) 100%);
   }
   .main-container.overlay-purple {
     background: url("/images/overlays/overlay-purple.png") no-repeat;
@@ -59,7 +58,7 @@ body {
   .modal-dialog {
     .modal-content {
       padding: 1rem;
-      border-radius: .5rem;
+      border-radius: 0.5rem;
       background: #fff url("/images/overlays/overlay_modal.jpg") no-repeat;
       background-size: cover;
       background-position: left top;

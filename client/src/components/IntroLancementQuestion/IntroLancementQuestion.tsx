@@ -4,6 +4,8 @@ import styled, { keyframes } from "styled-components";
 //@ts-ignore
 import { fadeIn } from "react-animations";
 
+import { withTranslation, WithTranslation } from "react-i18next";
+
 import { IIntroLancementQuestionProps } from "src/models/Question";
 
 import "./IntroLancementQuestion.scss";
@@ -19,14 +21,18 @@ const FadeInIntro = styled.div`
 `;
 
 class IntroLancementQuestion extends Component<
-  IIntroLancementQuestionProps,
+  IIntroLancementQuestionProps & WithTranslation,
   {}
-> {
+  > {
   private _onClick = () => {
     this.props.onValid();
   };
 
   render() {
+    const {
+      t,
+      tReady,
+    } = this.props;
     return (
       <FadeInIntro>
         <div className={"d-flock d-md-none mb-3"}>
@@ -48,7 +54,7 @@ class IntroLancementQuestion extends Component<
               </h2>
             </div>
           </div>
-          <h1 className={"text-center mt-3"}>Avant de commencer</h1>
+          <h1 className={"text-center mt-3"}>{t("intro_question.title")}</h1>
         </div>
         <div className={"main-intro m-0 px-4 py-4 px-md-0 pt-md-0 pb-md-2"}>
           <div className={"d-none d-md-flex mb-2 titre align-items-center"}>
@@ -67,11 +73,11 @@ class IntroLancementQuestion extends Component<
                   - {this.props.selectedNiveau?.nom}
                 </strong>
               </h2>
-              <p className={"mb-0"}>Derniers préparatifs avant le décollage</p>
+              <p className={"mb-0"}>{t("intro_question.subtitle")}</p>
             </div>
           </div>
           <h4 className={"d-none d-md-block mt-md-3 mb-2"}>
-            Seras-tu capable de répondre à la vitesse de la lumière ?
+            {t("intro_question.intro")}
           </h4>
           <p className={"text-center mb-0"}>
             <img
@@ -89,15 +95,14 @@ class IntroLancementQuestion extends Component<
             />
           </p>
           <p className={"text-center content mx-auto"}>
-            Explorateur.trice, le chronomètre va te permettre de gagner{" "}
+          {t("intro_question.explanation_start")}{" "}
             <strong className={"color-primary-light"}>
-              des points d’EXP supplémentaires si tu donnes une réponse correcte
-              en moins d'une minute
+            {t("intro_question.explanation_middle")}
             </strong>
             .
           </p>
           <p className={"text-center content mx-auto"}>
-            Mais rassure-toi, au-delà de ce temps, tu ne perdras aucun point!
+          {t("intro_question.explanation_end")}
           </p>
         </div>
         <p className={"btn-next pb-md-4"}>
@@ -106,7 +111,7 @@ class IntroLancementQuestion extends Component<
             className={"d-inline-block"}
             onClick={() => this._onClick()}
           >
-            Commencer l'exploration
+            {t("intro_question.start_explore")}
           </Button>
         </p>
       </FadeInIntro>
@@ -114,4 +119,4 @@ class IntroLancementQuestion extends Component<
   }
 }
 
-export default IntroLancementQuestion;
+export default withTranslation()(IntroLancementQuestion);

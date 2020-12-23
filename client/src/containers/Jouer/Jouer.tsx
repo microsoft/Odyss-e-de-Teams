@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
+import { WithTranslation, withTranslation } from "react-i18next";
+
 import ChoixModuleNiveau from "components/ChoixModuleNiveau/ChoixModuleNiveau";
 import IntroLancementQuestion from "components/IntroLancementQuestion/IntroLancementQuestion";
 
@@ -15,8 +17,8 @@ import {
 import "./Jouer.scss";
 import IStore from "store/IStore";
 
-class Jouer extends Component<IJouerProps, IJouerState> {
-  constructor(props: IJouerProps) {
+class Jouer extends Component<IJouerProps & WithTranslation, IJouerState> {
+  constructor(props: IJouerProps & WithTranslation) {
     super(props);
     this.state = {
       step: 1,
@@ -48,6 +50,10 @@ class Jouer extends Component<IJouerProps, IJouerState> {
   };
 
   render() {
+    const {
+      t,
+      tReady
+    } = this.props;
     {
       if (this.props.currentOrganisation.id_semaine_encours > 0) {
         if (this.state.step === 3) {
@@ -67,7 +73,7 @@ class Jouer extends Component<IJouerProps, IJouerState> {
                     alt="Ico Jouer"
                     className={"ico-titre"}
                   />
-                  Lancement du jeu
+                  {tReady && t("play.launch")}
                 </h1>
                 <ChoixModuleNiveau onSelect={this._selectModuleNiveau} />
               </>
@@ -92,12 +98,12 @@ class Jouer extends Component<IJouerProps, IJouerState> {
                 alt="Ico Jouer"
                 className={"ico-titre"}
               />
-              Pas de mission activée !
+              {tReady && t("play.no_mission")}
             </h1>
             <h2 className={"d-none d-md-block color-primary-light mb-2"}>
-              Pas de mission activée !
+            {tReady && t("play.no_mission")}
             </h2>
-              <p className={"mb-0"}>Tous les vaisseaux sont pour le moment réquisitionnés, reconnecte toi après le &laquo; GO &raquo; (par mail ou réseau social) du commandant.</p>
+              <p className={"mb-0"}>{tReady && t("play.no_ship_1")} &laquo; GO &raquo; {tReady && t("play.no_ship_2")}</p>
           </div>
         );
       }
@@ -109,4 +115,4 @@ const mapStateToProps = (state: IStore) => {
     currentOrganisation: state.user.currentOrganisation,
   };
 };
-export default connect(mapStateToProps)(Jouer);
+export default withTranslation()(connect(mapStateToProps)(Jouer));

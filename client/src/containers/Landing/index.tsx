@@ -24,6 +24,7 @@ class LandingComponent extends Component<ILandingProps, ILandingState> {
 
   componentDidMount() {
     AvatarAPI.getAvatars().then((data) => {
+      console.log(data)
       // add a selected property
       data.results.forEach((avatar: IAvatar) => {
         avatar.selected = false;

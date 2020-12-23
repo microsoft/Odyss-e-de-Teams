@@ -5,6 +5,9 @@ import { Redirect } from "react-router-dom";
 import { forkJoin } from "rxjs";
 import Cookies from "js-cookie";
 
+import { withTranslation, WithTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
+
 import "./App.scss";
 
 // containers
@@ -22,8 +25,8 @@ import AuthService from "api/sso/auth.service";
 import IStore from "store/IStore";
 import { IAppProps, IAppState } from "models/App";
 
-class App extends React.Component<IAppProps, IAppState> {
-  constructor(props: IAppProps) {
+class App extends React.Component<IAppProps & WithTranslation, IAppState> {
+  constructor(props: IAppProps & WithTranslation) {
     super(props);
     this.state = {
       logged: false,
@@ -79,7 +82,7 @@ class App extends React.Component<IAppProps, IAppState> {
   };
 
   onCompleteLanding = (e: any) => {
-    UserAPI.createUserByAD("fr", {
+    UserAPI.createUserByAD(i18n.language, {
       ad: this.state.userAD,
       id_avatar: e.avatarSelected,
     }).then((result: any) => {
@@ -94,7 +97,7 @@ class App extends React.Component<IAppProps, IAppState> {
         path: "/",
       });
 
-      UserAPI.getUser("fr", "current").then((user) => {
+      UserAPI.getUser(i18n.language, "current").then((user) => {
         if (user) {
           forkJoin([
             OrganisationAPI.getOrganisationInfos(user.id_organisation),
@@ -134,6 +137,10 @@ class App extends React.Component<IAppProps, IAppState> {
   };
 
   render() {
+    const {
+      t,
+      tReady
+    } = this.props;
     if (this.state.logged && this.props.location.pathname === "/") {
       return <Redirect to="/Cockpit" />;
     }
@@ -152,8 +159,8 @@ class App extends React.Component<IAppProps, IAppState> {
                 {JSON.stringify(this.state.error)}
               </div>
             ) : (
-              <p>Erreur non spécifiée</p>
-            )}
+                <p>{tReady && t("modal.utils.error_unknown")}</p>
+              )}
           </div>
         );
       } else {
@@ -187,4 +194,4 @@ const AppRouter = withRouter(App);
 const mapStateToProps = (state: IStore) => {
   return {};
 };
-export default connect(mapStateToProps)(AppRouter);
+export default withTranslation()(connect(mapStateToProps)(AppRouter));
