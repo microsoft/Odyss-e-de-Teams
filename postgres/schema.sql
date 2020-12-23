@@ -1291,8 +1291,11 @@ BEGIN
 		code_question text,
 		thematique text,
 		question text,
+		question_en text,
 		reponse text,
+		reponse_en text,
 		bonne_pratique text,
+		bonne_pratique_en text,
 		reponse_ok text,
 		mecanique text,
 		CONSTRAINT pk_i_question PRIMARY KEY (code_module, code_question)
