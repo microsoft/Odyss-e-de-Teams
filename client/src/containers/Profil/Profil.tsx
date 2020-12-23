@@ -89,6 +89,24 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
     });
   };
 
+  private _getEndNumber = (number: number): string => {
+    if (i18n.language === 'fr') {
+      return number === 1 ? "er" : "ème";
+    } else {
+      let numberToString: string = number.toString();
+      switch (numberToString[numberToString.length]) {
+        case '1':
+          return 'st';
+        case '2':
+          return 'nd';
+        case '3':
+          return 'rd';
+        default:
+          return 'th';
+      }
+    }
+  };
+
   render() {
     const { t, tReady } = this.props;
     return (
@@ -164,9 +182,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                         {this.state.classementXP ? this.state.classementXP : 0}
                         <sup>
                           {this.state.classementPoint &&
-                            this.state.classementPoint === 1
-                            ? "er"
-                            : "ème"}
+                            this._getEndNumber(this.state.classementPoint)}
                         </sup>
                       </p>
                       <p>{tReady && t("profile.exp_rank")}</p>
@@ -178,9 +194,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                           : 0}
                         <sup>
                           {this.state.classementPoint &&
-                            this.state.classementPoint === 1
-                            ? "er"
-                            : "ème"}
+                            this._getEndNumber(this.state.classementPoint)}
                         </sup>
                       </p>
                       <p>{tReady && t("profile.point_rank")}</p>
@@ -266,7 +280,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
               <UserAvatar user={this.props.currentUser} />
             </div>
             <p className={"text-center"}>
-            {tReady && t("profile.medal_replacement")}
+              {tReady && t("profile.medal_replacement")}
             </p>
             {this.state.listMedaille?.map((item: IMedaille) => {
               return (
