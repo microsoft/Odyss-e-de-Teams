@@ -367,7 +367,6 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
     FROM public.i_question a
         INNER JOIN public.t_question b ON TRIM(a.code_module)=TRIM(b.cle_fichier)
 	UNION ALL
-	/* TODO: inserer les vraies réponse en anglais quans on les aura */
 	SELECT DISTINCT 'REPONSE', id_reponse, 'en', nom_en, NULL::text FROM public.t_reponse
 	UNION ALL
 	SELECT DISTINCT 'THEMATIQUE', id_thematique, 'en', nom, NULL::text FROM public.t_thematique
