@@ -1286,20 +1286,20 @@ BEGIN
 	-- raz table importation
 	DROP TABLE IF EXISTS public.i_question;
 	CREATE TABLE public.i_question (
-		code_module text,
-		niveau text,
-		code_question text,
-		thematique text,
-		question text,
-		question_en text,
-		reponse text,
-		reponse_en text,
-		bonne_pratique text,
-		bonne_pratique_en text,
-		reponse_ok text,
-		mecanique text,
-		CONSTRAINT pk_i_question PRIMARY KEY (code_module, code_question)
-	);
+        code_module text,
+        niveau text,
+        code_question text,
+        thematique text,
+        question text,
+        question_en text,
+        reponse text,
+        reponse_en text,
+        bonne_pratique text,
+        bonne_pratique_en text,
+        reponse_ok text,
+        mecanique text,
+        CONSTRAINT pk_i_question PRIMARY KEY (code_module, code_question)
+    );
 	
 	COPY public.i_question FROM '/var/lib/postgresql/data/backlog_question.csv' DELIMITER ';' CSV HEADER;
 	

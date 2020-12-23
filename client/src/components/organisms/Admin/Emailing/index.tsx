@@ -1,5 +1,6 @@
 import React from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
+import i18n from '../../../../config/i18n';
 import { Dropdown, Button } from "react-bootstrap";
 import { forkJoin } from "rxjs";
 import domtoimage from "dom-to-image";
@@ -28,7 +29,7 @@ interface IAdminEmailingState {
 class AdminEmailing extends React.Component<
   WithTranslation,
   IAdminEmailingState
-> {
+  > {
   constructor(props: WithTranslation) {
     super(props);
     this.state = {
@@ -45,8 +46,8 @@ class AdminEmailing extends React.Component<
   private _loadAssets = () => {
     forkJoin([
       AdminAPI.getListAsset(1),
-      ClassementAPI.getClassement("fr", "xp", { limit: 3 }),
-      ClassementAPI.getClassement("fr", "point", { limit: 10 }),
+      ClassementAPI.getClassement(i18n.language, "xp", { limit: 3 }),
+      ClassementAPI.getClassement(i18n.language, "point", { limit: 10 }),
     ])
       .toPromise()
       .then((result: any) => {
@@ -254,34 +255,29 @@ class AdminEmailing extends React.Component<
             <Editor
               value={`
                 <div id="bodyContent">
-                  ${
-                    this.state.currentTemplate?.contenu &&
-                    this.state.currentTemplate?.contenu[0]
-                      ? this.state.currentTemplate?.contenu[0]
-                      : ""
-                  }
-                  ${
-                    this.state.currentTemplate?.contenu &&
-                    this.state.currentTemplate?.contenu[1]
-                      ? this.state.currentTemplate?.contenu[1]
-                      : ""
-                  }
-                  ${
-                    this.state.currentTemplate?.contenu &&
-                    this.state.currentTemplate?.contenu[2]
-                      ? this.state.currentTemplate?.contenu[2]
-                      : ""
-                  }
-                  ${
-                    this.state.currentTemplate?.id_asset_communication === 5
-                      ? this._renderClassement("pts")
-                      : ""
-                  }
-                  ${
-                    this.state.currentTemplate?.id_asset_communication === 5
-                      ? this._renderClassement("xp")
-                      : ""
-                  }
+                  ${this.state.currentTemplate?.contenu &&
+                  this.state.currentTemplate?.contenu[0]
+                  ? this.state.currentTemplate?.contenu[0]
+                  : ""
+                }
+                  ${this.state.currentTemplate?.contenu &&
+                  this.state.currentTemplate?.contenu[1]
+                  ? this.state.currentTemplate?.contenu[1]
+                  : ""
+                }
+                  ${this.state.currentTemplate?.contenu &&
+                  this.state.currentTemplate?.contenu[2]
+                  ? this.state.currentTemplate?.contenu[2]
+                  : ""
+                }
+                  ${this.state.currentTemplate?.id_asset_communication === 5
+                  ? this._renderClassement("pts")
+                  : ""
+                }
+                  ${this.state.currentTemplate?.id_asset_communication === 5
+                  ? this._renderClassement("xp")
+                  : ""
+                }
                 </div>`}
               init={{
                 height: 500,
@@ -305,7 +301,7 @@ class AdminEmailing extends React.Component<
         </div>
 
         <div className="Emailing__actions text-right mt-3">
-          <Button onClick={this.copyClipBoard}>Copier dans le cache</Button>
+          <Button onClick={this.copyClipBoard}>{tReady && t("utils.cache_copy")}</Button>
         </div>
       </div>
     );

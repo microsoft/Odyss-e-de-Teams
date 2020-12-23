@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import { WithTranslation, withTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
 import { FaRegEye } from "react-icons/fa";
 import { forkJoin } from "rxjs";
 import styled, { keyframes } from "styled-components";
@@ -48,8 +49,8 @@ class ChoixModuleNiveau extends Component<
 
   private _loadDataLancementJeu = () => {
     forkJoin([
-      QuestionAPI.getModule("fr"),
-      QuestionAPI.getNiveau("fr"),
+      QuestionAPI.getModule(i18n.language),
+      QuestionAPI.getNiveau(i18n.language),
       QuestionAPI.getHistoQuestionnaireComplete(),
     ])
       .toPromise()
@@ -69,19 +70,20 @@ class ChoixModuleNiveau extends Component<
   };
 
   render() {
+    const {
+      t,
+      tReady,
+    } = this.props;
     return (
       <div className={"main-choix-module mb-0"}>
         <h2 className={"d-none d-md-block color-primary-light mb-2"}>
-          &laquo; {this.props.currentCampaign?.mission_name} &raquo;
+          &laquo; {this.props.currentCampaign?.mission_name} &raquo;{" : "}{tReady && t("choix_module.title1")}
         </h2>
-        <h2 className={"d-block d-md-none mb-2"}>Mission : &laquo; {this.props.currentCampaign?.mission_name} &raquo;</h2>
+        <h2 className={"d-block d-md-none mb-2"}>{tReady && t("choix_module.title2")} &laquo; {this.props.currentCampaign?.mission_name} &raquo;</h2>
         <p className={"d-none d-md-block mb-2"}>
-          Ta première mission est arrivée : ici commence ton exploration
-          galactique à travers les usages collaboratifs de Teams
+        {t("choix_module.first_mission_intro")}
         </p>
-        <h4 className={"mt-2 mt-md-3 mb-2"}>
-        Sélectionne un module et un niveau puis prépare-toi au décollage ! Pour cumuler un maximum de points et augmenter tes chances de gagner, tu es invité(e) à compléter tous les modules proposés !
-        </h4>
+        <h4 className={"mt-2 mt-md-3 mb-2"}>{t("choix_module.subtitle")}</h4>
         <FadeInUpModule>
           <div className={"d-flex flex-column flex-md-row mt-4"}>
             {this.state.listModule?.map((item: IModule) => {
@@ -130,7 +132,7 @@ class ChoixModuleNiveau extends Component<
                               variant={"dark"}
                               className={`w-100 mr-2 niveau niveau${itemNiv.id_niveau}`}
                             >
-                              Terminé !
+                              {tReady && t("choix_module.end")}
                             </Button>
                             <Button
                               variant={"dark"}
@@ -150,7 +152,7 @@ class ChoixModuleNiveau extends Component<
                               className={`w-100 bleu niveau niveau${itemNiv.id_niveau}`}
                               onClick={() => this._onSelect(item, itemNiv)}
                             >
-                              Niveau {itemNiv.nom}
+                              {tReady && t("utils.level")} {itemNiv.nom}
                             </Button>
                           </div>
                         );

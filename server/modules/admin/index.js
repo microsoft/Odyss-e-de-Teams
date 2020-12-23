@@ -17,8 +17,6 @@ const ROOT_UPLOAD_PATH = "/company-assets";
 
 const ADMIN_ROLE_ID = 2;
 
-let lang = "fr";
-
 const register = async (server, options) => {
   server.route({
     path: "/admin/explorers-count",

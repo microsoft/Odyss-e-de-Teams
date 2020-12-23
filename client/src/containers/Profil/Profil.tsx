@@ -3,6 +3,7 @@ import { forkJoin } from "rxjs";
 import { connect } from "react-redux";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import { withTranslation, WithTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
 
 import UserAPI from "api/User";
 import ClassementAPI from "api/Classement";
@@ -41,9 +42,9 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
         this.props.dispatch(action_medal);
       }
       forkJoin([
-        UserAPI.getMedaille("fr"),
-        ClassementAPI.getClassement("fr", "xp", { user: 1 }),
-        ClassementAPI.getClassement("fr", "point", { user: 1 }),
+        UserAPI.getMedaille(i18n.language),
+        ClassementAPI.getClassement(i18n.language, "xp", { user: 1 }),
+        ClassementAPI.getClassement(i18n.language, "point", { user: 1 }),
         UserAPI.checkLevelUp(),
       ])
         .toPromise()
@@ -82,30 +83,31 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
   };
 
   private _loadCurrentUser = () => {
-    UserAPI.getUser("fr", "current").then((data) => {
+    UserAPI.getUser(i18n.language, "current").then((data) => {
       const action_liste = { type: "SET_CURRENT_USER", value: data };
       this.props.dispatch(action_liste);
     });
   };
 
   render() {
+    const { t, tReady } = this.props;
     return (
       <div>
-        <h1 className={"color-primary d-none d-md-block"}>Mon profil de jeu</h1>
+        <h1 className={"color-primary d-none d-md-block"}>{tReady && t("profile.game_profile")}</h1>
         <h1 className={"color-white d-flex d-md-none justify-content-center"}>
           <img
             src={process.env.PUBLIC_URL + "/images/icone/planete.png"}
             alt="Ico Profil"
             className={"ico-titre"}
           />
-          Mon profil de jeu
+          {tReady && t("profile.game_profile")}
         </h1>
         <Row>
           <Col xs={12} md={6} className={"main-col1"}>
             <Container fluid>
               <Row>
                 <Col className={"main-encart"}>
-                  <h2 className={"color-primary-light mb-2"}>Mon niveau</h2>
+                  <h2 className={"color-primary-light mb-2"}>{tReady && t("profile.level")}</h2>
                   <div className={"d-flex"}>
                     <div className={"flex-1 pl-0 pl-md-3"}>
                       {this.props.currentUser?.image_avatar ? (
@@ -118,15 +120,15 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                           className={"avatar mw-100"}
                         />
                       ) : (
-                        <span className={"d-none"}></span>
-                      )}
+                          <span className={"d-none"}></span>
+                        )}
                     </div>
                     <div className={"flex-1 flex-grow-3 pl-2 pl-md-3"}>
                       <p className={"h1 mb-2 pt-0 color-primary"}>
-                        Niveau {this.props.currentUser?.niveau}
+                        {tReady && t("utils.level")} {this.props.currentUser?.niveau}
                       </p>
                       <div className={"total_xp"}>
-                        Total points d'EXP :{" "}
+                        {tReady && t("profile.total_exp")}{" "}
                         <strong className={"color-primary"}>
                           {this.props.currentUser?.nb_xp}
                         </strong>
@@ -146,7 +148,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                       variant="primary"
                       onClick={() => this._setShowModalProfil(true)}
                     >
-                      Personnaliser mon avatar
+                      {tReady && t("profile.custom_avatar")}
                     </Button>
                   </p>
                 </Col>
@@ -154,7 +156,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
               <Row>
                 <Col className={"main-encart encart-stats mb-md-0"}>
                   <h2 className={"color-primary-light mb-3"}>
-                    Mes statistiques d'exploration
+                    {tReady && t("profile.exploration_stat")}
                   </h2>
                   <Row>
                     <Col>
@@ -162,12 +164,12 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                         {this.state.classementXP ? this.state.classementXP : 0}
                         <sup>
                           {this.state.classementPoint &&
-                          this.state.classementPoint === 1
+                            this.state.classementPoint === 1
                             ? "er"
                             : "ème"}
                         </sup>
                       </p>
-                      <p>Classement actuel EXP</p>
+                      <p>{tReady && t("profile.exp_rank")}</p>
                     </Col>
                     <Col>
                       <p className={"h1 mb-0 pt-0 color-primary"}>
@@ -176,12 +178,12 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                           : 0}
                         <sup>
                           {this.state.classementPoint &&
-                          this.state.classementPoint === 1
+                            this.state.classementPoint === 1
                             ? "er"
                             : "ème"}
                         </sup>
                       </p>
-                      <p>Classement actuel points</p>
+                      <p>{tReady && t("profile.point_rank")}</p>
                     </Col>
                     <Col>
                       <p className={"h1 mb-0 pt-0 color-primary"}>
@@ -193,11 +195,11 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                             ).toFixed(2)}
                           </span>
                         ) : (
-                          <span>0</span>
-                        )}
+                            <span>0</span>
+                          )}
                         <sup>%</sup>
                       </p>
-                      <p>Bonnes réponses</p>
+                      <p>{tReady && t("utils.good_answers")}</p>
                     </Col>
                   </Row>
                   <Row>
@@ -205,13 +207,13 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                       <p className={"h1 mb-0 pt-0 color-primary"}>
                         {this.props.currentUser?.nb_questionnaire_complete}
                       </p>
-                      <p>Questionnaires complétés</p>
+                      <p>{tReady && t("utils.questioner_complete")}</p>
                     </Col>
                     <Col className={"col-6 col-md-4"}>
                       <p className={"h1 mb-0 pt-0 color-primary"}>
                         {this.props.currentUser?.nb_reponse_consecutive_top}
                       </p>
-                      <p>Bonnes réponses consécutives</p>
+                      <p>{tReady && t("profile.consec_good_answer")}</p>
                     </Col>
                     <Col></Col>
                   </Row>
@@ -222,16 +224,13 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
           <Col xs={12} md={6}>
             <div className={"main-encart mb-md-0 main-col2"}>
               <h2 className={"color-primary-light mb-2"}>
-                Ma collection de médailles
+                {tReady && t("profile.medal_collection")}
               </h2>
               <div className={"d-none d-md-block"}>
-                Au cours de ton voyage, tu pourras sélectionner 3 médailles
-                favorites parmi ta collection ci-dessous, à exhiber sur ton
-                profil. Tu pourras également remplacer ton avatar actuel par une
-                nouvelle médaille !
+                {tReady && t("profile.3_fav_medal")}
               </div>
               <p className={"color-primary mt-3 mb-1"}>
-                Médailles communes{" "}
+                {tReady && t("profile.common_medal")}{" "}
                 {this.state.listMedaille?.filter((m) => !m.legendaire).length}
               </p>
               <div>
@@ -242,7 +241,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                   })}
               </div>
               <p className={"color-primary mt-3 mb-1"}>
-                Médailles légendaires{" "}
+                {tReady && t("profile.legendary_medal")}{" "}
                 {this.state.listMedaille?.filter((m) => m.legendaire).length}
               </p>
               <div>
@@ -262,13 +261,12 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
           centered
         >
           <Modal.Body>
-            <h2 className={"color-primary-light"}>Personnalise ton avatar</h2>
+            <h2 className={"color-primary-light"}>{tReady && t("profile.custom_your_avatar")}</h2>
             <div className={"container-avatar-user"}>
               <UserAvatar user={this.props.currentUser} />
             </div>
             <p className={"text-center"}>
-              Pour remplacer ton avatar par une médaille de ta collection,
-              sélectionne la médaille de ton choix.
+            {tReady && t("profile.medal_replacement")}
             </p>
             {this.state.listMedaille?.map((item: IMedaille) => {
               return (
@@ -280,19 +278,18 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                   selected={
                     this.state.hasUpdatedMedailleAvatar
                       ? this.state.selectedMedailleAvatar?.id_medaille ===
-                        item.id_medaille
+                      item.id_medaille
                       : this.props.currentUser?.id_medaille_avatar ===
-                        item.id_medaille
+                      item.id_medaille
                   }
                 />
               );
             })}
             <img
-              className={`medaille avatar pointer ${
-                (!this.state.selectedMedailleAvatar && !this.props.currentUser?.id_medaille_avatar) || (this.state.hasUpdatedMedailleAvatar && !this.state.selectedMedailleAvatar) ? "selected" : ""
-              }`}
+              className={`medaille avatar pointer ${(!this.state.selectedMedailleAvatar && !this.props.currentUser?.id_medaille_avatar) || (this.state.hasUpdatedMedailleAvatar && !this.state.selectedMedailleAvatar) ? "selected" : ""
+                }`}
               onClick={() => this._selectMedailleAvatar(null)}
-              src={process.env.PUBLIC_URL + this.props.currentUser?.image_avatar_origine} 
+              src={process.env.PUBLIC_URL + this.props.currentUser?.image_avatar_origine}
               alt="Avatar"
             />
           </Modal.Body>
@@ -301,14 +298,14 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
               variant="secondary"
               onClick={() => this._setShowModalProfil(false)}
             >
-              Annuler
+              {tReady && t("utils.cancel")}
             </Button>
             <Button
               variant="primary"
               disabled={!this.state.hasUpdatedMedailleAvatar}
               onClick={() => this._saveMedailleAvatar()}
             >
-              Valider mes modifications
+              {tReady && t("profile.valid_modif")}
             </Button>
           </Modal.Footer>
         </Modal>

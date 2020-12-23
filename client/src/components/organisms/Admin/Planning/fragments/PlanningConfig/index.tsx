@@ -117,7 +117,7 @@ const PlanningConfig = memo((props: WithTranslation & IPlanningConfigProps) => {
           onClick={cancelHandler}
           disabled={saving || closing}
         >
-          {tReady && t("utils.button.cancel")}
+          {tReady && t("utils.cancel")}
         </Button>
         <Button
           variant="primary"

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ListGroup } from "react-bootstrap";
+import i18n from '../../config/i18n';
 
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
 
@@ -22,7 +23,7 @@ class Menu extends Component<IMenuProps, IMenuState> {
 
   async componentDidMount() {
     try {
-      const menu = await MenuAPI.getMenu("fr");
+      const menu = await MenuAPI.getMenu(i18n.language);
       this.setState({
         listMenu: menu.results,
         organisationLogo: this.props.currentOrganisation?.logo

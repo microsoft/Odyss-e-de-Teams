@@ -3,7 +3,6 @@ const { QueryTypes, Op } = require("sequelize");
 const QuizzUtils = require("./../../utils/Quizz");
 const GainPointUtils = require("./../../utils/GainPoint");
 const baseUrl = "/question";
-let lang = "fr";
 
 const register = async (server, options) => {
   server.route({
@@ -28,7 +27,7 @@ const register = async (server, options) => {
         module: params.module,
         niveau: params.niveau,
         limit: 3,
-        lang: lang,
+        lang: params.language,
         user: currentUserByAD.id_user,
         organisation: currentUserByAD.id_organisation
       };
@@ -56,7 +55,7 @@ const register = async (server, options) => {
         db,
         main_query,
         replacements,
-        lang
+        params.language
       );
 
       return db.sequelize
@@ -317,7 +316,7 @@ const register = async (server, options) => {
     handler: function (request, h) {
       const db = request.getDb("odyssee_teams");
       const params = request.query;
-      let replacements = { lang: lang },
+      let replacements = { lang: params.language },
         oneResult = false,
         and_query = "";
       if (params.id) {
@@ -349,7 +348,7 @@ const register = async (server, options) => {
     handler: function (request, h) {
       const db = request.getDb("odyssee_teams");
       const params = request.query;
-      let replacements = { lang: lang },
+      let replacements = { lang: params.language },
         oneResult = false,
         and_query = "";
       if (params.id) {
@@ -463,7 +462,7 @@ const register = async (server, options) => {
         db,
         main_query,
         replacements,
-        lang
+        params.language
       );
 
       return db.sequelize

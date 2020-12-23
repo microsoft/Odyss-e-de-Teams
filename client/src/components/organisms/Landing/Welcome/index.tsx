@@ -1,6 +1,7 @@
 import React from "react";
 import { withTranslation } from "react-i18next";
 import { Button } from "react-bootstrap";
+import i18n from '../../../../config/i18n';
 
 import "./style.scss";
 
@@ -11,7 +12,7 @@ const Welcome = (props) => {
     <div className="Welcome d-flex h-100 flex-column justify-content-center px-5">
       <h1>{t("landing.welcome.text")}</h1>
       <div className="Welcome__logo mt-4 mb-5">
-        <img src="/images/logo/logo_gauche_blanc.png" alt="logo" />
+        <img src={"/images/logo/" + i18n.language + "/logo_gauche_blanc.png"} alt="logo" className={"teams_logo"} />
       </div>
 
       <h3 className="Welcome__body mb-4 mt-3">
