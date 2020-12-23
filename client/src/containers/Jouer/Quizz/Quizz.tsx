@@ -359,7 +359,7 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
           </div>
           <div className={"toolbar-right ml-0 ml-md-5 d-flex d-md-block"}>
             <StopWatch
-             /*  ref={this.chronoComponent} */
+              /* ref={this.chronoComponent} */
               onStopTimer={this._onStopTimer}
               onStartTimer={this._onStartTimer}
               canStopTimer={
