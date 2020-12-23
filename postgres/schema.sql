@@ -1354,13 +1354,21 @@ BEGIN
 	ALTER SEQUENCE public.seq_t_reponse RESTART WITH 1;
 	DELETE FROM public.t_libelle_i18n WHERE TRIM(code)='REPONSE';
 	
-	WITH w0 AS(
+	WITH w0_fr AS(
 		SELECT a.code_question, nom, ordre
-		FROM public.i_question a, regexp_split_to_table(a.reponse, '//') WITH ORDINALITY x(nom, ordre)
+		FROM public.i_question a, regexp_split_to_table(a.reponse, '//') WITH ORDINALITY x(nom, ordre) 
+	), w0_en AS(
+		SELECT a.code_question, nom, ordre
+		FROM public.i_question a, regexp_split_to_table(a.reponse_en, '//') WITH ORDINALITY x(nom, ordre) 
+	), w1 AS (
+		SELECT DISTINCT a.code_question, a.nom, a.ordre, b.nom AS nom_en
+		FROM w0_fr a
+			INNER JOIN w0_en b ON a.code_question=b.code_question AND a.ordre=b.ordre
+		ORDER BY a.code_question, a.ordre
 	)
-	INSERT INTO public.t_reponse (id_question, nom, ordre, actif, horodatage, horodatage_creation) 
-		SELECT DISTINCT b.id_question, a.nom, a.ordre, true, now(), now()
-		FROM w0 a
+	INSERT INTO public.t_reponse (id_question, nom, nom_en, ordre, actif, horodatage, horodatage_creation) 
+		SELECT DISTINCT b.id_question, a.nom, a.nom_en, a.ordre, true, now(), now()
+		FROM w1 a
 			INNER JOIN public.t_question b ON a.code_question=b.cle_fichier;
 	
 	EXECUTE 'SELECT CASE WHEN COUNT(*) = 0 THEN ''OK'' ELSE ''KO'' END

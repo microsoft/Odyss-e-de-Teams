@@ -359,19 +359,23 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 		true, now(), now());
 
 -- question
+	ALTER TABLE public.t_reponse ADD COLUMN nom_en text;
 	SELECT public.i_process_backlog_question();
 
 	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
-	SELECT DISTINCT 'QUESTION', b.id_question, 'en', a.question_en, a.bonne_pratique_en 
-    FROM public.i_question a
-        INNER JOIN public.t_question b ON TRIM(a.code_question)=TRIM(b.cle_fichier)
-	UNION ALL
 	SELECT DISTINCT 'QUESTION', id_question, 'fr', nom, commentaire FROM public.t_question
 	UNION ALL
 	SELECT DISTINCT 'REPONSE', id_reponse, 'fr', nom, NULL::text FROM public.t_reponse
 	UNION ALL
 	SELECT DISTINCT 'THEMATIQUE', id_thematique, 'fr', nom, NULL::text FROM public.t_thematique;
 
+	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
+	SELECT DISTINCT 'QUESTION', b.id_question, 'en', a.question_en, a.bonne_pratique_en 
+	FROM public.i_question a
+		INNER JOIN public.t_question b ON TRIM(a.code_question)=TRIM(b.cle_fichier);
+
+	ALTER TABLE public.t_reponse DROP COLUMN nom_en;
+	
 -- bareme point reponse
 	INSERT INTO public.t_bareme_reponse (id_niveau, reponse_valid_xp, reponse_valid_point, last_reponse_valid_xp, last_reponse_valid_point, bonus_video_xp, bonus_video_point, bonus_temps_xp, bonus_temps_point, actif, horodatage, horodatage_creation) VALUES 
 		(1, 10, 3, 15, 5, 5, 1, 5, 1, true, now(), now()),
