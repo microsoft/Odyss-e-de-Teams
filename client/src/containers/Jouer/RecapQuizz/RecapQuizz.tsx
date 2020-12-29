@@ -369,7 +369,7 @@ class RecapQuizz extends Component<IRecapQuizzProps & WithTranslation, IRecapQui
           {this.state.isLoading ? (
             <span></span>
           ) : (
-              <StopWatch done={true} initTimer={this.state.tempsTotal} />
+              <StopWatch done={true} initTimer={this.state.tempsTotal} translations={t} />
             )}
         </div>
       </div>

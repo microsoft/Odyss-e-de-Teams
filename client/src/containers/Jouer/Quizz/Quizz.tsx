@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, ForwardRefRenderFunction } from "react";
 import { connect } from "react-redux";
 import { Button, Spinner, Modal } from "react-bootstrap";
 import { FaQuestion } from "react-icons/fa";
@@ -14,16 +14,19 @@ import QCMVideo from "components/MecaniqueQuestion/QCM/QCMVideo";
 import StopWatch from "components/StopWatch/StopWatch";
 
 import IStore from "src/store/IStore";
-import { IQuizzProps, IQuizzState, IQuestion } from "src/models/Question";
+import { IQuizzProps, IQuizzState, IQuestion, IStopWatchProps } from "src/models/Question";
 
 import "./Quizz.scss";
 
 class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
   chronoComponent: any;
+  // private chronoComponent: React.RefObject<IStopWatchProps & WithTranslation> = React.createRef();
+  // private chronoComponent = React.createRef<typeof StopWatch>();
 
   constructor(props: IQuizzProps & WithTranslation) {
     super(props);
-    this.chronoComponent = React.createRef();
+    this.chronoComponent = React.createRef<any>();
+
     this.state = {
       isLoading: true,
       step: 1,
@@ -243,11 +246,14 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
     }
   }
 
+
   render() {
     const {
       t,
       tReady
     } = this.props;
+
+
     return this.state.isLoading ? (
       <div className={"main-encart"}>
         <div className="p-2 d-flex align-items-center">
@@ -359,13 +365,14 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
           </div>
           <div className={"toolbar-right ml-0 ml-md-5 d-flex d-md-block"}>
             <StopWatch
-              /* ref={this.chronoComponent} */
+              ref={this.chronoComponent}
               onStopTimer={this._onStopTimer}
               onStartTimer={this._onStartTimer}
               canStopTimer={
                 !this.state.hasAlreadyPaused &&
                 this.state.step <= this.state.listQuestion?.length
               }
+              translations={t}
             />
             <Button
               variant={"primary"}
