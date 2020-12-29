@@ -21,8 +21,8 @@ class User extends API {
     return super.fetchPOST(this.resource + "/set-medaille-avatar", { id: id });
   }
 
-  getCurrentCampaignInfo(): Promise<any> {
-    return super.fetchGET(this.resource + "/current-mission");
+  getCurrentCampaignInfo(lang: string): Promise<any> {
+    return super.fetchGET(this.resource + "/current-mission", { language: lang });
   }
 
   runChecks(): Promise<any> {

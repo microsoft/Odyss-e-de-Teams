@@ -7,7 +7,6 @@ const register = async (server, options) => {
     path: baseUrl,
     method: "GET",
     handler: async function (request, h) {
-      console.log(reques)
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
       if (!request.state.oid_ad) {

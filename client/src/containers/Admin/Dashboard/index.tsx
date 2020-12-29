@@ -50,7 +50,7 @@ class AdminDashboard extends Component {
   async componentDidMount() {
     try {
       const exploresCounts = await AdminAPI.getExplorersCount();
-      const campainInfo = await AdminAPI.getCurrentCampaignInfo();
+      const campainInfo = await AdminAPI.getCurrentCampaignInfo(i18n.language);
       let userRankingsPoints = await ClassementAPI.getClassement(
         i18n.language,
         "point",

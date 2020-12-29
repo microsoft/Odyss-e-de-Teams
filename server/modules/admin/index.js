@@ -68,6 +68,7 @@ const register = async (server, options) => {
     handler: async function (request, h) {
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
+      let lang = request.query.language;
 
       // check oid_ad is present in request
       if (!request.state.oid_ad) {
@@ -87,14 +88,16 @@ const register = async (server, options) => {
 
       const replacements = {
         id_organisation: currentUserByAD.id_organisation,
+        lang: lang
       };
 
       return db.sequelize
         .query(
-          `SELECT TRIM(s.nom) as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end 
+          `SELECT TRIM(b.nom) as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end 
           FROM t_semaine s 
             INNER JOIN j_organisation_semaine ts on ts.id_semaine = s.id_semaine 
-            INNER JOIN t_organisation c ON ts.id_organisation=c.id_organisation AND s.id_semaine=c.id_semaine_encours AND c.id_organisation=:id_organisation`,
+            INNER JOIN t_organisation c ON ts.id_organisation=c.id_organisation AND s.id_semaine=c.id_semaine_encours AND c.id_organisation=:id_organisation
+            INNER JOIN public.t_libelle_i18n b ON s.id_semaine=b.id_table AND TRIM(b.code)='SEMAINE' AND TRIM(b.lang)=:lang`,
           {
             replacements: replacements,
             type: QueryTypes.SELECT,

@@ -158,6 +158,18 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 
 -- multilangue
 	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
+	SELECT DISTINCT 'SEMAINE', id_semaine, 'fr', nom, description FROM public.t_semaine
+	UNION ALL 
+	SELECT 'SEMAINE', 1, 'en', 'Launch !', 'Let’s start and setup the program'
+	UNION ALL 
+	SELECT 'SEMAINE', 2, 'en', 'Stabilization !', 'Solidify your skills'
+	UNION ALL
+	SELECT 'SEMAINE', 3, 'en', 'Progression !', 'Strengthen your use cases'
+	UNION ALL
+	SELECT 'SEMAINE', 4, 'en', 'Landing !', 'Last boost to be an expert'
+	UNION ALL
+	SELECT 'SEMAINE', 5, 'en', 'Last mission', NULL
+	UNION ALL
 	SELECT DISTINCT 'AVATAR', id_avatar, 'fr', nom, description FROM public.t_avatar
 	UNION ALL
 	SELECT 'AVATAR', 1, 'en', 'Apollo20', 'Bold and robust'

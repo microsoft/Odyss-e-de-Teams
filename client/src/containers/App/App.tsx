@@ -101,7 +101,7 @@ class App extends React.Component<IAppProps & WithTranslation, IAppState> {
         if (user) {
           forkJoin([
             OrganisationAPI.getOrganisationInfos(user.id_organisation),
-            UserAPI.getCurrentCampaignInfo(),
+            UserAPI.getCurrentCampaignInfo(i18n.language),
           ])
             .toPromise()
             .then((data) => {
