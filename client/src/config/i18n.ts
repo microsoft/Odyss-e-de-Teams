@@ -10,7 +10,7 @@ i18n
       useSuspense: false
     },
     fallbackLng: 'en',
-    lng: navigator.language === "fr-FR" ? "fr" : "en",
+    lng: navigator.language === "fr-FR" || navigator.language === "fr" ? "fr" : "en",
     debug: true,
   })
 

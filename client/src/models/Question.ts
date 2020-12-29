@@ -119,6 +119,7 @@ export interface IStopWatchProps {
   onStartTimer?: any;
   onStopTimer?: any;
   canStopTimer?: boolean;
+  translations?: any;
 }
 
 export interface IStopWatchState {
