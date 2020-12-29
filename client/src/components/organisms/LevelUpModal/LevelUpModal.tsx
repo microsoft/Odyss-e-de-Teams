@@ -335,11 +335,11 @@ class LevelUpModal extends React.Component<
           <FadeButtonCollect id={"div_btn_footer"}>
             {dataLevelUp?.rewards && !this.state.rewardCollected ? (
               <Button variant="primary" onClick={() => this._collectReward()}>
-                {tReady && t("modal.reward_levelup.collect_reward")}
+                {tReady && t("modal.collect_reward")}
               </Button>
             ) : (
                 <Button variant="primary" onClick={() => this._setLevelUpChecked()}>
-                  {tReady && t("modal.reward_levelup.confirm_reward")}
+                  {tReady && t("modal.confirm_reward")}
                 </Button>
               )}
           </FadeButtonCollect>

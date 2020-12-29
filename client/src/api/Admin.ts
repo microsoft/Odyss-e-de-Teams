@@ -7,8 +7,8 @@ class Admin extends API {
     return super.fetchGET(this.resource + "/explorers-count");
   }
 
-  getCurrentCampaignInfo(): Promise<any> {
-    return super.fetchGET(this.resource + "/current-mission");
+  getCurrentCampaignInfo(lang: string): Promise<any> {
+    return super.fetchGET(this.resource + "/current-mission", {language: lang});
   }
 
   getCurrentCompanyInfo(): Promise<any> {
