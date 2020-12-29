@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Button } from "react-bootstrap";
 
 import { WithTranslation, withTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
 
 import "./Login.scss";
 
@@ -22,10 +23,10 @@ class Login extends React.Component<ILoginProps & WithTranslation, {}> {
           <div className="App-login-image-container">
             <img
               src={
-                process.env.PUBLIC_URL + "/images/logo/fr/logo_centre_violet.png"
+                process.env.PUBLIC_URL + "/images/logo/" + i18n.language + "/logo_centre_violet.png"
               }
               alt={"Logo"}
-              className={"logo"}
+              className={"logo " + (i18n.language === 'en' ? 'mb-5 mt-5 pl-3 pr-3' : '')}
             />
           </div>
           <div className="App-login-button-container text-center pb-4">
