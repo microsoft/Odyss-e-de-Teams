@@ -1,4 +1,4 @@
-import React, { Component, ForwardRefRenderFunction } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Button, Spinner, Modal } from "react-bootstrap";
 import { FaQuestion } from "react-icons/fa";

@@ -1,5 +1,5 @@
 import React from "react";
-import { WithTranslation, withTranslation, Trans } from "react-i18next";
+import { WithTranslation, withTranslation } from "react-i18next";
 
 import Counter from "components/atoms/Counter";
 
