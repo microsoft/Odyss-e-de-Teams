@@ -30,8 +30,7 @@ class IntroLancementQuestion extends Component<
 
   render() {
     const {
-      t,
-      tReady,
+      t
     } = this.props;
     return (
       <FadeInIntro>

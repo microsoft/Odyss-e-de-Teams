@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import i18n from '../../../../config/i18n';
 
 import "./style.scss";
