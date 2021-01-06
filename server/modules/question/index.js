@@ -44,7 +44,7 @@ const register = async (server, options) => {
                 LEFT JOIN public.j_thematique_organisation_disabled c ON a.id_thematique=c.id_thematique AND c.id_organisation=:organisation
               WHERE b.id_reponse_user IS NULL AND c.id_thematique IS NULL
             )
-            SELECT DISTINCT a.id_question, a.id_module, a.id_thematique, a.id_niveau, a.id_mecanique, TRIM(c.nom) AS nom, a.asset 
+            SELECT DISTINCT a.id_question, a.id_module, a.id_thematique, a.id_niveau, a.id_mecanique, TRIM(c.nom) AS nom, c.asset 
             FROM public.t_question a 
               INNER JOIN w0 b ON a.id_question=b.id_question
               INNER JOIN public.t_libelle_i18n c ON a.id_question=c.id_table AND TRIM(c.code)='QUESTION' AND TRIM(c.lang)=:lang
@@ -453,7 +453,7 @@ const register = async (server, options) => {
           FROM h_reponse_user a
           WHERE a.id_user=:user AND id_semaine=:semaine
         )
-        SELECT DISTINCT a.*, TRIM(c.nom) AS nom, c.description AS astuce, b.asset, b.reponse, b.id_mecanique
+        SELECT DISTINCT a.*, TRIM(c.nom) AS nom, c.description AS astuce, c.asset, b.reponse, b.id_mecanique
         FROM w0 a
           INNER JOIN public.t_question b ON a.id_question=b.id_question AND b.id_module=:module AND b.id_niveau=:niveau
               INNER JOIN public.t_libelle_i18n c ON a.id_question=c.id_table AND TRIM(c.code)='QUESTION' AND TRIM(c.lang)=:lang
