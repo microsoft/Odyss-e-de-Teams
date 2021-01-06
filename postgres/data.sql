@@ -384,7 +384,9 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
 	SELECT DISTINCT 'QUESTION', b.id_question, 'en', a.question_en, a.bonne_pratique_en 
 	FROM public.i_question a
-		INNER JOIN public.t_question b ON TRIM(a.code_question)=TRIM(b.cle_fichier);
+		INNER JOIN public.t_question b ON TRIM(a.code_question)=TRIM(b.cle_fichier)
+	UNION ALL
+	SELECT DISTINCT 'REPONSE', id_reponse, 'en', nom_en, NULL::text FROM public.t_reponse;
 
 	ALTER TABLE public.t_reponse DROP COLUMN nom_en;
 	
@@ -435,3 +437,23 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	
 	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
         (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
+
+-- modification structure suite traduction
+	ALTER TABLE t_libelle_i18n ADD COLUMN asset text;
+	UPDATE t_libelle_i18n
+	SET
+		asset = s0.asset
+	FROM
+		(SELECT DISTINCT * FROM t_question WHERE asset IS NOT NULL)s0
+	WHERE
+		TRIM(t_libelle_i18n.code) = 'QUESTION' AND t_libelle_i18n.id_table=s0.id_question;
+
+	UPDATE t_libelle_i18n
+	SET
+		asset = s0.asset
+	FROM
+		(SELECT DISTINCT * FROM t_reponse WHERE asset IS NOT NULL)s0
+	WHERE
+		TRIM(t_libelle_i18n.code) = 'REPONSE' AND t_libelle_i18n.id_table=s0.id_reponse;
+		
+	UPDATE t_libelle_i18n SET asset=REPLACE(asset, '_FR', '_EN') WHERE asset IS NOT NULL AND lang='en';
