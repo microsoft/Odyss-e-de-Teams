@@ -3,6 +3,7 @@ import React from "react";
 import moment from "moment";
 
 import { withTranslation, WithTranslation } from "react-i18next";
+import i18n from '../../../../config/i18n';
 
 import AgendaWeekSwitcher from "components/molecules/Admin/AgendaWeekSwitcher";
 import AgendaDay from "components/molecules/Admin/Agenda/AgendaDay";
@@ -40,7 +41,7 @@ class AdminAgenda extends React.Component<WithTranslation, {}> {
   }
 
   async fetchData() {
-    const res = await AdminAPI.getAgenda();
+    const res = await AdminAPI.getAgenda(i18n.language);
 
     let currentWeek = this.state.currentWeek ? this.state.currentWeek : 0;
     if (res) {

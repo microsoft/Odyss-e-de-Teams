@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminApi from "api/Admin";
+import i18n from '../../../../../../config/i18n';
 
 export interface IAsset {
   id_asset_communication: number;
@@ -33,7 +34,7 @@ export class IGroupedIAsset {
 }
 
 const loadAssets = async (): Promise<IGroupedIAsset[]> => {
-  const list: IAsset[] = await AdminApi.getListAsset(2);
+  const list: IAsset[] = await AdminApi.getListAsset(2, i18n.language);
   const socialMapping: Map<number, IGroupedIAsset> = new Map();
   list.forEach((as) => {
     if (!socialMapping.has(as.id_asset_communication))

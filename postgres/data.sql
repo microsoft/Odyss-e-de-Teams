@@ -457,3 +457,44 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 		TRIM(t_libelle_i18n.code) = 'REPONSE' AND t_libelle_i18n.id_table=s0.id_reponse;
 		
 	UPDATE t_libelle_i18n SET asset=REPLACE(asset, '_FR', '_EN') WHERE asset IS NOT NULL AND lang='en';
+
+	ALTER TABLE t_asset_communication ADD lang nchar(2);
+
+	UPDATE t_asset_communication SET lang='fr';
+
+	INSERT INTO public.t_asset_communication (id_type_asset_communication, id_social_asset_communication, nom, nom_fichier, contenu, lang, actif, horodatage, horodatage_creation) VALUES
+	(1, null, 'D-7 before launch emailing', 'promotion_en.png',
+		ARRAY[
+			'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Using Microsoft Teams seems out of your reach ?</h1><p style="text-align: center;">Teams Odyssey will make your Teams skills skyrocket! Enjoy the opportunity to discover new features through a tailored and playful learning experience.</p></div>', 
+			'<div style="top: 1325px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt font-family: ''Segoe UI''; "><h2 style="text-align:center; font-size: 26pt; line-height: 28pt; font-weight: 200; color: #5059C9;"><strong>D-7</strong> before launch,<br/>Keep a close eye on your inbox !</h2></div>'
+		],
+		'en', true, now(), now()),
+	(1, null, 'Launch emailing', 'lancement_en.png', 
+		ARRAY[
+			'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">It''s D Day!<br/><br/></h1><p style="text-align: center;">It''s time to discover the galaxy of Teams advanced options and adopt the best practices around collaboration</p></div>'
+		],
+		'en', true, now(), now()),
+	(1, null, 'New mission announcement emailing', 'fin_mission_en.png', 
+		ARRAY[
+			'<div style="top: 385px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">The weekly challenges<br/>are waiting for you!</h1><p style="text-align: center;">It''s getting tougher! Wether you have 100% correct answers or not. Even if you have not yet started playing, go ahead and find out what''s waiting for you in the next Teams Odyssey challenges!</p></div>'
+		],
+		'en', true, now(), now()),
+	(1, null, 'End of season emailing', 'fin_programme_en.png', 
+		ARRAY[
+			'<div style="top: 385px; position: relative; padding: 0 100px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">The 4 Teams Odyssey missions are<br/>now complete!</h1><p style="text-align: center;">Thanks to all Explorers who took part in this awesome galactic adventure!<br/>It was intense but we hope you enjoyed it!</p></div>', 
+			'<div style="top: 475px; position: relative; padding: 0 75px; margin-left: 150pt; font-size: 14pt; line-height: 18pt; font-family: ''Segoe UI'';"><h2 style="font-size: 17pt; line-height: 18pt; font-weight: 400; color: #fff; margin-bottom: 12pt;">Are you on the top of the leaderboard ?</h2><p style="color: #fff; text-align: justify; font-size: 13pt; line-height: 16pt;">If you are among the TOP 20 Explorers of the Game or in Top 3, conctact as soon as possible you Admiral at the following address: Admiral_email_adresse</p></div>',
+			'<div style="top: 595px; position: relative; padding: 0 75px; font-size: 14pt; line-height: 18pt; font-family: ''Segoe UI'';"><h1 style="font-size: 20pt; line-height: 22pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Explorers,</h1><p style="width: 320pt; text-align: justify; font-size: 15pt; line-height: 19pt;">We would like to thank you for taking part into this journey! We hpe you enjoyed this adventure and learned a lot about Teams use cases scenarios. You are invited to share all this precious knowledge with you co-workers !<br/>Stay tuned and be ready for next adventures with Teams Odysses.</p></div>'
+		], 
+		'en', true, now(), now()),
+	(1, null, 'Leaderboards announcement emailing', 'gagnant_en.png', 
+		ARRAY[
+			'<div style="top: 395px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Explorers!</h1><p style="text-align: center;">You have all been waiting for it ! You admiral will announce the top performers.<br/><br/>Congratulations Explorers and thank you all!</p></div>', 
+			'<div style="top: 795px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Top of the leaderboards</h1></div>' /* TODO: problème ici il manque des infos il faut comparer le rendu en français et en anglais */
+		], 
+		'en', true, now(), now()),
+	(2, 1, 'Bannière Yammer', 'Tuile_Yammer_en.png', 
+		null, 
+		'en', true, now(), now()),
+	(2, 2, 'Bannière Test Linkedin', 'Tuile_02_en.png', 
+		null, 
+		'en', true, now(), now());
