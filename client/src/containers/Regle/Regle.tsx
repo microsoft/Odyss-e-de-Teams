@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import styled, { keyframes } from "styled-components";
 import { withTranslation, WithTranslation } from "react-i18next";
+import i18n from '../../config/i18n';
+
 //@ts-ignore
 import { fadeIn, fadeInUpBig } from "react-animations";
 
@@ -157,11 +159,11 @@ class Regle extends Component<WithTranslation> {
               <Button as="a"
                 variant="primary"
                 className={"d-inline-block"}
-                href={`${process.env.PUBLIC_URL}/download/Odyssee-Teams_Reglement.pdf`}
+                href={i18n.language === 'en' ? `${process.env.PUBLIC_URL}/download/Teams-Odyssey _Explorer_Guide.pdf` : `${process.env.PUBLIC_URL}/download/Odyssee-Teams_Reglement.pdf`}
                 target="_blank"
               >
                 {tReady && t("rules.download_rules")}
-                </Button>
+              </Button>
             </p>
           </FadeInUpCartouche>
           {/* suppression demande client

@@ -45,7 +45,7 @@ class AdminEmailing extends React.Component<
 
   private _loadAssets = () => {
     forkJoin([
-      AdminAPI.getListAsset(1),
+      AdminAPI.getListAsset(1, i18n.language),
       ClassementAPI.getClassement(i18n.language, "xp", { limit: 3 }),
       ClassementAPI.getClassement(i18n.language, "point", { limit: 10 }),
     ])
@@ -69,7 +69,8 @@ class AdminEmailing extends React.Component<
 
   private _loadTemplate = () => {
     AdminAPI.getTemplate(
-      this.state.currentTemplate.id_asset_communication
+      this.state.currentTemplate.id_asset_communication,
+      i18n.language
     ).then((data) => {
       let currentTemplate = this.state.currentTemplate;
       currentTemplate.template = data.template;

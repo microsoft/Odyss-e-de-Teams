@@ -248,6 +248,7 @@ const register = async (server, options) => {
       const Semaine = db.getModel("Semaine");
       const Organisation = db.getModel("Organisation");
       const OrganisationSemaine = db.getModel("OrganisationSemaine");
+      const lang = request.query.language;
 
       // check oid_ad is present in request
       if (!request.state.oid_ad) {
@@ -264,13 +265,22 @@ const register = async (server, options) => {
       if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
         return false;
       }
-
-      let availableMissions = await Semaine.findAll({
-        where: {
-          can_play: true,
-        },
-        raw: true,
-      });
+      
+      let availableMissions;
+      try {
+        availableMissions = await db.sequelize
+          .query(
+            `SELECT * FROM t_semaine s
+            INNER JOIN public.t_libelle_i18n b ON s.id_semaine=b.id_table AND TRIM(b.code)='SEMAINE' AND TRIM(b.lang)=:lang
+            WHERE s.can_play`,
+            {
+              replacements: { lang: lang },
+              type: QueryTypes.SELECT,
+            }
+          )
+      } catch (error) {
+        console.log(error)
+      }
 
       const currentOrga = await Organisation.findOne({
         where: {
@@ -357,6 +367,7 @@ const register = async (server, options) => {
     path: "/admin/current-agenda",
     method: "GET",
     handler: async function (request, h) {
+      let lang = request.query.language;
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
       const OrganisationAgenda = db.getModel("OrganisationAgenda");
@@ -383,14 +394,16 @@ const register = async (server, options) => {
       try {
         const replacements = {
           id_organisation: currentUserByAD.id_organisation,
+          lang: lang
         };
         const organisationAgenda = await db.sequelize.query(
           `
-          SELECT a.id as mission_id, TRIM(b.nom) as mission_name, b.description as mission_description, a.date_event as mission_date, a.done as mission_done, b.id_semaine, c.nom as semaine_name, c.description as semaine_description, d.debut_semaine as semaine_start, d.fin_semaine as semaine_end
+          SELECT a.id as mission_id, TRIM(b.nom) as mission_name, b.description as mission_description, a.date_event as mission_date, a.done as mission_done, b.id_semaine, e.nom as semaine_name, e.description as semaine_description, d.debut_semaine as semaine_start, d.fin_semaine as semaine_end
           FROM j_organisation_agenda a
             INNER JOIN t_agenda b ON a.id_agenda = b.id_agenda AND a.id_organisation=:id_organisation
             INNER JOIN t_semaine c ON b.id_semaine = c.id_semaine
             INNER JOIN j_organisation_semaine d ON d.id_semaine = c.id_semaine AND a.id_organisation=d.id_organisation
+            INNER JOIN public.t_libelle_i18n e ON c.id_semaine=e.id_table AND TRIM(e.code)='SEMAINE' AND TRIM(e.lang)=:lang
           ORDER BY a.date_event ASC, mission_id
         `,
           {
@@ -515,6 +528,7 @@ const register = async (server, options) => {
     handler: async function (request, h) {
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
+      const lang = request.query.language;
       // check oid_ad is present in request
       if (!request.state.oid_ad) {
         return false;
@@ -535,6 +549,7 @@ const register = async (server, options) => {
       try {
         const replacements = {
           type: params.type_asset,
+          lang: lang
         };
         return db.sequelize
           .query(
@@ -542,7 +557,7 @@ const register = async (server, options) => {
           SELECT DISTINCT a.id_asset_communication, TRIM(a.nom) AS nom, TRIM(a.nom_fichier) AS nom_fichier, a.contenu, a.id_social_asset_communication, TRIM(sac.nom) as nom_social
           FROM public.t_asset_communication a
           LEFT JOIN public.t_social_asset_communication sac ON sac.id_social_asset_communication = a.id_social_asset_communication
-          WHERE a.actif AND a.id_type_asset_communication=:type;
+          WHERE a.actif AND a.id_type_asset_communication=:type AND a.lang=:lang;
         `,
             { replacements: replacements, type: QueryTypes.SELECT }
           )
@@ -563,6 +578,7 @@ const register = async (server, options) => {
       const User = db.getModel("User");
       const Organisation = db.getModel("Organisation");
       const AssetCommunication = db.getModel("AssetCommunication");
+      let lang = request.query.language;
 
       // check oid_ad is present in request
       if (!request.state.oid_ad) {

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { withTranslation, WithTranslation } from "react-i18next";
+import i18n from '../../../config/i18n';
 
 import { Tabs, Tab } from "react-bootstrap";
 
@@ -35,7 +36,7 @@ class PlanningContainer extends React.Component<
 
   async componentDidMount() {
     try {
-      const missions = await AdminAPI.getAllCampaigns();
+      const missions = await AdminAPI.getAllCampaigns(i18n.language);
 
       missions.availableMissions.forEach((mission) => {
         let startDate = new Date(mission.debut_semaine);

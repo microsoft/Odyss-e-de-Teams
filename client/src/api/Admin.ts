@@ -8,7 +8,7 @@ class Admin extends API {
   }
 
   getCurrentCampaignInfo(lang: string): Promise<any> {
-    return super.fetchGET(this.resource + "/current-mission", {language: lang});
+    return super.fetchGET(this.resource + "/current-mission", { language: lang });
   }
 
   getCurrentCompanyInfo(): Promise<any> {
@@ -19,8 +19,8 @@ class Admin extends API {
     return super.fetchUploadData(this.resource + "/upload-logo", data);
   }
 
-  getAllCampaigns(): Promise<any> {
-    return super.fetchGET(this.resource + "/available-missions");
+  getAllCampaigns(lang: string): Promise<any> {
+    return super.fetchGET(this.resource + "/available-missions", { language: lang });
   }
 
   setCurrentMission(data): Promise<any> {
@@ -28,8 +28,8 @@ class Admin extends API {
   }
 
   /**** agenda  ****/
-  getAgenda(): Promise<any> {
-    return super.fetchGET(this.resource + "/current-agenda");
+  getAgenda(lang: string): Promise<any> {
+    return super.fetchGET(this.resource + "/current-agenda", { language: lang });
   }
 
   setAgendaItemStatus(data): Promise<any> {
@@ -38,15 +38,17 @@ class Admin extends API {
   /**** fin agenda  ****/
 
   /**** assets comm  ****/
-  getListAsset(type_asset: number): Promise<any> {
+  getListAsset(type_asset: number, lang: string): Promise<any> {
     return super.fetchGET(this.resource + "/assets/get-list", {
       type_asset: type_asset,
+      language: lang
     });
   }
 
-  getTemplate(asset: number): Promise<any> {
+  getTemplate(asset: number, lang: string): Promise<any> {
     return super.fetchGET(this.resource + "/emailing/get-template", {
       asset: asset,
+      language: lang
     });
   }
 
