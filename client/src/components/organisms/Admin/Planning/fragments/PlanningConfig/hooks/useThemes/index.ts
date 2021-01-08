@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Admin from "api/Admin";
+import i18n from '../../../../../../../../config/i18n';
 
 export interface IThemesAsset {
   id_thematique: number;
@@ -14,7 +15,7 @@ export interface IUseThemesOutput {
   save: () => Promise<boolean> | boolean;
 }
 
-const fetchThemes = (): Promise<IThemesAsset[]> => Admin.getThemes();
+const fetchThemes = (): Promise<IThemesAsset[]> => Admin.getThemes(i18n.language);
 
 const mutateItems = (
   changed: Set<IThemesAsset>,

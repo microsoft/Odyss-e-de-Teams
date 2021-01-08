@@ -52,8 +52,10 @@ class Admin extends API {
     });
   }
 
-  getThemes(): Promise<any> {
-    return super.fetchGET(this.resource + "/themes");
+  getThemes(lang: string): Promise<any> {
+    return super.fetchGET(this.resource + "/themes", {
+      language: lang
+    });
   }
 
   activateThemes(themes: number[]): Promise<boolean> {
