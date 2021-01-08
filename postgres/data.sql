@@ -386,7 +386,9 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	FROM public.i_question a
 		INNER JOIN public.t_question b ON TRIM(a.code_question)=TRIM(b.cle_fichier)
 	UNION ALL
-	SELECT DISTINCT 'REPONSE', id_reponse, 'en', nom_en, NULL::text FROM public.t_reponse;
+	SELECT DISTINCT 'REPONSE', id_reponse, 'en', nom_en, NULL::text FROM public.t_reponse
+	UNION ALL
+	SELECT DISTINCT 'THEMATIQUE', id_thematique, 'en', nom, NULL::text FROM public.t_thematique;
 
 	ALTER TABLE public.t_reponse DROP COLUMN nom_en;
 	
@@ -498,3 +500,12 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	(2, 2, 'Bannière Test Linkedin', 'Tuile_02_en.png', 
 		null, 
 		'en', true, now(), now());
+
+		UPDATE t_libelle_i18n SET nom='Applications' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Applications';
+		UPDATE t_libelle_i18n SET nom='Conversations' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Conversations';
+		UPDATE t_libelle_i18n SET nom='Calls' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Appels';
+		UPDATE t_libelle_i18n SET nom='Statuses/Shortcuts' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Statut/Raccourcis';
+		UPDATE t_libelle_i18n SET nom='Statuses/Shortcuts/Shortcuts' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Statut/Raccourcis/Raccourcis';
+		UPDATE t_libelle_i18n SET nom='Teams' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Équipe/Discussions';
+		UPDATE t_libelle_i18n SET nom='Files' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Fichiers';
+		UPDATE t_libelle_i18n SET nom='Calendar' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Calendrier';

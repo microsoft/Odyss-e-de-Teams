@@ -70,7 +70,7 @@
       "title": "Programme et missions",
       "title_week": "Semaine ",
       "description": "Commandant, dans cette section vous aurez à activer la mission de la semaine et sélectionner les modules de questions associées.",
-      "setting": "Parmétrage",
+      "setting": "Paramétrage",
       "config": {
         "title": "Configuration de la mission « Lancement ! »",
         "description": "Commandant, cette interface vous permet de sélectionner les types de questions auxquels vos joueurs répondront dans le jeu. Il se peut que certaines fonctionnalités de Teams n’aient pas été déployées dans votre organisation, vous pouvez désactiver les questions correspondantes. Vous devez sélectionner au minimum six sous-thématiques pour garantir le fonctionnement du jeu."

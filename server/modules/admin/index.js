@@ -265,7 +265,7 @@ const register = async (server, options) => {
       if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
         return false;
       }
-      
+
       let availableMissions;
       try {
         availableMissions = await db.sequelize
@@ -711,7 +711,6 @@ const register = async (server, options) => {
       if (!request.state.oid_ad) {
         return false;
       }
-
       // Look for user and check if he is admin
       const currentUserByAD = await User.findOne({
         where: {
@@ -724,17 +723,19 @@ const register = async (server, options) => {
       }
 
       try {
+        const lang = request.query.language;  
         const replacements = {
           id_organisation: currentUserByAD.id_organisation,
+          lang: lang
         };
         return db.sequelize
           .query(
             `
-            SELECT t.id_thematique, TRIM(t.nom) AS nom , 
+            SELECT t.id_thematique, TRIM(l.nom) AS nom , 
             jt ISNULL as activated 
             FROM public.t_thematique t
-            LEFT JOIN public.j_thematique_organisation_disabled jt
-            ON jt.id_thematique = t.id_thematique and jt.id_organisation=:id_organisation
+              INNER JOIN public.t_libelle_i18n l ON t.id_thematique = l.id_table AND TRIM(l.code)='THEMATIQUE' AND TRIM(l.lang)=:lang
+              LEFT JOIN public.j_thematique_organisation_disabled jt ON jt.id_thematique = t.id_thematique and jt.id_organisation=:id_organisation
         `,
             { replacements: replacements, type: QueryTypes.SELECT }
           )
