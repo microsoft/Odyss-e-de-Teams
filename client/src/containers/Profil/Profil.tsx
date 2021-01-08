@@ -94,7 +94,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
       return number === 1 ? "er" : "ème";
     } else {
       let numberToString: string = number.toString();
-      switch (numberToString[numberToString.length]) {
+      switch (numberToString[numberToString.length - 1]) {
         case '1':
           return 'st';
         case '2':
