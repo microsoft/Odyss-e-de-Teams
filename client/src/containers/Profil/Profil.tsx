@@ -93,6 +93,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
     if (i18n.language === 'fr') {
       return number === 1 ? "er" : "ème";
     } else {
+      if (number === 11 || number === 12 || number === 13) return 'th';
       let numberToString: string = number.toString();
       switch (numberToString[numberToString.length - 1]) {
         case '1':
@@ -181,8 +182,8 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
                       <p className={"h1 mb-0 pt-0 color-primary"}>
                         {this.state.classementXP ? this.state.classementXP : 0}
                         <sup>
-                          {this.state.classementPoint &&
-                            this._getEndNumber(this.state.classementPoint)}
+                          {this.state.classementXP &&
+                            this._getEndNumber(this.state.classementXP)}
                         </sup>
                       </p>
                       <p>{tReady && t("profile.exp_rank")}</p>
