@@ -164,7 +164,7 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	UNION ALL 
 	SELECT 'SEMAINE', 2, 'en', 'Stabilization !', 'Solidify your skills'
 	UNION ALL
-	SELECT 'SEMAINE', 3, 'en', 'Progression !', 'Strengthen your use cases'
+	SELECT 'SEMAINE', 3, 'en', 'Expansion !', 'Strengthen your use cases'
 	UNION ALL
 	SELECT 'SEMAINE', 4, 'en', 'Landing !', 'Last boost to be an expert'
 	UNION ALL

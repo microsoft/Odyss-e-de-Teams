@@ -271,11 +271,11 @@ class AdminEmailing extends React.Component<
                   ? this.state.currentTemplate?.contenu[2]
                   : ""
                 }
-                  ${this.state.currentTemplate?.id_asset_communication === 5
+                  ${this.state.currentTemplate?.id_asset_communication === 5 || this.state.currentTemplate?.id_asset_communication === 12
                   ? this._renderClassement("pts")
                   : ""
                 }
-                  ${this.state.currentTemplate?.id_asset_communication === 5
+                  ${this.state.currentTemplate?.id_asset_communication === 5 || this.state.currentTemplate?.id_asset_communication === 12
                   ? this._renderClassement("xp")
                   : ""
                 }
