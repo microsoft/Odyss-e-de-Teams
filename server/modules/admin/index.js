@@ -398,12 +398,13 @@ const register = async (server, options) => {
         };
         const organisationAgenda = await db.sequelize.query(
           `
-          SELECT a.id as mission_id, TRIM(b.nom) as mission_name, b.description as mission_description, a.date_event as mission_date, a.done as mission_done, b.id_semaine, e.nom as semaine_name, e.description as semaine_description, d.debut_semaine as semaine_start, d.fin_semaine as semaine_end
+          SELECT a.id as mission_id, TRIM(f.nom) as mission_name, f.description as mission_description, a.date_event as mission_date, a.done as mission_done, b.id_semaine, e.nom as semaine_name, e.description as semaine_description, d.debut_semaine as semaine_start, d.fin_semaine as semaine_end
           FROM j_organisation_agenda a
             INNER JOIN t_agenda b ON a.id_agenda = b.id_agenda AND a.id_organisation=:id_organisation
             INNER JOIN t_semaine c ON b.id_semaine = c.id_semaine
             INNER JOIN j_organisation_semaine d ON d.id_semaine = c.id_semaine AND a.id_organisation=d.id_organisation
             INNER JOIN public.t_libelle_i18n e ON c.id_semaine=e.id_table AND TRIM(e.code)='SEMAINE' AND TRIM(e.lang)=:lang
+            INNER JOIN public.t_libelle_i18n f ON b.id_agenda=f.id_table AND TRIM(f.code)='AGENDA' AND TRIM(f.lang)=:lang
           ORDER BY a.date_event ASC, mission_id
         `,
           {
