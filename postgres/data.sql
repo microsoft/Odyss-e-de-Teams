@@ -491,7 +491,7 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	(1, null, 'Leaderboards announcement emailing', 'gagnant_en.png', 
 		ARRAY[
 			'<div style="top: 395px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Explorers!</h1><p style="text-align: center;">You have all been waiting for it ! You admiral will announce the top performers.<br/><br/>Congratulations Explorers and thank you all!</p></div>', 
-			'<div style="top: 795px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Top of the leaderboards</h1></div>' /* TODO: problème ici il manque des infos il faut comparer le rendu en français et en anglais */
+			'<div style="top: 795px; position: relative; padding: 0 75px; font-size: 18pt; line-height: 22pt; font-family: ''Segoe UI''; "><h1 style="text-align:center; font-size: 30pt; line-height: 32pt; font-weight: 200; color: #5059C9; margin-bottom: 22pt;">Top of the leaderboards</h1><p style="text-align: left;">The Teams Odyssey game is now over! We congratulate all the Explorers and hope that your involvement has made teamwork more fluid and efficient.<br/><br/>Find out now if you are one of the winners and contact your Admiral to claim your rewards!</p></div>'
 		], 
 		'en', true, now(), now()),
 	(2, 1, 'Bannière Yammer', 'Tuile_Yammer_en.png', 
