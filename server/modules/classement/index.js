@@ -2,6 +2,7 @@
 const { QueryTypes } = require("sequelize");
 const baseUrl = "/classement";
 const ClassementUtils = require("./../../utils/Classement");
+const Crypto = require("./../../utils/Crypto");
 const ADMIN_ROLE_ID = 2;
 
 const register = async (server, options) => {
@@ -49,10 +50,15 @@ const register = async (server, options) => {
           type: QueryTypes.SELECT,
         })
         .then((result) => {
+          const newResult = result.map(u =>
+            u.nom
+              ? {...u, nom: Crypto.decrypt(JSON.parse(u.nom))}
+              : u
+          );
           if (params.user) {
-            return result.filter((c) => c.id_user === id_user)[0];
+            return newResult.filter((c) => c.id_user === id_user)[0];
           }
-          return result;
+          return newResult;
         });
     },
   });

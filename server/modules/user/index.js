@@ -5,6 +5,7 @@ const LevelUpUtils = require("./../../utils/LevelUp");
 const RewardUtils = require("./../../utils/Reward");
 const GainPointUtils = require("./../../utils/GainPoint");
 const ClassementUtils = require("./../../utils/Classement");
+const Crypto = require("./../../utils/Crypto");
 
 const dailyRewards = require("./daily_rewards.json");
 
@@ -78,8 +79,17 @@ const register = async (server, options) => {
         )
         .then((result) => {
           // force cast to number
-
-          return oneResult ? result[0] : result;
+          if (oneResult) {
+            result[0].nom = Crypto.decrypt(JSON.parse(result[0].nom));
+            return result[0];
+          } else {
+            const newResult = result.map(u =>
+              u.nom
+                ? {...u, nom: Crypto.decrypt(JSON.parse(u.nom))}
+                : u
+            );
+            return newResult;
+          }
         });
     },
   });
@@ -152,12 +162,13 @@ const register = async (server, options) => {
         }
       }
       let nomUser = encoding.convert(body.ad.name, "latin1", "UTF-8");
+      const hashNomUser = Crypto.encrypt(nomUser);
       currentUserByAD = await User.create({
         id_organisation: currentOrganisation["id_organisation"],
         oid_ad: body.ad.idToken.oid,
         id_role: isMaitreJeu ? 2 : 1,
         id_avatar: body.id_avatar,
-        nom: nomUser.toString(),
+        nom: JSON.stringify(hashNomUser),
         actif: true,
         id_semaine_encours_inscription: (!isMaitreJeu && currentOrganisation["id_semaine_encours"] ? currentOrganisation["id_semaine_encours"] : null)
       });
