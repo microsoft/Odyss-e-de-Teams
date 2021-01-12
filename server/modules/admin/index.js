@@ -4,6 +4,7 @@ const moment = require("moment");
 const File = require("./../../utils/File");
 const path = require("path");
 const Jimp = require("jimp");
+const Crypto = require("./../../utils/Crypto");
 
 // constants
 const UPLOAD_PATH = path.resolve(
@@ -895,6 +896,55 @@ const register = async (server, options) => {
       }
     },
   });
+
+  /**
+   * @summary Encrypter tout les noms des user en db
+   */
+  server.route({
+    path: "/admin/encrypt-name",
+    method: "GET",
+    handler: async function (request, h) {
+      const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
+
+      // check oid_ad is present in request
+      if (!request.state.oid_ad) {
+        return false;
+      }
+
+      // Look for user and check if he is admin
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD || currentUserByAD.id_role !== ADMIN_ROLE_ID) {
+        return false;
+      }
+
+      try {
+        const allUser = await  User.findAll({raw: true});
+        for await (let user of allUser) {
+          const newName = Crypto.encrypt(user.nom);
+          const replacements = {
+            nom: JSON.stringify(newName),
+            id_user: user.id_user,
+          };
+          await db.sequelize.query(
+            `
+              UPDATE public.t_user SET nom=:nom WHERE id_user=:id_user;
+          `,
+            { replacements: replacements, type: QueryTypes.INSERT }
+          );
+        }
+        return true;
+      } catch (e) {
+        console.error(e);
+      }      
+    },
+  });
+
 };
 
 exports.plugin = {
