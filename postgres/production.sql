@@ -133,7 +133,26 @@
 		
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
         (39, 'picasse@groupebpcestaging.onmicrosoft.com', true, now(), now());
-		
+
+-- Bouygues-construction
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 
+        ('Bouygues-construction', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (45, 'j.roux@bouygues-construction.com', true, now(), now()),
+        (45, 'm.lelouarn@bouygues-construction.cocm', true, now(), now());
+
+	SELECT f_set_date_semaine(45, '2020-02-01'::date);
+
+-- MGEN / Reprise installation
+	SELECT f_delete_user_organisation(36, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (36, 'adeclercq@mgen.fr', true, now(), now()),
+	    (36, 'sdentini@mgen.fr', true, now(), now()),
+	    (36, 'cnotin@mgen.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(36, '2021-01-18'::date);
+
+
 ------ debug encoding
 
 CREATE TABLE public.t_debug_encoding

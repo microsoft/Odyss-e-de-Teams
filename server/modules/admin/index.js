@@ -907,6 +907,8 @@ const register = async (server, options) => {
       const db = request.getDb("odyssee_teams");
       const User = db.getModel("User");
 
+      // route fermee => reprise historique crypt fait
+      return false;
       // check oid_ad is present in request
       if (!request.state.oid_ad) {
         return false;
