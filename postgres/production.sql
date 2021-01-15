@@ -139,7 +139,8 @@
         ('Bouygues-construction', false, now(), now());
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
         (45, 'j.roux@bouygues-construction.com', true, now(), now()),
-        (45, 'm.lelouarn@bouygues-construction.cocm', true, now(), now());
+        (45, 'm.lelouarn@bouygues-construction.com', true, now(), now()),
+        (45, 'l.sportiello@bouygues-construction.com', true, now(), now());
 
 	SELECT f_set_date_semaine(45, '2020-02-01'::date);
 
