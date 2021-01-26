@@ -167,7 +167,6 @@ WITH (
 GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding TO odyssee_teams_appli;
 
 -- Lactalis
-
 	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Lactalis', false, now(), now());
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
  		(46, 'Thierry.paillette@fr.lactalis.com', true, now(), now()), 
