@@ -175,3 +175,13 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
  		(46, 'Test3.cto@lactalis.fr', true, now(), now());
 
 	SELECT f_set_date_semaine(46, '2021-02-01'::date);
+
+-- Serious Games (Bordeaux)
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Serious Game', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(47, 's.aman@bordeaux-metropole.fr', true, now(), now()), 
+ 		(47, 'j.gracieux@bordeaux-metropole.fr', true, now(), now()), 
+ 		(47, 'n.turbin@bordeaux-metropole.fr', true, now(), now()), 
+ 		(47, 'ma.lacaze@bordeaux-metropole.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(47, '2021-03-01'::date);
