@@ -185,3 +185,11 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
  		(47, 'ma.lacaze@bordeaux-metropole.fr', true, now(), now());
 
 	SELECT f_set_date_semaine(47, '2021-03-01'::date);
+
+-- Eram
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Eram', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(48, 'laurent.bourget@groupe-eram.com', true, now(), now()), 
+ 		(48, 'stanapin@groupe-eram.com', true, now(), now());
+
+	SELECT f_set_date_semaine(48, '2021-02-10'::date);
