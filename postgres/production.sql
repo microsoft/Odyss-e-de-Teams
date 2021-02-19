@@ -193,3 +193,10 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
  		(48, 'stanapin@groupe-eram.com', true, now(), now());
 
 	SELECT f_set_date_semaine(48, '2021-02-10'::date);
+
+-- M365x972580
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('M365x972580', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(49, 'admin@M365x972580.onmicrosoft.com', true, now(), now());
+
+	SELECT f_set_date_semaine(48, '2021-02-19'::date);
