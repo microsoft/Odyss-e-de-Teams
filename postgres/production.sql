@@ -199,4 +199,11 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
  		(49, 'admin@M365x972580.onmicrosoft.com', true, now(), now());
 
-	SELECT f_set_date_semaine(48, '2021-02-19'::date);
+	SELECT f_set_date_semaine(49, '2021-02-19'::date);
+
+-- Kiabi
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Kiabi', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(50, 'd.PICHON@KIABI.com', true, now(), now());
+
+	SELECT f_set_date_semaine(50, '2021-03-03'::date);
