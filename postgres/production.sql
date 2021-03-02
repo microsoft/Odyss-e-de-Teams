@@ -207,3 +207,10 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
  		(50, 'd.PICHON@KIABI.com', true, now(), now());
 
 	SELECT f_set_date_semaine(50, '2021-03-03'::date);
+
+-- Kiabi
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('LaCroix', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(51, 'l.lesaux@lacroix-group.com', true, now(), now());
+
+	SELECT f_set_date_semaine(51, '2021-03-08'::date);
