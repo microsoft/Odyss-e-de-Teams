@@ -214,3 +214,10 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
  		(51, 'l.lesaux@lacroix-group.com', true, now(), now());
 
 	SELECT f_set_date_semaine(51, '2021-03-08'::date);
+
+-- IlleDeFrance
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('IlleDeFrance', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(52, 'maud.herviou@iledefrance.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(52, '2021-03-08'::date);
