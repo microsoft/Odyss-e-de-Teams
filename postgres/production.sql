@@ -221,3 +221,13 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
  		(52, 'maud.herviou@iledefrance.fr', true, now(), now());
 
 	SELECT f_set_date_semaine(52, '2021-03-08'::date);
+
+-- MGEN / Reprise installation
+	SELECT f_delete_user_organisation(36, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (36, 'hgantes@mgen.fr', true, now(), now()),
+	    (36, 'adeclercq@mgen.fr', true, now(), now()),
+	    (36, 'Cpaquier1@mgen.fr', true, now(), now()),
+		(36, 'cnotin@mgen.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(36, '2021-03-15'::date);
