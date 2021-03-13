@@ -237,4 +237,6 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
         (43, 'Manish.Gite@saint-gobain.com', true, now(), now()),
         (43, 'Harish.Bhingarde@saint-gobain.com', true, now(), now());
+
+	SELECT f_set_date_semaine(43, '2021-03-15'::date);
 		
