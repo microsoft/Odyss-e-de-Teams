@@ -239,4 +239,6 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
         (43, 'Harish.Bhingarde@saint-gobain.com', true, now(), now());
 
 	SELECT f_set_date_semaine(43, '2021-03-15'::date);
-		
+
+-- Eram
+	SELECT f_set_date_semaine(48, '2021-03-29'::date);	
