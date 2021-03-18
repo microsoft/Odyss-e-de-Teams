@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 
 import { withTranslation, WithTranslation } from "react-i18next";
+import i18n from '../../../config/i18n';
 
 interface ICountdownProps {
   timeTillDate: string;
@@ -65,10 +66,10 @@ class Countdown extends Component<ICountdownProps & WithTranslation, ICountdownS
       <div className={className}>
         {
           (days > 0 && hours) ? (
-            <>{days}j {hours}:{minutes}:{seconds}</>
+            <>{days}{(i18n.language === 'fr' ? 'j' : 'd')}, {hours}:{minutes}:{seconds}</>
           ) : (
-              <>{tReady && t("counter.info")}</>
-            )
+            <>{tReady && t("counter.info")}</>
+          )
         }
       </div>
     );
