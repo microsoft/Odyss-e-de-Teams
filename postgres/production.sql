@@ -246,3 +246,6 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 -- Groupe Avril
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
 	    (35, 'melissa.daniel@groupeavril.com', true, now(), now());
+
+-- IlleDeFrance
+	SELECT f_set_date_semaine(52, '2021-03-22'::date);
