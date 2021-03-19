@@ -241,4 +241,8 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 	SELECT f_set_date_semaine(43, '2021-03-15'::date);
 
 -- Eram
-	SELECT f_set_date_semaine(48, '2021-03-29'::date);	
+	SELECT f_set_date_semaine(48, '2021-03-29'::date);
+
+-- Groupe Avril
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+	    (35, 'melissa.daniel@groupeavril.com', true, now(), now());
