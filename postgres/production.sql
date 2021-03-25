@@ -263,3 +263,10 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
         (43, 'Harish.Bhingarde@saint-gobain.com', true, now(), now());
 
 	SELECT f_set_date_semaine(43, '2021-03-24'::date);
+
+-- IlleDeFrance / Reprise installation
+	SELECT f_delete_user_organisation(52, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (52, 'maud.herviou@iledefrance.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(52, '2021-03-25'::date);
