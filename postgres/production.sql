@@ -270,3 +270,12 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
         (52, 'maud.herviou@iledefrance.fr', true, now(), now());
 
 	SELECT f_set_date_semaine(52, '2021-03-25'::date);
+
+
+-- Vinci - production
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (41, 'lucas.marty@vinci-energies.com', true, now(), now());
+		
+-- Vinci - Pre production
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+         (42, 'lucas.marty@vinci-energies.com', true, now(), now());
