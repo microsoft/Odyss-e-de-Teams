@@ -279,3 +279,20 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 -- Vinci - Pre production
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
          (42, 'lucas.marty@vinci-energies.com', true, now(), now());
+
+
+-- Vinci - production / Reprise installation
+	SELECT f_delete_user_organisation(41, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES
+		(41, 'sarah.bremont@vinci-energies.com', true, now(), now()), 
+    	(41, 'lucas.marty@vinci-energies.com', true, now(), now());
+
+	SELECT f_set_date_semaine(41, '2021-04-21'::date);
+
+-- Vinci - Pre production / Reprise installation
+	SELECT f_delete_user_organisation(42, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(42, 'sarah.bremont@vinci-energies.com', true, now(), now()),
+        (42, 'lucas.marty@vinci-energies.com', true, now(), now());
+
+	SELECT f_set_date_semaine(42, '2021-04-21'::date);
