@@ -296,3 +296,17 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
         (42, 'lucas.marty@vinci-energies.com', true, now(), now());
 
 	SELECT f_set_date_semaine(42, '2021-04-21'::date);
+
+
+/***** ATTENTION : Vinci Energie different de Vinci ou Vinci Preproduction (=> vinci holding ça) *****/
+	DELETE FROM public.t_maitre_jeu WHERE mail::text='lucas.marty@vinci-energies.com' AND id_organisation IN (41,42);
+	DELETE FROM public.t_maitre_jeu WHERE mail::text='sarah.bremont@vinci-energies.com' AND id_organisation IN (41,42);
+
+-- Vinci Energie
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Vinci Energie', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(53, 'lucas.marty@vinci-energies.com', true, now(), now()),
+		 (53, 'sarah.bremont@vinci-energies.com', true, now(), now());
+
+	SELECT f_set_date_semaine(53, '2021-01-22'::date);
+
