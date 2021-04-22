@@ -305,8 +305,8 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 -- Vinci Energie
 	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Vinci Energie', false, now(), now());
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
- 		(53, 'lucas.marty@vinci-energies.com', true, now(), now()),
-		 (53, 'sarah.bremont@vinci-energies.com', true, now(), now());
+ 		(53, 'lucas.marty@vinci-energies.net', true, now(), now()),
+		 (53, 'sarah.bremont@vinci-energies.net', true, now(), now());
 
 	SELECT f_set_date_semaine(53, '2021-01-22'::date);
 
