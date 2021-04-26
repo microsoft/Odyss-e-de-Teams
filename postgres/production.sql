@@ -310,3 +310,11 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 
 	SELECT f_set_date_semaine(53, '2021-01-22'::date);
 
+
+-- Sephora
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Sephora', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(54, 'jakoun@ext.sephora.fr', true, now(), now()),
+		 (54, 'hchir@sephora.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(54, '2021-04-26'::date);
