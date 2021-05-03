@@ -325,3 +325,17 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 		 (55, 'testuser2@tdf.fr', true, now(), now());
 
 	SELECT f_set_date_semaine(55, '2021-05-05'::date);
+
+
+-- St Gobain - Reprise installation
+	SELECT f_delete_user_organisation(43, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(43, 'david.aemhoun@ext.saint-gobain.com', true, now(), now()),
+		(43, 'celine.dasilva@saint-gobain.com', true, now(), now()),
+		(43, 'almudena.perezgarcia@ext.saint-gobain.com', true, now(), now()),
+		(43, 'caroline.bourgoin@ext.saint-gobain.com', true, now(), now()),
+		(43, 'celine.canivenq@ext.saint-gobain.com', true, now(), now()),
+		(43, 'Manish.Gite@saint-gobain.com', true, now(), now()),
+        (43, 'Harish.Bhingarde@saint-gobain.com', true, now(), now());
+
+	SELECT f_set_date_semaine(43, '2021-05-03'::date);
