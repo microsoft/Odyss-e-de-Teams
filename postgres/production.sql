@@ -339,3 +339,11 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
         (43, 'Harish.Bhingarde@saint-gobain.com', true, now(), now());
 
 	SELECT f_set_date_semaine(43, '2021-05-03'::date);
+
+-- Daher
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Daher', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (56, 'm.chevalier@daher.com', true, now(), now()),
+		 (56, 'g.lemoigne@daher.Com', true, now(), now());
+
+	SELECT f_set_date_semaine(56, '2021-05-21'::date);
