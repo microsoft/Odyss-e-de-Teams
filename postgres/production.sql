@@ -347,3 +347,11 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 		 (56, 'g.lemoigne@daher.Com', true, now(), now());
 
 	SELECT f_set_date_semaine(56, '2021-05-21'::date);
+
+-- Artelia Group
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Artelia Group', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (57, 'delphine.gharsallah-roger@arteliagroup.com', true, now(), now()),
+		 (57, 'deborah.marchand@arteliagroup.com', true, now(), now());
+
+	SELECT f_set_date_semaine(57, '2021-05-17'::date);
