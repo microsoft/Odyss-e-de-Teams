@@ -355,3 +355,6 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 		 (57, 'deborah.marchand@arteliagroup.com', true, now(), now());
 
 	SELECT f_set_date_semaine(57, '2021-05-17'::date);
+
+-- Sephora
+	SELECT f_set_date_semaine(54, '2021-05-10'::date);
