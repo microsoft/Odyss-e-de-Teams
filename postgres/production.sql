@@ -358,3 +358,10 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 
 -- Sephora
 	SELECT f_set_date_semaine(54, '2021-05-10'::date);
+
+-- Lactalis - Reprise installation
+	SELECT f_delete_user_organisation(46, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(46, 'julien.rouleaud@fr.lactalis.com', true, now(), now());
+
+	SELECT f_set_date_semaine(46, '2021-05-24'::date);
