@@ -373,3 +373,12 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 		 (58, 'Patricia.lernon@fnacdarty.com', true, now(), now());
 
 	SELECT f_set_date_semaine(58, '2021-05-17'::date);
+
+-- Artelia Group
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (57, 'ludovic.alberti@arteliagroup.com', true, now(), now());
+
+-- Saegus - Reprise installation
+	SELECT f_delete_user_organisation(1, false);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(1, 'joseph.deffayet@saegus.com', true, now(), now());
