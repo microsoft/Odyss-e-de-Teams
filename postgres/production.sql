@@ -382,3 +382,5 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 	SELECT f_delete_user_organisation(1, false);
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
 		(1, 'joseph.deffayet@saegus.com', true, now(), now());
+
+	SELECT f_set_date_semaine(1, '2021-05-17'::date);
