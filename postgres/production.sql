@@ -384,3 +384,11 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 		(1, 'joseph.deffayet@saegus.com', true, now(), now());
 
 	SELECT f_set_date_semaine(1, '2021-05-17'::date);
+
+-- Fnac Darty
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Hachette', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (59, 'agrandjean@hachette-livre.fr', true, now(), now()),
+		 (59, 'tmathiot-pre@hachette-livre.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(59, '2021-05-28'::date);
