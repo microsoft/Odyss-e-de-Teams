@@ -401,3 +401,6 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 		 (60, 'franck.roman@grtgaz.com', true, now(), now());
 
 	SELECT f_set_date_semaine(60, '2021-06-07'::date);
+
+-- GTR Gaz
+	SELECT f_set_date_semaine(60, '2021-05-26'::date);
