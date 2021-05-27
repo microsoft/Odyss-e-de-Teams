@@ -404,3 +404,13 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 
 -- GTR Gaz
 	SELECT f_set_date_semaine(60, '2021-05-26'::date);
+
+-- GTR Gaz  - Reprise installation
+	SELECT f_delete_user_organisation(60, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (60, 'olivier.bureau@grtgaz.com', true, now(), now()),
+		 (60, 'caroline.staelens@external.grtgaz.com', true, now(), now()),
+		 (60, 'franck.roman@grtgaz.com', true, now(), now());
+
+	
+	SELECT f_set_date_semaine(60, '2021-05-26'::date);
