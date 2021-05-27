@@ -414,3 +414,9 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 
 	
 	SELECT f_set_date_semaine(60, '2021-05-26'::date);
+
+-- GTR Gaz 
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (60, '7346YV@tera.infragaz.com', true, now(), now()),
+		 (60, '7339VC@tera.infragaz.com', true, now(), now()),
+		 (60, '1017NN@tera.infragaz.com', true, now(), now());
