@@ -420,3 +420,10 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 		 (60, '7346YV@tera.infragaz.com', true, now(), now()),
 		 (60, '7339VC@tera.infragaz.com', true, now(), now()),
 		 (60, '1017NN@tera.infragaz.com', true, now(), now());
+
+-- Keolis
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Keolis', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (61, 'vanessa.graziano@keolis.com', true, now(), now());
+
+	SELECT f_set_date_semaine(61, '2021-05-31'::date);
