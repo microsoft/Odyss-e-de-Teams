@@ -427,3 +427,43 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 		 (61, 'vanessa.graziano@keolis.com', true, now(), now());
 
 	SELECT f_set_date_semaine(61, '2021-05-31'::date);
+
+
+-- SONEPAR  - Reset installation
+	SELECT f_delete_user_organisation(27, true);
+
+-- BPCE staging  - Reset installation
+	SELECT f_delete_user_organisation(44, true);
+
+-- Lactalis  - Reset installation
+	SELECT f_delete_user_organisation(46, true);
+
+-- Groupe Avril  - Reset installation
+	SELECT f_delete_user_organisation(35, true);
+
+-- Faurecia - Test  - Reset installation
+	SELECT f_delete_user_organisation(37, true);
+
+-- Bouygues Construction  - Reset installation
+	SELECT f_delete_user_organisation(45, true);
+
+-- LaCroix  - Reset installation
+	SELECT f_delete_user_organisation(51, true);
+
+-- Eram - Test  - Reset installation
+	SELECT f_delete_user_organisation(48, true);
+
+-- MGEN - Test  - Reset installation
+	SELECT f_delete_user_organisation(36, true);
+
+-- IlleDeFrance - Test  - Reset installation
+	SELECT f_delete_user_organisation(52, true);
+
+-- Vinci Energies - Test  - Reset installation
+	SELECT f_delete_user_organisation(53, true);
+
+-- Kiabi - Test  - Reset installation
+	SELECT f_delete_user_organisation(50, true);
+
+-- Sephora - Test  - Reset installation
+	SELECT f_delete_user_organisation(54, true);
