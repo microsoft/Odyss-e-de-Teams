@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { connect } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 import i18n from '../../config/i18n';
+import { useHistory } from 'react-router-dom'
 
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
 
@@ -45,26 +46,30 @@ class Menu extends Component<IMenuProps, IMenuState> {
     }
   }
 
-  private _onClick = (e: any) => {
-    document.getElementById('indicator').style.display = 'block';
-    let elem = e.target;
-    if (!elem.classList.contains('list-group-item')) {
-      elem = elem.parentElement;
-    }
-    let newY = elem.offsetTop;
-
-    this._setPositionIndicator(newY);
-  }
-
   private _setPositionIndicator = (top: number) => {
     const marker = document.getElementById('indicator');
     marker.style.transform = `translateY(${top}px)`;
   }
 
+  private _setActivTabMenu = async () => {
+    let menuActive = window.location.hash.slice(2);
+    let ttMenuLink = document.getElementsByClassName('list-group-item-action');
+    for (let i = 0; i < ttMenuLink.length; i++) {
+      if (!ttMenuLink[i].innerHTML.includes(menuActive)) {
+        ttMenuLink[i].classList.remove('active');
+      } else {
+        ttMenuLink[i].classList.add('active');
+        let menu: any = ttMenuLink[i];
+        this._setPositionIndicator(menu.offsetTop);
+      }
+    }
+  }
+
   render() {
+    this._setActivTabMenu();
     let { currentRouterLink, currentUser } = this.props;
     const { organisationLogo } = this.state;
-    if (currentRouterLink.match(new RegExp('/',"gi")).length > 1) {
+    if (currentRouterLink.match(new RegExp('/', "gi")).length > 1) {
       const tabRouterLink = currentRouterLink.split('/');
       if (tabRouterLink.length > 1) {
         currentRouterLink = '/' + tabRouterLink[1];
@@ -90,7 +95,6 @@ class Menu extends Component<IMenuProps, IMenuState> {
                   key={item.id_page}
                   action
                   href={item.router_link}
-                  onClick={this._onClick}
                   className={`py-0 d-flex align-items-center menu${item.id_page}`}
                 >
                   <div style={itemStyle} className={"ico-menu"}></div>
