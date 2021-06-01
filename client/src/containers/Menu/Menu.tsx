@@ -48,6 +48,7 @@ class Menu extends Component<IMenuProps, IMenuState> {
 
   private _setPositionIndicator = (top: number) => {
     const marker = document.getElementById('indicator');
+    marker.style.display = 'block';
     marker.style.transform = `translateY(${top}px)`;
   }
 
