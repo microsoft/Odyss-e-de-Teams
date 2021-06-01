@@ -13,6 +13,7 @@ import AdminPlanning from "components/organisms/Admin/Planning";
 import AdminAgenda from "components/organisms/Admin/Agenda";
 import AdminEmailing from "components/organisms/Admin/Emailing";
 import AdminSocial from "components/organisms/Admin/Social";
+import AdminNotification from "components/organisms/Admin/Notification";
 
 import "./style.scss";
 
@@ -26,7 +27,7 @@ interface IPlanningContainerState {
 class PlanningContainer extends React.Component<
   WithTranslation,
   IPlanningContainerState
-  > {
+> {
   state = {
     loading: true,
     campaigns: [],
@@ -113,6 +114,13 @@ class PlanningContainer extends React.Component<
                 <Tab eventKey="SOCIAL" title={t("admin.planning.menu_social")}>
                   <AdminSocial
                   />
+                </Tab>
+
+                <Tab
+                  eventKey="NOTIFICATION"
+                  title={t("admin.planning.menu_teams")}
+                >
+                  <AdminNotification/>
                 </Tab>
 
                 <Tab
