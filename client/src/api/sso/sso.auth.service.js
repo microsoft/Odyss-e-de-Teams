@@ -45,8 +45,6 @@ class SSOAuthService {
       } else {
         this.getToken()
           .resolve(token => {
-            console.log('-------------------------------')
-            console.log(token)
             resolve(this.parseTokenToUser(token));
           })
           .reject(reason => {

@@ -851,7 +851,6 @@ const register = async (server, options) => {
     method: "GET",
     handler: async function (request, h) {
       let token = request.query.token;
-      console.log(token)
       const options = {
         hostname: 'graph.microsoft.com',
         port: 443,
@@ -917,8 +916,6 @@ const register = async (server, options) => {
 
       return await new Promise((resolve, reject) => {
         const req = https.request(options, res => {
-          console.log(`statusCode: ${res.statusCode}`)
-
           res.on('data', d => {
             process.stdout.write(d);
             resolve(d)

@@ -12,7 +12,6 @@ GraphApi.getGraphToken = async (token) => {
             assertion: encodeURI(token)
         }
     )
-    console.log(data)
     const options = {
         hostname: 'login.microsoftonline.com',
         port: 443,
@@ -25,13 +24,9 @@ GraphApi.getGraphToken = async (token) => {
 
     return await new Promise((resolve, reject) => {
         const req = https.request(options, res => {
-            console.log('ouiiiiazzeufhzrfhaofizefuIH')
-            console.log(`statusCode: ${res.statusCode}`)
 
             res.on('data', d => {
-                console.log('ouaaaaaaaaiiiiiiiiissss')
                 process.stdout.write(d);
-                console.log(d)
                 resolve(d)
             })
         });
