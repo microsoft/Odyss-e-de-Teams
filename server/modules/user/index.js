@@ -10,7 +10,6 @@ const Crypto = require("./../../utils/Crypto");
 const dailyRewards = require("./daily_rewards.json");
 
 const baseUrl = "/user";
-let lang = "en";
 
 const register = async (server, options) => {
   server.route({
@@ -677,7 +676,9 @@ const register = async (server, options) => {
       const User = db.getModel("User");
       const HistoMedaille = db.getModel("HMedaille");
       const Organisation = db.getModel("Organisation");
-
+      const params = request.query;
+      const lang = params.language;
+      
       if (!request.state.oid_ad) {
         return false;
       }
