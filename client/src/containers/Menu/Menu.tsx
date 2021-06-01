@@ -1,8 +1,7 @@
-import React, { Component, useEffect } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { ListGroup } from "react-bootstrap";
 import i18n from '../../config/i18n';
-import { useHistory } from 'react-router-dom'
 
 import UserAvatar from "../../components/UserAvatar/UserAvatar";
 
@@ -53,15 +52,16 @@ class Menu extends Component<IMenuProps, IMenuState> {
   }
 
   private _setActivTabMenu = async () => {
-    let menuActive = window.location.hash.slice(2);
+    let menuActive = window.location.hash;
     let ttMenuLink = document.getElementsByClassName('list-group-item-action');
     for (let i = 0; i < ttMenuLink.length; i++) {
-      if (!ttMenuLink[i].innerHTML.includes(menuActive)) {
-        ttMenuLink[i].classList.remove('active');
+      let menuDisplayed: any = ttMenuLink[i];
+      let menu = this.state.listMenu.find(m => ttMenuLink[i].innerHTML.includes(m.nom));
+      if (menu.router_link !== menuActive) {
+        menuDisplayed.classList.remove('active');
       } else {
-        ttMenuLink[i].classList.add('active');
-        let menu: any = ttMenuLink[i];
-        this._setPositionIndicator(menu.offsetTop);
+        menuDisplayed.classList.add('active');
+        this._setPositionIndicator(menuDisplayed.offsetTop);
       }
     }
   }

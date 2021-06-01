@@ -33,7 +33,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
   }
 
   private _loadDataProfil = () => {
-    UserAPI.checkNewMedal().then((dataMedal) => {
+    UserAPI.checkNewMedal(i18n.language).then((dataMedal) => {
       if (dataMedal && dataMedal.length > 0) {
         const action_medal = {
           type: "NEW_MEDAL",

@@ -37,8 +37,8 @@ class User extends API {
     return super.fetchGET(this.resource + "/check-level-up");
   }
 
-  checkNewMedal(): Promise<any> {
-    return super.fetchGET(this.resource + "/check-new-medal");
+  checkNewMedal(lang: string): Promise<any> {
+    return super.fetchGET(this.resource + "/check-new-medal", { language: lang });
   }
 }
 
