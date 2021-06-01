@@ -1,6 +1,6 @@
 ﻿{
   "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.7/MicrosoftTeams.schema.json",
-  "manifestVersion": "1.7",
+  "manifestVersion": "1.8",
   "version": "1.0",
   "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
   "packageName": "com.odysseeteams",
@@ -43,5 +43,19 @@
   "webApplicationInfo": {
     "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
     "resource": "api://odyssee-de-teams.saegus.com/5830a2dd-c958-47bd-b6e8-676341fc5faf"
+  },
+  "activities": {
+    "activityTypes": [
+      {
+        "type": "taskCreated",
+        "description": "Task Created Activity",
+        "templateText": "{actor} created task {taskId} for you"
+      },
+      {
+        "type": "sendNotificationToUser", 
+        "description": "Sending notification to a user",
+        "templateText": "{actor} sent you a Notification!"
+      }
+    ]
   }
 }

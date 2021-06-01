@@ -1,0 +1,34 @@
+@import "common/sass/_variables";
+
+$btn-tags: "button, button:active, button:hover, button:visited";
+$btn-tags-hover: "button:active, button:hover";
+
+.Notification {
+  &__header {
+    &__title {
+      font-weight: bold;
+      color: $color-primary;
+    }
+  }
+
+  &__body {
+    &__textarea {
+      width: 100%;
+      background-color: #f1f0ef;
+      border-radius: 15px;
+      border: none;
+      min-height: 150px;
+      margin-bottom: 20px;
+      padding: 10px;
+      &:focus-visible {
+        outline: none;
+      }
+    }
+    &__buttons {
+      text-align: right;
+      &__btn-left {
+        margin-right: 10px;
+      }
+    }
+  }
+}
