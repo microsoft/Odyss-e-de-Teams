@@ -50,7 +50,6 @@ Quizz.getReponseByQuestionQuery = async (
     { replacements: replacements, type: QueryTypes.SELECT, plain: true }
   );
   const tabIdQuestion = resultIdQuestion["ids"];
-/* TODO: lang fr en dur en attendant les réponses dans la table */
   const resultReponse = await db.sequelize.query(
     `
     SELECT DISTINCT a.id_reponse, a.id_question, TRIM(b.nom) AS nom, b.asset, a.ordre 
