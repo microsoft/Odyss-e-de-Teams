@@ -44,6 +44,24 @@ class ChoixModuleNiveau extends Component<
   }
 
   componentDidMount() {
+    console.log(this.props.currentCampaign)
+    switch (this.props.currentCampaign.ordre) {
+      case 1: 
+      this.props.currentCampaign.introText = 'first_mission_intro';
+      break;
+      case 2: 
+      this.props.currentCampaign.introText = 'second_mission_intro';
+      break;
+      case 3: 
+      this.props.currentCampaign.introText = 'third_mission_intro';
+      break;
+      case 4: 
+      this.props.currentCampaign.introText = 'fourth_mission_intro';
+      break;
+      default: 
+      this.props.currentCampaign.introText = 'first_mission_intro';
+      break;
+    }
     this._loadDataLancementJeu();
   }
 
@@ -81,7 +99,7 @@ class ChoixModuleNiveau extends Component<
         </h2>
         <h2 className={"d-block d-md-none mb-2"}>{tReady && t("choix_module.title2")} &laquo; {this.props.currentCampaign?.mission_name} &raquo;</h2>
         <p className={"d-none d-md-block mb-2"}>
-        {t("choix_module.first_mission_intro")}
+        {t("choix_module."+this.props.currentCampaign.introText)}
         </p>
         <h4 className={"mt-2 mt-md-3 mb-2"}>{t("choix_module.subtitle")}</h4>
         <FadeInUpModule>
