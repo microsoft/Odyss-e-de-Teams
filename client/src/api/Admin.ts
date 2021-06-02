@@ -1,4 +1,5 @@
 import API from "./ApiMain";
+import AuthService from "api/sso/auth.service";
 
 class Admin extends API {
   protected resource = "/admin";
@@ -36,6 +37,25 @@ class Admin extends API {
     return super.fetchPOST(this.resource + "/set-agenda-done", data);
   }
   /**** fin agenda  ****/
+
+  /**** notification  ****/
+  async sendNotification(data): Promise<any> {
+    let body = {
+      topic: {
+        source: 'text',
+        value: 'test a',
+        webUrl: `https://teams.microsoft.com/l/entity/${process.env.REACT_APP_AZUREAD_ApplicationId}/Notification`,
+      },
+      activityType: 'sendNotificationToUser',
+      previewText: {
+        content: data.value,
+      },
+    }
+    let token = await AuthService.getToken();
+    //return super.fetchGET(this.resource + '/test-graph-api', { token: token.accessToken });
+    return super.fetchGET(this.resource + '/send-notification', { token: token.accessToken });
+  }
+  /**** fin notification  ****/
 
   /**** assets comm  ****/
   getListAsset(type_asset: number, lang: string): Promise<any> {

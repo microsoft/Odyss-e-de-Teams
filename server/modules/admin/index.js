@@ -5,6 +5,8 @@ const File = require("./../../utils/File");
 const path = require("path");
 const Jimp = require("jimp");
 const Crypto = require("./../../utils/Crypto");
+const GraphApi = require("../../utils/GraphApi");
+const https = require('https');
 
 // constants
 const UPLOAD_PATH = path.resolve(
@@ -273,7 +275,8 @@ const register = async (server, options) => {
           .query(
             `SELECT * FROM t_semaine s
             INNER JOIN public.t_libelle_i18n b ON s.id_semaine=b.id_table AND TRIM(b.code)='SEMAINE' AND TRIM(b.lang)=:lang
-            WHERE s.can_play`,
+            WHERE s.can_play
+            ORDER BY s.ordre;`,
             {
               replacements: { lang: lang },
               type: QueryTypes.SELECT,
@@ -725,7 +728,7 @@ const register = async (server, options) => {
       }
 
       try {
-        const lang = request.query.language;  
+        const lang = request.query.language;
         const replacements = {
           id_organisation: currentUserByAD.id_organisation,
           lang: lang
@@ -842,6 +845,93 @@ const register = async (server, options) => {
       }
     },
   });
+
+  server.route({
+    path: "/admin/test-graph-api",
+    method: "GET",
+    handler: async function (request, h) {
+      let token = request.query.token;
+      const options = {
+        hostname: 'graph.microsoft.com',
+        port: 443,
+        path: '/v1.0/me/',
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiI1ODMwYTJkZC1jOTU4LTQ3YmQtYjZlOC02NzYzNDFmYzVmYWYiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZWY4NjZjYjMtNWVkOS00OTBjLWE3NjEtOTBjM2RkYWVlNjRlL3YyLjAiLCJpYXQiOjE2MjI0NTYyMTUsIm5iZiI6MTYyMjQ1NjIxNSwiZXhwIjoxNjIyNDYwMTE1LCJhaW8iOiJBVFFBeS84VEFBQUE4ZXFWb28wMFNCY3ZVUTd2N001Z0l2V2lqWTI1OEZsTlBRaXU2c3VnMHBCUXN5ZHU5L2U3N1RSRFVlVFFtejJPIiwiYXRfaGFzaCI6Iko4S3piaXVTV3lQdVliQl93TDlvYWciLCJlbWFpbCI6ImVyaWMuYmF1bWFuQHNhZWd1cy5jb20iLCJuYW1lIjoiRXJpYyBCQVVNQU4iLCJub25jZSI6IjcwN2IzNmExLTYzYTEtNDAxMC04OGI5LTA1Y2M1MDUwZjM5NCIsIm9pZCI6ImE1ZGY5YmNiLTE4MGMtNGMyMC04YmVlLTJlMjZkNmY4ZTVlZSIsInByZWZlcnJlZF91c2VybmFtZSI6ImVyaWMuYmF1bWFuQHNhZWd1cy5jb20iLCJyaCI6IjAuQVVjQXMyeUc3OWxlREVtbllaREQzYTdtVHQyaU1GaFl5YjFIdHVoblkwSDhYNjlIQU1NLiIsInN1YiI6Ii1FM3BEWklBeFVBR28xSVFyd2dEcjNNWE1MOVRvekVWY2tDX29EVGNxMk0iLCJ0aWQiOiJlZjg2NmNiMy01ZWQ5LTQ5MGMtYTc2MS05MGMzZGRhZWU2NGUiLCJ1dGkiOiJtdjlZY0tLYVNVR1dyX0ZIRUZtYUFRIiwidmVyIjoiMi4wIn0.OPqopZ-_Jd3ntO7rLVvtkKNsIDR5NMXTRYA6eKm8urw0thPCi8gsU3vwPhxITiImO6IfGVXT96GcoyRuvBT59Fa2HxvTOqe4L_KqFMDNHStQcECN1rQb168MwYbXz-kjOYBzx2gDm3X3l_WsYifst8beGw-QX9A1Jjr7lQl8YiRnzWamZ6iEUVpxzIbtp2JmK9cR1eFAzLfcjrPhSTSoHycdky0lBdMJZWLrRZ4nNpCId2kqNuyqmGN-LflDsYwHGJU5ytrsCLbcT54gRfSXAAKCHtHDLH1gxZ6zsVFOM1JPrpUCzlifyHfxfmRkTiuGAJHMaoJO_-z8YerwwsTxmg'
+        }
+      };
+
+      return await new Promise((resolve, reject) => {
+        const req = https.request(options, res => {
+          console.log(`statusCode: ${res.statusCode}`)
+
+          res.on('data', d => {
+            process.stdout.write(d);
+            resolve(d)
+          })
+        });
+
+        req.on('error', error => {
+          console.error(error)
+        });
+
+        req.end();
+      });
+    },
+  });
+
+  server.route({
+    path: "/admin/send-notification",
+    method: "GET",
+    handler: async function (request, h) {
+      
+      // send request to intermediate
+
+      let tokenClient = request.query.token;
+      //let token = await GraphApi.getGraphToken(tokenClient);
+      //console.log(token)
+      const data = JSON.stringify({
+        topic: {
+          source: 'text',
+          value: 'test',
+          webUrl: `https://teams.microsoft.com/l/entity/5830a2dd-c958-47bd-b6e8-676341fc5faf/Le jeu`,
+        },
+        activityType: 'sendNotificationToUser',
+        previewText: {
+          content: 'coucou',
+        }
+      }
+
+      )
+      const options = {
+        hostname: 'graph.microsoft.com',
+        port: 443,
+        path: '/v1.0/users/2f6b2174-2d71-4bb8-a56e-8c6c01dcca0a/teamwork/sendActivityNotification',
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: 'Bearer ' + tokenClient
+        }
+      };
+
+      return await new Promise((resolve, reject) => {
+        const req = https.request(options, res => {
+          res.on('data', d => {
+            process.stdout.write(d);
+            resolve(d)
+          })
+        });
+
+        req.on('error', error => {
+          console.error(error)
+        });
+
+        req.write(data)
+        req.end();
+      });
+    },
+  });
+
   /**
    * @summary Route "hack" qui permet de faire switcher le role d'un user
    */
@@ -926,7 +1016,7 @@ const register = async (server, options) => {
       }
 
       try {
-        const allUser = await  User.findAll({raw: true});
+        const allUser = await User.findAll({ raw: true });
         for await (let user of allUser) {
           const newName = Crypto.encrypt(user.nom);
           const replacements = {
@@ -943,7 +1033,7 @@ const register = async (server, options) => {
         return true;
       } catch (e) {
         console.error(e);
-      }      
+      }
     },
   });
 

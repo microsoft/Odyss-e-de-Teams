@@ -45,26 +45,32 @@ class Menu extends Component<IMenuProps, IMenuState> {
     }
   }
 
-  private _onClick = (e: any) => {
-    document.getElementById('indicator').style.display = 'block';
-    let elem = e.target;
-    if (!elem.classList.contains('list-group-item')) {
-      elem = elem.parentElement;
-    }
-    let newY = elem.offsetTop;
-
-    this._setPositionIndicator(newY);
-  }
-
   private _setPositionIndicator = (top: number) => {
     const marker = document.getElementById('indicator');
+    marker.style.display = 'block';
     marker.style.transform = `translateY(${top}px)`;
   }
 
+  private _setActivTabMenu = async () => {
+    let menuActive = window.location.hash;
+    let ttMenuLink = document.getElementsByClassName('list-group-item-action');
+    for (let i = 0; i < ttMenuLink.length; i++) {
+      let menuDisplayed: any = ttMenuLink[i];
+      let menu = this.state.listMenu.find(m => ttMenuLink[i].innerHTML.includes(m.nom));
+      if (menu.router_link !== menuActive) {
+        menuDisplayed.classList.remove('active');
+      } else {
+        menuDisplayed.classList.add('active');
+        this._setPositionIndicator(menuDisplayed.offsetTop);
+      }
+    }
+  }
+
   render() {
+    this._setActivTabMenu();
     let { currentRouterLink, currentUser } = this.props;
     const { organisationLogo } = this.state;
-    if (currentRouterLink.match(new RegExp('/',"gi")).length > 1) {
+    if (currentRouterLink.match(new RegExp('/', "gi")).length > 1) {
       const tabRouterLink = currentRouterLink.split('/');
       if (tabRouterLink.length > 1) {
         currentRouterLink = '/' + tabRouterLink[1];
@@ -90,7 +96,6 @@ class Menu extends Component<IMenuProps, IMenuState> {
                   key={item.id_page}
                   action
                   href={item.router_link}
-                  onClick={this._onClick}
                   className={`py-0 d-flex align-items-center menu${item.id_page}`}
                 >
                   <div style={itemStyle} className={"ico-menu"}></div>

@@ -26,6 +26,30 @@ class API {
       .catch((error) => this.handleAPIError(error));
   }
 
+  protected sendNotification(url: string, params: any = null) {
+    let urlParams = "";
+    if (params) {
+      Object.keys(params).forEach((e) => {
+        if (params[e]) {
+          urlParams += `&${e.toString()}=${params[e]}`;
+        }
+      });
+    }
+
+    let urlAPI =
+      this.BASE_URL +
+      url +
+      "?api_key=" +
+      this.API_TOKEN +
+      (params ? urlParams : "");
+
+    return fetch(urlAPI, {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .catch((error) => this.handleAPIError(error));
+  }
+
   protected fetchPOST(url: string, body: any, params: any = null) {
     return this.fetchWithBody(url, body, params, "post");
   }
