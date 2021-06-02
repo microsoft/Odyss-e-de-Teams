@@ -467,3 +467,7 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 
 -- Sephora - Test  - Reset installation
 	SELECT f_delete_user_organisation(54, true);
+
+-- TDF - Reprise installation
+	SELECT f_delete_user_organisation(55, false);
+	SELECT f_set_date_semaine(55, '2021-06-07'::date);
