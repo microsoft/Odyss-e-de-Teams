@@ -184,6 +184,9 @@
     "title1": "Launch!",
     "title2": "Mission:",
     "first_mission_intro": "Your first mission is live: here begins your galactic exploration through the collaborative usages of Teams",
+    "second_mission_intro": "Your second mission is live: here continue your galactic exploration through the collaborative usages of Teams",
+    "third_mission_intro": "Your third mission is live: here continue your galactic exploration through the collaborative usages of Teams",
+    "fourth_mission_intro": "Your last mission is live: here ends your galactic exploration through the collaborative usages of Teams",
     "subtitle": "Select a module and a level and start the game! Complete all the modules to collect as many points as you can and increase your chances of winning!",
     "end": "Done!"
   },
@@ -328,7 +331,7 @@
     "error_unknown": "Unkown Error",
     "level": "Level",
     "loading": "Loading...",
-    "login":"Login",
+    "login": "Login",
     "good_answers": "Right answers",
     "questioner_complete": "Completed quiz",
     "cancel": "Cancel"
