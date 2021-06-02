@@ -33,12 +33,14 @@ services:
       - ./postgres/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
       - ./postgres/data.sql:/docker-entrypoint-initdb.d/2-data.sql
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5433:5432"
     restart: always
   backend:
     container_name: odyssee_teams_server
     environment:
       DATABASE_URL: ${DATABASE_URL}
+      AZUREAD_APPLICATION_ID: ${AZUREAD_ApplicationId}
+      AZUREAD_APP_SECRET: ${AZUREAD_APP_SECRET}
     build:
       context: ./server
       dockerfile: Dockerfile

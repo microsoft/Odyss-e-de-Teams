@@ -92,6 +92,10 @@
     "social": {
       "title": "Social Networks",
       "description": "Admiral, you can select a social network template from the list below, customize it and click on the «Copy cache» button to directly paste the content into your ready-to-send message!"
+    },
+    "notification": {
+      "title": "Teams Notification",
+      "description": "Admiral, you can write your message in the box below! It will be visible to the Explorers of your organization via their \"Activity\" tab."
     }
   },
   "outillage": {
@@ -316,7 +320,8 @@
     "button": {
       "reset": "Reset",
       "save": "Save changes",
-      "saving": "Saving"
+      "saving": "Saving",
+      "send": "Send"
     },
     "explorer": "Explorer",
     "cache_copy": "Copy cache",

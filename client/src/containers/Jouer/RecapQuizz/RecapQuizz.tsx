@@ -48,7 +48,7 @@ class RecapQuizz extends Component<IRecapQuizzProps & WithTranslation, IRecapQui
         id_niveau: params.niveauId,
       }),
       UserAPI.checkLevelUp(),
-      UserAPI.checkNewMedal(),
+      UserAPI.checkNewMedal(i18n.language),
     ])
       .toPromise()
       .then((data) => {
