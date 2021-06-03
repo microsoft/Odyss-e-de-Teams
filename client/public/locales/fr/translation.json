@@ -183,6 +183,9 @@
     "title1": "Lancement !",
     "title2": "Mission :",
     "first_mission_intro": "Ta première mission est arrivée : ici commence ton exploration galactique à travers les usages collaboratifs de Teams",
+    "second_mission_intro": "Ta seconde mission est arrivée : ici se poursuit ton exploration galactique à travers les usages collaboratifs de Teams",
+    "third_mission_intro": "Ta troisième mission est arrivée : ici se poursuit ton exploration galactique à travers les usages collaboratifs de Teams",
+    "fourth_mission_intro": "Ta dernière mission est arrivée : ici se termine ton exploration galactique à travers les usages collaboratifs de Teams",
     "subtitle": "Sélectionne un module et un niveau puis prépare-toi au décollage ! Pour cumuler un maximum de points et augmenter tes chances de gagner, tu es invité(e) à compléter tous les modules proposés !",
     "end": "Terminé !"
   },
@@ -328,7 +331,7 @@
     "error_unknown": "Erreur non spécifiée",
     "level": "Niveau",
     "loading": "Chargement...",
-    "login":"Se connecter",
+    "login": "Se connecter",
     "good_answers": "Bonnes réponses",
     "questioner_complete": "Questionnaires complétés",
     "cancel": "Annuler"
