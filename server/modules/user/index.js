@@ -84,7 +84,7 @@ const register = async (server, options) => {
           } else {
             const newResult = result.map(u =>
               u.nom
-                ? {...u, nom: Crypto.decrypt(JSON.parse(u.nom))}
+                ? { ...u, nom: Crypto.decrypt(JSON.parse(u.nom)) }
                 : u
             );
             return newResult;
@@ -425,11 +425,11 @@ const register = async (server, options) => {
       return db.sequelize
         .query(
           `
-          select b.nom as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end 
-          from t_semaine s 
-            inner join j_organisation_semaine ts on ts.id_semaine = s.id_semaine AND id_organisation =:id_organisation
-            inner join t_organisation c on ts.id_organisation = c.id_organisation and c.id_semaine_encours=s.id_semaine
-            INNER JOIN public.t_libelle_i18n b ON s.id_semaine=b.id_table AND TRIM(b.code)='SEMAINE' AND TRIM(b.lang)=:lang;`,
+          SELECT b.nom as mission_name,ts.debut_semaine as mission_start, ts.fin_semaine as mission_end, s.ordre
+          FROM t_semaine s 
+          INNER JOIN j_organisation_semaine ts on ts.id_semaine = s.id_semaine AND id_organisation = :id_organisation
+          INNER JOIN t_organisation c on ts.id_organisation = c.id_organisation and c.id_semaine_encours = s.id_semaine
+          INNER JOIN public.t_libelle_i18n b ON s.id_semaine = b.id_table AND TRIM(b.code)='SEMAINE' AND TRIM(b.lang) =:lang;`,
           {
             replacements: replacements,
             type: QueryTypes.SELECT,
@@ -678,7 +678,7 @@ const register = async (server, options) => {
       const Organisation = db.getModel("Organisation");
       const params = request.query;
       const lang = params.language;
-      
+
       if (!request.state.oid_ad) {
         return false;
       }
