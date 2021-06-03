@@ -471,3 +471,28 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 -- TDF - Reprise installation
 	SELECT f_delete_user_organisation(55, false);
 	SELECT f_set_date_semaine(55, '2021-06-07'::date);
+
+
+-- GTR Gaz  - Reprise installation
+	SELECT f_delete_user_organisation(60, false);
+	SELECT f_set_date_semaine(60, '2021-06-07'::date);
+
+-- ARKEMA
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Arkema', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (62, 'mathieu.consol@arkema.com', true, now(), now()),
+		 (62, 'gauthier.danloux@arkema.com', true, now(), now()),
+		 (62, 'bill.siegel@arkema.com', true, now(), now()),
+		 (62, 'victor.ilano@arkema.com', true, now(), now()),
+		 (62, 'paul.hoh@arkema.com', true, now(), now());
+
+	SELECT f_set_date_semaine(62, '2021-06-14'::date);
+
+-- RTE France
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('RTE France', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (63, 'michael.chartois@rte-france.com', true, now(), now()),
+		 (63, 'christophe.devaux@rte-france.com', true, now(), now()),
+		 (63, 'julien.pietri@rte-france.com', true, now(), now());
+
+	SELECT f_set_date_semaine(63, '2021-06-07'::date);
