@@ -496,3 +496,25 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 		 (63, 'julien.pietri@rte-france.com', true, now(), now());
 
 	SELECT f_set_date_semaine(63, '2021-06-07'::date);
+
+-- Artelia  - Reprise installation
+	SELECT f_delete_user_organisation(57, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (57, 'deborah.marchand@arteliagroup.com', true, now(), now()),
+		 (57, 'delphine.gharsallah-roger@arteliagroup.com', true, now(), now());
+
+	
+	SELECT f_set_date_semaine(57, '2021-06-14'::date);
+
+-- Vinci Energies  - Reprise installation
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (53, 'sarah.bremont@vinci-energies.net', true, now(), now()),
+		 (53, 'lucas.marty@vinci-energies.net', true, now(), now());
+
+	
+	SELECT f_set_date_semaine(53, '2021-06-14'::date);
+
+-- Keolis  - Reprise installation
+SELECT f_delete_user_organisation(61, false);
+
+SELECT f_set_date_semaine(61, '2021-06-10'::date);
