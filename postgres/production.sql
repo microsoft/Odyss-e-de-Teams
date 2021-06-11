@@ -523,3 +523,11 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 SELECT f_delete_user_organisation(59, false);
 
 SELECT f_set_date_semaine(59, '2021-06-14'::date);
+
+
+-- Sephora - Reprise installation	
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(54, 'jakoun@ext.sephora.fr', true, now(), now()),
+		 (54, 'hchir@sephora.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(54, '2021-06-11'::date);
