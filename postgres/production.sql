@@ -515,6 +515,11 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 	SELECT f_set_date_semaine(53, '2021-06-14'::date);
 
 -- Keolis  - Reprise installation
-SELECT f_delete_user_organisation(61, false);
+	SELECT f_delete_user_organisation(61, false);
 
-SELECT f_set_date_semaine(61, '2021-06-10'::date);
+	SELECT f_set_date_semaine(61, '2021-06-10'::date);
+
+-- Hachette  - Reprise installation
+SELECT f_delete_user_organisation(59, false);
+
+SELECT f_set_date_semaine(59, '2021-06-14'::date);
