@@ -884,40 +884,43 @@ const register = async (server, options) => {
     path: "/admin/send-notification",
     method: "GET",
     handler: async function (request, h) {
-      
-      // send request to intermediate
 
+      // send request to intermediate
       let tokenClient = request.query.token;
-      //let token = await GraphApi.getGraphToken(tokenClient);
-      //console.log(token)
+      let token = await GraphApi.getGraphToken(tokenClient);
+      console.log('token application: ', token.access_token)
       const data = JSON.stringify({
-        topic: {
-          source: 'text',
-          value: 'test',
-          webUrl: `https://teams.microsoft.com/l/entity/5830a2dd-c958-47bd-b6e8-676341fc5faf/Le jeu`,
+        "topic": {
+          "source": "entityUrl",
+          "value": "https://graph.microsoft.com/v1.0/users/a5df9bcb-180c-4c20-8bee-2e26d6f8e5ee/teamwork/installedApps/YTVkZjliY2ItMTgwYy00YzIwLThiZWUtMmUyNmQ2ZjhlNWVlIyMxYzliNjFlOC1hNDI4LTQxZDUtYTFiNC02OTA2YWRmNjU3MjA="
         },
-        activityType: 'sendNotificationToUser',
-        previewText: {
-          content: 'coucou',
-        }
+        "activityType": "taskCreated",
+        "previewText": {
+          "content": "New Task Created"
+        },
+        "templateParameters": [
+          {
+            "name": "taskId",
+            "value": "Task 12322"
+          }
+        ]
       }
 
       )
       const options = {
         hostname: 'graph.microsoft.com',
         port: 443,
-        path: '/v1.0/users/2f6b2174-2d71-4bb8-a56e-8c6c01dcca0a/teamwork/sendActivityNotification',
+        path: '/v1.0/users/a5df9bcb-180c-4c20-8bee-2e26d6f8e5ee/teamwork/sendActivityNotification',
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          Authorization: 'Bearer ' + tokenClient
+          Authorization: 'Bearer ' + token.access_token
         }
       };
 
       return await new Promise((resolve, reject) => {
         const req = https.request(options, res => {
           res.on('data', d => {
-            process.stdout.write(d);
             resolve(d)
           })
         });

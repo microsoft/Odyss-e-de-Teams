@@ -41,6 +41,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       AZUREAD_APPLICATION_ID: ${AZUREAD_ApplicationId}
       AZUREAD_APP_SECRET: ${AZUREAD_APP_SECRET}
+      AZUREAD_ANNUAIRE_ID: ${AZUREAD_ANNUAIRE_ID}
     build:
       context: ./server
       dockerfile: Dockerfile
