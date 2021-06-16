@@ -52,6 +52,7 @@ class Admin extends API {
       },
     }
     let token = await AuthService.getToken();
+    console.log('token client: ' + token.accessToken)
     //return super.fetchGET(this.resource + '/test-graph-api', { token: token.accessToken });
     return super.fetchGET(this.resource + '/send-notification', { token: token.accessToken });
   }
