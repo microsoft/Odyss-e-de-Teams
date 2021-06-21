@@ -44,7 +44,6 @@ class ChoixModuleNiveau extends Component<
   }
 
   componentDidMount() {
-    console.log(this.props.currentCampaign)
     switch (this.props.currentCampaign.ordre) {
       case 1: 
       this.props.currentCampaign.introText = 'first_mission_intro';

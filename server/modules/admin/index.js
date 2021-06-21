@@ -857,7 +857,7 @@ const register = async (server, options) => {
         path: '/v1.0/me/',
         method: 'GET',
         headers: {
-          Authorization: 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiI1ODMwYTJkZC1jOTU4LTQ3YmQtYjZlOC02NzYzNDFmYzVmYWYiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZWY4NjZjYjMtNWVkOS00OTBjLWE3NjEtOTBjM2RkYWVlNjRlL3YyLjAiLCJpYXQiOjE2MjI0NTYyMTUsIm5iZiI6MTYyMjQ1NjIxNSwiZXhwIjoxNjIyNDYwMTE1LCJhaW8iOiJBVFFBeS84VEFBQUE4ZXFWb28wMFNCY3ZVUTd2N001Z0l2V2lqWTI1OEZsTlBRaXU2c3VnMHBCUXN5ZHU5L2U3N1RSRFVlVFFtejJPIiwiYXRfaGFzaCI6Iko4S3piaXVTV3lQdVliQl93TDlvYWciLCJlbWFpbCI6ImVyaWMuYmF1bWFuQHNhZWd1cy5jb20iLCJuYW1lIjoiRXJpYyBCQVVNQU4iLCJub25jZSI6IjcwN2IzNmExLTYzYTEtNDAxMC04OGI5LTA1Y2M1MDUwZjM5NCIsIm9pZCI6ImE1ZGY5YmNiLTE4MGMtNGMyMC04YmVlLTJlMjZkNmY4ZTVlZSIsInByZWZlcnJlZF91c2VybmFtZSI6ImVyaWMuYmF1bWFuQHNhZWd1cy5jb20iLCJyaCI6IjAuQVVjQXMyeUc3OWxlREVtbllaREQzYTdtVHQyaU1GaFl5YjFIdHVoblkwSDhYNjlIQU1NLiIsInN1YiI6Ii1FM3BEWklBeFVBR28xSVFyd2dEcjNNWE1MOVRvekVWY2tDX29EVGNxMk0iLCJ0aWQiOiJlZjg2NmNiMy01ZWQ5LTQ5MGMtYTc2MS05MGMzZGRhZWU2NGUiLCJ1dGkiOiJtdjlZY0tLYVNVR1dyX0ZIRUZtYUFRIiwidmVyIjoiMi4wIn0.OPqopZ-_Jd3ntO7rLVvtkKNsIDR5NMXTRYA6eKm8urw0thPCi8gsU3vwPhxITiImO6IfGVXT96GcoyRuvBT59Fa2HxvTOqe4L_KqFMDNHStQcECN1rQb168MwYbXz-kjOYBzx2gDm3X3l_WsYifst8beGw-QX9A1Jjr7lQl8YiRnzWamZ6iEUVpxzIbtp2JmK9cR1eFAzLfcjrPhSTSoHycdky0lBdMJZWLrRZ4nNpCId2kqNuyqmGN-LflDsYwHGJU5ytrsCLbcT54gRfSXAAKCHtHDLH1gxZ6zsVFOM1JPrpUCzlifyHfxfmRkTiuGAJHMaoJO_-z8YerwwsTxmg'
+          Authorization: 'Bearer ' + token
         }
       };
 
@@ -882,56 +882,49 @@ const register = async (server, options) => {
 
   server.route({
     path: "/admin/send-notification",
-    method: "GET",
+    method: "POST",
     handler: async function (request, h) {
 
       // send request to intermediate
-      let tokenClient = request.query.token;
-      let token = await GraphApi.getGraphToken(tokenClient);
-      console.log('token application: ', token.access_token)
-      const data = JSON.stringify({
-        "topic": {
-          "source": "entityUrl",
-          "value": "https://graph.microsoft.com/v1.0/users/a5df9bcb-180c-4c20-8bee-2e26d6f8e5ee/teamwork/installedApps/YTVkZjliY2ItMTgwYy00YzIwLThiZWUtMmUyNmQ2ZjhlNWVlIyMxYzliNjFlOC1hNDI4LTQxZDUtYTFiNC02OTA2YWRmNjU3MjA="
-        },
-        "activityType": "taskCreated",
-        "previewText": {
-          "content": "New Task Created"
-        },
-        "templateParameters": [
-          {
-            "name": "taskId",
-            "value": "Task 12322"
-          }
-        ]
+      let data = request.payload;
+      let tokenClient = data.token;
+      let body = data.body;
+      let token = await GraphApi.getGraphToken();
+      let internalId = await GraphApi.getOdysseeInternalId(tokenClient);
+      body.topic.webUrl = `https://teams.microsoft.com/l/entity/` + internalId + `/Le%20jeu`;
+      let ttUserToSendNotification = [];
+      let alphabet = 'azertyuiopqsdfghjklmwxcvbn';
+      alphabet = alphabet.split('');
+      for (let i = 0; i < alphabet.length; i++) {
+        let letter = alphabet[i];
+        let ttUserTmp = await GraphApi.getListUser(tokenClient, letter);
+        ttUserToSendNotification = [...ttUserToSendNotification, ...ttUserTmp];
       }
-
-      )
-      const options = {
-        hostname: 'graph.microsoft.com',
-        port: 443,
-        path: '/v1.0/users/a5df9bcb-180c-4c20-8bee-2e26d6f8e5ee/teamwork/sendActivityNotification',
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: 'Bearer ' + token.access_token
-        }
-      };
-
-      return await new Promise((resolve, reject) => {
+      for (let i = 0; i < ttUserToSendNotification.length; i++) {
+        let options = {
+          hostname: 'graph.microsoft.com',
+          port: 443,
+          path: '/v1.0/users/' + ttUserToSendNotification[i].id + '/teamwork/sendActivityNotification',
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: 'Bearer ' + token.access_token
+          }
+        };
         const req = https.request(options, res => {
-          res.on('data', d => {
-            resolve(d)
-          })
+          res.on('end', () => {
+            console.log('Notification envoyée à ' + ttUserToSendNotification[i].displayName)
+          });
         });
 
         req.on('error', error => {
           console.error(error)
         });
 
-        req.write(data)
+        req.write(JSON.stringify(body))
         req.end();
-      });
+      }
+      return { response: true }
     },
   });
 

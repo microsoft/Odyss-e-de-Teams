@@ -95,7 +95,12 @@
     },
     "notification": {
       "title": "Teams Notification",
-      "description": "Admiral, you can write your message in the box below! It will be visible to the Explorers of your organization via their \"Activity\" tab."
+      "description": "Admiral, you can write your message in the box below! It will be visible to the Explorers of your organization via their \"Activity\" tab.",
+      "title_message": "Message title",
+      "detail_message": "Admiral, define a title for your message. Please note that it is not possible to exceed the limit of 32 characters.",
+      "your_message": "Your message",
+      "detail_your_message": "Please note that it is not possible to exceed the limit of 32 characters.",
+      "notifiation_confirmation": "Admiral, has been successfully sent!"
     }
   },
   "outillage": {

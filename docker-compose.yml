@@ -12,7 +12,7 @@ services:
       - REACT_APP_API_URL= ${API_URL}
       - REACT_APP_STATIC_URL=${STATIC_URL}
       - REACT_APP_API_TOKEN= ${API_TOKEN}
-      - REACT_APP_AZUREAD_ApplicationId= ${AZUREAD_ApplicationId}
+      - REACT_APP_AZUREAD_APPLICATION_ID= ${AZUREAD_APPLICATION_ID}
       - REACT_APP_AZUREAD_BaseUri= ${AZUREAD_BaseUri}
     ports:
       - "3000:3000"
@@ -39,7 +39,7 @@ services:
     container_name: odyssee_teams_server
     environment:
       DATABASE_URL: ${DATABASE_URL}
-      AZUREAD_APPLICATION_ID: ${AZUREAD_ApplicationId}
+      AZUREAD_APPLICATION_ID: ${AZUREAD_APPLICATION_ID}
       AZUREAD_APP_SECRET: ${AZUREAD_APP_SECRET}
       AZUREAD_ANNUAIRE_ID: ${AZUREAD_ANNUAIRE_ID}
     build:
