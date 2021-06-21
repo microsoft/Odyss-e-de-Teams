@@ -42,19 +42,19 @@ class Admin extends API {
   async sendNotification(data): Promise<any> {
     let body = {
       topic: {
-        source: 'text',
-        value: 'test a',
-        webUrl: `https://teams.microsoft.com/l/entity/${process.env.REACT_APP_AZUREAD_ApplicationId}/Notification`,
+        "source": 'text',
+        "value": data.title,
       },
-      activityType: 'sendNotificationToUser',
-      previewText: {
-        content: data.value,
+      "activityType": 'sendNotificationToUser',
+      "previewText": {
+        "content": data.value,
       },
     }
+    console.log(data)
     let token = await AuthService.getToken();
-    console.log('token client: ' + token.accessToken)
+    //TODO: token si on est en prod token.accessToken en local
     //return super.fetchGET(this.resource + '/test-graph-api', { token: token.accessToken });
-    return super.fetchGET(this.resource + '/send-notification', { token: token.accessToken });
+    return super.fetchPOST(this.resource + '/send-notification', { token: token.accessToken ? token.accessToken : token, body: body });
   }
   /**** fin notification  ****/
 

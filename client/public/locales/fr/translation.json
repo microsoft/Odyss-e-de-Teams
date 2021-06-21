@@ -94,7 +94,12 @@
     },
     "notification": {
       "title": "Notification Teams",
-      "description": "Commandant, vous pouvez écrire un message qui sera visible dans l’onglet Activité de l’interface Teams de chaque Explorateur de votre organisation."
+      "description": "Commandant, vous pouvez écrire un message qui sera visible dans l’onglet Activité de l’interface Teams de chaque Explorateur de votre organisation.",
+      "title_message": "Titre du message",
+      "detail_message": "Définissez un titre qui accompagnera votre notification. Attention, il n’est pas possible dépasser la limite de 32 caractères.",
+      "your_message": "Votre message",
+      "detail_your_message": "Attention, il n’est pas possible de dépasser la limite de 32 caractères.",
+      "notifiation_confirmation": "Commandant, votre message a été envoyé avec succès !"
     }
   },
   "outillage": {

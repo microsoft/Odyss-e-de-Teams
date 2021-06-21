@@ -1,7 +1,6 @@
 import React from "react";
 
 import { withTranslation, WithTranslation } from "react-i18next";
-import i18n from '../../../../config/i18n';
 
 import AdminAPI from "api/Admin";
 
@@ -10,7 +9,8 @@ import "./style.scss";
 import { Button } from "react-bootstrap";
 
 interface IAdminNotificationState {
-  inputValue: string;
+  title: string;
+  value: string;
 }
 
 class AdminNotification extends React.Component<
@@ -20,22 +20,45 @@ class AdminNotification extends React.Component<
   constructor(props: WithTranslation) {
     super(props);
     this.state = {
-      inputValue: ''
+      title: '',
+      value: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ inputValue: event.target.value });
+    if (event.target?.value?.length > 32) {
+      event.target.value = event.target.value.slice(0, -1);
+    }
+    this.setState({ value: event.target.value });
+  }
+
+  handleTitleChange(event) {
+    if (event.target?.value?.length > 32) {
+      event.target.value = event.target.value.slice(0, -1);
+    }
+    this.setState({ title: event.target.value });
   }
 
   resetInput() {
-    this.setState({ inputValue: '' });
+    this.setState({ value: '', title: '' });
   }
 
   async sendNotification() {
-    await AdminAPI.sendNotification({ value: this.state.inputValue });
+    if (this.state.title?.trim() !== '' && this.state.value?.trim() !== '') {
+      this.resetInput();
+      await AdminAPI.sendNotification(this.state).then(res => {
+        if (res.response) {
+          let confirmation = document.getElementById('confirmation');
+          confirmation.style.display = 'block';
+          setTimeout(() => {
+            confirmation.style.display = 'none';
+          }, 10000);
+        }
+      });
+    }
   }
 
   render() {
@@ -54,8 +77,24 @@ class AdminNotification extends React.Component<
         </div>
 
         <div className="Notification__body">
-          <textarea className="Notification__body__textarea" value={this.state.inputValue} onChange={this.handleChange} />
+          <div className="Notification__body__title">
+            {tReady && t("admin.notification.title_message")}
+          </div>
+          <div>
+            {tReady && t("admin.notification.detail_message")}
+          </div>
+          <input type="text" value={this.state.title} onChange={this.handleTitleChange} className="Notification__body__input" />
+          <div className="Notification__body__title">
+            {tReady && t("admin.notification.your_message")}
+          </div>
+          <div>
+            {tReady && t("admin.notification.detail_your_message")}
+          </div>
+          <input type="text" className="Notification__body__input" value={this.state.value} onChange={this.handleChange} />
           <div className="Notification__body__buttons">
+            <div className="Notification__body__buttons__confirmation" id="confirmation">
+              {tReady && t("admin.notification.notifiation_confirmation")}
+            </div>
             <Button className="Notification__body__buttons__btn-left" variant="secondary" onClick={() => this.resetInput()}>
               {tReady && t("utils.button.reset")}
             </Button>

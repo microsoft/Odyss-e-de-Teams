@@ -24,11 +24,13 @@ GraphApi.getGraphToken = async () => {
     };
     /* TODO: attention content-length obligatoire */
 
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         const req = https.request(options, res => {
             res.on('data', d => {
+                d = d.toString('utf8');
+                d = JSON.parse(d);
                 resolve(d)
-            })
+            });
         });
 
         req.on('error', error => {
@@ -36,7 +38,70 @@ GraphApi.getGraphToken = async () => {
             reject(error)
         });
 
-        req.write(data)
+        req.write(data);
+        req.end();
+    });
+};
+
+GraphApi.getOdysseeInternalId = async (token) => {
+    const options = {
+        hostname: 'graph.microsoft.com',
+        port: 443,
+        path: "/v1.0/appCatalogs/teamsApps?$filter=externalId%20eq%20'" + process.env.AZUREAD_APPLICATION_ID + "'",
+        method: 'GET',
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    };
+
+    return new Promise((resolve, reject) => {
+        const req = https.request(options, res => {
+            res.on('data', d => {
+                d = d.toString('utf8');
+                d = JSON.parse(d)
+                d = d.value[0].id;
+                resolve(d)
+            });
+        });
+
+        req.on('error', error => {
+            console.error(error)
+            reject(error)
+        });
+
+        req.end();
+    });
+};
+
+GraphApi.getListUser = async (token, letter) => {
+    const options = {
+        hostname: 'graph.microsoft.com',
+        port: 443,
+        path: "/v1.0/users?$filter=startswith(givenName,'" + letter + "')",
+        method: 'GET',
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    };
+
+    return new Promise((resolve, reject) => {
+        const req = https.request(options, res => {
+            let result = '';
+            res.on('data', d => {
+                d = d.toString('utf8');
+                result += d;
+            });
+            res.on('end', () => {
+                result = JSON.parse(result);
+                resolve(result.value)
+            });
+        });
+
+        req.on('error', error => {
+            console.error(error)
+            reject(error)
+        });
+
         req.end();
     });
 };

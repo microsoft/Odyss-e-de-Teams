@@ -12,12 +12,12 @@ $btn-tags-hover: "button:active, button:hover";
   }
 
   &__body {
-    &__textarea {
+    &__input {
+      margin-top: 10px;
       width: 100%;
       background-color: #f1f0ef;
       border-radius: 15px;
       border: none;
-      min-height: 150px;
       margin-bottom: 20px;
       padding: 10px;
       &:focus-visible {
@@ -25,10 +25,26 @@ $btn-tags-hover: "button:active, button:hover";
       }
     }
     &__buttons {
-      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       &__btn-left {
         margin-right: 10px;
       }
+      &__confirmation {
+        display: none;
+        padding: 0.5rem 1.125rem;
+        background-color: #5db87c;
+        border: 1px solid #396247;
+        color: #ffffff;
+        border-radius: 0.75rem;
+        margin-right: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    }
+    &__title {
+      font-weight: bold;
     }
   }
 }
