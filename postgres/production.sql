@@ -471,3 +471,63 @@ GRANT SELECT, UPDATE, INSERT, TRUNCATE, DELETE ON TABLE public.t_debug_encoding 
 -- TDF - Reprise installation
 	SELECT f_delete_user_organisation(55, false);
 	SELECT f_set_date_semaine(55, '2021-06-07'::date);
+
+
+-- GTR Gaz  - Reprise installation
+	SELECT f_delete_user_organisation(60, false);
+	SELECT f_set_date_semaine(60, '2021-06-07'::date);
+
+-- ARKEMA
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('Arkema', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (62, 'mathieu.consol@arkema.com', true, now(), now()),
+		 (62, 'gauthier.danloux@arkema.com', true, now(), now()),
+		 (62, 'bill.siegel@arkema.com', true, now(), now()),
+		 (62, 'victor.ilano@arkema.com', true, now(), now()),
+		 (62, 'paul.hoh@arkema.com', true, now(), now());
+
+	SELECT f_set_date_semaine(62, '2021-06-14'::date);
+
+-- RTE France
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES ('RTE France', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (63, 'michael.chartois@rte-france.com', true, now(), now()),
+		 (63, 'christophe.devaux@rte-france.com', true, now(), now()),
+		 (63, 'julien.pietri@rte-france.com', true, now(), now());
+
+	SELECT f_set_date_semaine(63, '2021-06-07'::date);
+
+-- Artelia  - Reprise installation
+	SELECT f_delete_user_organisation(57, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (57, 'deborah.marchand@arteliagroup.com', true, now(), now()),
+		 (57, 'delphine.gharsallah-roger@arteliagroup.com', true, now(), now());
+
+	
+	SELECT f_set_date_semaine(57, '2021-06-14'::date);
+
+-- Vinci Energies  - Reprise installation
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (53, 'sarah.bremont@vinci-energies.net', true, now(), now()),
+		 (53, 'lucas.marty@vinci-energies.net', true, now(), now());
+
+	
+	SELECT f_set_date_semaine(53, '2021-06-14'::date);
+
+-- Keolis  - Reprise installation
+	SELECT f_delete_user_organisation(61, false);
+
+	SELECT f_set_date_semaine(61, '2021-06-10'::date);
+
+-- Hachette  - Reprise installation
+SELECT f_delete_user_organisation(59, false);
+
+SELECT f_set_date_semaine(59, '2021-06-14'::date);
+
+
+-- Sephora - Reprise installation	
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(54, 'jakoun@ext.sephora.fr', true, now(), now()),
+		 (54, 'hchir@sephora.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(54, '2021-06-11'::date);
