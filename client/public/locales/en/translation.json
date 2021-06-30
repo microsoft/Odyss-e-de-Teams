@@ -133,10 +133,7 @@
       "rules_desc": "Rules of the game and rewards",
       "mobile_mission_title": "Mission: ",
       "mobile_mission_pending": "in progress!",
-      "explanation": {
-        "part_1": "Try to win prizes and goodies by answering new questions every week!",
-        "part_2": "Collect Game Points and EXP Points to be at the top of the leaderboards."
-      },
+      "explanation": "Answer the questions every week and earn as many points as you can to climb to the top of the leaderboards and win plenty of prizes!",
       "bonus": {
         "title": "Daily bonus",
         "desc": "Log in every day to receive valuable rewards that will help you during your journey!",

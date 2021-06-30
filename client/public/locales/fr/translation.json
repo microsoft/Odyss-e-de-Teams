@@ -132,10 +132,7 @@
       "rules_desc": "Règles du jeu et récompenses",
       "mobile_mission_title": "Mission : ",
       "mobile_mission_pending": "en cours !",
-      "explanation": {
-        "part_1": "Cumulez des points au classement en répondant chaque semaine aux nouveaux modules de questions Teams et tentez de remporter un",
-        "part_2": "d'une valeur de 300,00 euros et de nombreux cadeaux !"
-      },
+      "explanation": "Cumulez des points au classement en répondant chaque semaine aux nouveaux modules de questions Teams et tentez de remporter de nombreux cadeaux !",
       "bonus": {
         "title": "Bonus journaliers",
         "desc": "Tous les jours en te connectant, reçois des précieuses récompenses d'honneur qui t'aideront dans ton exploration !",
