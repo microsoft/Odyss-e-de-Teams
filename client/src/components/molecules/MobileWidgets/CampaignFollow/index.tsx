@@ -23,9 +23,7 @@ const CampaignFollowMobile = (props: ICampaignFollow & WithTranslation) => {
         </div>
 
         <div className="CampaignFollow__container__text pt-4">
-          {tReady && t("player.cockpit.explanation.part_1")}
-          <strong>Surface Headphone</strong>
-          {tReady && t("player.cockpit.explanation.part_2")}
+          {tReady && t("player.cockpit.explanation")}
         </div>
 
         <div className="CampaignFollow__container__timer pt-5">
