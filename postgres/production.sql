@@ -531,3 +531,10 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 		 (54, 'hchir@sephora.fr', true, now(), now());
 
 	SELECT f_set_date_semaine(54, '2021-06-11'::date);
+
+-- LA POSTE 
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (17, 'kassie.vital@laposte.fr', true, now(), now()),
+		 (17, 'anne-laurence.rhein@laposte.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(17, '2021-07-07'::date);
