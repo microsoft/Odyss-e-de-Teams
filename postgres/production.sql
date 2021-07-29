@@ -538,3 +538,20 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 		 (17, 'anne-laurence.rhein@laposte.fr', true, now(), now());
 
 	SELECT f_set_date_semaine(17, '2021-07-07'::date);
+
+-- Adecco
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 
+		('Adecco', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(64, 'spetrovic.o365@adeccogrouptest.onmicrosoft.com', true, now(), now()),
+		(64, 'mdanto.o365@adeccogrouptest.onmicrosoft.com', true, now(), now()),
+		(64, 'nbubis.emeat@emea.adeccotest.net', true, now(), now());
+		
+	SELECT f_set_date_semaine(64, '2020-08-16'::date);
+
+-- Sonepar - Reprise installation
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+			(27, 'mickael.huguenin@sonepar.com', true, now(), now()),
+			(27, 'bruce.carr@sonepar-us.com', true, now(), now());
+
+	SELECT f_set_date_semaine(27, '2021-08-23'::date);
