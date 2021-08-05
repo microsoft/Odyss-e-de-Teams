@@ -547,7 +547,7 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 		(64, 'mdanto.o365@adeccogrouptest.onmicrosoft.com', true, now(), now()),
 		(64, 'nbubis.emeat@emea.adeccotest.net', true, now(), now());
 		
-	SELECT f_set_date_semaine(64, '2020-08-16'::date);
+	SELECT f_set_date_semaine(64, '2021-08-16'::date);
 
 -- Sonepar - Reprise installation
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
@@ -555,3 +555,49 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 			(27, 'bruce.carr@sonepar-us.com', true, now(), now());
 
 	SELECT f_set_date_semaine(27, '2021-08-23'::date);
+
+
+-- Cémoi
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 
+		('Cémoi', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(65, 'a.clozel@cemoi.fr', true, now(), now()),
+		(65, 't.adenis@cemoi.fr', true, now(), now());
+		
+	SELECT f_set_date_semaine(65, '2021-09-06'::date);
+
+-- Bouyges Telecom
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 
+		('Bouygues Télécom', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(66, 'mremon@bouyguestelecom.fr', true, now(), now()),
+		(66, 'nzerkak@bouyguestelecom.fr', true, now(), now());
+		
+	SELECT f_set_date_semaine(66, '2021-08-16'::date);
+
+-- suppression données de jeu TDF 
+	SELECT f_delete_user_organisation(55, false);
+
+-- suppression données de jeu Artelia group 
+	SELECT f_delete_user_organisation(57, false);
+
+-- suppression données de jeu Keolis
+	SELECT f_delete_user_organisation(61, false);
+
+-- suppression données de jeu GRT Gaz 
+	SELECT f_delete_user_organisation(60, false);
+
+-- suppression données de jeu RTE france 
+	SELECT f_delete_user_organisation(63, false);
+
+-- suppression données de jeu Arkema 
+	SELECT f_delete_user_organisation(62, false);
+
+-- suppression données de jeu Hachette 
+	SELECT f_delete_user_organisation(59, false);
+
+-- suppression données de jeu Sephora 
+	SELECT f_delete_user_organisation(54, false);
+
+-- suppression données de jeu vinci energies
+	SELECT f_delete_user_organisation(53, false);
