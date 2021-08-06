@@ -52,8 +52,8 @@ const register = async (server, options) => {
         .then((result) => {
           const newResult = result.map(u =>
             u.nom
-              ? {...u, nom: Crypto.decrypt(JSON.parse(u.nom))} //TODO: en prod les noms sont encrypté
-              //? {...u, nom: u.nom}
+              //? {...u, nom: Crypto.decrypt(JSON.parse(u.nom))} //TODO: en prod les noms sont encrypté
+              ? {...u, nom: u.nom}
               : u
           );
           if (params.user) {
