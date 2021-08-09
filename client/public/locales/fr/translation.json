@@ -51,7 +51,11 @@
       "current_logo_title": "Logo actuellement déployé",
       "current_logo_desc": "Commandant, il est recommandé d’importer un logo sur fond blanc pour assurer sa lisibilité.",
       "logoChangeButtonLabel": "Charger un logo",
-      "no_logo_text": "Pas de logo :("
+      "no_logo_text": "Pas de logo :(",
+      "block_game_title": "Bloquer l’accès au jeu",
+      "block_game_desc": "Commandant, il est possible de bloquer l’accès au jeu aux Explorateurs. L’utilisation de cette fonctionnalité est recommandée lorsque votre saison de jeu vient de se terminer.",
+      "block_game_desc2": "Pour réactiver l'accès au jeu, rendez-vous dans l'onglet « Planning » puis « Programme & missions » afin de relancer un des modules de questions.",
+      "btn_block": "Bloquer l'accès au jeu"
     },
     "planning": {
       "subtitle": "Planning du commandant",
