@@ -232,7 +232,7 @@ class Quizz extends Component<IQuizzProps & WithTranslation, IQuizzState> {
       case 6: // QCM avec pictos réponses - Choix unique
         return (
           <div>
-            <p>{tReady && t("quizz.find_wrong")}</p>
+            <p>{tReady && t("quizz.find_good")}</p>
             <QCM question={item} onSelect={this._onSelect} />
           </div>
         );
