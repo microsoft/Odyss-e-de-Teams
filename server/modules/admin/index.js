@@ -341,12 +341,10 @@ const register = async (server, options) => {
 
       const semaine_id = request.payload.id_semaine;
 
-      if (!semaine_id) return false;
-
       try {
         await Organisation.update(
           {
-            id_semaine_encours: semaine_id,
+            id_semaine_encours: semaine_id ? semaine_id : null,
           },
           {
             where: {

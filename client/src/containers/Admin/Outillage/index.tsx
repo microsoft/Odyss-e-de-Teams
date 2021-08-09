@@ -43,6 +43,12 @@ class Outillage extends Component<WithTranslation, IOutillageState> {
     window.location.reload(); // maybe to fix with something better
   };
 
+  blockGame = async (e: any) => {
+    await AdminAPI.setCurrentMission({
+      id_semaine: null,
+    });
+  };
+
   toggleFileInput = (e) => {
     document.getElementById("outillage_form_input").click();
   };
@@ -131,6 +137,24 @@ class Outillage extends Component<WithTranslation, IOutillageState> {
                 </Button>
               </div>
             </Form>
+            <div className="Outillage__blockgame">
+              <h2>{tReady && t("admin.outillage.block_game_title")}</h2>
+              <h5>{tReady && t("admin.outillage.block_game_desc")}</h5>
+            </div>
+            <div className="Outillage__form__action">
+              <h5 className="col-8">
+                {tReady && t("admin.outillage.block_game_desc2")}
+              </h5>
+              <Form className="col-4">
+                <Button
+                  type="button"
+                  onClick={this.blockGame}
+                  className="Outillage__form__input__button"
+                >
+                  {tReady && t("admin.outillage.btn_block")}
+                </Button>
+              </Form>
+            </div>
           </div>
         </div>
       );

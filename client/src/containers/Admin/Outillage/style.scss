@@ -27,6 +27,14 @@
     }
   }
 
+  &__blockgame {
+    width: 50%;
+    margin-top: 7em;
+    h2 {
+      font-weight: bold;
+    }
+  }
+
   &__form {
     margin-top: 1em;
     &__item {
@@ -54,27 +62,23 @@
 
       &__reset {
         background-color: $color-black2;
+        margin-right: 10px;
       }
 
       &__button {
         background-color: $color-primary !important;
       }
     }
-
-    &__reset {
-      background-color: $color-black2;
-    }
-
-    &__button {
-      background-color: $color-primary;
-    }
     &__action {
+      margin-top: 3em;
       display: flex;
-      justify-content: space-around;
+      justify-content: flex-end;
+      h5 {
+        padding-left: 0;
+      }
+      form {
+        text-align: right;
+      }
     }
   }
-}
-
-.Outillage__form__input__button {
-  background-color: $color-primary !important;
 }

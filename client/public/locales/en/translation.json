@@ -52,7 +52,11 @@
       "current_logo_title": "Current deployed logo",
       "current_logo_desc": "Admiral, it is recommended to import a logo on a white background to ensure readability! (.png or .jpg format)",
       "logoChangeButtonLabel": "Upload a logo",
-      "no_logo_text": "No logo :("
+      "no_logo_text": "No logo :(",
+      "block_game_title": "Manage access to the game",
+      "block_game_desc": "Admiral, it is possible to block access to the game for Explorers. Using this feature is recommended when your game season has just ended.",
+      "block_game_desc2": "To reactivate access to the game, go to the \"Planning\" tab then \"Program & missions\" to restart one of the question modules.",
+      "btn_block": "Block access"
     },
     "planning": {
       "subtitle": "Admiral's schedule",
