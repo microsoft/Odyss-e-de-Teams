@@ -35,7 +35,6 @@ class Classement extends Component<IClassementProps & WithTranslation, IClasseme
     let tabBatch = [
       ClassementAPI.getClassement(i18n.language, this.state.currentView, {
         monde: this.state.viewMonde ? 1 : 0,
-        limit: 100,
       }),
     ];
     let isAdmin: boolean = false;
