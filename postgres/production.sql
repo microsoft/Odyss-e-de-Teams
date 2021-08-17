@@ -552,8 +552,9 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 -- Sonepar - Reprise installation
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
 			(27, 'mickael.huguenin@sonepar.com', true, now(), now()),
+			(27, 'bruce.carr@sonepar.com', true, now(), now());
 			(27, 'bruce.carr@sonepar-us.com', true, now(), now());
-
+			
 	SELECT f_set_date_semaine(27, '2021-08-23'::date);
 
 
