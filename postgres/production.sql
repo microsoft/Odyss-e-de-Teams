@@ -620,3 +620,7 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 	    (67, 'maniprashanna.ag@cgtests.onmicrosoft.com', true, now(), now());
 
 	SELECT f_set_date_semaine(67, '2021-08-16'::date);
+	
+-- Sonepar - Add MDJ
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(27, 'bruce.carr_adm_l3@sonepar.onmicrosoft.com', true, now(), now());
