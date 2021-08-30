@@ -602,3 +602,21 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 
 -- suppression données de jeu vinci energies
 	SELECT f_delete_user_organisation(53, false);
+
+-- Sonepar - Reset organisation
+	SELECT f_delete_user_organisation(27, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+			(27, 'mickael.huguenin@sonepar.com', true, now(), now()),
+			(27, 'bruce.carr@sonepar-us.com', true, now(), now()),
+			(27, 'bruce.carr@sonepar.com', true, now(), now());
+
+	SELECT f_set_date_semaine(27, '2021-08-23'::date);
+
+-- Capgemini
+	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 
+        ('Capgemini', false, now(), now());
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (67, 'dinesh-kumar.a.k@cgtests.onmicrosoft.com', true, now(), now()),
+	    (67, 'maniprashanna.ag@cgtests.onmicrosoft.com', true, now(), now());
+
+	SELECT f_set_date_semaine(67, '2021-08-16'::date);
