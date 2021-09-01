@@ -637,6 +637,7 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 -- Bouyges Telecom - Reset début semaine 
 	SELECT f_delete_user_organisation(66, false);
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
-		(66, 'MABDELOU@bouyguestelecom.fr', true, now(), now());
+		(66, 'MABDELOU@bouyguestelecom.fr', true, now(), now()),
+		(66, 'Mohamed.abdelouahabi@BDIGITAL.onmicrosoft.com', true, now(), now());
 		
 	SELECT f_set_date_semaine(66, '2021-08-31'::date);
