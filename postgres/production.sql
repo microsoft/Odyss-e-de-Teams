@@ -642,3 +642,33 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 		(66, 'thierry.penalver@BDIGITAL.onmicrosoft.com', true, now(), now());
 		
 	SELECT f_set_date_semaine(66, '2021-08-31'::date);
+
+-- Sonepar - Add MDJ
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(27, 'brian.smith2@sonepar-us.com', true, now(), now());
+
+-- LA POSTE reset environnement
+	SELECT f_delete_user_organisation(17, false);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (17, 'nadege.alleaume-prestataire@laposte.fr', true, now(), now());
+
+	SELECT f_set_date_semaine(17, '2021-09-13'::date);
+
+-- Eram reset environnement
+	SELECT f_delete_user_organisation(48, false);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		 (48, 'laurent.bourget@groupe-eram.com', true, now(), now()),
+		 (48, 'stanapin@groupe-eram.com', true, now(), now());
+
+	SELECT f_set_date_semaine(48, '2021-09-13'::date);
+
+-- Fnac Darty reset environnement
+	SELECT f_delete_user_organisation(58, false);
+
+	SELECT f_set_date_semaine(58, '2021-09-13'::date);
+
+-- Kiabi reset environnement
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+ 		(50, 'd.PICHON@KIABI.com', true, now(), now());
+
+	SELECT f_set_date_semaine(50, '2021-09-13'::date);
