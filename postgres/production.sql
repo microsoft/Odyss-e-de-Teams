@@ -669,6 +669,11 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 
 -- Kiabi reset environnement
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
- 		(50, 'd.PICHON@KIABI.com', true, now(), now());
+ 		(50, 'd.PICHON@KIABI.com', true, now(), now()),
+ 		(50, 'michael.esteves@kiabi.com', true, now(), now());
 
 	SELECT f_set_date_semaine(50, '2021-09-13'::date);
+
+-- Fnac Darty ajout MDJ 
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 	
+		 (58, 'moss.test4@fnac.com', true, now(), now());
