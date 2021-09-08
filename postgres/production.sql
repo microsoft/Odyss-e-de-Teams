@@ -623,11 +623,9 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 	
 -- Sonepar - Add MDJ
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
-		(27, 'bruce.carr_adm_l3@sonepar.onmicrosoft.com', true, now(), now());
-
--- Sonepar - Add MDJ
-	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
-		(27, 'brian.smith@sonepar-us.com', true, now(), now());
+		(27, 'bruce.carr_adm_l3@sonepar.onmicrosoft.com', true, now(), now()),
+		(27, 'brian.smith@sonepar-us.com', true, now(), now()),
+		(27, 'brian.smith2@sonepar-us.com', true, now(), now());
 
 -- Sonepar - Reset organisation
 	SELECT f_delete_user_organisation(27, false);
@@ -642,10 +640,6 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 		(66, 'thierry.penalver@BDIGITAL.onmicrosoft.com', true, now(), now());
 		
 	SELECT f_set_date_semaine(66, '2021-08-31'::date);
-
--- Sonepar - Add MDJ
-	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
-		(27, 'brian.smith2@sonepar-us.com', true, now(), now());
 
 -- LA POSTE reset environnement
 	SELECT f_delete_user_organisation(17, false);
