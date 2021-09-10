@@ -567,7 +567,7 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 		
 	SELECT f_set_date_semaine(65, '2021-09-06'::date);
 
--- Bouyges Telecom
+-- Bouygues Telecom
 	INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 
 		('Bouygues Télécom', false, now(), now());
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
@@ -671,3 +671,11 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 -- Fnac Darty ajout MDJ 
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 	
 		 (58, 'moss.test4@fnac.com', true, now(), now());
+
+-- Reset Bouygues Telecom
+	SELECT f_delete_user_organisation(66, true);
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+		(66, 'mremon@bouyguestelecom.fr', true, now(), now()),
+		(66, 'nzerkak@bouyguestelecom.fr', true, now(), now());
+		
+	SELECT f_set_date_semaine(66, '2021-09-13'::date);
