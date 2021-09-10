@@ -676,6 +676,7 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 	SELECT f_delete_user_organisation(66, true);
 	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
 		(66, 'mremon@bouyguestelecom.fr', true, now(), now()),
-		(66, 'nzerkak@bouyguestelecom.fr', true, now(), now());
+		(66, 'nzerkak@bouyguestelecom.fr', true, now(), now()),
+		(66, 'MABDELOU@bouyguestelecom.fr', true, now(), now());
 		
 	SELECT f_set_date_semaine(66, '2021-09-13'::date);
