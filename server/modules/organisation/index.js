@@ -7,18 +7,28 @@ const register = async (server, options) => {
     method: "GET",
     handler: async function (request, h) {
       const db = request.getDb("odyssee_teams");
+      const User = db.getModel("User");
       const Organisation = db.getModel("Organisation");
 
-      if (!request.query.id_organisation) return false;
+      // check oid_ad is present in request
       if (!request.state.oid_ad) {
         return false;
       }
 
-      let replacements = { id_organisation: request.query.id_organisation };
+      // Look for user
+      const currentUserByAD = await User.findOne({
+        where: {
+          oid_ad: request.state.oid_ad,
+        },
+      });
+
+      if (!currentUserByAD) {
+        return false;
+      }
 
       const res = await Organisation.findOne({
         where: {
-          id_organisation: request.query.id_organisation,
+          id_organisation: currentUserByAD.id_organisation,
         },
       });
 
