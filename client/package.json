@@ -16,6 +16,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.0",
     "adal-angular": "^1.0.17",
+    "ajax": "0.0.4",
     "bootstrap": "^4.5.0",
     "dom-to-image": "^2.6.0",
     "gulp": "^4.0.2",

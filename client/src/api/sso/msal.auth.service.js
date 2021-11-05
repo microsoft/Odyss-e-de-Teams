@@ -49,7 +49,7 @@ class MsalAuthService {
 
     getToken() {
         var tokenRequest = {
-            scopes: ["email", "openid", "profile", "offline_access", "User.Read"]
+            scopes: ["email", "openid", "profile", "offline_access", "User.Read", "TeamsActivity.Send"]
         };
         return this.app
             .acquireTokenSilent(tokenRequest)

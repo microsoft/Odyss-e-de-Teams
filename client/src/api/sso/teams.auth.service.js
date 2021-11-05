@@ -75,6 +75,7 @@ class TeamsAuthService {
 
   getToken() {
     return new Promise((resolve, reject) => {
+      console.log('teams')
       this.ensureLoginHint().then(() => {
         this.authContext.acquireToken(
           this.applicationConfig.endpoints.api,
@@ -94,7 +95,7 @@ class TeamsAuthService {
     return new Promise((resolve, reject) => {
       microsoftTeams.getContext(context => {
         const scopes = encodeURIComponent(
-          "email openid profile offline_access User.Read"
+          "email openid profile offline_access User.Read TeamsActivity.Send"
         );
 
         // Setup extra query parameters for ADAL
