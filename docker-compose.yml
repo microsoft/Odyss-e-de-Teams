@@ -42,6 +42,7 @@ services:
       AZUREAD_APPLICATION_ID: ${AZUREAD_APPLICATION_ID}
       AZUREAD_APP_SECRET: ${AZUREAD_APP_SECRET}
       AZUREAD_ANNUAIRE_ID: ${AZUREAD_ANNUAIRE_ID}
+      NODE_ENV: ${NODE_ENV}
     build:
       context: ./server
       dockerfile: Dockerfile

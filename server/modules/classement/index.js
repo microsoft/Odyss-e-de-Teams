@@ -52,8 +52,7 @@ const register = async (server, options) => {
         .then((result) => {
           const newResult = result.map(u =>
             u.nom
-              ? {...u, nom: Crypto.decrypt(JSON.parse(u.nom))} //TODO: en prod les noms sont encrypté
-              //? {...u, nom: u.nom}
+              ? { ...u, nom: (process.env.NODE_ENV === 'production' ? Crypto.decrypt(JSON.parse(u.nom)) : u.nom) }
               : u
           );
           if (params.user) {
@@ -146,9 +145,9 @@ const register = async (server, options) => {
         resultIndicateur.pcReponseOk =
           (100 * resultPcBonneReponse["nb_reponse_ok"]) /
           resultPcBonneReponse["nb_reponse"];
-          if (resultIndicateur.pcReponseOk > 0) {
-            resultIndicateur.pcReponseOk = resultIndicateur.pcReponseOk.toFixed(2);
-          }
+        if (resultIndicateur.pcReponseOk > 0) {
+          resultIndicateur.pcReponseOk = resultIndicateur.pcReponseOk.toFixed(2);
+        }
       }
 
       //nb joueur niveau 15

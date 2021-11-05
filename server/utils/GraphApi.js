@@ -1,6 +1,7 @@
 const GraphApi = {};
 const https = require('https');
-var querystring = require('querystring')
+var querystring = require('querystring');
+const msal = require('@azure/msal-node');
 
 GraphApi.getGraphToken = async () => {
     const data = querystring.stringify(
@@ -42,6 +43,28 @@ GraphApi.getGraphToken = async () => {
         req.end();
     });
 };
+
+GraphApi.getUsefullToken = async (token) => {
+    const config = {
+        auth: {
+            clientId: "5830a2dd-c958-47bd-b6e8-676341fc5faf", //Le client ID de l'application enregistrée sur Azure Active Directory 
+            authority: "https://login.microsoftonline.com/ef866cb3-5ed9-490c-a761-90c3ddaee64e", //Le Tenant ID de votre domaine Azure ACtive Directory
+            clientSecret: "AB6OH-Pb.66SBbT__e9Bo5V6JdF.B7Pt8~",
+        }
+    };
+    const cca = new msal.ConfidentialClientApplication(config);
+    console.log('token de base: ' + token)
+    const oboRequest = {
+        oboAssertion: token,
+        scopes: ["email", "openid", "profile", "offline_access", "User.Read", "TeamsActivity.Send"],
+    }
+    return cca.acquireTokenOnBehalfOf(oboRequest).then((response) => {
+        console.log(response);
+        return response;
+    }).catch((error) => {
+        return { error: error }
+    });
+}
 
 GraphApi.getOdysseeInternalId = async (token) => {
     const options = {
