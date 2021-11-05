@@ -887,8 +887,11 @@ const register = async (server, options) => {
       let data = request.payload;
       let tokenClient = data.token;
       let body = data.body;
-      let token = await GraphApi.getGraphToken();
+      //let token = await GraphApi.getGraphToken();
+      let token = await GraphApi.getUsefullToken(tokenClient);
+      console.log(token)
       let internalId = await GraphApi.getOdysseeInternalId(tokenClient);
+
       body.topic.webUrl = `https://teams.microsoft.com/l/entity/` + internalId + `/Le%20jeu`;
       let ttUserToSendNotification = [];
       let alphabet = 'azertyuiopqsdfghjklmwxcvbn';

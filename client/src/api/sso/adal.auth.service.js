@@ -5,7 +5,7 @@ import AuthenticationContext from "adal-angular/lib/adal";
 class AdalAuthService {
   constructor() {
     const scopes = encodeURIComponent(
-      "email openid profile offline_access User.Read"
+      "email openid profile offline_access User.Read TeamsActivity.Send"
     );
 
     this.applicationConfig = {

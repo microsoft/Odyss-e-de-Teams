@@ -116,12 +116,13 @@ class PlanningContainer extends React.Component<
                   />
                 </Tab>
 
-               {/*  <Tab
+                <Tab
                   eventKey="NOTIFICATION"
                   title={t("admin.planning.menu_teams")}
                 >
                   <AdminNotification/>
-                </Tab> TODO: en attendant que le push notif marche bien*/}
+                </Tab> 
+               {/*  TODO: en attendant que le push notif marche bien */}
 
                 <Tab
                   eventKey="MISSION"

@@ -1,4 +1,5 @@
 var Glue = require("@hapi/glue");
+const msal = require('@azure/msal-node');
 const Path = require("path");
 const { Sequelize } = require("sequelize");
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -24,11 +25,21 @@ manifest.register.plugins.push({
 });
 manifest.register.plugins.push(Inert);
 
+const config = {
+  auth: {
+      clientId: "5830a2dd-c958-47bd-b6e8-676341fc5faf", //Le client ID de l'application enregistrée sur Azure Active Directory 
+      authority: "https://login.microsoftonline.com/ef866cb3-5ed9-490c-a761-90c3ddaee64e", //Le Tenant ID de votre domaine Azure ACtive Directory
+      clientSecret: "AB6OH-Pb.66SBbT__e9Bo5V6JdF.B7Pt8~",
+  }
+};
+
+const cca = new msal.ConfidentialClientApplication(config);
+
 const startServer = async function () {
   try {
     const server = await Glue.compose(manifest, options);
-    
-    
+
+
     server.route({
       method: "GET",
       path: "/{path*}",
@@ -52,7 +63,27 @@ const startServer = async function () {
         },
       },
     });
-    
+
+    server.route({
+      method: "GET",
+      path: "/token",
+      config: {
+        handler: async function (req, h) {
+          const authHeader = req.headers.authorization;
+          const oboRequest = {
+            oboAssertion: authHeader.split(' ')[1],
+            scopes: ["email", "openid", "profile", "offline_access", "User.Read", "TeamsActivity.Send"],
+          }
+          cca.acquireTokenOnBehalfOf(oboRequest).then((response) => {
+            console.log(response);
+            res.send(response.accessToken);
+          }).catch((error) => {
+            res.status(401).send(error);
+          });
+        },
+      },
+    });
+
     await server.start();
     console.log("hapi days!");
   } catch (err) {
