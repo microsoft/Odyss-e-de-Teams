@@ -42,6 +42,8 @@ class SSOAuthService {
   getUser() {
     return new Promise((resolve, reject) => {
       if (this.authToken) {
+        console.log('token already exist')
+        console.log(this.authToken)
         resolve(this.parseTokenToUser(this.authToken));
       } else {
         this.getToken()
@@ -57,6 +59,7 @@ class SSOAuthService {
 
   getToken() {
     return new Promise((resolve, reject) => {
+      console.log('get token /////////////////////////////////////')
       if (this.authToken) {
         console.log('5555555555555555555555555555555555555555555555555555555555555555')
         resolve(this.authToken);

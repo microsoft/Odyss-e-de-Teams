@@ -27,9 +27,9 @@ manifest.register.plugins.push(Inert);
 
 const config = {
   auth: {
-      clientId: "5830a2dd-c958-47bd-b6e8-676341fc5faf", //Le client ID de l'application enregistrée sur Azure Active Directory 
-      authority: "https://login.microsoftonline.com/ef866cb3-5ed9-490c-a761-90c3ddaee64e", //Le Tenant ID de votre domaine Azure ACtive Directory
-      clientSecret: "AB6OH-Pb.66SBbT__e9Bo5V6JdF.B7Pt8~",
+    clientId: "5830a2dd-c958-47bd-b6e8-676341fc5faf", //Le client ID de l'application enregistrée sur Azure Active Directory 
+    authority: "https://login.microsoftonline.com/ef866cb3-5ed9-490c-a761-90c3ddaee64e", //Le Tenant ID de votre domaine Azure ACtive Directory
+    clientSecret: "AB6OH-Pb.66SBbT__e9Bo5V6JdF.B7Pt8~",
   }
 };
 
@@ -68,17 +68,21 @@ const startServer = async function () {
       method: "GET",
       path: "/token",
       config: {
-        handler: async function (req, h) {
+        handler: async function (req, res, h) {
+          console.log('/////////////////////////////////////////// serveur side get token')
           const authHeader = req.headers.authorization;
+          console.log(authHeader)
           const oboRequest = {
             oboAssertion: authHeader.split(' ')[1],
             scopes: ["email", "openid", "profile", "offline_access", "User.Read", "TeamsActivity.Send"],
           }
-          cca.acquireTokenOnBehalfOf(oboRequest).then((response) => {
+          return cca.acquireTokenOnBehalfOf(oboRequest).then((response) => {
+            console.log('/////////////////////////////////////////// réponse')
             console.log(response);
-            res.send(response.accessToken);
+            return { response: response.accessToken };
           }).catch((error) => {
-            res.status(401).send(error);
+            console.log(error)
+            throw error;
           });
         },
       },
