@@ -11,6 +11,7 @@ import { Button } from "react-bootstrap";
 interface IAdminNotificationState {
   title: string;
   value: string;
+  sendDisabled: boolean;
 }
 
 class AdminNotification extends React.Component<
@@ -21,7 +22,8 @@ class AdminNotification extends React.Component<
     super(props);
     this.state = {
       title: '',
-      value: ''
+      value: '',
+      sendDisabled: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -48,6 +50,7 @@ class AdminNotification extends React.Component<
 
   async sendNotification() {
     if (this.state.title?.trim() !== '' && this.state.value?.trim() !== '') {
+      this.setState({sendDisabled: true});
       this.resetInput();
       await AdminAPI.sendNotification(this.state).then(res => {
         if (res.response) {
@@ -56,6 +59,7 @@ class AdminNotification extends React.Component<
           setTimeout(() => {
             confirmation.style.display = 'none';
           }, 10000);
+          this.setState({sendDisabled: false});
         }
       });
     }
@@ -98,7 +102,7 @@ class AdminNotification extends React.Component<
             <Button className="Notification__body__buttons__btn-left" variant="secondary" onClick={() => this.resetInput()}>
               {tReady && t("utils.button.reset")}
             </Button>
-            <Button variant="primary" onClick={() => this.sendNotification()}>
+            <Button disabled={this.state.sendDisabled} variant="primary" onClick={() => this.sendNotification()}>
               {tReady && t("utils.button.send")}
             </Button>
           </div>

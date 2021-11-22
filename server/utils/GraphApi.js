@@ -44,22 +44,20 @@ GraphApi.getGraphToken = async () => {
     });
 };
 
-GraphApi.getUsefullToken = async (token) => {
+GraphApi.getUsefullToken = async (tokenClient) => {
     const config = {
         auth: {
-            clientId: "5830a2dd-c958-47bd-b6e8-676341fc5faf", //Le client ID de l'application enregistrée sur Azure Active Directory 
-            authority: "https://login.microsoftonline.com/ef866cb3-5ed9-490c-a761-90c3ddaee64e", //Le Tenant ID de votre domaine Azure ACtive Directory
-            clientSecret: "***REMOVED***",
+            clientId: process.env.AZUREAD_APPLICATION_ID, //Le client ID de l'application enregistrée sur Azure Active Directory 
+            authority: "https://login.microsoftonline.com/" + process.env.AZUREAD_ANNUAIRE_ID, //Le Tenant ID de votre domaine Azure ACtive Directory
+            clientSecret: process.env.AZUREAD_APP_SECRET,
         }
     };
     const cca = new msal.ConfidentialClientApplication(config);
-    console.log('token de base: ' + token)
     const oboRequest = {
-        oboAssertion: token,
+        oboAssertion: tokenClient,
         scopes: ["email", "openid", "profile", "offline_access", "User.Read", "TeamsActivity.Send"],
     }
     return cca.acquireTokenOnBehalfOf(oboRequest).then((response) => {
-        console.log(response);
         return response;
     }).catch((error) => {
         return { error: error }
@@ -76,13 +74,14 @@ GraphApi.getOdysseeInternalId = async (token) => {
             Authorization: 'Bearer ' + token
         }
     };
-
     return new Promise((resolve, reject) => {
         const req = https.request(options, res => {
             res.on('data', d => {
                 d = d.toString('utf8');
                 d = JSON.parse(d)
-                d = d.value[0].id;
+                if (!d.error) { // si il n'y a pas d'erreur on renvoit l'id de l'application
+                    d = d.value[0].id;
+                }
                 resolve(d)
             });
         });
@@ -127,6 +126,41 @@ GraphApi.getListUser = async (token, letter) => {
 
         req.end();
     });
+};
+
+GraphApi.sendNotificationToAllUser = (token, ttUser, body) => {
+    for (let i = 0; i < ttUser.length; i++) {
+        let options = {
+            hostname: 'graph.microsoft.com',
+            port: 443,
+            path: '/v1.0/users/' + ttUser[i].id + '/teamwork/sendActivityNotification',
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                Authorization: 'Bearer ' + token
+            }
+        };
+        const req = https.request(options, res => {
+            res.on('data', (d) => {
+                d = JSON.parse(d.toString('utf8'))
+                if (d.error) {
+                    console.log('Erreur lors de l\'envoi à ' + ttUser[i].displayName);
+                    console.log(d)
+                }
+            })
+            res.on('end', () => {
+                if (res.statusCode === 200) {
+                    console.log('Notification envoyée à ' + ttUser[i].displayName)
+                }
+            });
+        });
+
+        req.on('error', error => {
+            console.error(error)
+        });
+        req.write(JSON.stringify(body))
+        req.end();
+    }
 };
 
 module.exports = GraphApi;

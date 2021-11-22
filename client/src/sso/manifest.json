@@ -1,6 +1,6 @@
 ﻿{
-    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.9/MicrosoftTeams.schema.json",
-    "manifestVersion": "1.9",
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.11",
     "version": "1.0",
     "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
     "packageName": "com.odysseeteams",

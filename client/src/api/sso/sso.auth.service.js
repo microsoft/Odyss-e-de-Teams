@@ -42,8 +42,6 @@ class SSOAuthService {
   getUser() {
     return new Promise((resolve, reject) => {
       if (this.authToken) {
-        console.log('token already exist')
-        console.log(this.authToken)
         resolve(this.parseTokenToUser(this.authToken));
       } else {
         this.getToken()
@@ -59,31 +57,12 @@ class SSOAuthService {
 
   getToken() {
     return new Promise((resolve, reject) => {
-      console.log('get token /////////////////////////////////////')
       if (this.authToken) {
-        console.log('5555555555555555555555555555555555555555555555555555555555555555')
         resolve(this.authToken);
       } else {
-        console.log('66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666')
-        console.log('get auth token')
         microsoftTeams.authentication.getAuthToken({
           successCallback: result => {
             this.authToken = result;
-            console.log('first token: ', result)
-            ajax({
-              url: process.env.REACT_APP_API_URL + '/token',
-              headers: {
-                'Authorization': 'bearer ' + this.authToken
-              },
-              type: "get",
-              success: function (result, status) {
-                console.log('second token: ', result)
-                console.log(result);
-              },
-              error: function (result, status, error) {
-                console.log(error)
-              }
-            })
             resolve(result);
           },
           failureCallback: reason => {
