@@ -845,87 +845,39 @@ const register = async (server, options) => {
   });
 
   server.route({
-    path: "/admin/test-graph-api",
-    method: "GET",
-    handler: async function (request, h) {
-      let token = request.query.token;
-      const options = {
-        hostname: 'graph.microsoft.com',
-        port: 443,
-        path: '/v1.0/me/',
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      };
-
-      return await new Promise((resolve, reject) => {
-        const req = https.request(options, res => {
-          console.log(`statusCode: ${res.statusCode}`)
-
-          res.on('data', d => {
-            process.stdout.write(d);
-            resolve(d)
-          })
-        });
-
-        req.on('error', error => {
-          console.error(error)
-        });
-
-        req.end();
-      });
-    },
-  });
-
-  server.route({
     path: "/admin/send-notification",
     method: "POST",
     handler: async function (request, h) {
-
-      // send request to intermediate
-      let data = request.payload;
-      let tokenClient = data.token;
-      let body = data.body;
-      //let token = await GraphApi.getGraphToken();
-      let token = await GraphApi.getUsefullToken(tokenClient);
-      console.log(token)
-      let internalId = await GraphApi.getOdysseeInternalId(tokenClient);
-
-      body.topic.webUrl = `https://teams.microsoft.com/l/entity/` + internalId + `/Le%20jeu`;
-      let ttUserToSendNotification = [];
-      let alphabet = 'azertyuiopqsdfghjklmwxcvbn';
-      alphabet = alphabet.split('');
-      for (let i = 0; i < alphabet.length; i++) {
-        let letter = alphabet[i];
-        let ttUserTmp = await GraphApi.getListUser(tokenClient, letter);
-        ttUserToSendNotification = [...ttUserToSendNotification, ...ttUserTmp];
-      }
-      for (let i = 0; i < ttUserToSendNotification.length; i++) {
-        let options = {
-          hostname: 'graph.microsoft.com',
-          port: 443,
-          path: '/v1.0/users/' + ttUserToSendNotification[i].id + '/teamwork/sendActivityNotification',
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: 'Bearer ' + token.access_token
+      try {
+        // send request to intermediate
+        let data = request.payload;
+        let tokenClient = data.token;
+        let body = data.body;
+        //let token = await GraphApi.getGraphToken();
+        let token = await GraphApi.getUsefullToken(tokenClient);
+        if (token.error) { //si on reçoit une erreur ça veut dire qu'on est sur navigateur et que le token est déjà bon
+          token = tokenClient;
+        }
+        let internalId = await GraphApi.getOdysseeInternalId(token.accessToken || token);
+        body.topic.webUrl = `https://teams.microsoft.com/l/entity/` + internalId + `/Le%20jeu`;
+        let ttUserToSendNotification = [];
+        let alphabet = 'azertyuiopqsdfghjklmwxcvbn';
+        alphabet = alphabet.split('');
+        for (let i = 0; i < alphabet.length; i++) {
+          let letter = alphabet[i];
+          let ttUserTmp = await GraphApi.getListUser(token.accessToken || token, letter);
+          ttUserToSendNotification = [...ttUserToSendNotification, ...ttUserTmp];
+        }
+        GraphApi.sendNotificationToAllUser(token.accessToken || token, ttUserToSendNotification, body);
+        return {
+          response: {
+            msg: 'Attention tous les utilisateurs n\'ont pas forcément été notifiés, certain n\'ont peut être pas l\'application d\'installé',
+            ttUserNotified: ttUserToSendNotification
           }
-        };
-        const req = https.request(options, res => {
-          res.on('end', () => {
-            console.log('Notification envoyée à ' + ttUserToSendNotification[i].displayName)
-          });
-        });
-
-        req.on('error', error => {
-          console.error(error)
-        });
-
-        req.write(JSON.stringify(body))
-        req.end();
+        } // TODO: voir si on peut attendre la fin de la fonction du dessus pour voir pour quels utilisateurs la notification a bien été envoyé pour l'instant ça ne marche pas pour tout le monde 
+      } catch (error) {
+        console.log(error)
       }
-      return { response: true }
     },
   });
 

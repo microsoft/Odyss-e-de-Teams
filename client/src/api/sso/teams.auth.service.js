@@ -75,13 +75,11 @@ class TeamsAuthService {
 
   getToken() {
     return new Promise((resolve, reject) => {
-      console.log('teams authentification //////////////////////////////////////////////////')
       this.ensureLoginHint().then(() => {
         this.authContext.acquireToken(
           this.applicationConfig.endpoints.api,
           (reason, token, error) => {
             if (!error) {
-              console.log('TOOOOOOOOOOKKKKKKKKKKENNNNNNNNN: ', token)
               resolve(token);
             } else {
               reject({ error, reason });
