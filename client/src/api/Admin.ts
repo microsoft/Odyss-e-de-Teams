@@ -50,11 +50,8 @@ class Admin extends API {
         "content": data.value,
       },
     }
-    console.log(data)
     let token = await AuthService.getToken();
-    //TODO: token si on est en prod token.accessToken en local
-    //return super.fetchGET(this.resource + '/test-graph-api', { token: token.accessToken });
-    return super.fetchPOST(this.resource + '/send-notification', { token: token.accessToken ? token.accessToken : token, body: body });
+    return super.fetchPOST(this.resource + '/send-notification', { token: token.accessToken || token, body: body });
   }
   /**** fin notification  ****/
 

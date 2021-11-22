@@ -64,30 +64,6 @@ const startServer = async function () {
       },
     });
 
-    server.route({
-      method: "GET",
-      path: "/token",
-      config: {
-        handler: async function (req, res, h) {
-          console.log('/////////////////////////////////////////// serveur side get token')
-          const authHeader = req.headers.authorization;
-          console.log(authHeader)
-          const oboRequest = {
-            oboAssertion: authHeader.split(' ')[1],
-            scopes: ["email", "openid", "profile", "offline_access", "User.Read", "TeamsActivity.Send"],
-          }
-          return cca.acquireTokenOnBehalfOf(oboRequest).then((response) => {
-            console.log('/////////////////////////////////////////// réponse')
-            console.log(response);
-            return { response: response.accessToken };
-          }).catch((error) => {
-            console.log(error)
-            throw error;
-          });
-        },
-      },
-    });
-
     await server.start();
     console.log("hapi days!");
   } catch (err) {
