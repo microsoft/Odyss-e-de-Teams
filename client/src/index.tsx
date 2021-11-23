@@ -12,11 +12,7 @@ import { persistor, store } from "./store/configureStore";
 import AppRouter from "./containers/App/App";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-console.log("ICI:::::::::::::")
-console.log("ICI:::::::::::::")
-console.log("ICI:::::::::::::")
-console.log("ICI:::::::::::::")
-console.log("ICI:::::::::::::")
+
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
