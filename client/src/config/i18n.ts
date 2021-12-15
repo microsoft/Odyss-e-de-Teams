@@ -7,6 +7,7 @@ import * as microsoftTeams from "@microsoft/teams-js";
 microsoftTeams.initialize(()=>{
   console.log('Go Teams')
   microsoftTeams.getContext((context)=>{
+
     i18n
       .init({
         react: {
