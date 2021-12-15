@@ -1,6 +1,5 @@
 import * as microsoftTeams from "@microsoft/teams-js";
 import TeamsAuthService from "./teams.auth.service";
-import * as ajax from 'ajax';
 
 // An authentication that will only request an access token for the logged in user.
 // This token can then be used to request other resources.
