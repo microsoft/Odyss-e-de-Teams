@@ -680,3 +680,5 @@ SELECT f_set_date_semaine(59, '2021-06-14'::date);
 		(66, 'MABDELOU@bouyguestelecom.fr', true, now(), now());
 		
 	SELECT f_set_date_semaine(66, '2021-09-13'::date);
+
+-- suppression de toutes les organisations a part saegus le 15/12/2021
