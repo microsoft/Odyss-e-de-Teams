@@ -52,14 +52,21 @@ GraphApi.getUsefullToken = async (tokenClient) => {
             clientSecret: process.env.AZUREAD_APP_SECRET,
         }
     };
+    console.log("---------------Auth config is :")
+    console.log(config.auth.clientId);
+    console.log(config.auth.authority);
+    console.log(config.auth.clientSecret);
     const cca = new msal.ConfidentialClientApplication(config);
     const oboRequest = {
         oboAssertion: tokenClient,
-        scopes: ["email", "openid", "profile", "offline_access", "User.Read", "TeamsActivity.Send"],
+        scopes: ["TeamsActivity.Send"],
     }
+    console.log("-------------------marcher")
     return cca.acquireTokenOnBehalfOf(oboRequest).then((response) => {
+        console.log("----------------token acquireTokenOnBehalfOf:"+response)
         return response;
     }).catch((error) => {
+        console.log("----------------error acquireTokenOnBehalfOf:"+error)
         return { error: error }
     });
 }
@@ -105,7 +112,6 @@ GraphApi.getListUser = async (token, letter) => {
             Authorization: 'Bearer ' + token
         }
     };
-
     return new Promise((resolve, reject) => {
         const req = https.request(options, res => {
             let result = '';
@@ -114,7 +120,9 @@ GraphApi.getListUser = async (token, letter) => {
                 result += d;
             });
             res.on('end', () => {
+                // console.log("---------------the result is :"+ result)
                 result = JSON.parse(result);
+                // console.log("---------------Value is :"+ result.value)
                 resolve(result.value)
             });
         });
@@ -130,10 +138,12 @@ GraphApi.getListUser = async (token, letter) => {
 
 GraphApi.sendNotificationToAllUser = (token, ttUser, body) => {
     for (let i = 0; i < ttUser.length; i++) {
+        console.log("-------------------Token3:" + token)
         let options = {
             hostname: 'graph.microsoft.com',
             port: 443,
             path: '/v1.0/users/' + ttUser[i].id + '/teamwork/sendActivityNotification',
+            // path:  '/v1.0/users/d41ea76a-5e96-477a-a0c5-678c5536ba59/teamwork/sendActivityNotification',
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -144,13 +154,15 @@ GraphApi.sendNotificationToAllUser = (token, ttUser, body) => {
             res.on('data', (d) => {
                 d = JSON.parse(d.toString('utf8'))
                 if (d.error) {
-                    console.log('Erreur lors de l\'envoi à ' + ttUser[i].displayName);
-                    console.log(d)
+                    console.log("--------------------Error Notification")
+                    // console.log('Erreur lors de l\'envoi à ' + ttUser[i].displayName);
+                    // console.log(d)
                 }
             })
             res.on('end', () => {
                 if (res.statusCode === 200) {
-                    console.log('Notification envoyée à ' + ttUser[i].displayName)
+                    // console.log('Notification envoyée à ' + ttUser[i].displayName)
+                    console.log("------------------Finish")
                 }
             });
         });
