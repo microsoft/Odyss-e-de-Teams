@@ -853,28 +853,22 @@ const register = async (server, options) => {
         let data = request.payload;
         let tokenClient = data.token;
         let body = data.body;
-        console.log("--------------tokenClient:" +tokenClient)
         //let token = await GraphApi.getGraphToken();
         let token = await GraphApi.getUsefullToken(tokenClient);
         if (token.error) { //si on reçoit une erreur ça veut dire qu'on est sur navigateur et que le token est déjà bon
           token = tokenClient;
         }
-        console.log("--------------tokenClient2:" +token.accessToken)
-
-        let internalId = await GraphApi.getOdysseeInternalId(token.accessToken?token.accessToken:token);
+        let internalId = await GraphApi.getOdysseeInternalId(token.accessToken || token);
         body.topic.webUrl = `https://teams.microsoft.com/l/entity/` + internalId + `/Le%20jeu`;
         let ttUserToSendNotification = [];
         let alphabet = 'azertyuiopqsdfghjklmwxcvbn';
         alphabet = alphabet.split('');
         for (let i = 0; i < alphabet.length; i++) {
           let letter = alphabet[i];
-          // console.log(letter) a
-          // console.log("----------there is a token.accessToken: "+token.accessToken)
-          let ttUserTmp = await GraphApi.getListUser(token.accessToken?token.accessToken:token, letter);
+          let ttUserTmp = await GraphApi.getListUser(token.accessToken || token, letter);
           ttUserToSendNotification = [...ttUserToSendNotification, ...ttUserTmp];
         }
-        console.log("-----------------ttUserToSendNotification is :"+ttUserToSendNotification);
-        GraphApi.sendNotificationToAllUser(token.accessToken?token.accessToken:token, ttUserToSendNotification, body);
+        GraphApi.sendNotificationToAllUser(token.accessToken || token, ttUserToSendNotification, body);
         return {
           response: {
             msg: 'Attention tous les utilisateurs n\'ont pas forcément été notifiés, certain n\'ont peut être pas l\'application d\'installé',
