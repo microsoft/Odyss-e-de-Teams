@@ -65,13 +65,8 @@ GraphApi.getUsefullToken = async (tokenClient) => {
     return cca.acquireTokenOnBehalfOf(oboRequest).then((response) => {
         console.log("----------------token acquireTokenOnBehalfOf:"+response)
         return response;
-<<<<<<< HEAD
     }).catch((error) => {
         console.log("----------------error acquireTokenOnBehalfOf:"+error)
-=======
-    }).catch((error) => { // TODO: attention une erreur ici veut peut être dire qu'on est sur navigateur et qu'on a pas besoin de ce token, si on est sur teams il faut regarder l'erreur de plus près
-        console.log(error)
->>>>>>> f00370d078f92cf27b11616de5f9c9ef04376f2b
         return { error: error }
     });
 }
@@ -142,7 +137,6 @@ GraphApi.getListUser = async (token, letter) => {
 };
 
 GraphApi.sendNotificationToAllUser = (token, ttUser, body) => {
-<<<<<<< HEAD
     for (let i = 0; i < ttUser.length; i++) {
         console.log("-------------------Token3:" + token)
         let options = {
@@ -150,29 +144,12 @@ GraphApi.sendNotificationToAllUser = (token, ttUser, body) => {
             port: 443,
             path: '/v1.0/users/' + ttUser[i].id + '/teamwork/sendActivityNotification',
             // path:  '/v1.0/users/d41ea76a-5e96-477a-a0c5-678c5536ba59/teamwork/sendActivityNotification',
-=======
-    /* for (let i = 0; i < ttUser.length; i++) { */
-        let options = {
-            hostname: 'graph.microsoft.com',
-            port: 443,
-            path: '/v1.0/users/d41ea76a-5e96-477a-a0c5-678c5536ba59/teamwork/sendActivityNotification',
->>>>>>> f00370d078f92cf27b11616de5f9c9ef04376f2b
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
                 Authorization: 'Bearer ' + token
             }
         };
-        /* let options = {
-            hostname: 'graph.microsoft.com',
-            port: 443,
-            path: '/v1.0/users/' + ttUser[i].id + '/teamwork/sendActivityNotification',
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                Authorization: 'Bearer ' + token
-            }
-        }; */
         const req = https.request(options, res => {
             res.on('data', (d) => {
                 d = JSON.parse(d.toString('utf8'))
@@ -195,7 +172,7 @@ GraphApi.sendNotificationToAllUser = (token, ttUser, body) => {
         });
         req.write(JSON.stringify(body))
         req.end();
-    /* } */
+    }
 };
 
 module.exports = GraphApi;
