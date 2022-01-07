@@ -67,23 +67,23 @@ L&#39;Odyssée de Teams est un jeu qui propose un champ lexical propre à son un
 
 ## Sommaire
 
-- I. Configuration de votre tenant Azure
-  - Schéma d&#39;architecture
-  - Configuration de votre tenant Azure
-    - Création dans Azure Active Directory
-    - Microsoft Azure
-    - Création d&#39;une base de données
-- II. Installation de L&#39;Odyssée de Teams sur Teams
-  - Avant-propos
-  - Un pare-feu bloque votre installation
-  - 5 étapes pour une installation réussie
-- III. Premiers pas pour activer L&#39;Odyssée de Teams - Le rôle du Maître du jeu
-  - Introduction
-  - Devenir Maître du jeu et configuration d&#39;une saison L&#39;Odyssée de Teams
-  - Première connexion
-- FAQ
+- I. [Configuration du tenant Azure](#configuration-du-tenant-azure)
+  - [Schéma d&#39;architecture](#introduction)
+  - [Configuration de votre tenant Azure](#configuration-de-votre-tenant-azure)
+    - [Création dans Azure Active Directory](#création-de-votre-application-dans-azure-active-directory)
+    - [Microsoft Azure](#microsoft-azure)
+    - [Création de la base de données](#création-de-la-base-de-données)
+- II. [Installation du jeu Odyssée de Teams sur votre tenant Teams](#installation-du-jeu-odyssée-de-teams-sur-votre-tenant-teams)
+  - [Avant-propos](#avant-propos)
+  - [Un pare-feu bloque votre installation](#un-pare-feu-bloque-votre-installation)
+  - [5 étapes pour une installation réussie](#5-étapes-pour-une-installation-réussie)
+- III. [Premiers pas pour activer le jeu](#premiers-pas-pour-activer-le-jeu)
+  - [Introduction](#introduction)
+  - [Devenir Maître du jeu et configuration d&#39;une saison](#devenir-maître-du-jeu-et-configuration-de-la-saison)
+  - [Première connexion](#première-connexion)
+- [FAQ](#faq)
 
-# I. Configuration du tenant Azure
+# Configuration du tenant Azure
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
@@ -98,13 +98,13 @@ L&#39;application et sa base de données seront toutes deux hébergées sur Azur
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-1. Configuration de votre tenant Azure
+## Configuration de votre tenant Azure
 
 Introduction
 
 Le prérequis pour suivre le guide pas-à-pas ci-dessous est de disposer **des droits**** Administrateur ****du tenant Azure** de votre organisation.
 
-### Partie A - Création de votre application dans Azure Active Directory
+### Création de votre application dans Azure Active Directory
 
 Informations supplémentaires avant de commencer : [Documentation Microsoft](https://docs.microsoft.com/fr-fr/azure/active-directory/develop/quickstart-register-app)
 
@@ -171,7 +171,7 @@ Vous pouvez désormais voir votre application dans la liste.
 
 La partie Azure Active Directory est maintenant terminée. Retournez sur Microsoft Azure où nous irons ajouter un groupe de ressources.
 
-### Partie B - Microsoft Azure
+### Microsoft Azure
 
 Informations supplémentaires avant de commencer : [Documentation Microsoft](https://docs.microsoft.com/fr-fr/azure/azure-resource-manager/management/manage-resource-groups-portal)
 
@@ -228,7 +228,7 @@ Valeur : **postgres://\&lt;nom\_utilisateur\&gt;:\&lt;mot\_de\_passe\&gt;@\&lt;h
 ![30](https://user-images.githubusercontent.com/57418005/148472671-f2c2c373-7102-41a7-bb56-5ced7dfa8aa9.png)
 
 
-### Partie C – Création d&#39;une base de données
+### Création de la base de données
 
 Informations supplémentaires avant de commencer cette étape : [Documentation Microsoft](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal)
 
@@ -373,7 +373,7 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-# Installation de L&#39;Odyssée de Teams sur votre tenant Teams
+# Installation du jeu Odyssée de Teams sur votre tenant Teams
 
 ## Avant-propos
 
@@ -383,7 +383,7 @@ L&#39;Odyssée de Teams est une web application dont le package au format .zip �
 
 NB : Notez qu&#39;il n&#39;y a aucun port spécifique à ouvrir lors de la manipulation.
 
-### Un pare-feu bloque l&#39;installation
+### Un pare-feu bloque votre installation
 
 Si un pare-feu ou un proxy quelconque bloque le processus d&#39;installation, le lien ci-dessous vous permet d&#39;ajouter une règle (policy) à votre tenant Teams pour autoriser les appels à cette URL.
 
@@ -458,7 +458,7 @@ Rappel : Sur Microsoft Teams, il est possible de configurer une policy de sorte 
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-# Premiers pas pour activer L&#39;Odyssée de Teams – Le rôle du Maître du jeu
+# Premiers pas pour activer le jeu
 
 ## Introduction
 
@@ -466,7 +466,7 @@ Maintenant que l&#39;application L&#39;Odyssée de Teams a été correctement in
 
 Pour cela, le rôle de Maître du jeu intervient : tant que le jeu n&#39;a pas été activé par le Maître du jeu, les Explorateur.ice.s (joueur·euse·s) ne pourront pas accéder à leur interface.
 
-## Devenir Maître du jeu et configuration d&#39;une saison
+## Devenir Maître du jeu et configuration de la saison
 
 Pour rappel, le Maître du jeu a pour objectif de gérer une saison de 4 semaines pendant lesquelles les Explorateur.ice.s répondront à plus de 200 questions. Le Maître du jeu a à sa disposition une interface spécifique qui lui permettra :
 
