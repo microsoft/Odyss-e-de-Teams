@@ -62,10 +62,10 @@ Teams Odyssey is a game that has its own vocabulary. Here are the terms you will
 
 ## Contents
 
-- I. Configuring your Azure tenant
-   - Architecture
-   - Configuring your Azure tenant
-       - Creating in the Azure Active Directory
+-  [Configuring your Azure tenant](#configuring-the-azure-tenant)
+   - [Architecture](#architecture)
+   - [Configuring your Azure tenant](#configuring-your-azure-tenant)
+       - [Creating in the Azure Active Directory](#part-a:)
        - Microsoft Azure
        - Creating a database
 - II. Installing Teams Odyssey in Teams
@@ -78,11 +78,11 @@ Teams Odyssey is a game that has its own vocabulary. Here are the terms you will
    - First login
 - FAQ
 
-# I. Configuring the Azure tenant
+# Configuring the Azure tenant
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-1. Architecture
+## Architecture
 
 #### Introduction
 
@@ -92,13 +92,13 @@ The application and its database will both be hosted on Azure. Teams Odyssey wil
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-1. Configuring your Azure tenant
+## Configuring your Azure tenant
 
 Introduction
 
 To follow this step-by-step guide you must have the **Admin rights of your organisation&#39;s Azure tenant**.
 
-### Part A - Creating your application in the Azure Active Directory
+### Part A: Creating your application in the Azure Active Directory
 
 Additional information before you begin: [Microsoft documents](https://docs.microsoft.com/fr-fr/azure/active-directory/develop/quickstart-register-app)
 
