@@ -156,16 +156,19 @@ You can now see your application in the list.
 ![13](https://user-images.githubusercontent.com/57418005/148472298-3ac99277-a6e6-44b3-bef7-bd62cf325ce1.png)
 ![14](https://user-images.githubusercontent.com/57418005/148472304-afed63a7-f81e-4171-9101-acc9fa9dbd9c.png)
 
-19. New, go to &quot;Expose an API&quot; in the left menu.
+19. Open the file server.js and replace auth informations with your IDs.
+![Capture2](https://user-images.githubusercontent.com/67316441/148569266-02ded892-0d04-428c-872f-09952847146f.PNG)
+
+20. New, go to &quot;Expose an API&quot; in the left menu.
 
 ![15](https://user-images.githubusercontent.com/57418005/148472315-b00ef19d-f79e-4d2c-89ce-f1a9acd76cef.png)
 
-20. Click &quot;Add a scope&quot;.
+21. Click &quot;Add a scope&quot;.
 
 ![16](https://user-images.githubusercontent.com/57418005/148472326-5872c636-defb-469f-8ccc-cea04b5268fe.png)
 
-21. In the window that opens (see above), add all the people who will consent to be &quot;Administrators and Users&quot;.
-22. Click &quot;Add a scope&quot; to close the window.
+22. In the window that opens (see above), add all the people who will consent to be &quot;Administrators and Users&quot;.
+23. Click &quot;Add a scope&quot; to close the window.
 
 The Azure Active Directory part is now complete. Go back to Microsoft Azure where we will add a resource group.
 
