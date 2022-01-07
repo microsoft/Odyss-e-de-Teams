@@ -23,7 +23,6 @@ GraphApi.getGraphToken = async () => {
             'Content-Length': Buffer.byteLength(data)
         }
     };
-    /* TODO: attention content-length obligatoire */
 
     return new Promise((resolve, reject) => {
         const req = https.request(options, res => {
