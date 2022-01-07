@@ -73,8 +73,7 @@ L&#39;Odyssée de Teams est un jeu qui propose un champ lexical propre à son un
     - [Création dans Azure Active Directory](#création-de-votre-application-dans-azure-active-directory)
     - [Microsoft Azure](#microsoft-azure)
     - [Création de la base de données](#création-de-la-base-de-données)
-- II. [Installation du jeu Odyssée de Teams sur votre tenant Teams](#installation-du-jeu-odyssée-de-teams-sur-votre-tenant-teams)![image](https://user-images.githubusercontent.com/67316441/148568194-aacdc707-eaa7-404e-ae9a-f73d47b90f7a.png)
-
+- II. [Installation du jeu Odyssée de Teams sur votre tenant Teams](#installation-du-jeu-odyssée-de-teams-sur-votre-tenant-teams)
   - [Avant-propos](#avant-propos)
   - [Un pare-feu bloque votre installation](#un-pare-feu-bloque-votre-installation)
   - [5 étapes pour une installation réussie](#5-étapes-pour-une-installation-réussie)
