@@ -73,7 +73,8 @@ L&#39;Odyssée de Teams est un jeu qui propose un champ lexical propre à son un
     - [Création dans Azure Active Directory](#création-de-votre-application-dans-azure-active-directory)
     - [Microsoft Azure](#microsoft-azure)
     - [Création de la base de données](#création-de-la-base-de-données)
-- II. [Installation du jeu Odyssée de Teams sur votre tenant Teams](#installation-du-jeu-odyssée-de-teams-sur-votre-tenant-teams)
+- II. [Installation du jeu Odyssée de Teams sur votre tenant Teams](#installation-du-jeu-odyssée-de-teams-sur-votre-tenant-teams)![image](https://user-images.githubusercontent.com/67316441/148568194-aacdc707-eaa7-404e-ae9a-f73d47b90f7a.png)
+
   - [Avant-propos](#avant-propos)
   - [Un pare-feu bloque votre installation](#un-pare-feu-bloque-votre-installation)
   - [5 étapes pour une installation réussie](#5-étapes-pour-une-installation-réussie)
@@ -362,15 +363,18 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 38. Faites « Fichier » puis « Ouvrir le dossier » et allez sélectionner le dossier « Prod » fourni avec ce guide d&#39;installation.
 ![64](https://user-images.githubusercontent.com/57418005/148473407-e15ba56f-5d00-40fb-a15e-941d73b3f77e.png)
 
-39. Rendez-vous dans les « Extensions » dans la barre latérale de gauche.
-40. Recherchez « Azure App Service ».
-41. Installez l&#39;application « Azure App Service ».
+39. Ouvrez le fichier Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
+![Capture](https://user-images.githubusercontent.com/67316441/148568614-673a780a-9ab9-4bf0-b1d1-599e5acae9a1.PNG)
+
+40. Rendez-vous dans les « Extensions » dans la barre latérale de gauche.
+41. Recherchez « Azure App Service ».
+42. Installez l&#39;application « Azure App Service ».
 ![65](https://user-images.githubusercontent.com/57418005/148473425-adf436d4-c12c-4fda-bbf2-3a98d4b54dd1.png)
 
-42. Ouvrez l&#39;application « Azure App Service » nouvellement installée.
-43. Connectez-vous avec votre compte Microsoft.
-44. Votre App service s&#39;affichera et proposera « OdysseeTest » (ou le nom que vous aviez choisi précédemment). Faites un clic droit sur l&#39;application.
-45. Cliquez sur « Deploy to Web App ».
+43. Ouvrez l&#39;application « Azure App Service » nouvellement installée.
+44. Connectez-vous avec votre compte Microsoft.
+45. Votre App service s&#39;affichera et proposera « OdysseeTest » (ou le nom que vous aviez choisi précédemment). Faites un clic droit sur l&#39;application.
+46. Cliquez sur « Deploy to Web App ».
 
 **Félicitations, votre application est désormais installée et accessible.**
 
