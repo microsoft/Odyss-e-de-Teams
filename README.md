@@ -158,6 +158,9 @@ Vous pouvez désormais voir votre application dans la liste.
 ![13](https://user-images.githubusercontent.com/57418005/148472298-3ac99277-a6e6-44b3-bef7-bd62cf325ce1.png)
 ![14](https://user-images.githubusercontent.com/57418005/148472304-afed63a7-f81e-4171-9101-acc9fa9dbd9c.png)
 
+18-1. Rendez vous dans le fichier server.js et ajoutez le client id, secret id et l'id de votre tenant Azure à cet endroit.
+![Capture2](https://user-images.githubusercontent.com/67316441/148567447-85ebe015-1a9a-4d65-93a5-5638556c3dff.PNG)
+
 19. À présent, rendez-vous dans le menu « Exposer une API » du menu latéral de gauche.
 ![15](https://user-images.githubusercontent.com/57418005/148472315-b00ef19d-f79e-4d2c-89ce-f1a9acd76cef.png)
 
