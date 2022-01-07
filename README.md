@@ -7,8 +7,8 @@ L’Odyssée de Teams est une formation ludique conçue par Microsoft sous la fo
 ![1](https://user-images.githubusercontent.com/57418005/148520808-2021649a-1650-401e-b434-33f59f6790dc.png)
 
 Plusieurs étapes sont nécessaires pour correctement installer puis déployer le jeu. Toutes les explications et packages sont disponibles en français et en anglais sur ce Git dans leur branche respective :
-- Dossier L'Odyssée de Teams FR
-- Dossier Teams Odyssey EN
+- [Dossier L'Odyssée de Teams FR](https://github.com/saegus/Odysee_teams_pub/tree/Odysee_FR)
+- [Dossier Teams Odyssey EN](https://github.com/saegus/Odysee_teams_pub/tree/Odysee_EN)
 
 **Nous vous souhaitons une très bonne aventure spatiale avec L'Odyssée de Teams !**
 
@@ -20,7 +20,7 @@ Teams Odyssey is a fun training course designed by Microsoft as a web app. The g
 ![2](https://user-images.githubusercontent.com/57418005/148521089-04db6ed5-0296-43e2-949d-bc741c481597.png)
 
 Several stages are required to correctly install and launch the game. All explanations and packages are available in english and french on this Git in their respective branch:
-- Teams Odyssey EN folder (link)
-- L'Odyssée de Teams FR folder (link)
+- [Dossier Teams Odyssey EN](https://github.com/saegus/Odysee_teams_pub/tree/Odysee_EN)
+- [Dossier L'Odyssée de Teams FR](https://github.com/saegus/Odysee_teams_pub/tree/Odysee_FR)
 
 **We wish you a great space exploration with Teams Odyssey!**
