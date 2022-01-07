@@ -377,9 +377,9 @@ You can now import the files; this is the next step.
 
 ![62](https://user-images.githubusercontent.com/57418005/148473378-a6945d7d-000a-428b-a4ef-799686ecf974.png)
 
-37. Once &quot;VSC&quot; is installed, open it.
-
+37. Once &quot;VSC&quot; is installed, open it, open the file Crypto.js and put a random string in the variable CRYPTO_SECRET_KEY.
 ![63](https://user-images.githubusercontent.com/57418005/148473402-ed65fafe-7e55-4da8-b066-d88e2e1feba9.png)
+![Capture](https://user-images.githubusercontent.com/67316441/148569783-dd02800d-6528-4b9e-8ba8-d979c1658a4f.PNG)
 
 38. Go to &quot;File&quot; then &quot;Open folder&quot; and select the &quot;Prod&quot; folder provided with this installation guide.
 
