@@ -874,7 +874,7 @@ const register = async (server, options) => {
             msg: 'Attention tous les utilisateurs n\'ont pas forcément été notifiés, certain n\'ont peut être pas l\'application d\'installé',
             ttUserNotified: ttUserToSendNotification
           }
-        } // TODO: voir si on peut attendre la fin de la fonction du dessus pour voir pour quels utilisateurs la notification a bien été envoyé pour l'instant ça ne marche pas pour tout le monde 
+        } 
       } catch (error) {
         console.log(error)
       }
