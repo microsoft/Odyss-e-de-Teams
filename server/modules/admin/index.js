@@ -853,7 +853,6 @@ const register = async (server, options) => {
         let data = request.payload;
         let tokenClient = data.token;
         let body = data.body;
-        //let token = await GraphApi.getGraphToken();
         let token = await GraphApi.getUsefullToken(tokenClient);
         if (token.error) { //si on reçoit une erreur ça veut dire qu'on est sur navigateur et que le token est déjà bon
           token = tokenClient;
