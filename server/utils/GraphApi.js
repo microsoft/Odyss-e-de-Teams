@@ -10,8 +10,6 @@ GraphApi.getGraphToken = async () => {
             'client_id': process.env.AZUREAD_APPLICATION_ID,
             'client_secret': process.env.AZUREAD_APP_SECRET,
             'scope': 'https://graph.microsoft.com/.default',
-            //requested_token_use: encodeURI('on_behalf_of'),
-            //assertion: encodeURI(token) 
         });
     const options = {
         hostname: 'login.microsoftonline.com',
