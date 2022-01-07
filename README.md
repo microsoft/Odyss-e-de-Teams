@@ -62,21 +62,21 @@ Teams Odyssey is a game that has its own vocabulary. Here are the terms you will
 
 ## Contents
 
--  [Configuring your Azure tenant](#configuring-the-azure-tenant)
+-  I. [Configuring your Azure tenant](#configuring-the-azure-tenant)
    - [Architecture](#architecture)
    - [Configuring your Azure tenant](#configuring-your-azure-tenant)
-       - [Creating in the Azure Active Directory](#part-a:)
-       - Microsoft Azure
-       - Creating a database
-- II. Installing Teams Odyssey in Teams
-   - Introduction
-   - A firewall is blocking your installation
-   - 5 stages for a successful installation
-- III. First steps to activate Teams Odyssey - The role of the Game Master
-   - Introduction
-   - Becoming a Game Master and configuring a season of Teams Odyssey
-   - First login
-- FAQ
+       - [Creating in the Azure Active Directory](#creating-your-application-in-the-azure-active-directory)
+       - [Microsoft Azure](#microsoft-azure)
+       - [Creating a database](#creating-a-database)
+- II. [Installing Teams Odyssey in Teams](#installing-teams-odyssey-on-your-teams-tenant)
+   - [Introduction](#introduction)
+   - [A firewall is blocking the installation](#a-firewall-is-blocking-the-installation)
+   - [5 stages for a successful installation](#5-stages-for-a-successful-installation)
+- III. [First steps to activate Teams Odyssey](#first-steps-to-activate-teams-odyssey)
+   - [Introduction](#introduction)
+   - [Becoming a Game Master and configuring a season of Teams Odyssey](#becoming-a-game-master-and-configuring-a-season)
+   - [First login](#first-login)
+- [FAQ](#faq)
 
 # Configuring the Azure tenant
 
@@ -98,7 +98,7 @@ Introduction
 
 To follow this step-by-step guide you must have the **Admin rights of your organisation&#39;s Azure tenant**.
 
-### Part A: Creating your application in the Azure Active Directory
+### Creating your application in the Azure Active Directory
 
 Additional information before you begin: [Microsoft documents](https://docs.microsoft.com/fr-fr/azure/active-directory/develop/quickstart-register-app)
 
@@ -169,7 +169,7 @@ You can now see your application in the list.
 
 The Azure Active Directory part is now complete. Go back to Microsoft Azure where we will add a resource group.
 
-### Part B - Microsoft Azure
+### Microsoft Azure
 
 Additional information before you begin: [Microsoft documents](https://docs.microsoft.com/fr-fr/azure/azure-resource-manager/management/manage-resource-groups-portal)
 
@@ -234,7 +234,7 @@ Value: **postgres://\&lt;nom\_utilisateur\&gt;:\&lt;mot\_de\_passe\&gt;@\&lt;hos
 
 ![30](https://user-images.githubusercontent.com/57418005/148472671-f2c2c373-7102-41a7-bb56-5ced7dfa8aa9.png)
 
-### Part C – Creating a database
+### Creating a database
 
 Additional information before you begin this stage: [Microsoft documents](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal)
 
@@ -486,7 +486,7 @@ Reminder: On Microsoft Teams, it is possible to configure a policy with an appli
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-# First steps to activate Teams Odyssey - The role of the Game Master
+# First steps to activate Teams Odyssey
 
 ## Introduction
 
