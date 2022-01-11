@@ -370,9 +370,9 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 43. Dans le terminal tapez la commande "cd client" et appuyez sur "entrer" pour vous rendre dans le dossier client.
 ![Capture12](https://user-images.githubusercontent.com/67316441/149011195-7e906a0d-13e4-459c-a798-5fa9d6857b88.PNG)
 44. Une fois dans le dossier client tapez la commande "npm i" puis appuyez sur "entrer".
-![Capture5](https://user-images.githubusercontent.com/67316441/149011331-62e162db-b0a5-4701-a937-89921b89c199.PNG)
+![Capture5](https://user-images.githubusercontent.com/67316441/149013660-0252b5a4-26f8-4be4-a061-244c3b787b54.PNG)
 45. Tapez ensuite la commande "npm run build" pour créer le build du front.
-![Capture6](https://user-images.githubusercontent.com/67316441/149011454-c28b3734-5d32-4e0c-bdab-2361e08e769a.PNG)
+![Capture6](https://user-images.githubusercontent.com/67316441/149013613-e84dd1f1-afe1-4213-9a5b-db99bf7cd2da.PNG)
 46. Cela devrait vous créer un dossier build dans le dossier client.
 ![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
 
@@ -385,18 +385,18 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 50. Dans votre nouveau dossier "Prod" allez dans le dossier "public" et copiez le build que vous avez créé précédemment dans le dossier "client".
 ![Capture9](https://user-images.githubusercontent.com/67316441/149012534-c88a0727-7f61-4c60-be76-d859d2ab76c3.PNG)
 
-39. Ouvrez le fichier Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
+51. Ouvrez le fichier Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
 ![Capture](https://user-images.githubusercontent.com/67316441/148568614-673a780a-9ab9-4bf0-b1d1-599e5acae9a1.PNG)
 
-40. Rendez-vous dans les « Extensions » dans la barre latérale de gauche.
-41. Recherchez « Azure App Service ».
-42. Installez l&#39;application « Azure App Service ».
+52. Rendez-vous dans les « Extensions » dans la barre latérale de gauche.
+53. Recherchez « Azure App Service ».
+54. Installez l&#39;application « Azure App Service ».
 ![65](https://user-images.githubusercontent.com/57418005/148473425-adf436d4-c12c-4fda-bbf2-3a98d4b54dd1.png)
 
-43. Ouvrez l&#39;application « Azure App Service » nouvellement installée.
-44. Connectez-vous avec votre compte Microsoft.
-45. Votre App service s&#39;affichera et proposera « OdysseeTest » (ou le nom que vous aviez choisi précédemment). Faites un clic droit sur l&#39;application.
-46. Cliquez sur « Deploy to Web App ».
+55. Ouvrez l&#39;application « Azure App Service » nouvellement installée.
+56. Connectez-vous avec votre compte Microsoft.
+57. Votre App service s&#39;affichera et proposera « OdysseeTest » (ou le nom que vous aviez choisi précédemment). Faites un clic droit sur l&#39;application.
+58. Cliquez sur « Deploy to Web App ».
 
 **Félicitations, votre application est désormais installée et accessible.**
 
