@@ -365,42 +365,42 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 40. Pour le télécharger et l'installer rendez vous sur nodejs.org/en/download/releases/ vous devriez trouver vers la page 10 la version correspondante.
 ![Capture4](https://user-images.githubusercontent.com/67316441/149010916-9d6e0c0c-4ec0-4601-bad1-9689494f6554.PNG)
 
-42. Une fois que c'est fait ouvrez le terminal via l'onglet "terminal"
+41. Une fois que c'est fait ouvrez le terminal via l'onglet "terminal"
 ![Capture3](https://user-images.githubusercontent.com/67316441/149010619-2b0cbb52-5ca5-4e9a-bda2-c73ac1a99425.PNG)
-43. Dans le terminal tapez la commande "cd client" et appuyez sur "entrer" pour vous rendre dans le dossier client.
+42. Dans le terminal tapez la commande "cd client" et appuyez sur "entrer" pour vous rendre dans le dossier client.
 ![Capture12](https://user-images.githubusercontent.com/67316441/149011195-7e906a0d-13e4-459c-a798-5fa9d6857b88.PNG)
-44. Une fois dans le dossier client tapez la commande "npm i" puis appuyez sur "entrer".
+43. Une fois dans le dossier client tapez la commande "npm i" puis appuyez sur "entrer".
 ![Capture5](https://user-images.githubusercontent.com/67316441/149013660-0252b5a4-26f8-4be4-a061-244c3b787b54.PNG)
 
-45. Tapez ensuite la commande "npm run build" pour créer le build du front.
+44. Tapez ensuite la commande "npm run build" pour créer le build du front.
 
 ![Capture6](https://user-images.githubusercontent.com/67316441/149013613-e84dd1f1-afe1-4213-9a5b-db99bf7cd2da.PNG)
 
-46. Cela devrait vous créer un dossier build dans le dossier client.
+45. Cela devrait vous créer un dossier build dans le dossier client.
 
 ![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
 
-47. Créez un nouveau dossier appelé "Prod" dans lequel vous allez copier certains dossiers présents dans "Odyssee_teams_pub/server" le résultat doit ressembler à ça.
+46. Créez un nouveau dossier appelé "Prod" dans lequel vous allez copier certains dossiers présents dans "Odyssee_teams_pub/server" le résultat doit ressembler à ça.
 ![Capture8](https://user-images.githubusercontent.com/67316441/149011893-642530b8-84d9-491e-85ce-20423c11ab2b.PNG)
-48. Le fichier .deployement est un fichier que vous devez créer qui ne contient que deux lignes.
+47. Le fichier .deployement est un fichier que vous devez créer qui ne contient que deux lignes.
 ![Capture13](https://user-images.githubusercontent.com/67316441/149012174-78c5550a-9518-41ba-b7c9-ca39141c2825.PNG)
-49. Dans le dossier "config" ouvrez le fichier "manifest.json" et remplacez le "port":8080, par "port":443. 
+48. Dans le dossier "config" ouvrez le fichier "manifest.json" et remplacez le "port":8080, par "port":443. 
 ![Capture14](https://user-images.githubusercontent.com/67316441/149012874-f0a0aeb3-b845-4a7a-b8aa-10f739ed98a4.PNG)
-50. Dans votre nouveau dossier "Prod" allez dans le dossier "public" et copiez le build que vous avez créé précédemment dans le dossier "client".
+49. Dans votre nouveau dossier "Prod" allez dans le dossier "public" et copiez le build que vous avez créé précédemment dans le dossier "client".
 ![Capture9](https://user-images.githubusercontent.com/67316441/149012534-c88a0727-7f61-4c60-be76-d859d2ab76c3.PNG)
 
-51. Ouvrez le fichier Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
+50. Ouvrez le fichier Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
 ![Capture](https://user-images.githubusercontent.com/67316441/148568614-673a780a-9ab9-4bf0-b1d1-599e5acae9a1.PNG)
 
-52. Rendez-vous dans les « Extensions » dans la barre latérale de gauche.
-53. Recherchez « Azure App Service ».
-54. Installez l&#39;application « Azure App Service ».
+51. Rendez-vous dans les « Extensions » dans la barre latérale de gauche.
+52. Recherchez « Azure App Service ».
+53. Installez l&#39;application « Azure App Service ».
 ![65](https://user-images.githubusercontent.com/57418005/148473425-adf436d4-c12c-4fda-bbf2-3a98d4b54dd1.png)
 
-55. Ouvrez l&#39;application « Azure App Service » nouvellement installée.
-56. Connectez-vous avec votre compte Microsoft.
-57. Votre App service s&#39;affichera et proposera « OdysseeTest » (ou le nom que vous aviez choisi précédemment). Faites un clic droit sur l&#39;application.
-58. Cliquez sur « Deploy to Web App ».
+54. Ouvrez l&#39;application « Azure App Service » nouvellement installée.
+55. Connectez-vous avec votre compte Microsoft.
+56. Votre App service s&#39;affichera et proposera « OdysseeTest » (ou le nom que vous aviez choisi précédemment). Faites un clic droit sur l&#39;application.
+57. Cliquez sur « Deploy to Web App ».
 
 **Félicitations, votre application est désormais installée et accessible.**
 
