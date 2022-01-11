@@ -383,10 +383,13 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 46. Créez un nouveau dossier appelé "Prod" dans lequel vous allez copier certains dossiers présents dans "Odyssee_teams_pub/server" le résultat doit ressembler à ça.
 
 ![Capture8](https://user-images.githubusercontent.com/67316441/149011893-642530b8-84d9-491e-85ce-20423c11ab2b.PNG)
+
 47. Le fichier .deployement est un fichier que vous devez créer qui ne contient que deux lignes.
 ![Capture13](https://user-images.githubusercontent.com/67316441/149012174-78c5550a-9518-41ba-b7c9-ca39141c2825.PNG)
+
 48. Dans le dossier "config" ouvrez le fichier "manifest.json" et remplacez le "port":8080, par "port":443. 
 ![Capture14](https://user-images.githubusercontent.com/67316441/149012874-f0a0aeb3-b845-4a7a-b8aa-10f739ed98a4.PNG)
+
 49. Dans votre nouveau dossier "Prod" allez dans le dossier "public" et copiez le build que vous avez créé précédemment dans le dossier "client".
 
 ![Capture9](https://user-images.githubusercontent.com/67316441/149012534-c88a0727-7f61-4c60-be76-d859d2ab76c3.PNG)
