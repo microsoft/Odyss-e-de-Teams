@@ -27,9 +27,9 @@ manifest.register.plugins.push(Inert);
 
 const config = {
   auth: {
-    clientId: "5830a2dd-c958-47bd-b6e8-676341fc5faf", //Le client ID de l'application enregistrée sur Azure Active Directory 
-    authority: "https://login.microsoftonline.com/ef866cb3-5ed9-490c-a761-90c3ddaee64e", //Le Tenant ID de votre domaine Azure ACtive Directory
-    clientSecret: "AB6OH-Pb.66SBbT__e9Bo5V6JdF.B7Pt8~",
+    clientId: "your client id", //Le client ID de l'application enregistrée sur Azure Active Directory 
+    authority: "https://login.microsoftonline.com/<your tenant id>", //Le Tenant ID de votre domaine Azure ACtive Directory
+    clientSecret: "your secret application id",
   }
 };
 
