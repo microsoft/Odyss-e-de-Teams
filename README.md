@@ -558,6 +558,8 @@ Toutes les informations spécifiques au rôle de Maître du jeu sont disponibles
 
 ## L’arborescence
 
+<img width="813" alt="截屏2022-01-11 17 17 57" src="https://user-images.githubusercontent.com/93584324/148981234-867a8738-d50b-4c59-8d58-488587d6c82a.png">
+
 ### Server
 
 L’ensemble des dossiers et fichiers à la racine sont ceux du backend Hapi.Js, à savoir :
@@ -588,6 +590,9 @@ Dans VS code, installer l’extension Azure App service de Microsoft. A la premi
 ### Déploiement
 
 Une fois connecté, la liste des abonnements azure apparait, avec l’ensemble des apps service disponibles pour la mise en production :
+
+<img width="664" alt="截屏2022-01-11 17 22 43" src="https://user-images.githubusercontent.com/93584324/148981304-0d63f032-8d34-4c97-ad68-0740b1341779.png">
+
 
 Pour déployer, clic droit et « Deploy to Web app » puis sélectionnez le dossier à déployer (celui avec l’arborescence plus haut dans ce document).
 
