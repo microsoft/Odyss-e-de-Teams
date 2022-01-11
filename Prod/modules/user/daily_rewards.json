@@ -1,0 +1,105 @@
+[
+  {
+    "day": 1,
+    "type": "EXP",
+    "value": 50
+  },
+  {
+    "day": 2,
+    "type": "PTS",
+    "value": 5
+  },
+  {
+    "day": 3,
+    "type": "EXP",
+    "value": 150
+  },
+  {
+    "day": 4,
+    "type": "PTS",
+    "value": 15
+  },
+  {
+    "day": 5,
+    "type": "MEDAL",
+    "value": "Premier contact",
+    "img": "premier_contact.png"
+  },
+  {
+    "day": 6,
+    "type": "EXP",
+    "value": 150
+  },
+  {
+    "day": 7,
+    "type": "PTS",
+    "value": 5
+  },
+  {
+    "day": 8,
+    "type": "EXP",
+    "value": 200
+  },
+  {
+    "day": 9,
+    "type": "PTS",
+    "value": 15
+  },
+  {
+    "day": 10,
+    "type": "MEDAL",
+    "value": "Emissaire subspatial",
+    "img": "emissaire_subspatial.png"
+  },
+  {
+    "day": 11,
+    "type": "EXP",
+    "value": 150
+  },
+  {
+    "day": 12,
+    "type": "PTS",
+    "value": 5
+  },
+  {
+    "day": 13,
+    "type": "EXP",
+    "value": 200
+  },
+  {
+    "day": 14,
+    "type": "PTS",
+    "value": 15
+  },
+  {
+    "day": 15,
+    "type": "MEDAL",
+    "value": "Ambassadeur intergalactique",
+    "img": "ambassadeur_intergalactique.png"
+  },
+  {
+    "day": 16,
+    "type": "EXP",
+    "value": 150
+  },
+  {
+    "day": 17,
+    "type": "PTS",
+    "value": 5
+  },
+  {
+    "day": 18,
+    "type": "EXP",
+    "value": 200
+  },
+  {
+    "day": 19,
+    "type": "PTS",
+    "value": 15
+  },
+  {
+    "day": 20,
+    "type": "EXP",
+    "value": 400
+  }
+]
