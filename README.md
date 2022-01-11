@@ -552,6 +552,47 @@ Toutes les informations spécifiques au rôle de Maître du jeu sont disponibles
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
+# Mise en production Azure
+
+## L’arborescence
+
+### Server
+
+L’ensemble des dossiers et fichiers à la racine sont ceux du backend Hapi.Js, à savoir :
+
+- config : répertoire contenant le manifest.json. Attention : Le port doit être 443 pour l’app service Azure
+- models (optionnel) : Définition des objets
+- modules : Tout le traitement backend
+- public : Les fichiers statics (images...). Ce répertoire contiendra aussi le
+frontend.
+- package.json : Nécessaire pour le npm install et la commande de
+démarrage
+- server.js : Point d’entrée du serveur
+Les autres dossiers (ici utils et active) correspondent au contexte de l’application (l’odyssée de teams dans l’exemple ci-dessus).
+
+### Frontend
+
+Hapi.Js doit être configuré pour faire tourner une application statique (angular, react...), voir dans server.js. Dans l’exemple ci-dessous, le serveur attends celle-ci dans public/build.
+
+Après compilation du front, il faut copier l’ensemble du dossier dist généré par le build (le contenu, pas le dossier en lui-même), et le coller dans public/build.
+
+
+## Vs Code
+
+### Extension
+
+Dans VS code, installer l’extension Azure App service de Microsoft. A la première ouverture, celle-ci va vous demander de vous connecter au portail Azure.
+
+### Déploiement
+
+Une fois connecté, la liste des abonnements azure apparait, avec l’ensemble des apps service disponibles pour la mise en production :
+
+Pour déployer, clic droit et « Deploy to Web app » puis sélectionnez le dossier à déployer (celui avec l’arborescence plus haut dans ce document).
+
+Il est recommandé de faire « stop » avant de déployer (et donc de faire start en fin de déploiement).
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
 # FAQ
 
 ## Installation &amp; gestion
