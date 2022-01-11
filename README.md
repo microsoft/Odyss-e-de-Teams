@@ -354,20 +354,20 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 ![61](https://user-images.githubusercontent.com/57418005/148473365-81287346-2a2f-4d2c-80aa-8e05991c3acc.png)
 
 
-36. Votre base de données est prête. Il ne vous reste plus qu&#39;à mettre l&#39;application sur l&#39;App service que vous avez précédemment créé. Pour ce faire vous aller avoir besoin de télécharger et d&#39;installer «  **Visual Studio Code ** » : [lien](https://code.visualstudio.com/)
+36. Votre base de données est prête. Il ne vous reste plus qu&#39;à mettre l&#39;application sur l&#39;App service que vous avez précédemment créé. Pour ce faire, vous aller avoir besoin de télécharger et d&#39;installer l'outil gratuit **Visual Studio Code ** : [lien d'accès](https://code.visualstudio.com/)
 ![62](https://user-images.githubusercontent.com/57418005/148473378-a6945d7d-000a-428b-a4ef-799686ecf974.png)
 
-37. Une fois « VSC » installé, lancez-le.
+37. Une fois « VSC » d'installé, lancez-le.
 ![63](https://user-images.githubusercontent.com/57418005/148473402-ed65fafe-7e55-4da8-b066-d88e2e1feba9.png)
 
-38. Faites « Fichier » puis « Ouvrir le dossier » et allez sélectionner le dossier « Odyssee_teams_pub » de ce repository.
-39. Pour la suite vous allez avoir besoin de Node JS dans sa version 12.22.9 (pour des versions plus récente il faudra adapter le code).
-40. Pour le télécharger et l'installer rendez vous sur nodejs.org/en/download/releases/ vous devriez trouver vers la page 10 la version correspondante.
+38. Allez dans « Fichier » puis « Ouvrir le dossier » et allez sélectionner le dossier « Odyssee_teams_pub » de ce repository.
+39. Pour la suite, vous allez avoir besoin de Node JS dans sa version 12.22.9 (pour des versions plus récente il faudra adapter le code).
+40. Pour le télécharger et l'installer rendez vous sur [node.js](nodejs.org/en/download/releases/) : vous devriez trouver à la page 10 la version correspondante.
 ![Capture4](https://user-images.githubusercontent.com/67316441/149010916-9d6e0c0c-4ec0-4601-bad1-9689494f6554.PNG)
 
-41. Une fois que c'est fait ouvrez le terminal via l'onglet "terminal"
+41. Une fois cette étape faite, ouvrez le terminal via l'onglet "terminal"
 ![Capture3](https://user-images.githubusercontent.com/67316441/149010619-2b0cbb52-5ca5-4e9a-bda2-c73ac1a99425.PNG)
-42. Dans le terminal tapez la commande "cd client" et appuyez sur "entrer" pour vous rendre dans le dossier client.
+42. Dans le terminal, tapez la commande "cd client" et appuyez sur "entrer" pour vous rendre dans le dossier client.
 ![Capture12](https://user-images.githubusercontent.com/67316441/149011195-7e906a0d-13e4-459c-a798-5fa9d6857b88.PNG)
 43. Une fois dans le dossier client tapez la commande "npm i" puis appuyez sur "entrer".
 ![Capture5](https://user-images.githubusercontent.com/67316441/149013660-0252b5a4-26f8-4be4-a061-244c3b787b54.PNG)
@@ -380,17 +380,17 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 
 ![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
 
-46. Créez un nouveau dossier appelé "Prod" dans lequel vous allez copier certains dossiers présents dans "Odyssee_teams_pub/server" le résultat doit ressembler à ça.
+46. Créez un nouveau dossier sous le nom dee "Prod" dans lequel vous allez copier plusieurs dossiers présents dans "Odyssee_teams_pub/server" : le résultat doit ressembler à cela.
 
 ![Capture8](https://user-images.githubusercontent.com/67316441/149011893-642530b8-84d9-491e-85ce-20423c11ab2b.PNG)
 
-47. Le fichier .deployement est un fichier que vous devez créer qui ne contient que deux lignes.
+47. Le fichier ".deployement" est un fichier que vous devez créer qui ne contient que deux lignes.
 ![Capture13](https://user-images.githubusercontent.com/67316441/149012174-78c5550a-9518-41ba-b7c9-ca39141c2825.PNG)
 
-48. Dans le dossier "config" ouvrez le fichier "manifest.json" et remplacez le "port":8080, par "port":443. 
+48. Dans le dossier "config" ouvrez le fichier "manifest.json" et remplacez-le "port":8080, par "port":443. 
 ![Capture14](https://user-images.githubusercontent.com/67316441/149012874-f0a0aeb3-b845-4a7a-b8aa-10f739ed98a4.PNG)
 
-49. Dans votre nouveau dossier "Prod" allez dans le dossier "public" et copiez le build que vous avez créé précédemment dans le dossier "client".
+49. Dans votre nouveau dossier "Prod", allez dans le dossier "public" et copiez le build que vous avez précédemment créé dans le dossier "client".
 
 ![Capture9](https://user-images.githubusercontent.com/67316441/149012534-c88a0727-7f61-4c60-be76-d859d2ab76c3.PNG)
 
