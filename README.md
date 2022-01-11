@@ -372,8 +372,10 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 44. Une fois dans le dossier client tapez la commande "npm i" puis appuyez sur "entrer".
 ![Capture5](https://user-images.githubusercontent.com/67316441/149013660-0252b5a4-26f8-4be4-a061-244c3b787b54.PNG)
 45. Tapez ensuite la commande "npm run build" pour créer le build du front.
+
 ![Capture6](https://user-images.githubusercontent.com/67316441/149013613-e84dd1f1-afe1-4213-9a5b-db99bf7cd2da.PNG)
 46. Cela devrait vous créer un dossier build dans le dossier client.
+
 ![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
 
 47. Créez un nouveau dossier appelé "Prod" dans lequel vous allez copier certains dossiers présents dans "Odyssee_teams_pub/server" le résultat doit ressembler à ça.
