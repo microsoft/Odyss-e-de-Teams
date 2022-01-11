@@ -1,5 +1,4 @@
 node_modules
-build
 .vscode/settings.json
 .DS_Store
 server/public/company-assets/*
