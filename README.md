@@ -81,6 +81,8 @@ L&#39;Odyssée de Teams est un jeu qui propose un champ lexical propre à son un
   - [Introduction](#introduction)
   - [Devenir Maître du jeu et configuration d&#39;une saison](#devenir-maître-du-jeu-et-configuration-de-la-saison)
   - [Première connexion](#première-connexion)
+- IV. [Mise en production Azure](#Mise-en-production-Azure)
+
 - [FAQ](#faq)
 
 # Configuration du tenant Azure
