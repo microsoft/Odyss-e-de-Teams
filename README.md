@@ -360,8 +360,30 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 37. Une fois « VSC » installé, lancez-le.
 ![63](https://user-images.githubusercontent.com/57418005/148473402-ed65fafe-7e55-4da8-b066-d88e2e1feba9.png)
 
-38. Faites « Fichier » puis « Ouvrir le dossier » et allez sélectionner le dossier « Prod » fourni avec ce guide d&#39;installation.
-![64](https://user-images.githubusercontent.com/57418005/148473407-e15ba56f-5d00-40fb-a15e-941d73b3f77e.png)
+38. Faites « Fichier » puis « Ouvrir le dossier » et allez sélectionner le dossier « Odyssee_teams_pub » de ce repository.
+39. Pour la suite vous allez avoir besoin de Node JS dans sa version 12.22.9 (pour des versions plus récente il faudra adapter le code).
+40. Pour le télécharger et l'installer rendez vous sur nodejs.org/en/download/releases/ vous devriez trouver vers la page 10 la version correspondante.
+![Capture4](https://user-images.githubusercontent.com/67316441/149010916-9d6e0c0c-4ec0-4601-bad1-9689494f6554.PNG)
+
+42. Une fois que c'est fait ouvrez le terminal via l'onglet "terminal"
+![Capture3](https://user-images.githubusercontent.com/67316441/149010619-2b0cbb52-5ca5-4e9a-bda2-c73ac1a99425.PNG)
+43. Dans le terminal tapez la commande "cd client" et appuyez sur "entrer" pour vous rendre dans le dossier client.
+![Capture12](https://user-images.githubusercontent.com/67316441/149011195-7e906a0d-13e4-459c-a798-5fa9d6857b88.PNG)
+44. Une fois dans le dossier client tapez la commande "npm i" puis appuyez sur "entrer".
+![Capture5](https://user-images.githubusercontent.com/67316441/149011331-62e162db-b0a5-4701-a937-89921b89c199.PNG)
+45. Tapez ensuite la commande "npm run build" pour créer le build du front.
+![Capture6](https://user-images.githubusercontent.com/67316441/149011454-c28b3734-5d32-4e0c-bdab-2361e08e769a.PNG)
+46. Cela devrait vous créer un dossier build dans le dossier client.
+![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
+
+47. Créez un nouveau dossier appelé "Prod" dans lequel vous allez copier certains dossiers présents dans "Odyssee_teams_pub/server" le résultat doit ressembler à ça.
+![Capture8](https://user-images.githubusercontent.com/67316441/149011893-642530b8-84d9-491e-85ce-20423c11ab2b.PNG)
+48. Le fichier .deployement est un fichier que vous devez créer qui ne contient que deux lignes.
+![Capture13](https://user-images.githubusercontent.com/67316441/149012174-78c5550a-9518-41ba-b7c9-ca39141c2825.PNG)
+49. Dans le dossier "config" ouvrez le fichier "manifest.json" et remplacez le "port":8080, par "port":443. 
+![Capture14](https://user-images.githubusercontent.com/67316441/149012874-f0a0aeb3-b845-4a7a-b8aa-10f739ed98a4.PNG)
+50. Dans votre nouveau dossier "Prod" allez dans le dossier "public" et copiez le build que vous avez créé précédemment dans le dossier "client".
+![Capture9](https://user-images.githubusercontent.com/67316441/149012534-c88a0727-7f61-4c60-be76-d859d2ab76c3.PNG)
 
 39. Ouvrez le fichier Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
 ![Capture](https://user-images.githubusercontent.com/67316441/148568614-673a780a-9ab9-4bf0-b1d1-599e5acae9a1.PNG)
@@ -550,53 +572,6 @@ Notez que lorsqu&#39;un·e Maître du jeu active une nouvelle semaine, cela dés
 Toutes les informations spécifiques au rôle de Maître du jeu sont disponibles dans le document &quot;L&#39;Odyssée de Teams - Règles\_Admin.pdf&quot; fourni avec le jeu.
 
 **Félicitations, la saison L&#39;Odyssée de Teams est maintenant lancée !**
-
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
-
-# Mise en production sur Azure
-
-## L’arborescence
-
-<img width="813" alt="截屏2022-01-11 17 17 57" src="https://user-images.githubusercontent.com/93584324/148981234-867a8738-d50b-4c59-8d58-488587d6c82a.png">
-
-### Serveur
-
-L’ensemble des dossiers et fichiers à la racine sont ceux du backend Hapi.Js, à savoir :
-
-| **Terme** | **Définition** |
-| --- | --- |
-| **Config** | Répertoire contenant le manifest.json. Attention : Le port doit être 443 pour l’app service Azure |
-| **Models (optionnel)** | Définition des objets |
-| **Modules** | Tout le traitement lié au backend |
-| **Public** | Les fichiers statiques (ex : les images). Ce répertoire contiendra aussi le frontend. |
-| **Package.json** | Nécessaire pour le npm install et la commande de démarrage |
-| **Serveur .js** | Point d’entrée du serveur |
-
-Les autres dossiers (ici "Utils" et "Active") correspondent au contexte de l’application (L’Odyssée de Teams dans l’exemple ci-dessus).
-
-### Frontend
-
-Hapi.Js doit être configuré pour faire tourner une application statique (Angular, React, etc.), voir un serveur.js. Dans l’exemple ci-dessous, le serveur attend celle-ci dans "Public/Build".
-
-Après compilation du front, copiez l’ensemble du dossier "dist" généré par le build (uniquement le contenu), et collez-le dans "Public/Build".
-
-
-## Visual Studio Code
-
-### Extension
-
-Dans Visual Studio Code, installez l’extension "Azure App service" de Microsoft. À la première ouverture, celle-ci va vous demander de vous connecter au portail Azure.
-
-### Déploiement
-
-Une fois connecté.e, la liste des abonnements azure apparait avec l’ensemble des apps service disponibles pour la mise en production :
-
-<img width="664" alt="截屏2022-01-11 17 22 43" src="https://user-images.githubusercontent.com/93584324/148981304-0d63f032-8d34-4c97-ad68-0740b1341779.png">
-
-
-Pour effectuer un déploiement, faites un clic droit, "Deploy to Web app" puis sélectionnez le dossier à déployer (celui avec l’arborescence mentionné plus haut dans ce document).
-
-Il est recommandé de faire "Stop" avant de déployer (et donc de faire "Start" en fin de déploiement).
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
