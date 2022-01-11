@@ -57,7 +57,6 @@ L&#39;Odyssée de Teams est un jeu qui propose un champ lexical propre à son un
 | **Terme** | **Définition** |
 | --- | --- |
 | **Administrateur tenant Microsoft Teams** | Utilisateur·ice ayant un accès à la console Microsoft Teams pour installer et configurer L&#39;Odyssée en tant que Maître du jeu |
-| --- | --- |
 | **Cockpit** | Le cockpit est le nom de l&#39;interface d&#39;accueil du jeu L&#39;Odyssée de Teams, que ce soit pour les joueur·euse·s ou les Maîtres du jeu |
 | **Explorateur·ice** | Utilisateur·ice ayant le rôle de joueur·euse avec un accès standard à L&#39;Odyssée |
 | **L&#39;Odyssée de Teams** | Serious game destiné à l&#39;apprentissage des usages et bonnes pratiques de Microsoft Teams |
@@ -554,49 +553,50 @@ Toutes les informations spécifiques au rôle de Maître du jeu sont disponibles
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
-# Mise en production Azure
+# Mise en production sur Azure
 
 ## L’arborescence
 
 <img width="813" alt="截屏2022-01-11 17 17 57" src="https://user-images.githubusercontent.com/93584324/148981234-867a8738-d50b-4c59-8d58-488587d6c82a.png">
 
-### Server
+### Serveur
 
 L’ensemble des dossiers et fichiers à la racine sont ceux du backend Hapi.Js, à savoir :
 
-- config : répertoire contenant le manifest.json. Attention : Le port doit être 443 pour l’app service Azure
-- models (optionnel) : Définition des objets
-- modules : Tout le traitement backend
-- public : Les fichiers statics (images...). Ce répertoire contiendra aussi le
-frontend.
-- package.json : Nécessaire pour le npm install et la commande de
-démarrage
-- server.js : Point d’entrée du serveur
-Les autres dossiers (ici utils et active) correspondent au contexte de l’application (l’odyssée de teams dans l’exemple ci-dessus).
+| **Terme** | **Définition** |
+| --- | --- |
+| **Config** | Répertoire contenant le manifest.json. Attention : Le port doit être 443 pour l’app service Azure |
+| **Models (optionnel)** | Définition des objets |
+| **Modules** | Tout le traitement lié au backend |
+| **Public** | Les fichiers statiques (ex : les images). Ce répertoire contiendra aussi le frontend. |
+| **Package.json** | Nécessaire pour le npm install et la commande de démarrage |
+| **Serveur .js** | Point d’entrée du serveur |
+
+Les autres dossiers (ici "Utils" et "Active") correspondent au contexte de l’application (L’Odyssée de Teams dans l’exemple ci-dessus).
 
 ### Frontend
 
-Hapi.Js doit être configuré pour faire tourner une application statique (angular, react...), voir dans server.js. Dans l’exemple ci-dessous, le serveur attends celle-ci dans public/build.
+Hapi.Js doit être configuré pour faire tourner une application statique (Angular, React, etc.), voir un serveur.js. Dans l’exemple ci-dessous, le serveur attend celle-ci dans "Public/Build".
 
-Après compilation du front, il faut copier l’ensemble du dossier dist généré par le build (le contenu, pas le dossier en lui-même), et le coller dans public/build.
+Après compilation du front, copiez l’ensemble du dossier "dist" généré par le build (uniquement le contenu), et collez-le dans "Public/Build".
 
 
-## Vs Code
+## Visual Studio Code
 
 ### Extension
 
-Dans VS code, installer l’extension Azure App service de Microsoft. A la première ouverture, celle-ci va vous demander de vous connecter au portail Azure.
+Dans Visual Studio Code, installez l’extension "Azure App service" de Microsoft. À la première ouverture, celle-ci va vous demander de vous connecter au portail Azure.
 
 ### Déploiement
 
-Une fois connecté, la liste des abonnements azure apparait, avec l’ensemble des apps service disponibles pour la mise en production :
+Une fois connecté.e, la liste des abonnements azure apparait avec l’ensemble des apps service disponibles pour la mise en production :
 
 <img width="664" alt="截屏2022-01-11 17 22 43" src="https://user-images.githubusercontent.com/93584324/148981304-0d63f032-8d34-4c97-ad68-0740b1341779.png">
 
 
-Pour déployer, clic droit et « Deploy to Web app » puis sélectionnez le dossier à déployer (celui avec l’arborescence plus haut dans ce document).
+Pour effectuer un déploiement, faites un clic droit, "Deploy to Web app" puis sélectionnez le dossier à déployer (celui avec l’arborescence mentionné plus haut dans ce document).
 
-Il est recommandé de faire « stop » avant de déployer (et donc de faire start en fin de déploiement).
+Il est recommandé de faire "Stop" avant de déployer (et donc de faire "Start" en fin de déploiement).
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
