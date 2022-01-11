@@ -8,40 +8,7 @@
 		
 -- organisation
   INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 	
-    ('Saegus', true, now(), now()),
-	('Microsoft', true, now(), now()),
-	('Air France', false, now(), now()),
-	('Alstom', false, now(), now()),
-	('ALTEN SA', false, now(), now()),
-	('AXA GIE', false, now(), now()),
-	('BPCE', false, now(), now()),
-	('Colas', false, now(), now()),
-	('Edenred', false, now(), now()),
-	('EDF Renouvelable', false, now(), now()),
-	('EUROVIA', false, now(), now()),
-	('Grtgaz', false, now(), now()),
-	('JCDecaux', false, now(), now()),
-	('Kenzo', false, now(), now()),
-	('Kering', false, now(), now()),
-	('KIABI', false, now(), now()),
-	('La Poste', false, now(), now()),
-	('LVMH', false, now(), now()),
-	('MANUFACTURE FRANCAISE DES PNEUMATIQUES MICHELIN', false, now(), now()),
-	('Moet Hennessy', false, now(), now()),
-	('PUBLICIS', false, now(), now()),
-	('RATP', false, now(), now()),
-	('RENAULT SAS', false, now(), now()),
-	('SANOFI', false, now(), now()),
-	('SERVIER', false, now(), now()),
-	('SNCF', false, now(), now()),
-	('SONEPAR', false, now(), now()),
-	('SOPRA STERIA GROUP', false, now(), now()),
-	('SPIE SA', false, now(), now()),
-	('Suez', false, now(), now()),
-	('Total', false, now(), now()),
-	('VINCI AUTOROUTES', false, now(), now()),
-	('VINCI CONSTRUCTION', false, now(), now()),
-	('APRR', false, now(), now());
+    ('Votre organisation', true, now(), now());
 
 -- role
   INSERT INTO public.t_role (nom, actif, horodatage, horodatage_creation) VALUES 	
