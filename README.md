@@ -376,25 +376,63 @@ You can now import the files; this is the next step.
 36. Your database is ready. All you have to do is put the application on the App service you created before. To do this you will need to download and install &quot;Visual Studio Code&quot;: [link](https://code.visualstudio.com/)
 
 ![62](https://user-images.githubusercontent.com/57418005/148473378-a6945d7d-000a-428b-a4ef-799686ecf974.png)
+37. Une fois « VSC » d'installé, lancez-le.
+![63](https://user-images.githubusercontent.com/57418005/148473402-ed65fafe-7e55-4da8-b066-d88e2e1feba9.png)
 
-37. Once &quot;VSC&quot; is installed, open it, open the file Crypto.js and put a random string in the variable CRYPTO_SECRET_KEY.
+38. Go to "File" then "Open folder" and select the "Odyssee_teams_pub" folder from this repository.
+
+40. Next, you will need "Node JS" in its version 12.22.9 (Note that for more recent versions, you will have to adapt the code).
+
+42. To download and install it, go to [node.js] (nodejs.org/en/download/releases/): you should find the corresponding version on page 10.
+![Capture4](https://user-images.githubusercontent.com/67316441/149010916-9d6e0c0c-4ec0-4601-bad1-9689494f6554.PNG)
+
+41. Once this step is done, open terminal via the "terminal" tab.
+![Capture3](https://user-images.githubusercontent.com/67316441/149010619-2b0cbb52-5ca5-4e9a-bda2-c73ac1a99425.PNG)
+
+42. In the terminal, type the command "cd client" and press "enter" to go to the client folder.
+![Capture12](https://user-images.githubusercontent.com/67316441/149011195-7e906a0d-13e4-459c-a798-5fa9d6857b88.PNG)
+
+43. Once in the client folder, type the command "npm i" then press "enter".
+![Capture5](https://user-images.githubusercontent.com/67316441/149013660-0252b5a4-26f8-4be4-a061-244c3b787b54.PNG)
+
+44. Next, type the command "npm run build" to create the build of the front.
+![Capture6](https://user-images.githubusercontent.com/67316441/149013613-e84dd1f1-afe1-4213-9a5b-db99bf7cd2da.PNG)
+
+45. This should create a build folder for you in the client folder.
+
+![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
+
+46. Create a new folder under the name "Prod" in which you will copy several folders found in "Odyssee_teams_pub / server": the result should look like this.
+
+![Capture8](https://user-images.githubusercontent.com/67316441/149011893-642530b8-84d9-491e-85ce-20423c11ab2b.PNG)
+
+47. The ".deployment" file is a file that you must create and that contains only two lines.
+![Capture13](https://user-images.githubusercontent.com/67316441/149012174-78c5550a-9518-41ba-b7c9-ca39141c2825.PNG)
+
+48. In the "config" folder, open the "manifest.json" file and replace "port": 8080 by "port": 443.
+![Capture14](https://user-images.githubusercontent.com/67316441/149012874-f0a0aeb3-b845-4a7a-b8aa-10f739ed98a4.PNG)
+
+49. In your new "Prod" folder, go to the "public" folder and copy the build you previously created to the "client" folder.
+![Capture9](https://user-images.githubusercontent.com/67316441/149012534-c88a0727-7f61-4c60-be76-d859d2ab76c3.PNG)
+
+50. Once &quot;VSC&quot; is installed, open it, open the file Crypto.js and put a random string in the variable CRYPTO_SECRET_KEY.
 ![63](https://user-images.githubusercontent.com/57418005/148473402-ed65fafe-7e55-4da8-b066-d88e2e1feba9.png)
 ![Capture](https://user-images.githubusercontent.com/67316441/148569783-dd02800d-6528-4b9e-8ba8-d979c1658a4f.PNG)
 
-38. Go to &quot;File&quot; then &quot;Open folder&quot; and select the &quot;Prod&quot; folder provided with this installation guide.
+51. Go to &quot;File&quot; then &quot;Open folder&quot; and select the &quot;Prod&quot; folder provided with this installation guide.
 
 ![64](https://user-images.githubusercontent.com/57418005/148473407-e15ba56f-5d00-40fb-a15e-941d73b3f77e.png)
 
-39. Go to &quot;Extensions&quot; in the left menu.
-40. Find &quot;Azure App Service&quot;.
-41. Install the &quot;Azure App Service&quot; application.
+52. Go to &quot;Extensions&quot; in the left menu.
+53. Find &quot;Azure App Service&quot;.
+54. Install the &quot;Azure App Service&quot; application.
 
 ![65](https://user-images.githubusercontent.com/57418005/148473425-adf436d4-c12c-4fda-bbf2-3a98d4b54dd1.png)
 
-42. Open the &quot;Azure App Service&quot; application now installed.
-43. Login with your Microsoft account.
-44. Your App service will appear and suggest &quot;OdysseyTest&quot; or (the name you chose). Right-click the application.
-45. Click &quot;Deploy to Web App&quot;.
+55. Open the &quot;Azure App Service&quot; application now installed.
+56. Login with your Microsoft account.
+57. Your App service will appear and suggest &quot;OdysseyTest&quot; or (the name you chose). Right-click the application.
+58. Click &quot;Deploy to Web App&quot;.
 
 **Congratulations, your application is now installed and accessible.**
 

@@ -13,9 +13,6 @@ class TeamsAuthService {
     const params = new URLSearchParams(url.search);
     const tenantId = params["tenantId"] || "common";
 
-    // TODO: Clear sign in context on user mismatch
-    // const userObjectId = params["userObjectId"];
-
     // Configure ADAL
     this.applicationConfig = {
       tenant: tenantId,
