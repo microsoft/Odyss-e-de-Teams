@@ -1,58 +1,62 @@
 ﻿{
-  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
-  "manifestVersion": "1.5",
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.11",
   "version": "1.0",
   "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
   "packageName": "com.odysseeteams",
   "developer": {
-    "name": "Saegus",
-    "websiteUrl": "https://9fc911c4.ngrok.io",
-    "privacyUrl": "https://9fc911c4.ngrok.io/privacypolicy",
-    "termsOfUseUrl": "https://9fc911c4.ngrok.io/termsofuse"
-  },
-  "name": {
-    "short": "L'Odyssee de Teams",
-    "full": "L'Odyssee de Teams - Un voyage à travers les usages"
-  },
-  "description": {
-    "short": "Partez à la conquète de la collaboration avec Microsoft Teams",
-    "full": "Le jeu concours intéractif pour explorer la galaxie des usages collaboratifs"
+      "name": "Saegus",
+      "websiteUrl": "https://saegus.com/",
+      "privacyUrl": "https://privacy.microsoft.com/fr-fr/privacystatement",
+      "termsOfUseUrl": "https://docs.microsoft.com/fr-fr/legal/termsofuse",
+      "mpnId": "4861823"
   },
   "icons": {
-    "outline": "outline.png",
-    "color": "color.png"
+      "color": "color.png",
+      "outline": "outline.png"
   },
-  "accentColor": "#ffffff",
-  "configurableTabs": [
-    {
-      "configurationUrl": "https://9fc911c4.ngrok.io/config/?inTeamsSSO=true",
-      "canUpdateConfiguration": true,
-      "scopes": [
-        "team",
-        "groupchat"
-      ]
-    }
-  ],
+  "name": {
+      "short": "Teams Odyssey",
+      "full": "Teams Odyssey - A journey to discover Teams use case scenarios"
+  },
+  "description": {
+      "short": "Teams Odyssey - A journey to discover Teams use case scenarios",
+      "full": "Le jeu concours interactif pour explorer la galaxie des usages collaboratifs."
+  },
+  "accentColor": "#424BB0",
   "staticTabs": [
-    {
-      "contentUrl": "https://9fc911c4.ngrok.io/?inTeamsSSO=true",
-      "entityId": "myTasks",
-      "name": "My Tasks",
-      "scopes": [
-        "personal"
-      ]
-    }
+      {
+          "entityId": "jeu",
+          "name": "Application",
+          "contentUrl": "https://odyssee-de-teams.saegus.com/?inTeamsSSO=true/",
+          "scopes": [
+              "personal"
+          ]
+      }
   ],
   "permissions": [
-    "messageTeamMembers",
-    "identity"
+      "identity",
+      "messageTeamMembers"
   ],
   "validDomains": [
-    "9fc911c4.ngrok.io",
-    "localhost"
+      "odyssee-de-teams.saegus.com"
   ],
   "webApplicationInfo": {
-    "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
-    "resource": "api://5830a2dd-c958-47bd-b6e8-676341fc5faf"
+      "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
+      "resource": "api://odyssee-de-teams.saegus.com/5830a2dd-c958-47bd-b6e8-676341fc5faf"
+  },
+  "activities": {
+      "activityTypes": [
+          {
+              "type": "taskCreated",
+              "description": "Task Created Activity",
+              "templateText": "{actor} created task {taskId} for you"
+          },
+          {
+              "type": "sendNotificationToUser",
+              "description": "Sending notification to a user",
+              "templateText": "{actor} sent you a Notification!"
+          }
+      ]
   }
 }
