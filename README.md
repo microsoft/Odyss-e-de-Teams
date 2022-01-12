@@ -470,16 +470,17 @@ If a firewall or proxy is blocking the installation process, the link below will
 
 ### 3rd stage: Upload the .zip file on your tenant
 
-5. In the right section of your interface, click &quot;Upload&quot;.
+5. Open the file "PACKAGE_ODYSSEY_FR / manifest.json" on your computer, and change the URL to the one you created in the app service and the id of your app.
+
+![Capture15](https://user-images.githubusercontent.com/67316441/149138090-a58996d6-7967-429d-a990-d0af99f72f94.PNG)
+
+6. Create a .zip file from the three files "color.png", "manifest.json" (which you just modified) and "outline.png".
+
+7. On the right side of your interface, click on the "Upload" button.
 
 ![67](https://user-images.githubusercontent.com/57418005/148473589-ce432cee-4727-4694-9f30-91fc05a59aa5.png)
 
-6. Click &quot;Select a file&quot; from the window that has just opened.
-
-![68](https://user-images.githubusercontent.com/57418005/148473597-e50cb97b-7aaf-4b17-9e1e-dd7f94b3409d.png)
-
-7. Select the file &quot;LOdysseedeTeams2021.zip&quot; on your PC.
-8. Confirm the import. If the import is a success, the icon and name of the application will appear in the list of applications.
+8. Click on the "Select a file" button offered by the modal that just appeared, and choose the zip you just created.
 
 ![69](https://user-images.githubusercontent.com/57418005/148473606-6a87bb90-b258-464b-a68e-9aee57e6ff0c.png)
 
