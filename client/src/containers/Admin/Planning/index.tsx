@@ -122,8 +122,6 @@ class PlanningContainer extends React.Component<
                 >
                   <AdminNotification/>
                 </Tab> 
-               {/*  TODO: en attendant que le push notif marche bien */}
-
                 <Tab
                   eventKey="MISSION"
                   title={t("admin.planning.menu_missions")}
