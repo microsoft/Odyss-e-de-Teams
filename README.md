@@ -441,53 +441,58 @@ Si un pare-feu ou un proxy quelconque bloque le processus d&#39;installation, le
 
 #### 3ème étape : Uploadez le fichier .zip sur votre tenant
 
-5. Sur la partie droite de votre interface, cliquez sur le bouton « Upload ».
+5. Ouvrez le fichier « PACKAGE_ODYSSEY_FR/manifest.json » sur votre ordinateur et modifiez l'URL par celui que vous avez créé dans l'app service.
+
+![Capture15](https://user-images.githubusercontent.com/67316441/149136071-abeb829f-26a3-41ea-aaf7-0a0d549c9a2a.PNG)
+
+6. Créez un fichier .zip à partir des trois fichiers "color.png", "manifest.json" (que vous venez de modifier) et "outline.png".
+
+7. Sur la partie droite de votre interface, cliquez sur le bouton « Upload ».
 
 ![67](https://user-images.githubusercontent.com/57418005/148473589-ce432cee-4727-4694-9f30-91fc05a59aa5.png)
 
-6. Cliquez sur le bouton « Select a file » proposé par la modale qui vient d&#39;apparaître.
+8. Cliquez sur le bouton « Select a file » proposé par la modale qui vient d&#39;apparaître et choisissez le zip que vous venez de créer.
 
 ![68](https://user-images.githubusercontent.com/57418005/148473597-e50cb97b-7aaf-4b17-9e1e-dd7f94b3409d.png)
 
-7. Aller sélectionner le fichier « LOdysseedeTeams2021.zip » sur votre ordinateur.
-8. Confirmez l&#39;importation. Si l&#39;import est un succès, l&#39;icône et le nom de l&#39;application apparaîtront alors dans la liste des applications.
+9. Confirmez l&#39;importation. Si l&#39;import est un succès, l&#39;icône et le nom de l&#39;application apparaîtront alors dans la liste des applications.
 
 ![69](https://user-images.githubusercontent.com/57418005/148473606-6a87bb90-b258-464b-a68e-9aee57e6ff0c.png)
 
 #### 4ème étape : Policy
 
-9. Maintenant que l&#39;application a été importée avec succès, vous devez lui attribuer une « policy », ou règle en français.
+10. Maintenant que l&#39;application a été importée avec succès, vous devez lui attribuer une « policy », ou règle en français.
 
 Rappel : Sur Microsoft Teams, il est possible de configurer une policy de sorte à ce que l&#39;application qui lui sera associée ne soit accessible qu&#39;à une seule population précise de votre organisation. Par défaut, une application est accessible à tou·te·s les utilisateur·ice·s avec une policy dite « Global ».
 
-10. Cliquez sur le bouton « Setup policies » dans votre barre de gauche.
+11. Cliquez sur le bouton « Setup policies » dans votre barre de gauche.
 ![70](https://user-images.githubusercontent.com/57418005/148473655-0c6e5e0b-066b-4681-971a-05d161c092da.png)
 
-11. La fenêtre « App setup policies » s&#39;ouvre sur la droite.
-12. Il vous est possible de reprendre et éditer une policy existante qui est proposée dans la liste. Si vous souhaitez configurer une nouvelle policy spécifique à une population, cliquez sur le bouton « + Add » pour en créer une nouvelle.
+12. La fenêtre « App setup policies » s&#39;ouvre sur la droite.
+13. Il vous est possible de reprendre et éditer une policy existante qui est proposée dans la liste. Si vous souhaitez configurer une nouvelle policy spécifique à une population, cliquez sur le bouton « + Add » pour en créer une nouvelle.
 
 ![71](https://user-images.githubusercontent.com/57418005/148473670-0d7eade3-2e73-42c5-baf6-ad437f25cd78.png)
 
 #### 5ème étape : Configurez une nouvelle policy
 
-13. Sur la fenêtre de création de la policy, veillez à ce que les 2 boutons « Upload custom apps » et « Allow user pinning » soient cochés « on ».
+14. Sur la fenêtre de création de la policy, veillez à ce que les 2 boutons « Upload custom apps » et « Allow user pinning » soient cochés « on ».
 
 ![72](https://user-images.githubusercontent.com/57418005/148473710-669442c6-e785-42bb-a464-b57d513807a1.png)
 
-14. Pour associer votre application L&#39;Odyssée de Teams à cette policy, cliquez sur le bouton « + Add apps » pour ouvrir le volet latéral de recherche.
+15. Pour associer votre application L&#39;Odyssée de Teams à cette policy, cliquez sur le bouton « + Add apps » pour ouvrir le volet latéral de recherche.
 ![73](https://user-images.githubusercontent.com/57418005/148473718-5b0084e4-184c-44db-bd75-9aed307743f3.png)
 
-15. Maintenant que le volet latéral s&#39;est ouvert, recherchez le nom de l&#39;application L&#39;Odyssée de Teams dans le champ de recherche. Celui-ci va remonter.
+16. Maintenant que le volet latéral s&#39;est ouvert, recherchez le nom de l&#39;application L&#39;Odyssée de Teams dans le champ de recherche. Celui-ci va remonter.
 
 ![74](https://user-images.githubusercontent.com/57418005/148473727-dcb00299-0b4b-4c79-a041-b335935f658a.png)
 
-16. Cliquez sur le bouton « Add » pour confirmer la sélection de cette application.
+17. Cliquez sur le bouton « Add » pour confirmer la sélection de cette application.
 ![75](https://user-images.githubusercontent.com/57418005/148473758-986a0f6a-2d59-4dfb-a881-b1f7441b9505.png)
 
-17. De la même manière, si vous souhaitez que les utilisateur·ice·s puissent accéder facilement à l&#39;application sur leur interface Microsoft Teams, il est possible de l&#39;épingler en accès rapide. Pour cela, cliquez sur « + Add apps » dans la zone « Pinned apps ».
+18. De la même manière, si vous souhaitez que les utilisateur·ice·s puissent accéder facilement à l&#39;application sur leur interface Microsoft Teams, il est possible de l&#39;épingler en accès rapide. Pour cela, cliquez sur « + Add apps » dans la zone « Pinned apps ».
 ![76](https://user-images.githubusercontent.com/57418005/148473776-5462356e-08b3-4363-8057-bf575559fb4c.png)
 
-18. Pour valider l&#39;ensemble de vos modifications, cliquez sur le bouton « Save » en bas de page.
+19. Pour valider l&#39;ensemble de vos modifications, cliquez sur le bouton « Save » en bas de page.
 ![77](https://user-images.githubusercontent.com/57418005/148473797-ce4e8050-7b09-4b5b-ad5c-4ccea2e12769.png)
 
 **Félicitations ! L&#39;application l&#39;Odyssée de Teams est maintenant installée et configurée pour utilisation !**
