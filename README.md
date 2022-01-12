@@ -399,9 +399,11 @@ You can now import the files; this is the next step.
 ![Capture6](https://user-images.githubusercontent.com/67316441/149013613-e84dd1f1-afe1-4213-9a5b-db99bf7cd2da.PNG)
 
 45. This should create a build folder for you in the client folder.
+
 ![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
 
 46. Create a new folder under the name "Prod" in which you will copy several folders found in "Odyssee_teams_pub / server": the result should look like this.
+
 ![Capture8](https://user-images.githubusercontent.com/67316441/149011893-642530b8-84d9-491e-85ce-20423c11ab2b.PNG)
 
 47. The ".deployment" file is a file that you must create and that contains only two lines.
