@@ -5,7 +5,7 @@
     "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
     "packageName": "com.odysseeteams",
     "developer": {
-        "name": "Saegus ",
+        "name": "Saegus",
         "websiteUrl": "https://saegus.com/",
         "privacyUrl": "https://privacy.microsoft.com/fr-fr/privacystatement",
         "termsOfUseUrl": "https://docs.microsoft.com/fr-fr/legal/termsofuse",
@@ -16,19 +16,19 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "L'Odyssée de Teams",
-        "full": "L'Odyssée de Teams - Un voyage à travers les usages"
+        "short": "Teams Odyssey",
+        "full": "Teams Odyssey - A journey to discover Teams use case scenarios"
     },
     "description": {
-        "short": "L'Odyssée de Teams - Un voyage à travers les usages",
-        "full": "Le jeu concours interactif pour explorer la galaxie des usages collaboratifs."
+        "short": "Teams Odyssey - A journey to discover Teams use case scenarios",
+        "full": "A galactic interactive game to discover Teams use cases."
     },
     "accentColor": "#424BB0",
     "staticTabs": [
         {
             "entityId": "jeu",
-            "name": "Le jeu",
-            "contentUrl": "https://odyssee-de-teams.saegus.com/?inTeamsSSO=true/",
+            "name": "Application",
+            "contentUrl": "https://<your url>/?inTeamsSSO=true/",
             "scopes": [
                 "personal"
             ]
@@ -39,11 +39,11 @@
         "messageTeamMembers"
     ],
     "validDomains": [
-        "odyssee-de-teams.saegus.com"
+        "<your url>"
     ],
     "webApplicationInfo": {
         "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
-        "resource": "api://odyssee-de-teams.saegus.com/5830a2dd-c958-47bd-b6e8-676341fc5faf"
+        "resource": "api://<your url>/5830a2dd-c958-47bd-b6e8-676341fc5faf"
     },
     "activities": {
         "activityTypes": [
