@@ -441,9 +441,9 @@ Si un pare-feu ou un proxy quelconque bloque le processus d&#39;installation, le
 
 #### 3ème étape : Uploadez le fichier .zip sur votre tenant
 
-5. Ouvrez le fichier « PACKAGE_ODYSSEY_FR/manifest.json » sur votre ordinateur et modifiez l'URL par celui que vous avez créé dans l'app service.
+5. Ouvrez le fichier « PACKAGE_ODYSSEY_FR/manifest.json » sur votre ordinateur et modifiez l'URL par celui que vous avez créé dans l'app service et l'id de votre application.
 
-![Capture15](https://user-images.githubusercontent.com/67316441/149136071-abeb829f-26a3-41ea-aaf7-0a0d549c9a2a.PNG)
+![Capture15](https://user-images.githubusercontent.com/67316441/149138090-a58996d6-7967-429d-a990-d0af99f72f94.PNG)
 
 6. Créez un fichier .zip à partir des trois fichiers "color.png", "manifest.json" (que vous venez de modifier) et "outline.png".
 
