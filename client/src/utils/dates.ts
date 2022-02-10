@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 const monthNamesKeys = [
   "utils.date.january",
   "utils.date.february",

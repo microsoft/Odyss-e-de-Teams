@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 module.exports = (sequelize, DataTypes) =>
   sequelize.define(
     "HGainPoints",

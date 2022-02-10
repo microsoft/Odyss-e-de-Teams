@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 "use strict";
 const { QueryTypes, Op } = require("sequelize");
 const QuizzUtils = require("./../../utils/Quizz");

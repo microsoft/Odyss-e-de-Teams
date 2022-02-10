@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import AuthenticationContext from "adal-angular/lib/adal";
 
 // An authentication service that uses the ADAL.js library to sign in users with

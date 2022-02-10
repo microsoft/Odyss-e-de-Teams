@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 const { QueryTypes } = require("sequelize");
 
 const GainPoint = {};
