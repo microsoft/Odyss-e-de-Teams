@@ -1,0 +1,84 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.Outillage {
+  background-color: $color-white1;
+  border-radius: 15px;
+
+  &__subtitle {
+    @include typo-bold;
+
+    h1 {
+      font-weight: bold;
+      color: $color-primary;
+    }
+
+    &__desc {
+    }
+  }
+
+  &__currentLogo {
+    margin-top: 3em;
+    h2 {
+      font-weight: bold;
+    }
+
+    &__desc {
+    }
+  }
+
+  &__blockgame {
+    width: 50%;
+    margin-top: 7em;
+    h2 {
+      font-weight: bold;
+    }
+  }
+
+  &__form {
+    margin-top: 1em;
+    &__item {
+      display: flex;
+      flex-direction: row;
+    }
+    &__logo {
+      height: 20em;
+      border-radius: 15px;
+      border: solid 1px #424bb0;
+      display: flex;
+      align-items: center;
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+
+    &__input {
+      &__file {
+        visibility: hidden;
+        width: 2em;
+      }
+
+      &__reset {
+        background-color: $color-black2;
+        margin-right: 10px;
+      }
+
+      &__button {
+        background-color: $color-primary !important;
+      }
+    }
+    &__action {
+      margin-top: 3em;
+      display: flex;
+      justify-content: flex-end;
+      h5 {
+        padding-left: 0;
+      }
+      form {
+        text-align: right;
+      }
+    }
+  }
+}

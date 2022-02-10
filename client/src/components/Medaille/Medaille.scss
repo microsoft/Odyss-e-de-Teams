@@ -1,0 +1,17 @@
+@import "../../common/sass/variables";
+
+.medaille {
+    max-width: 3.25rem;
+}
+.medaille.selected {
+    border: solid 2px $color-yellow;
+    border-radius: 3rem;
+}
+.medaille.lock:hover {
+    animation: rotate-hover-medal 1s infinite;
+}
+@keyframes rotate-hover-medal {
+    0%   { transform: rotate(0); }
+    50%  { transform: rotate(20deg); }
+    100% { transform: rotate(0); }
+}

@@ -1,0 +1,122 @@
+@import "common/sass/typography";
+@import "common/sass/variables";
+@import "common/sass/media-queries";
+
+.AvatarCard {
+  display: flex;
+  flex-direction: column;
+  background-color: $color-primary;
+  border-radius: 15px;
+  height: 20em;
+
+  @include MQ(XS) {
+    background-color: $color-white1;
+    display: inline-flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+  }
+
+  &--selected {
+    background-color: $color-primary-light;
+
+    @include MQ(XS) {
+      background-color: $color-yellow;
+      .AvatarCard__container {
+        background-color: transparent;
+      }
+    }
+  }
+
+  &:hover,
+  :visited {
+    background-color: $color-primary-light;
+
+    @include MQ(XS) {
+      background-color: $color-yellow;
+      color: $color-white1;
+
+      .AvatarCard__container {
+        background-color: transparent;
+      }
+      .AvatarCard__container__image {
+        img {
+          transform: scale(0);
+        }
+      }
+    }
+
+    .AvatarCard__container__image {
+      img {
+        transform: scale(1.3);
+      }
+    }
+
+    &__container {
+      &__image {
+        img {
+          transform: scale(1.3);
+        }
+      }
+    }
+  }
+
+  &__title {
+    @include typo-bold;
+    color: $color-white1;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+  }
+
+  &__container {
+    height: 8em;
+    width: 8em;
+    background-color: $color-white1;
+    border-radius: 50%;
+
+    @include MQ(XS) {
+      width: 30%;
+      height: 5em;
+    }
+
+    &__image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        height: 100%;
+        transition: transform 0.2s;
+
+        @include MQ(XS) {
+          height: 7em;
+        }
+      }
+    }
+  }
+
+  &__description {
+    @include typo-body;
+    font-size: 1em;
+    color: $color-white1;
+  }
+
+  @include MQ(XS) {
+    &__body {
+      width: 70%;
+      &__title {
+        color: $color-primary;
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+
+      &__description {
+        color: $color-primary-light;
+        font-size: 1em;
+      }
+    }
+  }
+}

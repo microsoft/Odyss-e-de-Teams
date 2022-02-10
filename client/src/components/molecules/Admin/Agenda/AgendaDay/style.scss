@@ -1,0 +1,42 @@
+@import "common/sass/_variables";
+
+.AgendaDay {
+  border: 1px solid #0000002b;
+
+  &__header {
+    height: 5em;
+    border-bottom: 1px solid #0000002b;
+    padding-left: 1em;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    &__currentday {
+      background-color: $color-primary-light-opacity03;
+
+      .AgendaDay__header__day {
+        color: $color-primary;
+      }
+      .AgendaDay__header__month {
+        color: $color-primary;
+      }
+    }
+
+    &__day {
+      font-size: 2em;
+      font-weight: bold;
+      display: block;
+    }
+
+    &__month {
+      font-size: 1.2em;
+    }
+  }
+
+  &__body {
+    &__item {
+      margin: 0.2em;
+      margin-top: 0.5em;
+    }
+  }
+}

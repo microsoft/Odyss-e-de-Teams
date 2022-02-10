@@ -1,0 +1,48 @@
+{
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8080,
+    "routes": {
+      "cors": {
+        "origin": ["*"],
+        "credentials": true
+      }
+    }
+  },
+  "register": {
+    "plugins": [
+      {
+        "plugin": "blipp"
+      },
+      {
+        "plugin": "./avatar/index.js"
+      },
+      {
+        "plugin": "./classement/index.js"
+      },
+      {
+        "plugin": "./menu/index.js"
+      },
+      {
+        "plugin": "./question/index.js"
+      },
+      {
+        "plugin": "./user/index.js"
+      },
+      {
+        "plugin": "./admin/index.js"
+      },
+      {
+        "plugin": "./agenda/index.js"
+      },
+      {
+        "plugin": "./organisation/index.js"
+      }
+    ],
+    "options": {
+      "routes": {
+        "prefix": "/api"
+      }
+    }
+  }
+}

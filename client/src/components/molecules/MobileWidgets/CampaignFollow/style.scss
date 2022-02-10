@@ -1,0 +1,43 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.CampaignFollow {
+  &__container {
+    background-color: $color-white1;
+    border-radius: 15px;
+
+    &__title {
+      @include typo-title-component;
+      color: $color-primary-light;
+      font-size: 1.6em;
+    }
+
+    &__text {
+      @include typo-body-component;
+      color: $color-black1;
+      font-size: 1.1em;
+    }
+
+    &__timer {
+      color: $color-primary;
+      &__icon {
+        position: absolute !important; //overload bootstrap col position
+        transform: translate(70%, -75%);
+
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+  }
+}
+
+.LaunchFollowWidget__container__timeleft__label {
+  color: $color-primary-light;
+}
+
+.LaunchFollowWidget__container__timeleft__timer {
+  color: $color-primary-light;
+  font-size: 1.75rem;
+}

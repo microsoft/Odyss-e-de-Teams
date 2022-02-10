@@ -1,0 +1,68 @@
+@import "common/sass/typography";
+@import "common/sass/variables";
+@import "common/sass/media-queries";
+
+.Description {
+  color: $color-white1;
+  width: 60%;
+  @include MQ(XS) {
+    width: 100%;
+  }
+
+  &__logo {
+    height: 3em;
+    @include MQ(XS) {
+      img {
+        object-fit: contain;
+        max-width: 100%;
+      }
+    }
+  }
+
+  &__body {
+    &__elt {
+      display: inline-flex;
+      align-items: center;
+      justify-content: left;
+      height: 3em;
+      margin-bottom: 1em;
+      width: 100%;
+
+      @include MQ(XS) {
+        margin-bottom: 2em;
+
+        .Description__body__elt__text {
+          line-height: 1.3em;
+          font-size: 1em;
+        }
+      }
+
+      & strong {
+        // translated texts
+        margin: 0.3em;
+      }
+
+      &__img {
+        height: 3em;
+        margin-right: 1.75em;
+
+        & > img {
+          object-fit: contain;
+          height: 100%;
+        }
+      }
+
+      &__text {
+        @include typo-body;
+        font-size: 1.3em;
+      }
+    }
+  }
+
+  .btn {
+    width: fit-content;
+    @include MQ(XS) {
+      width: 100%;
+    }
+  }
+}

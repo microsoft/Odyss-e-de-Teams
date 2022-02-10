@@ -1,0 +1,58 @@
+@import "../../common/sass/variables";
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+.main-choix-module {
+    background: url("/images/astronaute/astro_hello.png") no-repeat 97% 122%;
+    background-size: 6rem;
+    padding-bottom: 11%;
+    .module {
+        width: 20%;
+        background: $color-white1;
+        border-radius: 1rem;
+        -webkit-box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+        -moz-box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+        box-shadow: 0px 0px 5px 0px rgba(123, 131, 235, 0.4);
+        .illustration-module {
+            height: 3.5rem;
+            margin: .5rem 0;
+        }
+        .niveau {
+            font-size: .9em;
+            min-height: 2rem;
+        }
+        h4 {
+            height: 20%;
+        }
+        .btn-dark {
+            line-height: 1;
+        }
+    }
+    .module:hover {
+        transform: scale(1.1);
+        transition: all .25s;
+        .illustration-module {
+            animation: bounce 0.35s ease infinite alternate;
+        }
+    }
+}
+@keyframes bounce{
+    from {transform: translateY(5px);}
+    to   {transform: translateY(-15px);}
+}
+
+@include media-breakpoint-down(md) {
+  .main-choix-module {
+    .module {
+        width: 100%;
+        margin-bottom: 1rem;
+        .illustration-module {
+            max-width: 20%;
+        }
+    }
+    .module:hover {
+        transform: unset;
+    }
+  }
+}

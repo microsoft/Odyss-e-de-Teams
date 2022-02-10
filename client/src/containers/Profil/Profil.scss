@@ -1,0 +1,39 @@
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+.container-avatar-user {
+  width: 30%;
+  margin: 0 auto;
+}
+
+.total_xp {
+  background: url("/images/icone/coin.png") no-repeat top left;
+  background-size: contain;
+  padding-left: 1.75rem;
+}
+
+.modal-profil {
+  .medaille.avatar {
+    max-width: 3rem;
+    max-height: 3rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .avatar {
+    max-height: 8rem;
+  }
+  .modal-profil {
+    width: 60%;
+    max-width: 60% !important;
+  }
+  .main-col1,
+  .main-col2 {
+    height: 100%;
+  }
+  .encart-stats {
+    background: url(/images/astronaute/astro_hello.png) no-repeat 97% 186% #fff;
+    background-size: 6rem;
+  }
+}

@@ -1,0 +1,68 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.RewardModal {
+  &__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    &__icon {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      height: 5em;
+
+      &__container {
+        height: 100%;
+        img {
+          max-width: 85%;
+          max-height: 100%;
+        }
+      }
+
+      &__container:first-child {
+        margin-top: 3rem;
+        img {
+          transform: rotate(45deg);
+        }
+      }
+
+      &__container:nth-child(2) {
+        img {
+          transform: scale(1.5);
+        }
+      }
+
+      &__container:nth-child(3) {
+        margin-top: 3rem;
+        img {
+          transform: rotate(-45deg);
+        }
+      }
+    }
+
+    &__title {
+      @include typo-title-component;
+      color: $color-primary;
+      margin-top: 1.25rem;
+    }
+
+    &__description {
+      width: 70%;
+      @include typo-body-component;
+      font-size: 1em;
+      text-align: center;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
