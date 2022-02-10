@@ -1,0 +1,12 @@
+@import "../../common/sass/variables";
+
+.main-container {
+  .App-login {
+    @include bg-encart;
+    &-image-container {
+      .logo {
+        width: 20rem;
+      }
+    }
+  }
+}

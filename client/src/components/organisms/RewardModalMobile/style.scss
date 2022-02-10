@@ -1,0 +1,96 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.RewardModalMobile {
+  padding: 1em;
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2em;
+
+    &__icon {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      height: 5em;
+
+      &__container {
+        height: 100%;
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+
+      &__container:first-child {
+        margin-top: 3em;
+        img {
+          transform: rotate(45deg);
+        }
+      }
+
+      &__container:nth-child(2) {
+        img {
+          transform: scale(1.5);
+        }
+      }
+
+      &__container:nth-child(3) {
+        margin-top: 3em;
+        img {
+          transform: rotate(-45deg);
+        }
+      }
+    }
+
+    &__title {
+      @include typo-title-component;
+      color: $color-white1;
+      margin-top: 1em;
+      width: 90%;
+    }
+    &__subtitle {
+      @include typo-title-component;
+      color: $color-white1;
+      margin-top: 1em;
+      width: 90%;
+    }
+
+    &__description {
+      width: 70%;
+      @include typo-body-component;
+      font-size: 1em;
+      text-align: center;
+    }
+  }
+
+  &__currentbonus {
+    margin-bottom: 2em;
+  }
+
+  &__separator {
+    height: 1px;
+    background-color: $color-white1;
+    opacity: 0.5;
+    width: 80%;
+  }
+
+  &__bonus {
+    margin-top: 0.5em;
+    color: $color-white1;
+    font-size: 1.5em;
+    text-align: left;
+    width: 90%;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

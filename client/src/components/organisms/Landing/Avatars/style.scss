@@ -1,0 +1,57 @@
+@import "common/sass/typography";
+@import "common/sass/variables";
+@import "common/sass/media-queries";
+
+.Avatars {
+  @include MQ(XS) {
+    margin: 0;
+  }
+
+  &__logo {
+    height: 3em;
+    @include MQ(XS) {
+      img {
+        object-fit: contain;
+        max-width: 100%;
+      }
+    }
+  }
+  &__container {
+    background: url("/images/overlays/overlay-blue.jpg") center center fixed;
+    background-size: cover;
+
+    border-radius: 15px;
+  }
+  &__body {
+    &__title {
+      color: $color-primary;
+      font-weight: bold;
+    }
+
+    &__subtitle {
+      color: $color-white1;
+    }
+
+    &__list {
+      display: inline-flex;
+      width: 100%;
+      align-items: center;
+      margin: 0.5em;
+
+      @include MQ(XS) {
+        flex-direction: column;
+
+        &__item {
+          display: inline-flex;
+          flex-direction: row;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

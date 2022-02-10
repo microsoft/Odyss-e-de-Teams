@@ -1,0 +1,7 @@
+@import "../../common/sass/variables";
+
+.main-container {
+  .App-loading {
+    @include bg-encart;
+  }
+}

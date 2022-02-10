@@ -1,0 +1,48 @@
+/****
+COLORS
+*****/
+$color-primary: #424bb0;
+$color-primary-light: #7b83eb;
+$color-primary-light-opacity03: #424bb02e;
+$color-white1: #fff;
+$color-white2: #f1f0ef;
+$color-white3: #eeeffc;
+$color-black1: #010101;
+$color-black2: #414141;
+$color-black3: #606060;
+$color-yellow: #f1b446;
+$color-orange: #F38A30;
+$color-green: #5db87c;
+$color-pink: #cc496f;
+
+/**** 
+Gradiants 
+****/
+@mixin orange-gradiant() {
+  background: linear-gradient(to bottom, #ffc623 -29%, #ff8322 176%);
+  color: $color-white1 !important;
+  border: none;
+  :hover {
+    background: linear-gradient(to bottom, #ff8322 -29%, #ffc623 176%);
+  }
+}
+@mixin orange-gradiant-hover() {
+  background: linear-gradient(to bottom, #ff8322 -29%, #ffc623 176%);
+}
+
+/****
+Others
+****/
+@mixin bg-encart() {
+  background-color: $color-white1;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0px 0px 25px -5px rgba(123, 131, 235, 0.4);
+  -moz-box-shadow: 0px 0px 25px -5px rgba(123, 131, 235, 0.4);
+  box-shadow: 0px 0px 25px -5px rgba(123, 131, 235, 0.4);
+}
+
+@mixin box-shadow-app() {
+  -webkit-box-shadow: 0px 0px 15px -5px rgba(123, 131, 235, 0.72);
+  -moz-box-shadow: 0px 0px 15px -5px rgba(123, 131, 235, 0.72);
+  box-shadow: 0px 0px 15px -5px rgba(123, 131, 235, 0.72);
+}

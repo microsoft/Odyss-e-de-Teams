@@ -1,0 +1,145 @@
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+body {
+    .flex-1 {
+        flex: 1;
+    }
+    .flex-grow-3 {
+        flex-grow: 3;
+    }
+
+    .h1,
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: .75rem;
+        .ico-titre {
+            max-height: 2rem;
+            margin-right: 0.25rem;
+        }
+    }
+    .h2,
+    h2 {
+        font-size: 1.25rem;
+    }
+    .h3,
+    h3 {
+        font-size: 1.125rem;
+    }
+    .h4,
+    h4 {
+        font-size: 1rem;
+    }
+    .h5,
+    h5 {
+        font-size: 0.825rem;
+    }
+    .h6,
+    h6 {
+        font-size: 0.75rem;
+    }
+
+    .color-primary, .text-primary {
+        color: $color-primary !important;
+    }
+    .color-primary-light {
+        color: $color-primary-light;
+    }
+    .color-white1 {
+        color: $color-white1;
+    }
+    .color-white2 {
+        color: $color-white2;
+    }
+    .color-black1 {
+        color: $color-black1;
+    }
+    .color-black2 {
+        color: $color-black2;
+    }
+    .color-black3 {
+        color: $color-black3 !important;
+    }
+    .color-yellow {
+        color: $color-yellow;
+    }
+    .color-green {
+        color: $color-green;
+    }
+    .color-pink {
+        color: $color-pink;
+    }
+
+    .btn {
+        padding: 1rem 0.5rem;
+        border-radius: 0.75rem;
+        font-weight: bold;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-out;
+        transform-origin: 0 0;
+        .btn-ico {
+            max-height: 1.5rem;
+            margin-right: 0.25rem;
+        }
+    }
+    .btn.btn-primary:not(.bleu) {
+        @include orange-gradiant;
+    }
+    .btn.btn-primary:not(.bleu):not(:disabled):hover {
+        @include orange-gradiant-hover;
+    }
+    .btn.btn-primary.bleu {
+        background: $color-primary-light;
+        border: none;
+        box-shadow:0px 0px 0 100px $color-primary inset;
+    }
+    .btn.btn-primary.bleu:not(:disabled):hover {
+        box-shadow:0px 0px 0 0px $color-primary inset;
+    }
+    .btn.btn-secondary {
+        background-color: $color-primary;
+        border: none;
+        box-shadow:0px 0px 0 100px $color-primary-light inset;
+    }
+    .btn.btn-secondary:not(:disabled):hover {
+        box-shadow:0px 0px 0 0px $color-primary-light inset;
+    }
+    .btn.btn-dark {
+        background-color: $color-black1;
+        border: none;
+        box-shadow:0px 0px 0 100px $color-black2 inset;
+    }
+    .btn.btn-dark:not(:disabled):hover {
+        box-shadow:0px 0px 0 0px $color-black2 inset;
+    }
+    .btn.btn-light {
+        background-color: $color-white2;
+        border: none;
+        color: $color-primary;
+        box-shadow:0px 0px 0 100px $color-white1 inset;
+    }
+    .btn.btn-light:not(:disabled):hover {
+        box-shadow:0px 0px 0 0px $color-white1 inset;
+    }
+    .pointer {
+        cursor: pointer;
+    }
+
+    .p-sep {
+        width: 60%;
+        margin: 1.5rem auto;
+        padding: 0;
+        height: 1px;
+        background-color: $color-primary-light;
+        opacity: 0.4;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    body {
+        .btn {
+            padding: 0.5rem 1.125rem;
+        }
+    }
+}

@@ -1,0 +1,83 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.BonusCardMobile {
+  background: $color-white1;
+
+  @include bg-encart;
+
+  &__container {
+    border-radius: 15px;
+    overflow: hidden;
+
+    padding: 1em;
+    height: 5em;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+
+    &__icon {
+      height: 5em;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    &__value {
+      color: $color-yellow;
+      font-weight: bold;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+
+      margin-top: 1em;
+
+      &__value {
+        width: 30%;
+        width: 100%;
+        margin-bottom: 0;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+      &__text {
+        color: $color-yellow;
+        font-size: 0.8em;
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+
+    &__day {
+      width: 30%;
+      height: 3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-black1;
+      font-weight: bold;
+    }
+  }
+
+  &__locked {
+    filter: grayscale(100%);
+
+    .BonusCardMobile__container__value__value {
+      font-weight: bold;
+    }
+  }
+
+  &__current {
+    border: 1px solid $color-primary;
+
+    .BonusCardMobile__container__footer {
+      background: $color-primary-light;
+    }
+  }
+}
