@@ -1,0 +1,31 @@
+@import "common/sass/_variables";
+
+.AdminAgenda {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    &__title {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: $color-primary-light;
+    }
+
+    &__actions {
+      margin-top: 1em;
+    }
+  }
+
+  &__body {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 2em;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      width: calc(100% / 5);
+    }
+  }
+}

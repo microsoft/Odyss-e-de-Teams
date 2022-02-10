@@ -1,0 +1,34 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.GameLauncher {
+  &__container {
+    background: url("/images/overlays/overlay-yellow.png");
+    border-radius: 15px;
+
+    &__icon {
+      position: absolute !important; //overload bootstrap col position
+      transform: translate(-50%, -50%) scale(1.3);
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    &__title {
+      @include typo-title-component;
+      color: $color-white1;
+      font-size: 1.8em;
+      margin-left: 25%;
+      margin-bottom: 1em;
+    }
+
+    &__desc {
+      @include typo-body-component;
+      color: $color-white1;
+      font-size: 1.1em;
+      margin-bottom: 1em;
+    }
+  }
+}

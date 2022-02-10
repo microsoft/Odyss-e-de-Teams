@@ -1,0 +1,66 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@microsoft/teams-js": "^1.6.0",
+    "@testing-library/jest-dom": "^5.7.0",
+    "@testing-library/react": "^10.0.4",
+    "@testing-library/user-event": "^10.2.0",
+    "@tinymce/tinymce-react": "^3.6.0",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^14.0.1",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/styled-components": "^5.1.0",
+    "adal-angular": "^1.0.17",
+    "bootstrap": "^4.5.0",
+    "dom-to-image": "^2.6.0",
+    "gulp": "^4.0.2",
+    "gulp-zip": "^5.0.1",
+    "i18next": "^19.4.4",
+    "i18next-http-backend": "^1.0.11",
+    "js-cookie": "^2.2.1",
+    "moment": "^2.26.0",
+    "msal": "^1.3.1",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-animations": "^1.0.0",
+    "react-bootstrap": "^1.0.1",
+    "react-dom": "^16.13.1",
+    "react-i18next": "^11.4.0",
+    "react-icons": "^3.10.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "rxjs": "^6.5.5",
+    "styled-components": "^5.1.0",
+    "typescript": "3.8.3",
+    "video.js": "^7.8.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

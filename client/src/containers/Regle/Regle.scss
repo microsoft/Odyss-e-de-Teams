@@ -1,0 +1,108 @@
+@import "../../common/sass/variables";
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+.steps {
+  background: url(/images/regle/fil_dekstop.png) no-repeat left center;
+  background-size: 100%;
+  padding-left: 7rem;
+  .step {
+    position: relative;
+    font-size: 0.9em;
+    margin-top: 0;
+    height: 12rem;
+    img {
+      height: 5.25rem;
+    }
+    .num-step {
+      background-color: $color-primary-light;
+      color: $color-white1;
+      border-radius: 100%;
+      -webkit-box-shadow: 0px 0px 5px 5px rgba(123, 131, 235, 0.62);
+      -moz-box-shadow: 0px 0px 5px 5px rgba(123, 131, 235, 0.62);
+      box-shadow: 0px 0px 5px 5px rgba(123, 131, 235, 0.62);
+      width: fit-content;
+      padding: 0.5rem;
+      line-height: 0.5rem;
+    }
+  }
+  .step4 {
+    background: url(/images/regle/step4_desktop.png) no-repeat 3rem 1.5rem;
+    background-size: 11.5rem;
+    margin-top: -5.5rem;
+    padding-top: 10.75rem;
+    padding-right: 2rem;
+  }
+}
+
+.cartouche {
+  background: $color-primary-light;
+  color: $color-white1;
+  border-radius: 1rem;
+  font-size: 0.9em;
+  height: 100%;
+}
+
+.btn-download {
+  text-align: right;
+  .btn {
+    width: fit-content;
+  }
+}
+.powered {
+  text-align: right;
+}
+
+@include media-breakpoint-down(md) {
+  .steps {
+    flex-direction: column;
+    background: none;
+    padding-left: 0;
+    .step {
+      width: 50%;
+      .num-step {
+        position: relative;
+      }
+    }
+    .step1,
+    .step3 {
+      .num-step {
+        float: right;
+        right: -0.5rem;
+      }
+    }
+    .step2 {
+      margin-left: 50%;
+      margin-top: 2rem;
+      .num-step {
+        float: left;
+        left: -2rem;
+      }
+    }
+    .step4 {
+      width: 100%;
+      background: none;
+      padding-top: 7rem;
+      height: 30rem;
+      img {
+        width: 80%;
+        height: auto;
+      }
+    }
+  }
+  .btn-download {
+    text-align: center;
+    margin-top: 1rem;
+    .btn {
+      width: 100%;
+    }
+  }
+  .powered {
+    text-align: center;
+    color: $color-white1 !important;
+    a {
+      color: $color-white1 !important;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+@import "common/sass/_variables";
+
+$btn-tags: "button, button:active, button:hover, button:visited";
+$btn-tags-hover: "button:active, button:hover";
+
+.Notification {
+  &__header {
+    &__title {
+      font-weight: bold;
+      color: $color-primary;
+    }
+  }
+
+  &__body {
+    &__input {
+      margin-top: 10px;
+      width: 100%;
+      background-color: #f1f0ef;
+      border-radius: 15px;
+      border: none;
+      margin-bottom: 20px;
+      padding: 10px;
+      &:focus-visible {
+        outline: none;
+      }
+    }
+    &__buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      &__btn-left {
+        margin-right: 10px;
+      }
+      &__confirmation {
+        display: none;
+        padding: 0.5rem 1.125rem;
+        background-color: #5db87c;
+        border: 1px solid #396247;
+        color: #ffffff;
+        border-radius: 0.75rem;
+        margin-right: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    }
+    &__title {
+      font-weight: bold;
+    }
+  }
+}

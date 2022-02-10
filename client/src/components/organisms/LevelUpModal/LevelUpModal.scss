@@ -1,0 +1,68 @@
+
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+.LevelUpModal {
+  &__Niveau {
+    overflow: hidden;
+  }
+  &__Coffre {
+    display: none;
+    &__Img {
+      width: 50%;
+      img {
+        max-width: 75%;
+      }
+    }
+    &__Rewards {
+      display: none;
+    }
+  }
+  .content-avatar {
+    width: 50%;
+  }
+  .reward {
+    margin: 0 .5rem;
+    .img-reward {
+      height: 4rem;
+    }
+    .titre-reward {
+      display: inline-block;
+      padding-left: 1.55rem;
+    }
+  }
+  .reward.reward-medal {
+    .titre-reward {
+      background: url("/images/icone/planete.png") no-repeat top left;
+      background-size: contain;
+    }
+  }
+  .reward.reward-pts {
+    .titre-reward {
+      background: url("/images/icone/coin.png") no-repeat top left;
+      background-size: contain;
+    }
+  }
+  .reward.reward-exp {
+    .titre-reward {
+      background: url("/images/icone/coin_xp.png") no-repeat top left;
+      background-size: contain;
+    }
+  }
+
+  
+}
+.LevelUpModal:not(.has-reward) {
+  .LevelUpModal__Niveau {
+    opacity: 1 !important;
+    display: block !important;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .modal-level-up {
+      width: 30rem;
+      max-width: 30rem !important;
+  }
+}

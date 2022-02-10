@@ -1,0 +1,198 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+// anchor tag from <Link> Component
+.no-hover {
+  &:hover {
+    text-decoration: none;
+  }
+
+  .Cockpit__links__item__text {
+    color: $color-black1;
+  }
+
+  .Links__container__text__descrption {
+    color: $color-primary-light;
+  }
+}
+
+.Cockpit {
+  &__title {
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  &__game {
+    background: url("/images/overlays/overlay-jouer.png");
+    background-size: cover;
+    border-radius: 15px;
+    display: flex;
+
+    &:hover {
+      cursor: pointer;
+    }
+    &__container {
+      color: $color-white1;
+      margin-right: 9.5rem;
+
+      &__name {
+        position: relative;
+        font-size: 2em;
+      }
+
+      &__desc {
+        @include typo-body-component;
+        font-size: 1.125em;
+      }
+    }
+
+    &__icon {
+      width: 30%;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
+
+  &__exp {
+    position: relative;
+    background: url("/images/overlays/overlay_reward.png");
+    background-size: cover;
+    border-radius: 15px;
+    margin-left: 30px;
+    cursor: pointer;
+
+    &__container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      &__icon {
+        position: absolute;
+        width: 5rem;
+        top: 0;
+        left: 0;
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+
+      &__text {
+        display: flex;
+        flex-direction: column;
+        &__title {
+          @include typo-title-component;
+          font-weight: bold;
+          color: $color-white1;
+          width: 12rem !important;
+          font-size: 1.2rem;
+          padding-top: 0;
+          padding-left: 3.25rem;
+          width: 100%;
+          line-height: 1.4rem;
+          .val {
+            font-size: 1.75rem;
+          }
+        }
+
+        &__desc {
+          @include typo-body-component;
+          color: $color-white1;
+          font-size: 1em;
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  &__links {
+    display: flex;
+    margin-top: 1em;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    &__item {
+      background: $color-white1;
+      border-radius: 15px;
+      padding: 0.2em;
+      display: flex;
+      align-items: center;
+      height: 9rem;
+
+      &__icon {
+        width: 30%;
+        img {
+          max-width: 95%;
+        }
+      }
+      &__icon.bouclier {
+        img {
+          max-width: 80%;
+        }
+      }
+
+      &__text {
+        margin-left: 1em;
+        &__content {
+          @include typo-title-component;
+          color: $color-primary;
+          font-size: 1.5em;
+        }
+
+        &__desc {
+          @include typo-body-component;
+          font-size: 1em;
+        }
+      }
+    }
+  }
+  &__game:hover, &__exp:hover, &__links>a:hover {
+    transform: scale(1.025);
+    transition: all .25s;
+    img {
+      transform: scale(1.2) rotate(10deg);
+      transition: all .25s;
+    }
+  }
+}
+
+.LaunchFollowWidget__background {
+  transform: scale(1.2);
+}
+
+.LaunchFollowWidget__container__timeleft {
+  height: 1em;
+}
+
+.fixheight-mobile {
+  .Links__container {
+    height: 7em;
+  }
+}
+
+.rotate-cup {
+  .Links__container__icone img {
+    transform: translate(-25%, 0%) scale(1.2) rotate(25deg);
+  }
+}
+
+.mobile-button {
+  background-color: $color-yellow !important;
+  border-color: $color-yellow !important;
+  color: $color-white1 !important;
+  width: 100%;
+  height: 4em;
+}
+
+@media screen and (max-width: 768px) {
+  .BonusEXP__container__content {
+    align-items: baseline !important;
+  }
+}

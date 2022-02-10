@@ -1,0 +1,46 @@
+@import "common/sass/_variables";
+
+.PlanningComponent {
+  padding: 1em;
+  position: relative;
+  &__title {
+    font-size: 2em;
+    color: $color-primary;
+    font-weight: bold;
+  }
+
+  &__subtitle {
+    color: $color-black1;
+  }
+
+  &__missions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    .MissionItem {
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .MissionItem:nth-child(1) {
+      background-image: url("/images/overlays/overlay-purple.png");
+    }
+    .MissionItem:nth-child(2) {
+      background-image: url("/images/overlays/overlay-blue.png");
+    }
+    .MissionItem:nth-child(3) {
+      background-image: url("/images/overlays/overlay-green.png");
+    }
+    .MissionItem:nth-child(4) {
+      background-image: url("/images/overlays/overlay-yellow.png");
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 1em;
+  }
+}

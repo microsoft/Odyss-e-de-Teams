@@ -1,0 +1,48 @@
+@import "common/sass/_variables";
+@import "common/sass/_typography";
+
+.MissionItem {
+  border-radius: 15px;
+
+  padding: 1em;
+
+  &__header {
+    display: inline-flex;
+    font-weight: bold;
+    color: $color-white1;
+    font-size: 1em;
+  }
+
+  &__body {
+    margin-top: 1.5em;
+    color: $color-white1;
+    height: 10em;
+    overflow: hidden;
+    margin-bottom: 1em;
+    &__title {
+      font-size: 1.7em;
+      font-weight: bold;
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    &__desc {
+      margin-top: 1em;
+    }
+  }
+
+  &__footer {
+    margin-top: 2em;
+    text-align: center;
+    margin-bottom: 1em;
+
+    .btn {
+      font-size: 1em !important;
+    }
+
+    &__pending {
+      cursor: pointer;
+    }
+  }
+}
