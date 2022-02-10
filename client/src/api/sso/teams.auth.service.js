@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import AuthenticationContext from "adal-angular/lib/adal";
 import * as microsoftTeams from "@microsoft/teams-js";
 

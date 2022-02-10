@@ -1,3 +1,5 @@
+-- Copyright (c) Microsoft Corporation.
+-- Licensed under the MIT License.
 CREATE ROLE odyssee_teams_appli WITH
 	LOGIN
 	NOSUPERUSER

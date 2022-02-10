@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import IStore from "./IStore";
 
 export const initialState: IStore = {

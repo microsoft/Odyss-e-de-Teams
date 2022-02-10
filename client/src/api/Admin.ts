@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import API from "./ApiMain";
 import AuthService from "api/sso/auth.service";
 

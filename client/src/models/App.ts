@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { RouteComponentProps } from "react-router-dom";
 
 export interface IAppProps extends RouteComponentProps {

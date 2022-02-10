@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { Reducer } from "react";
 import { IQuizzState } from "../../models/Question";
 
