@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 const crypto = require('crypto');
 
 const Crypto = {};

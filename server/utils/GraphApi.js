@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 const GraphApi = {};
 const https = require('https');
 var querystring = require('querystring');

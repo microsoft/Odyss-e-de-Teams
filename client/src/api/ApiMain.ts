@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 class API {
   protected API_TOKEN = process.env.REACT_APP_API_TOKEN;
   protected BASE_URL = process.env.REACT_APP_API_URL;

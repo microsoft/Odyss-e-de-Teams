@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { useEffect, useState } from "react";
 import Admin from "api/Admin";
 import i18n from '../../../../../../../../config/i18n';

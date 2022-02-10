@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import * as microsoftTeams from "@microsoft/teams-js";
 import TeamsAuthService from "./teams.auth.service";
 

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { combineReducers } from "redux";
 
 import { questionReducer } from "./questionReducer";

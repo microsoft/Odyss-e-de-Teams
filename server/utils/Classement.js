@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 const Classement = {};
 
 Classement.GetMainQuery = (params, order_query) => {

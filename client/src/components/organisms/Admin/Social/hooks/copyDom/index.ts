@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import domtoimage from "dom-to-image";
 import { MutableRefObject } from "react";
 

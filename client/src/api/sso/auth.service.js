@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import MockAuthService from "./mock.auth.service";
 import MsalAuthService from "./msal.auth.service";
 import SSOAuthService from "./sso.auth.service";
