@@ -29,7 +29,7 @@ const config = {
   auth: {
     clientId: "<your client id>", //Le client ID de l'application enregistrée sur Azure Active Directory 
     authority: "https://login.microsoftonline.com/<your tenant id>", //Le Tenant ID de votre domaine Azure ACtive Directory
-    clientSecret: "your secret application id",
+    clientSecret: "<your secret application id>",
   }
 };
 

@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
   "manifestVersion": "1.11",
   "version": "1.0",
-  "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
+  "id": "<your client id>",
   "packageName": "com.odysseeteams",
   "developer": {
       "name": "Saegus",
@@ -28,7 +28,7 @@
       {
           "entityId": "jeu",
           "name": "Application",
-          "contentUrl": "https://odyssee-de-teams.saegus.com/?inTeamsSSO=true/",
+          "contentUrl": "https://<your url>/?inTeamsSSO=true/",
           "scopes": [
               "personal"
           ]
@@ -39,11 +39,11 @@
       "messageTeamMembers"
   ],
   "validDomains": [
-      "odyssee-de-teams.saegus.com"
+      "<your url>"
   ],
   "webApplicationInfo": {
-      "id": "5830a2dd-c958-47bd-b6e8-676341fc5faf",
-      "resource": "api://odyssee-de-teams.saegus.com/5830a2dd-c958-47bd-b6e8-676341fc5faf"
+      "id": "<your client id>",
+      "resource": "api://<your url>/<your client id>"
   },
   "activities": {
       "activityTypes": [
