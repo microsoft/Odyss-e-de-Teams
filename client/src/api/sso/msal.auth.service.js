@@ -8,7 +8,7 @@ class MsalAuthService {
     constructor() {
         this.applicationConfig = {
             auth: {
-                clientId: '5830a2dd-c958-47bd-b6e8-676341fc5faf',
+                clientId: '<your client id>',
                 redirectUri: `${window.location.origin}/`
             },
             cache: {
