@@ -9,9 +9,9 @@ class AdalAuthService {
     );
 
     this.applicationConfig = {
-      clientId: "5830a2dd-c958-47bd-b6e8-676341fc5faf",
+      clientId: "<your client id>",
       endpoints: {
-        api: "5830a2dd-c958-47bd-b6e8-676341fc5faf"
+        api: "<your client id>"
       },
       extraQueryParameter: `prompt=consent&scope=${scopes}`,
       redirectUri: `${window.location.origin}/callback/v1`,
