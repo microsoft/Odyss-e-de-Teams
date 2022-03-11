@@ -109,3 +109,5 @@ server/public/company-assets/*
 .env
 /client/public/upload
 /client/manifest
+/client/.env
+/client/.env.production
