@@ -8,9 +8,9 @@ CREATE ROLE odyssee_teams_appli WITH
 	INHERIT
 	NOREPLICATION
 	CONNECTION LIMIT -1
-	PASSWORD 'R7x3sYh7Br9FWXZ7d39agUiv2H92Xv';
+	PASSWORD 'YourPassword';
 
-ALTER DATABASE odyssee_teams OWNER TO odyssee_teams_appli;
+ALTER DATABASE odyssee_teams OWNER TO login;
 
 ----- organisation  
 CREATE SEQUENCE public.seq_t_organisation;
@@ -1161,6 +1161,7 @@ GRANT ALL ON SEQUENCE public.h_user_login_id_seq TO odyssee_teams_appli;
 		lang character(2),
 		nom text,
 		description text,
+		asset text,
 		CONSTRAINT pk_t_libelle_i18n PRIMARY KEY (id_libelle_i18n)
 	)
 	WITH (
