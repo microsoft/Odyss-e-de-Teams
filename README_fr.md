@@ -378,7 +378,7 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 
 ![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
 
-46. Créez un nouveau dossier sous le nom dee "Prod" dans lequel vous allez copier plusieurs dossiers présents dans "Odyssee_teams_pub/server" : le résultat doit ressembler à cela.
+46. Créez un nouveau dossier sous le nom de "Prod" dans lequel vous allez copier plusieurs dossiers présents dans "Odyssee_teams_pub/server" : le résultat doit ressembler à cela.
 
 ![Capture8](https://user-images.githubusercontent.com/67316441/149011893-642530b8-84d9-491e-85ce-20423c11ab2b.PNG)
 
@@ -413,7 +413,7 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 
 ## Avant-propos
 
-L&#39;Odyssée de Teams est une web application dont le package au format .zip « _LOdysseedeTeams2021.zip_ » doit être récupéré sur le GitHub puis importé sur le store Microsoft Teams de votre organisation. Cette manipulation requiert des droits d&#39;accès spécifiques à la console Admin Microsoft Teams. Si votre organisation a désactivé le store Microsoft Teams, vous trouverez ci-dessous un lien de réactivation afin de vous permettre de procéder à l&#39;installation de l&#39;application sans problème.
+Pour importer l&#39;Odyssée de Teams sur votre tenant, il est nécessaire de créer un fichier zip contenant le manifeste de l'application. La procédure de création du fichier zip est détaillée ci-dessous. La manipulation d'import dans Teams requiert des droits d&#39;accès spécifiques à la console Admin Microsoft Teams. Si votre organisation a désactivé le store Microsoft Teams, vous trouverez ci-dessous un lien de réactivation afin de vous permettre de procéder à l&#39;installation de l&#39;application sans problème.
 
 [https://docs.microsoft.com/fr-fr/MicrosoftTeams/manage-apps](https://docs.microsoft.com/fr-fr/MicrosoftTeams/manage-apps)
 
@@ -421,10 +421,7 @@ NB : Notez qu&#39;il n&#39;y a aucun port spécifique à ouvrir lors de la manip
 
 ### Un pare-feu bloque votre installation
 
-Si un pare-feu ou un proxy quelconque bloque le processus d&#39;installation, le lien ci-dessous vous permet d&#39;ajouter une règle (policy) à votre tenant Teams pour autoriser les appels à cette URL.
-
-[https://odyssee-de-teams.saegus.com/](https://odyssee-de-teams.saegus.com/)
-
+Si vous utilisez un proxy, pensez à vérifier que l'URL de l'application soit bien authorisée.
 
 ## 5 étapes pour une installation réussie
 
@@ -439,7 +436,7 @@ Si un pare-feu ou un proxy quelconque bloque le processus d&#39;installation, le
 4. Cliquez maintenant sur le bouton « Manage Apps ». La partie de droite de votre interface affiche à présent la liste de vos applications.
 ![66](https://user-images.githubusercontent.com/57418005/148473581-03249dd4-88c4-461b-b1cd-ccac5f0bf5cb.png)
 
-#### 3ème étape : Uploadez le fichier .zip sur votre tenant
+#### 3ème étape : Créez et uploadez le fichier .zip sur votre tenant
 
 5. Ouvrez le fichier « PACKAGE_ODYSSEY_FR/manifest.json » sur votre ordinateur et modifiez l'URL par celui que vous avez créé dans l'app service et l'id de votre application.
 
