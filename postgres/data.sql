@@ -8,9 +8,9 @@
 		('Amerrissage !', 4, 'Dernière poussée pour être un pro de Teams', true), 
 		('Fin de mission', 5, null, false);
 		
--- organisation
+-- votre organisation
   INSERT INTO public.t_organisation (nom, actif, horodatage, horodatage_creation) VALUES 	
-    ('Votre organisation', true, now(), now());
+    ('votreOrganisation', true, now(), now());
 
 -- role
   INSERT INTO public.t_role (nom, actif, horodatage, horodatage_creation) VALUES 	
@@ -101,10 +101,6 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 	('Notification Réseaux sociaux', 'Programme terminé. Invitation à checker l’email de conclusion pour prendre connaissance des résultats et des gagnants', 5, 1, '14:00', true, now(), now());
 
 
-/***************************/
-/******** question *********/
-/***************************/
-
 -- mecanique
   INSERT INTO public.t_mecanique (nom, cle_fichier, actif, horodatage, horodatage_creation) VALUES 	
     ('QCM - Choix unique', 'QCMUnique', true, now(), now()),
@@ -119,178 +115,12 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 -- module
   INSERT INTO public.t_module (nom, cle_fichier, image, actif, horodatage, horodatage_creation) VALUES 	
     ('Communiquer efficacement', 'COMM', 'communiquer.png', true, now(), now()),
-    ('Animer et piloter des projets', 'PILPROJ', 'piloter.png', true, now(), now()),	
+    ('Animer et piloter des projets', 'PILPROJ', 'piloter.png', true, now(), now()),
     ('Optimiser les réunions', 'REU', 'reunion.png', true, now(), now()),
     ('Mieux collaborer en équipe', 'MNG', 'manager.png', true, now(), now()),
     ('Mieux travailler en mobilité', 'MOB', 'mobilite.png', true, now(), now());
 	
 
--- multilangue
-	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
-	SELECT DISTINCT 'SEMAINE', id_semaine, 'fr', nom, description FROM public.t_semaine
-	UNION ALL 
-	SELECT 'SEMAINE', 1, 'en', 'Launch !', 'Let’s start and setup the program'
-	UNION ALL 
-	SELECT 'SEMAINE', 2, 'en', 'Stabilization !', 'Solidify your skills'
-	UNION ALL
-	SELECT 'SEMAINE', 3, 'en', 'Expansion !', 'Strengthen your use cases'
-	UNION ALL
-	SELECT 'SEMAINE', 4, 'en', 'Landing !', 'Last boost to be an expert'
-	UNION ALL
-	SELECT 'SEMAINE', 5, 'en', 'Last mission', NULL
-	UNION ALL
-	SELECT DISTINCT 'AVATAR', id_avatar, 'fr', nom, description FROM public.t_avatar
-	UNION ALL
-	SELECT 'AVATAR', 1, 'en', 'Apollo20', 'Bold and robust'
-	UNION ALL
-	SELECT 'AVATAR', 2, 'en', 'Discovery Two', 'Strong and imposing'
-	UNION ALL
-	SELECT 'AVATAR', 3, 'en', 'Odysseus', 'Attentive and thoughtful'
-	UNION ALL
-	SELECT 'AVATAR', 4, 'en', 'USS Teams', 'Multitask'
-	UNION ALL
-	SELECT 'AVATAR', 5, 'en', 'Haddock 17', 'Fearless and prudent'
-	UNION ALL
-	SELECT 'AVATAR', 6, 'en', 'Llewsor 47', 'Dynamic and curious'
-	UNION ALL
-	SELECT DISTINCT 'MEDAILLE', id_medaille, 'fr', nom, description FROM public.t_medaille
-	UNION ALL
-	SELECT 'MEDAILLE', 1, 'en', 'Novice Explorer', 'Reach the level 5'
-	UNION ALL
-	SELECT 'MEDAILLE', 2, 'en', 'Explorer', 'Reach the level 10'
-	UNION ALL
-	SELECT 'MEDAILLE', 3, 'en', 'Galactic Explorer', 'Reach the level 15'
-	UNION ALL
-	SELECT 'MEDAILLE', 4, 'en', 'Challenger', 'Reach the top 100 of the GAME or EXP ranking'
-	UNION ALL
-	SELECT 'MEDAILLE', 5, 'en', 'For the glory !', 'Reach the top 20 of the GAME or EXP ranking'
-	UNION ALL
-	SELECT 'MEDAILLE', 6, 'en', 'Born to be a star', 'Answer correctly 20 questions'
-	UNION ALL
-	SELECT 'MEDAILLE', 7, 'en', 'Teams uses Hunter', 'Answer correctly 50 questions'
-	UNION ALL
-	SELECT 'MEDAILLE', 8, 'en', 'Admiral of Teams uses', 'Answer correctly 150 questions'
-	UNION ALL
-	SELECT 'MEDAILLE', 9, 'en', 'First contact', 'Log in 5 days in a row'
-	UNION ALL
-	SELECT 'MEDAILLE', 10, 'en', 'Subspace Emissary', 'Log in 10 days in a row'
-	UNION ALL
-	SELECT 'MEDAILLE', 11, 'en', 'Intergalactic Ambassador', 'Log in 15 days in a row'
-	UNION ALL
-	SELECT 'MEDAILLE', 12, 'en', 'I am the Rocketeer', 'Answer 20 questions in less than 30 seconds'
-	UNION ALL
-	SELECT 'MEDAILLE', 13, 'en', 'Film-lover of the stars', 'Launch 5 videos via the differents quizz'
-	UNION ALL
-	SELECT 'MEDAILLE', 14, 'en', 'Never twice without thrice', 'Answer the 3rd question correctly 15 times in a module'
-	UNION ALL
-	SELECT 'MEDAILLE', 15, 'en', 'Interstellar Intendant', 'Answer correctly 5 questions of the «Teamwork & collaboration» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 16, 'en', 'Collaboration Master', 'Answer correctly 30 questions of the «Teamwork & collaboration» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 17, 'en', 'Are you the Fastest Player ?', 'Answer correctly 5 questions of the «Project Management» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 18, 'en', 'Project Management Master', 'Answer correctly 30 questions of the «Project Management» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 19, 'en', 'Space-time avenger', 'Answer correctly 5 questions of the «Effective communication» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 20, 'en', 'Communication Master', 'Answer correctly 30 questions of the «Effective communication» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 21, 'en', 'Gravitational concentration', 'Answer correctly 5 questions of the «Efficient meetings» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 22, 'en', 'Meeting Master', 'Answer correctly 30 questions of the «Efficient meetings» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 23, 'en', 'Pegasus Meteor', 'Answer correctly 5 questions of the «Mobile work» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 24, 'en', 'Mobile Work Master', 'Answer correctly 30 questions of the «Mobile work» module'
-	UNION ALL
-	SELECT 'MEDAILLE', 25, 'en', 'The Infinity Collector', 'Obtain all common and legendary badges'
-	UNION ALL
-	SELECT DISTINCT 'NIVEAU', id_niveau, 'fr', nom, NULL::text FROM public.t_niveau
-	UNION ALL
-	SELECT 'NIVEAU', 1, 'en', 'Beginner', NULL
-	UNION ALL
-	SELECT 'NIVEAU', 2, 'en', 'Intermediate', NULL
-	UNION ALL
-	SELECT 'NIVEAU', 3, 'en', 'Advanced', NULL
-	UNION ALL
-	SELECT DISTINCT 'MODULE', id_module, 'fr', nom, NULL::text FROM public.t_module
-	UNION ALL
-	SELECT 'MODULE', 1, 'en', 'Effective communication', NULL
-	UNION ALL
-	SELECT 'MODULE', 2, 'en', 'Project Management', NULL
-	UNION ALL
-	SELECT 'MODULE', 3, 'en', 'Efficient meetings', NULL
-	UNION ALL
-	SELECT 'MODULE', 4, 'en', 'Teamwork & collaboration', NULL
-	UNION ALL
-	SELECT 'MODULE', 5, 'en', 'Mobile work', NULL
-	UNION ALL
-	SELECT DISTINCT 'PAGE', id_page, 'fr', nom, NULL::text FROM public.t_page
-	UNION ALL
-	SELECT 'PAGE', 1, 'en', 'Cockpit', NULL
-	UNION ALL
-	SELECT 'PAGE', 2, 'en', 'Play', NULL
-	UNION ALL
-	SELECT 'PAGE', 3, 'en', 'Schedule', NULL
-	UNION ALL
-	SELECT 'PAGE', 4, 'en', 'Leaderboards', NULL
-	UNION ALL
-	SELECT 'PAGE', 5, 'en', 'Tools', NULL
-	UNION ALL
-	SELECT 'PAGE', 6, 'en', 'My profile', NULL
-	UNION ALL
-	SELECT 'PAGE', 7, 'en', 'Rules', NULL
-	UNION ALL
-	SELECT DISTINCT 'AGENDA', id_agenda, 'fr', nom, NULL::text FROM public.t_agenda
-	UNION ALL
-	SELECT 'AGENDA', 1, 'en', 'Activate the mission :"Launch"', 'Explorers interfaces'
-	UNION ALL
-	SELECT 'AGENDA', 2, 'en', 'Communication: Send the "Launch" emailing', 'Organization emailing'
-	UNION ALL
-	SELECT 'AGENDA', 3, 'en', 'Social network notification', 'Week 1 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 4, 'en', 'Communication: Send the "Mission in progress" emailing', 'Organization emailing'
-	UNION ALL
-	SELECT 'AGENDA', 5, 'en', 'Social network notification', 'Week 1 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 6, 'en', 'Social network notification', 'Week 1 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 7, 'en', 'Activate the mission :"Stabilization"', 'Explorers interfaces'
-	UNION ALL
-	SELECT 'AGENDA', 8, 'en', 'Social network notification', 'Week 2 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 9, 'en', 'Communication: Send the "Mission in progress" emailing', 'Organization emailing'
-	UNION ALL
-	SELECT 'AGENDA', 10, 'en', 'Social network notification', 'Week 2 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 11, 'en', 'Social network notification', 'Week 2 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 12, 'en', 'Activate the mission :"Progress"', 'Explorers interfaces'
-	UNION ALL
-	SELECT 'AGENDA', 13, 'en', 'Social network notification', 'Week 3 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 14, 'en', 'Communication: Send the "Mission in progress" emailing', 'Organization emailing'
-	UNION ALL
-	SELECT 'AGENDA', 15, 'en', 'Social network notification', 'Week 3 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 16, 'en', 'Social network notification', 'Week 3 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 17, 'en', 'Activate the mission :"Landing"', 'Explorers interfaces'
-	UNION ALL
-	SELECT 'AGENDA', 18, 'en', 'Communication: Send the "End of season" emailing', 'Organization emailing'
-	UNION ALL
-	SELECT 'AGENDA', 19, 'en', 'Social network notification', 'Week 4 mission in progress'
-	UNION ALL
-	SELECT 'AGENDA', 20, 'en', 'Communication: Send the "Mission in progress" emailing', 'Organization emailing'
-	UNION ALL
-	SELECT 'AGENDA', 21, 'en', 'Social network notification', 'Week 4 mission in progress and end of season'
-	UNION ALL
-	SELECT 'AGENDA', 22, 'en', 'Social network notification', 'Week 4 mission in progress and end of season'
-	UNION ALL
-	SELECT 'AGENDA', 23, 'en', 'Communication: Send the "Big_announcement" emailing', 'Organization emailing'
-	UNION ALL
-	SELECT 'AGENDA', 24, 'en', 'Social network notification', 'Program completed. Invitation to check the emailing "Big announcement" with the results and the winners';
-	
 -- assets communication
 	INSERT INTO public.t_type_asset_communication (nom, actif, horodatage, horodatage_creation) VALUES 	
 		('Emailing', true, now(), now()),
@@ -339,27 +169,6 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 		null, 
 		true, now(), now());
 
--- question
-	ALTER TABLE public.t_reponse ADD COLUMN nom_en text;
-	SELECT public.i_process_backlog_question();
-
-	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
-	SELECT DISTINCT 'QUESTION', id_question, 'fr', nom, commentaire FROM public.t_question
-	UNION ALL
-	SELECT DISTINCT 'REPONSE', id_reponse, 'fr', nom, NULL::text FROM public.t_reponse
-	UNION ALL
-	SELECT DISTINCT 'THEMATIQUE', id_thematique, 'fr', nom, NULL::text FROM public.t_thematique;
-
-	INSERT INTO public.t_libelle_i18n (code, id_table, lang, nom, description)
-	SELECT DISTINCT 'QUESTION', b.id_question, 'en', a.question_en, a.bonne_pratique_en 
-	FROM public.i_question a
-		INNER JOIN public.t_question b ON TRIM(a.code_question)=TRIM(b.cle_fichier)
-	UNION ALL
-	SELECT DISTINCT 'REPONSE', id_reponse, 'en', nom_en, NULL::text FROM public.t_reponse
-	UNION ALL
-	SELECT DISTINCT 'THEMATIQUE', id_thematique, 'en', nom, NULL::text FROM public.t_thematique;
-
-	ALTER TABLE public.t_reponse DROP COLUMN nom_en;
 	
 -- bareme point reponse
 	INSERT INTO public.t_bareme_reponse (id_niveau, reponse_valid_xp, reponse_valid_point, last_reponse_valid_xp, last_reponse_valid_point, bonus_video_xp, bonus_video_point, bonus_temps_xp, bonus_temps_point, actif, horodatage, horodatage_creation) VALUES 
@@ -384,50 +193,13 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 		(14, 4530, ARRAY['{ "type": "EXP", "value": 300 }']::json[], true, now(), now()),
 		(15, 5530, ARRAY['{ "type": "EXP", "value": 550 }', '{ "type": "MEDAL", "value": 3 }', '{ "type": "PTS", "value": 50 }']::json[], true, now(), now());
 
--- user temp dev
-	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
-	VALUES (1, 1, 1, 'Catherine Kefhi', 5, 100, 255, 15, 12, 5, 5, 5, true, now(), now(), now());
-	
-	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
-	VALUES (1, 1, 2, 'Barney Highfive', 7, 150, 300, 42, 27, 9, 2, 8, true, now(), now(), now());
-	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
-	VALUES (1, 1, 3, 'Henri Gole', 3, 45, 120, 10, 10, 5, 3, 2, true, now(), now(), now());
+-- ajout tenant id de votre organisation / Pas de maitre du jeu qui active
+	UPDATE public.t_organisation SET tid_ad='votreTenantId' WHERE id_organisation=1;
 
-	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, niveau, nb_point, nb_xp, nb_reponse, nb_reponse_ok, nb_reponse_consecutive_top, nb_reponse_consecutive_en_cours, nb_questionnaire_complete, actif, horodatage, horodatage_creation, horodatage_connexion)
-	VALUES (2, 1, 4, 'Emile Feuille', 9, 164, 333, 55, 50, 13, 12, 11, true, now(), now(), now());
-
-	INSERT INTO public.t_user(id_organisation, id_role, id_avatar, nom, actif, horodatage, horodatage_creation, horodatage_connexion)
-	VALUES (1, 2, 6, 'Eddy Scylla', true, now(), now(), now());
-
--- ajout tid SAEGUS et MS / Pas de maitre du jeu qui active
-	UPDATE public.t_organisation SET tid_ad='ef866cb3-5ed9-490c-a761-90c3ddaee64e', id_semaine_encours=1 WHERE id_organisation=1;
-	UPDATE public.t_organisation SET tid_ad='72f988bf-86f1-41af-91ab-2d7cd011db47' WHERE id_organisation=2;
-
--- Organisation semaine / agenda
-	SELECT f_set_date_semaine(1, '2020-07-06'::date);
-	
-	/* INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
-        (1, 'nicolas.lapointe@saegus.com', true, now(), now()); */
-
--- modification structure suite traduction
-	ALTER TABLE t_libelle_i18n ADD COLUMN asset text;
-	UPDATE t_libelle_i18n
-	SET
-		asset = s0.asset
-	FROM
-		(SELECT DISTINCT * FROM t_question WHERE asset IS NOT NULL)s0
-	WHERE
-		TRIM(t_libelle_i18n.code) = 'QUESTION' AND t_libelle_i18n.id_table=s0.id_question;
-
-	UPDATE t_libelle_i18n
-	SET
-		asset = s0.asset
-	FROM
-		(SELECT DISTINCT * FROM t_reponse WHERE asset IS NOT NULL)s0
-	WHERE
-		TRIM(t_libelle_i18n.code) = 'REPONSE' AND t_libelle_i18n.id_table=s0.id_reponse;
-		
-	UPDATE t_libelle_i18n SET asset=REPLACE(asset, '_FR', '_EN') WHERE asset IS NOT NULL AND lang='en';
+-- Ajout de votre maitre du jeu
+	INSERT INTO public.t_maitre_jeu (id_organisation, mail, actif, horodatage, horodatage_creation) VALUES 
+        (1, 'votre-maitre-du-jeu@gmail.com', true, now(), now()),
+		(2, 'deuxième-maitre-du-jeu@gmail.com', true, now(), now());
 
 	ALTER TABLE t_asset_communication ADD lang nchar(2);
 
@@ -470,11 +242,3 @@ INSERT INTO public.t_agenda (nom, description, id_semaine, num_jour, heure, acti
 		null, 
 		'en', true, now(), now());
 
-		UPDATE t_libelle_i18n SET nom='Applications' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Applications';
-		UPDATE t_libelle_i18n SET nom='Conversations' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Conversations';
-		UPDATE t_libelle_i18n SET nom='Calls' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Appels';
-		UPDATE t_libelle_i18n SET nom='Statuses/Shortcuts' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Statut/Raccourcis';
-		UPDATE t_libelle_i18n SET nom='Statuses/Shortcuts/Shortcuts' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Statut/Raccourcis/Raccourcis';
-		UPDATE t_libelle_i18n SET nom='Teams' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Équipe/Discussions';
-		UPDATE t_libelle_i18n SET nom='Files' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Fichiers';
-		UPDATE t_libelle_i18n SET nom='Calendar' WHERE lang='en' AND TRIM(code)='THEMATIQUE' and TRIM(nom)='Calendrier';
