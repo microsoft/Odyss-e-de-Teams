@@ -1,5 +1,3 @@
--- Copyright (c) Microsoft Corporation.
--- Licensed under the MIT License.
 -- Semaine
 	INSERT INTO public.t_semaine(nom, ordre, description, can_play) 
 		VALUES ('Lancement !', 1, 'Partir et commencer le programme', true), 
