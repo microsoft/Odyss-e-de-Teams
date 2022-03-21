@@ -15,7 +15,7 @@ import {
   INiveau,
   IChoixModuleNiveauState,
   IChoixModuleNiveauProps,
-} from "src/models/Question";
+} from "models/Question";
 
 import "./ChoixModuleNiveau.scss";
 import IStore from "store/IStore";
