@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import { FaPause, FaStop, FaPlay } from "react-icons/fa";
 
-import { IStopWatchProps, IStopWatchState } from "src/models/Question";
+import { IStopWatchProps, IStopWatchState } from "models/Question";
 
 import "./StopWatch.scss";
 

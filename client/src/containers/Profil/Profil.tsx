@@ -90,7 +90,7 @@ class Profil extends Component<IProfilProps & WithTranslation, IProfilState> {
   };
 
   private _getEndNumber = (number: number): string => {
-    if(number == 0) {
+    if(number === 0) {
       return ''
     } else if (i18n.language === 'fr') {
       return number === 1 ? "er" : "ème";
