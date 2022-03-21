@@ -6,7 +6,7 @@ import { fadeIn } from "react-animations";
 
 import { withTranslation, WithTranslation } from "react-i18next";
 
-import { IIntroLancementQuestionProps } from "src/models/Question";
+import { IIntroLancementQuestionProps } from "models/Question";
 
 import "./IntroLancementQuestion.scss";
 

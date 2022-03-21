@@ -18,7 +18,7 @@ import {
   IRecapQuizzProps,
   IRecapQuizzState,
   IQuestion,
-} from "src/models/Question";
+} from "models/Question";
 
 import "./RecapQuizz.scss";
 
