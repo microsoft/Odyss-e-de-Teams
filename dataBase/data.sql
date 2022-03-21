@@ -1,3 +1,14 @@
+-- Thématiques 
+	INSERT INTO public.t_thematique(nom, actif, horodatage, horodatage_creation)
+		VALUES 
+		('Applications', true, now(), now()),
+		('Statut/Raccourcis', true, now(), now()),
+		('Calendrier', true, now(), now()),
+		('Équipe/Discussions', true, now(), now()),
+		('Appels', true, now(), now()),
+		('Statut/Raccourcis/Raccourcis', true, now(), now()),
+		('Fichiers', true, now(), now());
+
 -- Semaine
 	INSERT INTO public.t_semaine(nom, ordre, description, can_play) 
 		VALUES ('Lancement !', 1, 'Partir et commencer le programme', true), 
