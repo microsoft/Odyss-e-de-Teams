@@ -18,7 +18,7 @@
     "hapi-sequelizejs": "^4.0.0",
     "jimp": "^0.13.0",
     "jschardet": "^2.2.1",
-    "moment": "^2.26.0",
+    "moment": "^2.29.2",
     "pg": "^8.1.0",
     "pg-hstore": "^2.3.3",
     "querystring": "^0.2.1",
