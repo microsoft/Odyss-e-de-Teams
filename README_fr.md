@@ -139,7 +139,12 @@ Informations supplémentaires avant de commencer : [Documentation Microsoft](htt
 
 Vous pouvez désormais voir votre application dans la liste.
 
-11. Cliquez maintenant sur le nom de l&#39;application nouvellement apparue.
+Maintenant retournez sur la page d'accueil et aller sur l'onglet 
+
+![11](https://user-images.githubusercontent.com/67316441/176896860-c0380661-284f-4a6f-ba63-c0270d4ffe39.PNG)
+![11_bis](https://user-images.githubusercontent.com/67316441/176896911-43c35e3b-a7fb-4526-a6f9-ffddb50071ff.PNG)
+
+11. Cliquez maintenant sur le nom de l&#39;application.
 
 ![8](https://user-images.githubusercontent.com/57418005/148472153-9fc47ffe-5a81-4a6d-8057-26b31729a51e.png)
 
