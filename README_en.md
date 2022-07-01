@@ -274,7 +274,11 @@ Value: **postgres://\<nom\_utilisateur>:\<mot\_de\_passe>@\<host>5432/odyssee\_t
 
 ![33](https://user-images.githubusercontent.com/67316441/174289613-4d31d5ff-0df3-4f05-a03e-47418b6a6ede.PNG)
 
-14. Then we must add an SSL certificate to have a secure URL (https).
+14. Then we must create a custom domain and an SSL certificate to have a secure URL (https).
+
+14.1. To create your custom domain see the [microsoft documentation](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain?tabs=a%2Cazurecli)
+   
+14.2. Then add the SSL certificate.
 
 ![34](https://user-images.githubusercontent.com/67316441/174291737-59b74304-0c51-45d1-8f32-e96e218d97ee.PNG)
 
