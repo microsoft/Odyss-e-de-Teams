@@ -132,7 +132,7 @@ Additional information before you begin: [Microsoft documents](https://docs.micr
 
 You can now see your application on the list.
 
-Go back on home page and click "App registration"
+Go back on home page and click on "App registration"
 
 ![11_en](https://user-images.githubusercontent.com/67316441/167112449-999bfa42-8222-4ae3-ad53-551048033694.PNG)
 
