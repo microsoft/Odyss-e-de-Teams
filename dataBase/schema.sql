@@ -8,7 +8,9 @@ CREATE ROLE odyssee_teams_appli WITH
 	CONNECTION LIMIT -1
 	PASSWORD 'YourPassword';
 
-ALTER DATABASE odyssee_teams OWNER TO login;
+GRANT odyssee_teams_appli TO odyssee_admin;
+
+ALTER DATABASE odyssee_teams OWNER TO odyssee_teams_appli;
 
 ----- organisation  
 CREATE SEQUENCE public.seq_t_organisation;
