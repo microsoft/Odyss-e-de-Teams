@@ -284,7 +284,7 @@ Valeur : **postgres://\&lt;nom\_utilisateur\&gt;:\&lt;mot\_de\_passe\&gt;@\&lt;h
   
 14. Ensuite nous devons creer un domaine personnalisé et ajouter un certificat SSL pour qu'il soit sécurisé.
  
-14.1. Pour créer le domaine suivez cette la [documentation microsoft](https://docs.microsoft.com/fr-fr/azure/app-service/app-service-web-tutorial-custom-domain?tabs=a%2Cazurecli).
+14.1. Pour créer le domaine suivez la [documentation microsoft](https://docs.microsoft.com/fr-fr/azure/app-service/app-service-web-tutorial-custom-domain?tabs=a%2Cazurecli).
   
 14.2. Ensuite nous devons ajouter un certificat SSL pour avoir un URL sécurisé (https).
 
