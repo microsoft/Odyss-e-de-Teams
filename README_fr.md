@@ -280,7 +280,7 @@ Valeur : **postgres://\&lt;nom\_utilisateur\&gt;:\&lt;mot\_de\_passe\&gt;@\&lt;h
 
 ![32](https://user-images.githubusercontent.com/67316441/174289605-ed1440a3-b79a-4987-b9e2-cf0b125f3fc9.PNG)
 
-![33](https://user-images.githubusercontent.com/67316441/174289613-4d31d5ff-0df3-4f05-a03e-47418b6a6ede.PNG)
+![33](.github/assets/13-applicationId.png)
 
 14. Ensuite nous devons creer un domaine personnalisé et ajouter un certificat SSL pour qu'il soit sécurisé.
 
@@ -377,7 +377,7 @@ Maintenant que l&#39;accès à votre serveur Postgre a été établi depuis pgAd
 16. Faites un nouveau clic droit sur votre serveur. Parcourez «  Create » puis sélectionnez « Database ».
 17. Donnez-lui le nom « odyssee\_teams ». Attention : par la suite, si vous souhaitez changer son nom, il faudra procéder aux modifications via les fichiers SQL.
 
-![46](https://user-images.githubusercontent.com/57418005/148473032-13bba9e8-5f43-4f77-afab-490bea3a65f8.png)
+![46](.github/assets/17-createdb.png)
 
 ![47](https://user-images.githubusercontent.com/57418005/148473034-ab5a6881-dff6-4402-895d-1422268f084e.png)
 
@@ -390,7 +390,7 @@ Maintenant que l&#39;accès à votre serveur Postgre a été établi depuis pgAd
 
 Attention : Si vous souhaitez changer le nom du rôle plus tard, il vous faudra le modifier partout.
 
-![49](https://user-images.githubusercontent.com/57418005/148473078-68cea173-96b2-417d-bd5c-b47dbc8ea1e3.png)
+![49](.github/assets/20-importDbSchema.png)
 
 21. Pour exécuter la requête, cliquez sur le bouton « Play » de pgAdmin (ci-dessous).
 
@@ -485,7 +485,7 @@ Attention : Si vous souhaitez changer le nom du rôle plus tard, il vous faudra 
 
 ![Capture9](https://user-images.githubusercontent.com/67316441/149012534-c88a0727-7f61-4c60-be76-d859d2ab76c3.PNG)
 
-45. Ouvrez le dossier "Prod" dans VSCode et ouvrez le fichier Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
+45. Ouvrez le dossier "Prod" dans VSCode et ouvrez le fichier Prod/utils/Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
 
 ![Capture](https://user-images.githubusercontent.com/67316441/148568614-673a780a-9ab9-4bf0-b1d1-599e5acae9a1.PNG)
   
@@ -496,7 +496,7 @@ Attention : Si vous souhaitez changer le nom du rôle plus tard, il vous faudra 
 ![Capture44](https://user-images.githubusercontent.com/67316441/175503150-673de202-092e-4bed-9ff7-51e03f56d52d.PNG)
 
 49. Ouvrez l&#39;application « Azure App Service » nouvellement installée.
-50. Connectez-vous avec votre compte Microsoft.
+50. Choisissez le dossier "Prod" contenant les sources à déployer et connectez-vous avec votre compte Microsoft. 
 51. Votre App service s&#39;affichera et proposera « OdysseeTest » (ou le nom que vous aviez choisi précédemment). Faites un clic droit sur l&#39;application.
 52. Cliquez sur « Deploy to Web App ».
   
@@ -518,9 +518,9 @@ NB : Notez qu&#39;il n&#39;y a aucun port spécifique à ouvrir lors de la manip
 
 ### Un pare-feu bloque votre installation
 
-Si un pare-feu ou un proxy quelconque bloque le processus d&#39;installation, le lien ci-dessous vous permet d&#39;ajouter une règle (policy) à votre tenant Teams pour autoriser les appels à cette URL.
+Si un pare-feu ou un proxy quelconque bloque le processus d&#39;installation, le lien ci-dessous vous permet d&#39;ajouter une règle (policy) à votre tenant Teams pour autoriser l'URL de l'app service que vous avez créé .
 
-[https://odyssee-de-teams.saegus.com/](https://odyssee-de-teams.saegus.com/)
+[https://odyssee-de-teams.com/](https://odyssee-de-teams.com/)
 
 
 ## 5 étapes pour une installation réussie
@@ -538,7 +538,7 @@ Si un pare-feu ou un proxy quelconque bloque le processus d&#39;installation, le
 
 #### 3ème étape : Uploadez le fichier .zip sur votre tenant
 
-5. Ouvrez le fichier « PACKAGE_ODYSSEY_FR/manifest.json » sur votre ordinateur et modifiez l'URL par celui que vous avez créé dans l'app service et l'id de votre application.
+5. Ouvrez le fichier « PACKAGE_ODYSSEY_FR/Manifest/manifest.json » sur votre ordinateur et modifiez l'URL par celui que vous avez créé dans l'app service et l'id de votre application.
 
 ![Capture15](https://user-images.githubusercontent.com/67316441/149138090-a58996d6-7967-429d-a990-d0af99f72f94.PNG)
 
