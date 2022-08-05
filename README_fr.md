@@ -443,7 +443,7 @@ Attention : Si vous souhaitez changer le nom du rôle plus tard, il vous faudra 
 
 ![63](https://user-images.githubusercontent.com/57418005/148473402-ed65fafe-7e55-4da8-b066-d88e2e1feba9.png)
 
-33. Allez dans « Fichier » puis « Ouvrir le dossier » et allez sélectionner le dossier « Odyssee_teams_pub » de ce repository.
+33. Allez dans « Fichier » puis [clonez le répertoire Github](https://docs.microsoft.com/fr-fr/azure/developer/javascript/how-to/with-visual-studio-code/clone-github-repository?tabs=create-repo-command-palette%2Cinitialize-repo-activity-bar%2Ccreate-branch-command-palette%2Ccommit-changes-command-palette%2Cpush-command-palette).
 34. Pour la suite, vous allez avoir besoin de Node JS dans sa version 12.22.9 (pour des versions plus récentes il faudra adapter le code).
 35. Pour le télécharger et l'installer rendez-vous sur [node.js](nodejs.org/en/download/releases/) : vous devriez trouver à la page 10 la version correspondante.
 
