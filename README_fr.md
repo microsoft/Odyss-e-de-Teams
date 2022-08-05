@@ -107,18 +107,25 @@ Le prérequis pour suivre le guide pas-à-pas ci-dessous est de disposer **des d
 
 Informations supplémentaires avant de commencer : [Documentation Microsoft](https://docs.microsoft.com/fr-fr/azure/active-directory/develop/quickstart-register-app)
 
-1. Rendez-vous sur Azure Active Directory.
+1. Rendez-vous sur Azure Active Directory dans l'onglet application d'entreprise.
+
+![1](https://user-images.githubusercontent.com/67316441/166934131-d994eee0-c4e3-4ba9-a972-3fb027a2ab15.PNG)
+
 2. Depuis le tableau de bord vous pouvez créer une nouvelle application.
+
 ![3](https://user-images.githubusercontent.com/57418005/148472057-4f86142b-47ea-47f0-844e-40a1c65c2b0b.png)
 
 3. Cliquez sur « Nouvelle Application ». Vous serez redirigé·e vers la page ci-dessous.
+
 ![4](https://user-images.githubusercontent.com/57418005/148471329-eedd82e8-c1b6-4543-bbc1-cd5b393aaa5f.png)
 
 4. Sur cette page, cliquez sur « Créer votre propre application ».
+
 ![5](https://user-images.githubusercontent.com/57418005/148472084-b502c838-4f3e-484c-8cbd-8b28c9cd0cbb.png)
 
 5. Donnez-lui le nom que vous souhaitez - par exemple « ODYSSEEDETEAMS » et veillez à cocher le deuxième bouton radio « Register an application to integrate with Azure AD »
 6. Appuyez ensuite sur le bouton « Créer » en bas de l&#39;onglet.
+
 ![6](https://user-images.githubusercontent.com/57418005/148472118-a42c1c9b-e7f7-45fd-a6b5-94c28f60c80b.png)
 
 
@@ -126,28 +133,55 @@ Informations supplémentaires avant de commencer : [Documentation Microsoft](htt
 8. Choisissez le groupe de personnes qui pourra accéder à cette application.
 9. Enfin, indiquez l&#39;URL de redirection suivante : [http://localhost:8080](http://localhost:8080/)
 10. Cliquez sur le bouton « S&#39;inscrire » pour terminer cette étape.
+
 ![7](https://user-images.githubusercontent.com/57418005/148472137-ea5384d5-5d1e-47eb-aa89-c251814721a9.png)
 
 
 Vous pouvez désormais voir votre application dans la liste.
 
-11. Cliquez maintenant sur le nom de l&#39;application nouvellement apparue.
+Maintenant retournez sur la page d'accueil et aller sur l'onglet 
+
+![11](https://user-images.githubusercontent.com/67316441/176896860-c0380661-284f-4a6f-ba63-c0270d4ffe39.PNG)
+![11_bis](https://user-images.githubusercontent.com/67316441/176896911-43c35e3b-a7fb-4526-a6f9-ffddb50071ff.PNG)
+
+11. Cliquez maintenant sur le nom de l&#39;application.
+
 ![8](https://user-images.githubusercontent.com/57418005/148472153-9fc47ffe-5a81-4a6d-8057-26b31729a51e.png)
 
 
 12. Rendez-vous dans la partie « API autorisées » via le menu latéral de gauche.
+
 ![9](https://user-images.githubusercontent.com/57418005/148472169-68351d40-bd17-4fde-af8b-2822a20e4c27.png)
 
-
 13. Ajoutez la liste des autorisations ci-dessus en **délégué**.
+
+Pour ce faire, cliquez sur "Ajouter une autorisation".
+
+![12](https://user-images.githubusercontent.com/67316441/166935495-ca43ca35-a80b-4edc-9ec8-cd9ab404e4db.PNG)
+
+Séléctionnez "Microsoft Graph".
+
+![12_bis](https://user-images.githubusercontent.com/67316441/166936012-da06f350-ea38-4b30-bf47-675c6cd9c2cd.PNG)
+
+Puis séléctionnez "Autorisations déléguées".
+
+![12_ter](https://user-images.githubusercontent.com/67316441/166937035-6ecc09de-7330-435b-998c-101337010cd5.PNG)
+
+Pour finir séléctionnez toutes les autorisations présentées sur l'image 13.
+
+![12_last](https://user-images.githubusercontent.com/67316441/166938049-fec48896-4cde-4e9f-a335-604e6a02a5b9.PNG)
+
 14. Toujours via le menu latéral de gauche, cliquez sur « Authentification ».
-![10](https://user-images.githubusercontent.com/57418005/148472240-9d2865a7-8d8f-42d5-aa9c-ae73d30dd096.png)
+
+![14](https://user-images.githubusercontent.com/67316441/166942869-d2327786-2ac6-40c0-ab51-58a35976f59b.PNG)
 
 15. Ajoutez une plateforme de type « Application à page unique » en cliquant sur le bouton « Ajouter une plateforme ».
-![11](https://user-images.githubusercontent.com/57418005/148472258-d95a97db-bb03-46bc-9f51-b9fa73120905.png)
 
+![14_bis](https://user-images.githubusercontent.com/67316441/166943530-076cf6b7-d3bb-4552-afbb-83e5cc977424.PNG)
+![14_ter](https://user-images.githubusercontent.com/67316441/166943576-9292654e-02e0-4494-a559-e21e66de4d96.PNG)
 
 16. Ajoutez deux URL de redirections qui correspondent à l&#39;URL de l&#39;app service qui sera créée dans les étapes suivantes : [https://odysseetest.azurewebsites.net](https://odysseetest.azurewebsites.net/)et [https://odysseetest.azurewebsites.net/callback/v2](https://odysseetest.azurewebsites.net/callback/v2)
+
 ![12](https://user-images.githubusercontent.com/57418005/148472278-de5c2d00-361a-488f-922b-71eeda5e626f.png)
 
 
@@ -157,19 +191,28 @@ Vous pouvez désormais voir votre application dans la liste.
 ![13](https://user-images.githubusercontent.com/57418005/148472298-3ac99277-a6e6-44b3-bef7-bd62cf325ce1.png)
 ![14](https://user-images.githubusercontent.com/57418005/148472304-afed63a7-f81e-4171-9101-acc9fa9dbd9c.png)
 
-18-1. Rendez vous dans le fichier server.js et ajoutez le client id, secret id et l'id de votre tenant Azure à cet endroit.
+19. Rendez vous dans le fichier server.js et ajoutez le client id, secret id et l'id de votre tenant Azure à cet endroit.
+
 ![Capture2](https://user-images.githubusercontent.com/67316441/148567447-85ebe015-1a9a-4d65-93a5-5638556c3dff.PNG)
 
-19. À présent, rendez-vous dans le menu « Exposer une API » du menu latéral de gauche.
+19.1. Il faut répéter cette étape de remplacement, quand vous trouvez <your url> ou <your tenant id> ou <your client id> dans tous les fichiers suivants :
+  - adal.auth.service.js
+  - manifest.json
+  - msal.auth.service.js
+  - teams.auth.service.js
+
+20. À présent, rendez-vous dans le menu « Exposer une API » du menu latéral de gauche.
+
 ![15](https://user-images.githubusercontent.com/57418005/148472315-b00ef19d-f79e-4d2c-89ce-f1a9acd76cef.png)
 
 
-20. Cliquez sur « Ajouter une étendue ».
-![16](https://user-images.githubusercontent.com/57418005/148472326-5872c636-defb-469f-8ccc-cea04b5268fe.png)
+21. Cliquez sur « Ajouter une étendue ».
+
+![20](https://user-images.githubusercontent.com/67316441/166944360-760ca662-f5e3-4d6b-9c49-02eb3fab16df.PNG)
 
 
-21. Dans la fenêtre qui vient de s&#39;ouvrir (ci-dessus), veillez à bien renseigner les personnes qui pourront consentir à « Administrateurs et Utilisateurs ».
-22. Cliquez sur « Add scope » pour fermer la fenêtre.
+22. Dans la fenêtre qui vient de s&#39;ouvrir (ci-dessus), veillez à bien renseigner les personnes qui pourront consentir à « Administrateurs et Utilisateurs ».
+23. Cliquez sur « Add scope » pour fermer la fenêtre.
 
 La partie Azure Active Directory est maintenant terminée. Retournez sur Microsoft Azure où nous irons ajouter un groupe de ressources.
 
@@ -178,6 +221,7 @@ La partie Azure Active Directory est maintenant terminée. Retournez sur Microso
 Informations supplémentaires avant de commencer : [Documentation Microsoft](https://docs.microsoft.com/fr-fr/azure/azure-resource-manager/management/manage-resource-groups-portal)
 
 1. Rendez-vous sur la partie « Groupes de ressources » depuis l&#39;accueil.
+
 ![17](https://user-images.githubusercontent.com/57418005/148472435-91d882da-0e26-4311-b884-c3f89e9f6121.png)
 
 ![18](https://user-images.githubusercontent.com/57418005/148472438-47fbc3f5-8186-4333-b830-2767433fe635.png)
@@ -185,15 +229,18 @@ Informations supplémentaires avant de commencer : [Documentation Microsoft](htt
 ![19](https://user-images.githubusercontent.com/57418005/148472462-b64e1570-3e9d-499d-ad2d-1ca3b6bb8c48.png)
 
 2. Choisissez et renseignez un nom pour ce groupe de ressources. Validez-le.
+
 ![20](https://user-images.githubusercontent.com/57418005/148472478-a20b37d9-c0c5-4d79-82a2-cb1c9542b2de.png)
 
 3. Une fois la confirmation de la bonne création de votre groupe de ressources, sélectionnez-le et cliquez sur « Créer » pour créer une application web.
 
 Informations supplémentaires avant de commencer cette étape : [Documentation Microsoft](https://docs.microsoft.com/en-us/azure/app-service/app-service-plan-manage)
+
 ![21](https://user-images.githubusercontent.com/57418005/148472502-fea3f156-7575-4790-b094-0d1c6c9d0f5a.png)
 ![22](https://user-images.githubusercontent.com/57418005/148472513-ef0a491b-cb88-4012-9b79-fa6b0a93469d.png)
 
 4. Sélectionnez « Web app » dans la liste proposée.
+
 ![23](https://user-images.githubusercontent.com/57418005/148472539-7aa76ed4-109e-49a9-aa42-50747abe10a6.png)
 
 
@@ -201,12 +248,15 @@ Informations supplémentaires avant de commencer cette étape : [Documentation M
 6. **Conservez** la méthode de publication « Code » et choisissez **Node 14 LTS** comme pile d&#39;exécution.
 7. Conservez le Système d&#39;exploitation Linux et utilisez le plan Linux qui vous convient le mieux (_en fonction de la fréquentation attendue/ estimée sur l&#39;application L&#39;Odyssée de Teams_).
 8. Cliquez sur « Vérifier + créer » pour créer la ressource.
+
 ![24](https://user-images.githubusercontent.com/57418005/148472571-bec62945-453d-474e-a32d-0ec6abd750ce.png)
 
 Maintenant vous avez accès à votre « app service », il vous faut renseigner ses variables d&#39;environnements. Pour ce faire, rendez-vous dans le menu « configuration » dans le menu latéral de gauche.
-![25](https://user-images.githubusercontent.com/57418005/148472592-8c86b967-c118-471e-9e68-731a17bb2d74.png)
+
+![25](https://user-images.githubusercontent.com/67316441/174288765-1c5da3a6-4beb-4a5f-b8db-b718e188e581.PNG)
 
 9. Sur l&#39;onglet, cliquez sur « Nouveau paramètre d&#39;application ».
+
 ![26](https://user-images.githubusercontent.com/57418005/148472614-87656e86-6ec2-444d-afeb-ad755bde647a.png)
 
 10. Ajoutez les paramètres suivants :
@@ -217,48 +267,80 @@ Valeur : **postgres://\&lt;nom\_utilisateur\&gt;:\&lt;mot\_de\_passe\&gt;@\&lt;h
 
 11. Cliquez sur « ok ».
 12. Remplacez les informations comprises entre « \&lt; \&gt; » par les informations du serveur Postgres **que vous**  **allez créer juste après**.
-![27](https://user-images.githubusercontent.com/57418005/148472638-fcd27d30-978c-4c4e-9b62-3c1051d39af2.png)
 
-13. Renseignez ensuite le paramètre suivant **MICROSOFT\_PROVIDER\_AUTHENTICATION\_SECRET**
-14. Cette fois-ci, cochez la case « paramètre de l&#39;emplacement de déploiement ».
-15. Cliquez sur « ok » pour valider.
-16. Répétez la même manipulation avec les paramètres ci-dessous :
+13. Répétez la même manipulation avec les paramètres ci-dessous :
+
 ![28](https://user-images.githubusercontent.com/57418005/148472669-2f56dadb-4fb2-44a8-a2e1-92b8bc6cad0b.png)
 
 ![29](https://user-images.githubusercontent.com/57418005/148472670-f5e3376b-d470-4be8-82de-70d4b6616323.png)
 
 ![30](https://user-images.githubusercontent.com/57418005/148472671-f2c2c373-7102-41a7-bb56-5ced7dfa8aa9.png)
 
+![31](https://user-images.githubusercontent.com/67316441/174289592-edd1ee71-4600-4c29-8315-a6c553371c81.PNG)
+
+![32](https://user-images.githubusercontent.com/67316441/174289605-ed1440a3-b79a-4987-b9e2-cf0b125f3fc9.PNG)
+
+![33](.github/assets/13-applicationId.png)
+
+14. Ensuite nous devons creer un domaine personnalisé et ajouter un certificat SSL pour qu'il soit sécurisé.
+
+14.1. Pour créer le domaine suivez la [documentation microsoft](https://docs.microsoft.com/fr-fr/azure/app-service/app-service-web-tutorial-custom-domain?tabs=a%2Cazurecli).
+
+14.2. Ensuite nous devons ajouter un certificat SSL pour avoir un URL sécurisé (https).
+
+![34](https://user-images.githubusercontent.com/67316441/174290015-5c3fcd9f-c2ec-4edc-b76a-f7ac35303a40.PNG)
+
+Pour ce faire rendez-vous dans le menu Paramètres TLS/SSL et cliquez sur l'onglet "Certificat à clé privée(.pfx)" et enfin "Créer un certificat managé App Service".
+
+![35](https://user-images.githubusercontent.com/67316441/174290343-e3db026a-e76c-45f7-9a4a-65714138a712.PNG)
+
+Renseignez l'URL que vous voulez sécuriser et cliquez sur "Créer".
+
+![36](https://user-images.githubusercontent.com/67316441/174290482-81bd2752-c129-43db-8b26-3b9279f3902f.PNG)
+
+Changez d'onglet pour aller dans "Liaisons" et cliquez sur "Ajouter une liaison TLS/SSL".
+
+![37](https://user-images.githubusercontent.com/67316441/174290614-4e880ed6-020a-4ccf-8322-bda40c86c79f.PNG)
+
+Sélectionnez le domaine que vous avez mis précédemment, prenez l'empreinte numérique proposée et choisissez pour le Type TLS/SSL "SLL basé sur IP".
 
 ### Création de la base de données
 
 Informations supplémentaires avant de commencer cette étape : [Documentation Microsoft](https://docs.microsoft.com/en-us/azure/postgresql/quickstart-create-server-database-portal)
 
 1. Pour le bon fonctionnement de l&#39;application il est nécessaire d&#39;avoir une base de données. Créez une nouvelle ressource en recherchant : Azure Database pour PostgreSQL.
-![31](https://user-images.githubusercontent.com/57418005/148472732-51fb5d1d-0a33-4530-9ad1-a130239e7270.png)
 
-![32](https://user-images.githubusercontent.com/57418005/148472735-2d5f1d1b-6bc7-46b6-97d3-b8b56f041b17.png)
+![1](https://user-images.githubusercontent.com/67316441/166949529-2bf8525a-c784-4d19-aeb6-f979c507d7a2.PNG)
+
+![1_bis](https://user-images.githubusercontent.com/67316441/166949589-b6f6fa65-6465-4fde-aa2f-dc77c6a31ec6.PNG)
 
 2. Sélectionnez « Serveur unique ».
-![33](https://user-images.githubusercontent.com/57418005/148472748-8004f486-a0bf-46ef-b4df-dd7aa4b99fec.png)
+
+![2](https://user-images.githubusercontent.com/67316441/166949751-42a63881-b328-43d8-8e89-c6f17189b150.PNG)
 
 3. Sur la page qui s&#39;est ouverte, renseignez le nom du serveur désiré, ici « odyssee-postgres », son emplacement, sa version et le « calcul + stockage » qui convient le mieux à vos besoins.
 
-![34](https://user-images.githubusercontent.com/57418005/148472765-b0d1f678-c29a-4196-a45a-e6490c2a1db6.png)
+![3](https://user-images.githubusercontent.com/67316441/166949837-e372abfa-0349-4724-9751-b89645c3dbdc.PNG)
 
-![35](https://user-images.githubusercontent.com/57418005/148472768-53de01fa-60dc-4447-a73f-7a2340e2e5eb.png)
+![3_bis](https://user-images.githubusercontent.com/67316441/166949876-23b79ee7-34ff-4dc9-90ce-051ffbad74ed.PNG)
+
+![3_ter](https://user-images.githubusercontent.com/67316441/166950021-c0c7b407-e043-4faa-bfbc-4b469a419f19.PNG)
 
 4. Finissez de remplir les informations de connexions au serveur et cliquez sur « Vérifier + créer ». Votre groupe de ressources devrait maintenant ressembler à cela (ci-dessous) :
-![36](https://user-images.githubusercontent.com/57418005/148472789-95b08d1a-ad81-4fa0-8126-1525ea396cee.png)
+
+![4](https://user-images.githubusercontent.com/67316441/166950164-9032b3d9-84b7-4ec7-af3f-036c01b3b4d9.PNG)
 
 5. Rendez-vous dans la partie « Sécurité de la connexion » de la ressource odyssee-postgre.
-![37](https://user-images.githubusercontent.com/57418005/148472813-ca24bb44-2aa4-45e6-865d-2051d4dc7f70.png)
+
+![5](https://user-images.githubusercontent.com/67316441/166950278-fe785fc8-d321-44c5-8992-5ce0889a948b.PNG)
 
 6. Ajoutez votre adresse IP pour pouvoir accéder au serveur. Pour cela, cliquez sur « Ajouter une adresse IP cliente actuelle ».
+
 ![38](https://user-images.githubusercontent.com/57418005/148472838-17240475-6f18-43fc-9644-3a4772d09273.png)
 
 7. Ajoutez également l&#39;adresse IP de l&#39;application que vous avez créée, et qui est disponible dans le menu « propriétés ».
-![39](https://user-images.githubusercontent.com/57418005/148472860-2a864998-b0ea-4072-9ab1-79007c11e3d8.png)
+
+![7](https://user-images.githubusercontent.com/67316441/166950428-bceb992b-9b4b-45e6-9c1d-6bf4f772903f.png)
 
 8. Enfin, cliquez sur « Enregistrer » pour enregistrer vos changements.
 
@@ -278,132 +360,147 @@ Informations supplémentaires avant de commencer cette étape : [Documentation M
 ![42](https://user-images.githubusercontent.com/57418005/148472950-6b95a452-4a79-400f-8abb-4cd5b541b58e.png)
 
 12. Une modale s&#39;ouvre.
+
 ![43](https://user-images.githubusercontent.com/57418005/148472986-ed7ba54b-18a6-46b6-af94-a26c10d82382.png)
 
 13. Inscrivez le nom que vous souhaitez à votre nouveau serveur.
 14. Renseignez les informations de connexion qui correspondent à votre serveur Azure. Pour rappel, ces informations sont disponibles dans l&#39;onglet «  **Chaine de connexion »** sur votre serveur Postgre sur Microsoft Azure.
+
 ![44](https://user-images.githubusercontent.com/57418005/148472999-c6fbba66-84dc-4052-80b7-4a83a6f791a4.png)
 
 15. Cliquez sur « Save » pour enregistrer les modifications.
 
 Maintenant que l&#39;accès à votre serveur Postgre a été établi depuis pgAdmin, vous allez devoir créer une base de données.
+
 ![45](https://user-images.githubusercontent.com/57418005/148473018-96285ada-7607-407f-8ba4-40b53775c842.png)
 
 16. Faites un nouveau clic droit sur votre serveur. Parcourez «  Create » puis sélectionnez « Database ».
 17. Donnez-lui le nom « odyssee\_teams ». Attention : par la suite, si vous souhaitez changer son nom, il faudra procéder aux modifications via les fichiers SQL.
-![46](https://user-images.githubusercontent.com/57418005/148473032-13bba9e8-5f43-4f77-afab-490bea3a65f8.png)
+
+![46](.github/assets/17-createdb.png)
 
 ![47](https://user-images.githubusercontent.com/57418005/148473034-ab5a6881-dff6-4402-895d-1422268f084e.png)
 
 18. À la suite ce cette création, vous aurez accès à cette nouvelle arborescence.
 
-19.
 ![48](https://user-images.githubusercontent.com/57418005/148473058-238f8970-fea3-4969-a2bd-2df816ea4dbc.png)
 
-20. Faites un clic droit sur votre base de données. Cliquez sur « Query Tool ».
-21. Une fenêtre s&#39;ouvre. Copiez-y le contenu du fichier « Schema.sql » fournit avec ce guide d&#39;installation. Veillez à changer le mot de passe du rôle odyssee\_teams\_appli.
+19. Faites un clic droit sur votre base de données. Cliquez sur « Query Tool ».
+20. Une fenêtre s&#39;ouvre. Copiez-y le contenu du fichier « Schema.sql » fournit avec ce guide d&#39;installation. Veillez à changer le mot de passe du rôle odyssee\_teams\_appli.
 
 Attention : Si vous souhaitez changer le nom du rôle plus tard, il vous faudra le modifier partout.
-![49](https://user-images.githubusercontent.com/57418005/148473078-68cea173-96b2-417d-bd5c-b47dbc8ea1e3.png)
 
-22. Pour exécuter la requête, cliquez sur le bouton « Play » de pgAdmin (ci-dessous).
+![49](.github/assets/20-importDbSchema.png)
+
+21. Pour exécuter la requête, cliquez sur le bouton « Play » de pgAdmin (ci-dessous).
+
 ![50](https://user-images.githubusercontent.com/57418005/148473098-1445f2da-7e93-4fcd-b521-30a4b0a449e1.png)
 
-23. Afin de permettre les imports de fichiers CSV par la suite, il vous faut vous rendre sur «  **Configure pgAdmin**  » en cliquant sur « Servers » puis « Dashboard ».
-![51](https://user-images.githubusercontent.com/57418005/148473117-f4f6ea4e-463b-4a38-9661-ac4ae32acd97.png)
+22. Faites un clic droit sur la table « t\_question », puis cliquez sur « Import/ Export ».
 
-24. Dans le menu latéral de gauche, cliquez sur « Binary paths ».
-25. Ajoutez le chemin jusqu&#39;au répertoire à votre version de postgreSQL.
-![52](https://user-images.githubusercontent.com/57418005/148473145-1b8863e0-a723-4f76-835f-12e2d17891f0.png)
-
-26. Sélectionnez la case comme indiqué sur la capture d&#39;écran ci-dessus. Puis cliquez sur le bouton « Save » pour enregistrer.
-
-Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de la prochaine étape.
-
-27. Faites un clic droit sur la table « t\_question », puis cliquez sur « Import/ Export ».
 ![53](https://user-images.githubusercontent.com/57418005/148473202-0b2b054f-6281-486e-a771-077bdee6a54c.png)
 
-28. Veillez à avoir le bouton sur « Import » et non « Export ».
+23. Veillez à avoir le bouton sur « Import » et non « Export ».
+
 ![54](https://user-images.githubusercontent.com/57418005/148473214-27803a3a-ca56-4c87-b7d6-ef71cb9f0ba1.png)
 
-29. Sélectionnez le fichier «  **t\_question.csv**  » fourni avec ce guide d&#39;installation. Sélectionnez « UTF8 » pour l&#39;encodage et le « ; » comme délimiteur.
-30. Cliquez sur « OK » pour valider cette étape.
-31. La table des questions a été complétée avec toutes les questions. Répétez la procédure d&#39;import avec le fichier «  **t\_reponse.csv**  » cette fois.
+24. Sélectionnez le fichier «  **t\_question.csv**  » fourni avec ce guide d&#39;installation. Sélectionnez « UTF8 » pour l&#39;encodage et le « ; » comme délimiteur.
+25. Cliquez sur « OK » pour valider cette étape.
+26. La table des questions a été complétée avec toutes les questions. Répétez la procédure d&#39;import avec le fichier «  **t\_reponse.csv**  » cette fois.
+
 ![55](https://user-images.githubusercontent.com/57418005/148473239-d59d2e3d-db25-4599-ad97-36cc1d9b9f7a.png)
 
 ![56](https://user-images.githubusercontent.com/57418005/148473240-97ef2142-4621-48a8-90ec-7b81a21c557e.png)
 
-32. Ouvrez le fichier data.sql fourni avec ce guide d&#39;installation.
-33. Modifiez les valeurs suivantes :
+27. Ouvrez le fichier data.sql fourni avec ce guide d&#39;installation.
+28. Modifiez les valeurs suivantes :
 - a. Le « tid\_ad » par votre tenant id Azure.
+
 ![57](https://user-images.githubusercontent.com/57418005/148473282-07477400-64a2-499b-91be-80f4fa209142.png)
 
 - b. Le nom de votre organisation.
+
 ![58](https://user-images.githubusercontent.com/57418005/148473286-77ddead9-8f4d-4a9b-898f-89cce21dad61.png)
 
 - c. Et les adresses email de vos Maitres du jeu.
+
 ![59](https://user-images.githubusercontent.com/57418005/148473301-2fc92a2e-5e5d-405e-8881-05bd4d3dd75a.png)
 
-34. Copiez-collez le contenu de ce fichier dans le «  **Query Tool**  » de **pgAdmin** comme vous l&#39;aviez fait pour le fichier «  **schema.sql**  ».
+29. Copiez-collez le contenu de ce fichier dans le «  **Query Tool**  » de **pgAdmin** comme vous l&#39;aviez fait pour le fichier «  **schema.sql**  ».
 
 ![60](https://user-images.githubusercontent.com/57418005/148473340-44680f70-a0f8-4a59-b024-a2872a7f9d24.png)
 
-35. À présent et comme pour les questions et les réponses, il vous faut importer la table « t\_libelle\_i18n », via le fichier CSV fourni avec ce guide d&#39;installation. Le processus d&#39;import reste le même que pour les deux précédents fichiers.
+30. À présent et comme pour les questions et les réponses, il vous faut importer la table « t\_libelle\_i18n », via le fichier CSV fourni avec ce guide d&#39;installation. Le processus d&#39;import reste le même que pour les deux précédents fichiers.
+
 ![61](https://user-images.githubusercontent.com/57418005/148473365-81287346-2a2f-4d2c-80aa-8e05991c3acc.png)
 
 
-36. Votre base de données est prête. Il ne vous reste plus qu&#39;à mettre l&#39;application sur l&#39;App service que vous avez précédemment créé. Pour ce faire, vous aller avoir besoin de télécharger et d&#39;installer l'outil gratuit **Visual Studio Code ** : [lien d'accès](https://code.visualstudio.com/)
+31. Votre base de données est prête. Il ne vous reste plus qu&#39;à mettre l&#39;application sur l&#39;App service que vous avez précédemment créé. Pour ce faire, vous aller avoir besoin de télécharger et d&#39;installer l'outil gratuit **Visual Studio Code ** : [lien d'accès](https://code.visualstudio.com/)
+
 ![62](https://user-images.githubusercontent.com/57418005/148473378-a6945d7d-000a-428b-a4ef-799686ecf974.png)
 
-37. Une fois « VSC » d'installé, lancez-le.
+32. Une fois « VSC » d'installé, lancez-le.
+
 ![63](https://user-images.githubusercontent.com/57418005/148473402-ed65fafe-7e55-4da8-b066-d88e2e1feba9.png)
 
-38. Allez dans « Fichier » puis « Ouvrir le dossier » et allez sélectionner le dossier « Odyssee_teams_pub » de ce repository.
-39. Pour la suite, vous allez avoir besoin de Node JS dans sa version 12.22.9 (pour des versions plus récente il faudra adapter le code).
-40. Pour le télécharger et l'installer rendez vous sur [node.js](nodejs.org/en/download/releases/) : vous devriez trouver à la page 10 la version correspondante.
+33. Allez dans « Fichier » puis [clonez le répertoire Github](https://docs.microsoft.com/fr-fr/azure/developer/javascript/how-to/with-visual-studio-code/clone-github-repository?tabs=create-repo-command-palette%2Cinitialize-repo-activity-bar%2Ccreate-branch-command-palette%2Ccommit-changes-command-palette%2Cpush-command-palette).
+34. Pour la suite, vous allez avoir besoin de Node JS dans sa version 12.22.9 (pour des versions plus récentes il faudra adapter le code).
+35. Pour le télécharger et l'installer rendez-vous sur [node.js](nodejs.org/en/download/releases/) : vous devriez trouver à la page 10 la version correspondante.
+
 ![Capture4](https://user-images.githubusercontent.com/67316441/149010916-9d6e0c0c-4ec0-4601-bad1-9689494f6554.PNG)
 
-41. Une fois cette étape faite, ouvrez le terminal via l'onglet "terminal"
+36. Une fois cette étape faite, ouvrez le terminal via l'onglet "terminal"
+
 ![Capture3](https://user-images.githubusercontent.com/67316441/149010619-2b0cbb52-5ca5-4e9a-bda2-c73ac1a99425.PNG)
-42. Dans le terminal, tapez la commande "cd client" et appuyez sur "entrer" pour vous rendre dans le dossier client.
+
+37. Dans le terminal, tapez la commande "cd client" et appuyez sur "entrer" pour vous rendre dans le dossier client.
+
 ![Capture12](https://user-images.githubusercontent.com/67316441/149011195-7e906a0d-13e4-459c-a798-5fa9d6857b88.PNG)
-43. Une fois dans le dossier client tapez la commande "npm i" puis appuyez sur "entrer".
+
+38. Une fois dans le dossier client tapez la commande "npm i" puis appuyez sur "entrer".
+
 ![Capture5](https://user-images.githubusercontent.com/67316441/149013660-0252b5a4-26f8-4be4-a061-244c3b787b54.PNG)
 
-44. Tapez ensuite la commande "npm run build" pour créer le build du front.
+39. Tapez ensuite la commande "npm run build" pour créer le build du front.
 
 ![Capture6](https://user-images.githubusercontent.com/67316441/149013613-e84dd1f1-afe1-4213-9a5b-db99bf7cd2da.PNG)
 
-45. Cela devrait vous créer un dossier build dans le dossier client.
+40. Cela devrait vous créer un dossier build dans le dossier client.
 
 ![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
 
-46. Créez un nouveau dossier sous le nom de "Prod" dans lequel vous allez copier plusieurs dossiers présents dans "Odyssee_teams_pub/server" : le résultat doit ressembler à cela.
+41. Créez un nouveau dossier sous le nom de "Prod" dans lequel vous allez copier plusieurs dossiers présents dans "Odyssee_teams_pub/server" : le résultat doit ressembler à cela.
 
 ![Capture8](https://user-images.githubusercontent.com/67316441/149011893-642530b8-84d9-491e-85ce-20423c11ab2b.PNG)
 
-47. Le fichier ".deployement" est un fichier que vous devez créer qui ne contient que deux lignes.
+42. Le fichier ".deployement" est un fichier que vous devez créer et qui ne contient que deux lignes.
+
 ![Capture13](https://user-images.githubusercontent.com/67316441/149012174-78c5550a-9518-41ba-b7c9-ca39141c2825.PNG)
 
-48. Dans le dossier "config" ouvrez le fichier "manifest.json" et remplacez-le "port":8080, par "port":443. 
+43. Dans le dossier "config" ouvrez le fichier "manifest.json" et remplacez-le "port":8080, par "port":443. 
+
 ![Capture14](https://user-images.githubusercontent.com/67316441/149012874-f0a0aeb3-b845-4a7a-b8aa-10f739ed98a4.PNG)
 
-49. Dans votre nouveau dossier "Prod", allez dans le dossier "public" et copiez le build que vous avez précédemment créé dans le dossier "client".
+44. Dans votre nouveau dossier "Prod", allez dans le dossier "public" et copiez le build que vous avez précédemment créé dans le dossier "client".
 
 ![Capture9](https://user-images.githubusercontent.com/67316441/149012534-c88a0727-7f61-4c60-be76-d859d2ab76c3.PNG)
 
-50. Ouvrez le fichier Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
+45. Ouvrez le dossier "Prod" dans VSCode et ouvrez le fichier Prod/utils/Crypto.js et ajoutez une chaine de charactère aléatoire dans la variable CRYPTO_SECRET_KEY.
+
 ![Capture](https://user-images.githubusercontent.com/67316441/148568614-673a780a-9ab9-4bf0-b1d1-599e5acae9a1.PNG)
+  
+46. Rendez-vous dans les « Extensions » dans la barre latérale de gauche.
+47. Recherchez « Azure App Service ».
+48. Installez l&#39;application « Azure App Service ».
 
-51. Rendez-vous dans les « Extensions » dans la barre latérale de gauche.
-52. Recherchez « Azure App Service ».
-53. Installez l&#39;application « Azure App Service ».
+![Capture44](https://user-images.githubusercontent.com/67316441/175503150-673de202-092e-4bed-9ff7-51e03f56d52d.PNG)
+
+49. Ouvrez l&#39;application « Azure App Service » nouvellement installée.
+50. Choisissez le dossier "Prod" contenant les sources à déployer et connectez-vous avec votre compte Microsoft. 
+51. Votre App service s&#39;affichera et proposera « OdysseeTest » (ou le nom que vous aviez choisi précédemment). Faites un clic droit sur l&#39;application.
+52. Cliquez sur « Deploy to Web App ».
+  
 ![65](https://user-images.githubusercontent.com/57418005/148473425-adf436d4-c12c-4fda-bbf2-3a98d4b54dd1.png)
-
-54. Ouvrez l&#39;application « Azure App Service » nouvellement installée.
-55. Connectez-vous avec votre compte Microsoft.
-56. Votre App service s&#39;affichera et proposera « OdysseeTest » (ou le nom que vous aviez choisi précédemment). Faites un clic droit sur l&#39;application.
-57. Cliquez sur « Deploy to Web App ».
 
 **Félicitations, votre application est désormais installée et accessible.**
 
@@ -413,7 +510,7 @@ Vous êtes désormais en mesure d&#39;importer des fichiers et il s&#39;agit de 
 
 ## Avant-propos
 
-Pour importer l&#39;Odyssée de Teams sur votre tenant, il est nécessaire de créer un fichier zip contenant le manifeste de l'application. La procédure de création du fichier zip est détaillée ci-dessous. La manipulation d'import dans Teams requiert des droits d&#39;accès spécifiques à la console Admin Microsoft Teams. Si votre organisation a désactivé le store Microsoft Teams, vous trouverez ci-dessous un lien de réactivation afin de vous permettre de procéder à l&#39;installation de l&#39;application sans problème.
+L&#39;Odyssée de Teams est une web application dont le package au format .zip « _LOdysseedeTeams2021.zip_ » doit être récupéré sur le GitHub puis importé sur le store Microsoft Teams de votre organisation. Cette manipulation requiert des droits d&#39;accès spécifiques à la console Admin Microsoft Teams. Si votre organisation a désactivé le store Microsoft Teams, vous trouverez ci-dessous un lien de réactivation afin de vous permettre de procéder à l&#39;installation de l&#39;application sans problème.
 
 [https://docs.microsoft.com/fr-fr/MicrosoftTeams/manage-apps](https://docs.microsoft.com/fr-fr/MicrosoftTeams/manage-apps)
 
@@ -421,7 +518,10 @@ NB : Notez qu&#39;il n&#39;y a aucun port spécifique à ouvrir lors de la manip
 
 ### Un pare-feu bloque votre installation
 
-Si vous utilisez un proxy, pensez à vérifier que l'URL de l'application soit bien authorisée.
+Si un pare-feu ou un proxy quelconque bloque le processus d&#39;installation, le lien ci-dessous vous permet d&#39;ajouter une règle (policy) à votre tenant Teams pour autoriser l'URL de l'app service que vous avez créé .
+
+[https://odyssee-de-teams.com/](https://odyssee-de-teams.com/)
+
 
 ## 5 étapes pour une installation réussie
 
@@ -436,9 +536,9 @@ Si vous utilisez un proxy, pensez à vérifier que l'URL de l'application soit b
 4. Cliquez maintenant sur le bouton « Manage Apps ». La partie de droite de votre interface affiche à présent la liste de vos applications.
 ![66](https://user-images.githubusercontent.com/57418005/148473581-03249dd4-88c4-461b-b1cd-ccac5f0bf5cb.png)
 
-#### 3ème étape : Créez et uploadez le fichier .zip sur votre tenant
+#### 3ème étape : Uploadez le fichier .zip sur votre tenant
 
-5. Ouvrez le fichier « PACKAGE_ODYSSEY_FR/manifest.json » sur votre ordinateur et modifiez l'URL par celui que vous avez créé dans l'app service et l'id de votre application.
+5. Ouvrez le fichier « PACKAGE_ODYSSEY_FR/Manifest/manifest.json » sur votre ordinateur et modifiez l'URL par celui que vous avez créé dans l'app service et l'id de votre application.
 
 ![Capture15](https://user-images.githubusercontent.com/67316441/149138090-a58996d6-7967-429d-a990-d0af99f72f94.PNG)
 
