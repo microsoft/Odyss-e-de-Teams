@@ -272,7 +272,7 @@ Value: **postgres://\<nom\_utilisateur>:\<mot\_de\_passe>@\<host>5432/odyssee\_t
 
 ![32](https://user-images.githubusercontent.com/67316441/174289605-ed1440a3-b79a-4987-b9e2-cf0b125f3fc9.PNG)
 
-![33](https://user-images.githubusercontent.com/67316441/174289613-4d31d5ff-0df3-4f05-a03e-47418b6a6ede.PNG)
+![33](.github/assets/13-applicationId.png)
 
 14. Then we must create a custom domain and an SSL certificate to have a secure URL (https).
 
@@ -369,7 +369,7 @@ Now that access to your Postgre server has been enabled through pgAdmin, you mus
 16. Right-click on your server. Go to "Create" then "Database".
 17. Name it "odyssey\_teams". Note: if you want to change its name later, you will have to make the changes in the SQL files.
 
-![46](https://user-images.githubusercontent.com/57418005/148473032-13bba9e8-5f43-4f77-afab-490bea3a65f8.png)
+![46](.github/assets/17-createdb.png)
 
 ![47](https://user-images.githubusercontent.com/57418005/148473034-ab5a6881-dff6-4402-895d-1422268f084e.png)
 
@@ -382,7 +382,7 @@ Now that access to your Postgre server has been enabled through pgAdmin, you mus
 
 Note: If you want to change the role name later, you will need to change it everywhere.
 
-![49](https://user-images.githubusercontent.com/57418005/148473078-68cea173-96b2-417d-bd5c-b47dbc8ea1e3.png)
+![49](.github/assets/20-importDbSchema.png)
 
 21. To execute the query, click on the "Play" button in pgAdmin (below).
 ![50](https://user-images.githubusercontent.com/57418005/148473098-1445f2da-7e93-4fcd-b521-30a4b0a449e1.png)
@@ -462,7 +462,7 @@ Note: If you want to change the role name later, you will need to change it ever
 44. In your new "Prod" folder, go to the "public" folder and copy the build you previously created in the "client" folder.
 ![Capture9](https://user-images.githubusercontent.com/67316441/149012534-c88a0727-7f61-4c60-be76-d859d2ab76c3.PNG)
 
-45. Open the "Prod" file using VSCode and open the file Crypto.js and add a random string in the variable CRYPTO_SECRET_KEY.
+45. Open the "Prod" file using VSCode and open the file Prod/utils/Crypto.js and add a random string in the variable CRYPTO_SECRET_KEY.
 ![Capture](https://user-images.githubusercontent.com/67316441/148569783-dd02800d-6528-4b9e-8ba8-d979c1658a4f.PNG)
 
 47. Go to "Extensions" in the left menu.
@@ -472,7 +472,7 @@ Note: If you want to change the role name later, you will need to change it ever
 ![64](https://user-images.githubusercontent.com/57418005/148473407-e15ba56f-5d00-40fb-a15e-941d73b3f77e.png)
 
 50. Open the "Azure App Service" application freshly installed.
-51. Login with your Microsoft account.
+51. Rigth-click select the folder Prod and "Deploy to Azure App Service" Login with your Microsoft account.
 52. Your App service will appear and suggest "OdysseyTest" or (the name you chose). Right-click on the application.
 53. Click on "Deploy to Web App".
    
@@ -494,9 +494,8 @@ Note: There is no specific port to open for the installation.
 
 ### A firewall is blocking the installation
 
-If a firewall or proxy is blocking the installation process, the link below will add a policy to your Teams tenant authorizing calls to this URL.
+If a firewall or proxy is blocking the installation process, the link below will add a policy to your Teams tenant authorizing calls to the Azure App Service URL you created earlier.
 
-[https://odyssee-de-teams.saegus.com/](https://odyssee-de-teams.saegus.com/)
 
 ## 5 steps for a successful installation
 
@@ -514,7 +513,7 @@ If a firewall or proxy is blocking the installation process, the link below will
 
 ### 3rd step: Upload the .zip file on your tenant
 
-5. Open the file "PACKAGE_ODYSSEY_FR / manifest.json" on your computer, and change the URL to the one you created in the app service and the id of your app.
+5. Open the file "PACKAGE_ODYSSEY_EN/Manifest/ manifest.json" on your computer, and change the URL to the one you created in the app service and the id of your app.
 
 ![Capture15](https://user-images.githubusercontent.com/67316441/149138090-a58996d6-7967-429d-a990-d0af99f72f94.PNG)
 
