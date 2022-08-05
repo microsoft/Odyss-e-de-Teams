@@ -5,7 +5,7 @@ import videojs from "video.js";
 import QCMChoixMultiple from "./QCMChoixMultiple";
 import QCMChoixUnique from "./QCMChoixUnique";
 
-import { IQCMVideoProps, IMecaniqueQuestionState } from "src/models/Question";
+import { IQCMVideoProps, IMecaniqueQuestionState } from "models/Question";
 
 import "./QCMVideo.scss";
 

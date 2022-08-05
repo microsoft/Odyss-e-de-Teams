@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 var Glue = require("@hapi/glue");
 const msal = require('@azure/msal-node');
 const Path = require("path");

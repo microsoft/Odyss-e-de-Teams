@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { IUser } from "./User";
 
 export interface IClassement extends IUser {

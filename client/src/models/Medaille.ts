@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 export interface IMedaille {
     id_medaille: number;
     nom: string;

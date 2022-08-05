@@ -5,7 +5,7 @@ import {
   IMecaniqueQuestionProps,
   IReponse,
   IRemettreOrdreState,
-} from "src/models/Question";
+} from "models/Question";
 
 import "./RemettreOrdre.scss";
 

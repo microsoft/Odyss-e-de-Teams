@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { IAvatar } from "./Avatar";
 
 export interface ILandingProps {

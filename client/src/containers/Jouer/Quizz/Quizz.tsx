@@ -13,8 +13,8 @@ import RemettreOrdre from "components/MecaniqueQuestion/RemettreOrdre/RemettreOr
 import QCMVideo from "components/MecaniqueQuestion/QCM/QCMVideo";
 import StopWatch from "components/StopWatch/StopWatch";
 
-import IStore from "src/store/IStore";
-import { IQuizzProps, IQuizzState, IQuestion, IStopWatchProps } from "src/models/Question";
+import IStore from "store/IStore";
+import { IQuizzProps, IQuizzState, IQuestion, IStopWatchProps } from "models/Question";
 
 import "./Quizz.scss";
 
