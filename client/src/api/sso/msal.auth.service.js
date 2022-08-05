@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import * as Msal from "msal";
 
 // An authentication service that uses the MSAL.js library to sign in users with

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 // NOTE: Source: npm package: emojilib, file:emojis.json
 window.tinymce.Resource.add("tinymce.plugins.emoticons", {
   grinning: {

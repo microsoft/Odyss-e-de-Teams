@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 // A mock authentication service used for testing
 class MockAuthService {
   isCallback = () => {

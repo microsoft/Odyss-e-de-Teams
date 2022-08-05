@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import API from "./ApiMain";
 import i18n from '../config/i18n';
 

@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 const gulp = require('gulp');
 const zip = require('gulp-zip');
 const del = require('del');

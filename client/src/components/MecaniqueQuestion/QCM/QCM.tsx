@@ -6,7 +6,7 @@ import QCMChoixUnique from "./QCMChoixUnique";
 import {
   IQCMProps,
   IMecaniqueQuestionState,
-} from "src/models/Question";
+} from "models/Question";
 
 import "./QCM.scss";
 
