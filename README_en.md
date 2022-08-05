@@ -426,7 +426,7 @@ Note: If you want to change the role name later, you will need to change it ever
 32.  Once « VSC » is installed, launch it.
 ![63](https://user-images.githubusercontent.com/57418005/148473402-ed65fafe-7e55-4da8-b066-d88e2e1feba9.png)
 
-33. Go to "File" then "Open folder" and select the "Odyssee_teams_pub" folder from this repository.
+33. Select "Clone Git Repository" and [clone the current Github repository](https://docs.microsoft.com/en-us/azure/developer/javascript/how-to/with-visual-studio-code/clone-github-repository?tabs=create-repo-command-palette%2Cinitialize-repo-activity-bar%2Ccreate-branch-command-palette%2Ccommit-changes-command-palette%2Cpush-command-palette). 
 
 34. Next, you will need "Node JS" in its version 12.22.9 (Note that for more recent versions, you will have to adapt the code).
 
@@ -449,7 +449,7 @@ Note: If you want to change the role name later, you will need to change it ever
 
 ![Capture7](https://user-images.githubusercontent.com/67316441/149011538-fda05a81-fa5a-4a2b-ac27-c4ae1e017866.PNG)
 
-41. Create a new folder under the name "Prod" in which you will copy several folders found in "Odyssee_teams_pub / server": the result should look like this.
+41. Create a new folder under the name "Prod" in which you will copy several folders found in "server": the result should look like this.
 
 ![Capture8](https://user-images.githubusercontent.com/67316441/149011893-642530b8-84d9-491e-85ce-20423c11ab2b.PNG)
 
