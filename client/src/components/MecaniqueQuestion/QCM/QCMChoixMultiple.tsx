@@ -5,7 +5,7 @@ import {
   IQCMProps,
   IReponse,
   IMecaniqueQuestionState,
-} from "src/models/Question";
+} from "models/Question";
 
 class QCMChoixMultiple extends Component<IQCMProps, IMecaniqueQuestionState> {
   private _idMecaniqueImg = 7;

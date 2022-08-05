@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import API from "./ApiMain";
 
 class Organisation extends API {

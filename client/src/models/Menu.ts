@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { IUser, IOrganisation } from "./User";
 
 export interface IMenu {

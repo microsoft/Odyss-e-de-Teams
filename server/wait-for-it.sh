@@ -1,3 +1,5 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
 #!/usr/bin/env bash
 # Use this script to test if a given TCP host/port are available
 

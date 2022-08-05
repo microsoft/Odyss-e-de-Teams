@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 module.exports = function (sequelize, DataTypes) {
     const AssetCommunication = sequelize.define('AssetCommunication', {
         id_asset_communication:{

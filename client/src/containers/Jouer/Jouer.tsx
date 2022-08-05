@@ -12,7 +12,7 @@ import {
   IJouerProps,
   IModule,
   INiveau,
-} from "src/models/Question";
+} from "models/Question";
 
 import "./Jouer.scss";
 import IStore from "store/IStore";
