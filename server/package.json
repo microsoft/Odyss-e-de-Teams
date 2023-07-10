@@ -7,7 +7,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@azure/msal-node": "^1.3.3",
+    "@azure/msal-node": "^1.18.0",
     "@hapi/glue": "^7.0.0",
     "@hapi/hapi": "^19.1.1",
     "@hapi/inert": "^6.0.1",
@@ -22,6 +22,6 @@
     "pg": "^8.1.0",
     "pg-hstore": "^2.3.3",
     "querystring": "^0.2.1",
-    "sequelize": "^5.21.8"
+    "sequelize": "^6.32.1"
   }
 }
